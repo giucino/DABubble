@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 
 export class ChannelService implements OnDestroy {
-
+    // firestore: Firestore = inject(Firestore);
 
     ngOnDestroy(): void {
         // throw new Error('Method not implemented.');

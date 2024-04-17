@@ -37,6 +37,26 @@
   margin: 0;
   padding: 0;
   font-family: "Nunito", "Helvetica Neue", sans-serif;
+    --color-white: #FFFFFF;
+    --color-bg: #ECEEFE;
+    --color-light-purple: #ADB0D9;/*lines*/
+    --color-black: #000000;
+    --color-gray: #686868;
+    --color-purple-1: #444DF2;
+    --color-purple-2: #797EF3;
+    --color-purple-3: #535AF1;
+    --color-online: #92C83E;
+    --color-error: #ED1E79;
+}
+
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    scroll-behavior: smooth;
+    // background-color: #ECEEFE;
+    background-color: var(--color-bg);
 }
 
 html,
