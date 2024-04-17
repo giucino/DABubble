@@ -2,151 +2,155 @@
 
 /* nunito-regular - latin */
 @font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 400;
-    src: url('./assets/fonts/nunito-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-  }
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/nunito-v26-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
 /* nunito-700 - latin */
 @font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    src: url('./assets/fonts/nunito-v26-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-  }
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./assets/fonts/nunito-v26-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
 
 :root {
-    --color-white: #FFFFFF;
-    --color-bg: #ECEEFE;
-    --color-light-purple: #ADB0D9; /* lines */
-    --color-black: #000000;
-    --color-gray: #686868;
-    --color-purple-1: #444DF2;
-    --color-purple-2: #797EF3;
-    --color-purple-3: #535AF1;
-    --color-online: #92C83E;
-    --color-error: #ED1E79;
+  --color-white: #ffffff;
+  --color-bg: #eceefe;
+  --color-light-purple: #adb0d9; /* lines */
+  --color-black: #000000;
+  --color-gray: #686868;
+  --color-purple-1: #444df2;
+  --color-purple-2: #797ef3;
+  --color-purple-3: #535af1;
+  --color-online: #92c83e;
+  --color-error: #ed1e79;
 }
 
-* {
-    font-family: 'Nunito', "Helvetica Neue", sans-serif;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", "Helvetica Neue", sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0;}
+html,
+body {
+  height: 100%;
+}
 
-/* fonts */ 
+/* fonts */
 .fs {
-    &-46 {
-        @extend .fs;
-        font-size: 46px;
-        line-height: 55.2px; //1.2
-    }
-    &-38 {
-        font-size: 38px;
-        line-height: 45.6px;
-    }
-    &-32 {
-        font-size: 32px;
-        line-height: 38.4px;
-    }
-    &-26 {
-        font-size: 26px;
-        line-height: 31.2px;
-    }
-    &-22 {
-        font-size: 22px;
-        line-height: 26.4px;
-    }
-    &-18 {
-        font-size: 18px;
-        line-height: 21.6px;
-    }
-    &-15 {
-        font-size: 15px;
-        line-height: 18px;
-    }
-    &-12 {
-        font-size: 12px;
-        line-height: 14.4px;
-    }
+  &-46 {
+    @extend .fs;
+    font-size: 46px;
+    line-height: 55.2px; //1.2
+  }
+  &-38 {
+    font-size: 38px;
+    line-height: 45.6px;
+  }
+  &-32 {
+    font-size: 32px;
+    line-height: 38.4px;
+  }
+  &-26 {
+    font-size: 26px;
+    line-height: 31.2px;
+  }
+  &-22 {
+    font-size: 22px;
+    line-height: 26.4px;
+  }
+  &-18 {
+    font-size: 18px;
+    line-height: 21.6px;
+  }
+  &-15 {
+    font-size: 15px;
+    line-height: 18px;
+  }
+  &-12 {
+    font-size: 12px;
+    line-height: 14.4px;
+  }
 }
 
-
-/* button */ 
+/* button */
 button {
-    cursor: pointer;
-    outline: none;
-    border: none;
-    background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 
 .btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-weight: 700;
-    border: 1px solid transparent;
-    &-primary {
-        @extend .btn;
-        color: var(--color-white);
-        background-color: var(--color-purple-1);
-       
-        &:hover {
-            background-color: var(--color-purple-2);
-        };
-        &:active {
-            background-color: var(--color-purple-1);
-        };
-        &:disabled {
-            background-color: var(--color-gray);
-        }
-        
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  &-primary {
+    @extend .btn;
+    color: var(--color-white);
+    background-color: var(--color-purple-1);
+    &:hover {
+      background-color: var(--color-purple-2);
     }
-    &-secondary {
-        @extend .btn;
-        color: var(--color-purple-1);
-        background-color: transparent;
-        border: 1px solid var(--color-purple-2);
-        
-        &:hover {
-            color: var(--color-white);
-            background-color: var(--color-purple-3);
-            border-color: var(--color-purple-3);
-        };
-        &:active {
-            color: var(--color-white);
-            background-color: var(--color-purple-1);
-            border-color: var(--color-purple-1);
-        }; 
-        &:disabled {
-            color: var(--color-gray);
-            background-color: transparent;
-            border-color: var(--color-gray);
-        }   
+    &:active {
+      background-color: var(--color-purple-1);
     }
-    &-icon {
-        @extend .btn;
-        border-radius: 100%;
-        aspect-ratio: 1 / 1;
-        padding: 0;
-        width: 32px;
-        background-color: transparent;
-        svg {
-            flex-shrink: 0;
-        }
-        &:hover {
-            background-color: var(--color-bg);
-            svg path, 
-            svg rect {
-                fill: var(--color-purple-3);
-            }
-        }
+    &:disabled {
+      background-color: var(--color-gray);
     }
-}
+  }
+  &-secondary {
+    @extend .btn;
+    color: var(--color-purple-1);
+    background-color: transparent;
+    border: 1px solid var(--color-purple-2);
 
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-purple-3);
+      border-color: var(--color-purple-3);
+    }
+    &:active {
+      color: var(--color-white);
+      background-color: var(--color-purple-1);
+      border-color: var(--color-purple-1);
+    }
+    &:disabled {
+      color: var(--color-gray);
+      background-color: transparent;
+      border-color: var(--color-gray);
+    }
+  }
+  &-icon {
+    @extend .btn;
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    width: 32px;
+    background-color: transparent;
+    svg {
+      flex-shrink: 0;
+    }
+    &:hover {
+      background-color: var(--color-bg);
+      svg path,
+      svg rect {
+        stroke-width: 4px !important;
+        fill: var(--color-purple-3);
+      }
+    }
+  }
+}
