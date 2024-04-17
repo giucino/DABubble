@@ -1,8 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* nunito-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./assets/fonts/nunito-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+
 :root {
     --color-white: #FFFFFF,
     --color-bg: #ECEEFE,
-    --color-light-purple: #ADB0D9, //lines
+    --color-light-purple: #ADB0D9, /* lines */
     --color-black: #000000,
     --color-gray: #686868,
     --color-purple-1: #444DF2,
@@ -12,9 +23,52 @@
     --color-error: #ED1E79,
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+    font-family: 'Nunito', "Helvetica Neue", sans-serif;
+}
 
+html, body { height: 100%; }
+body { margin: 0;}
+
+/* fonts */ 
+.fs {
+    &-46 {
+        @extend .fs;
+        font-size: 46px;
+        line-height: 55.2px; //1.2
+    }
+    &-38 {
+        font-size: 38px;
+        line-height: 45.6px;
+    }
+    &-32 {
+        font-size: 32px;
+        line-height: 38.4px;
+    }
+    &-26 {
+        font-size: 26px;
+        line-height: 31.2px;
+    }
+    &-22 {
+        font-size: 22px;
+        line-height: 26.4px;
+    }
+    &-18 {
+        font-size: 18px;
+        line-height: 21.6px;
+    }
+    &-15 {
+        font-size: 15px;
+        line-height: 18px;
+    }
+    &-12 {
+        font-size: 12px;
+        line-height: 14.4px;
+    }
+}
+
+
+/* button */ 
 button {
     cursor: pointer;
 }
