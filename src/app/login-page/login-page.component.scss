@@ -67,6 +67,16 @@
     animation: revealText 1000ms forwards 1500ms;
 }
 
+.create-new-account-container{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    button{
+        a{
+            text-decoration: none;
+        }
+    }
+}
 
 
 @keyframes fadeOut {
