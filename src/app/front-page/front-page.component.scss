@@ -13,9 +13,9 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-
+    position: absolute;
+    width: 100%;
     z-index: 1;
-    
     overflow: hidden;
     animation: moveAway 1s forwards 4000ms;
 }
@@ -44,7 +44,7 @@
         transform: translate(0px, 0);
     }
     100% {
-        transform: translate(-90vw, -90vh);
+        transform: translate(-85vw, -85vh);
         scale: 0.5;
         opacity: 0;
     }
