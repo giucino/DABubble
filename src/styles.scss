@@ -2,7 +2,7 @@
 :root {
     --color-white: #FFFFFF,
     --color-bg: #ECEEFE,
-    --color-light-purple: #ADB0D9, //lines
+    --color-light-purple: #ADB0D9, /*lines*/
     --color-black: #000000,
     --color-gray: #686868,
     --color-purple-1: #444DF2,
@@ -13,7 +13,11 @@
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    scroll-behavior: smooth;
+}
 
 button {
     cursor: pointer;

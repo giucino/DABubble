@@ -1,0 +1,85 @@
+.intro-container {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+    background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
+    // animation-delay: 2500ms;
+    animation-timing-function: ease-out;
+    animation: FadeOut 1s forwards 4000ms;
+}
+.front-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    z-index: 1;
+    
+    overflow: hidden;
+    animation: moveAway 1s forwards 4000ms;
+}
+.logo-intro{
+    animation: moveLogo 1s forwards 1500ms; 
+    position: relative;
+    left: 284px;
+    z-index: 2;
+}
+
+
+.intro-name {
+    width: 472px;
+    position: relative;
+    left: 0px;
+    opacity: 0;
+    margin: 0;
+    color: rgba(255, 255, 255, 1);
+    font-size: 90px;
+    animation: displayName 1s forwards 2000ms;
+    z-index: 1;
+}
+
+@keyframes moveAway {
+    0% {
+        transform: translate(0px, 0);
+    }
+    100% {
+        transform: translate(-90vw, -90vh);
+        scale: 0.5;
+        opacity: 0;
+    }
+
+}
+
+@keyframes FadeOut {
+    0% {
+      opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+@keyframes displayName{
+    0% {
+        opacity: 0;
+        transform: translate(0px, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(50px, 0px);
+    }
+
+}
+@keyframes moveLogo {
+    0% {
+        transform: translate(0px, 0);
+    }
+    100% {
+        transform: translate(-284px, 0px);
+    }
+}
