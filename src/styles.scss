@@ -8,19 +8,26 @@
     font-weight: 400;
     src: url('./assets/fonts/nunito-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
-
+/* nunito-700 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./assets/fonts/nunito-v26-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
 
 :root {
-    --color-white: #FFFFFF,
-    --color-bg: #ECEEFE,
-    --color-light-purple: #ADB0D9, /* lines */
-    --color-black: #000000,
-    --color-gray: #686868,
-    --color-purple-1: #444DF2,
-    --color-purple-2: #797EF3,
-    --color-purple-3: #535AF1,
-    --color-online: #92C83E,
-    --color-error: #ED1E79,
+    --color-white: #FFFFFF;
+    --color-bg: #ECEEFE;
+    --color-light-purple: #ADB0D9; /* lines */
+    --color-black: #000000;
+    --color-gray: #686868;
+    --color-purple-1: #444DF2;
+    --color-purple-2: #797EF3;
+    --color-purple-3: #535AF1;
+    --color-online: #92C83E;
+    --color-error: #ED1E79;
 }
 
 * {
@@ -71,4 +78,75 @@ body { margin: 0;}
 /* button */ 
 button {
     cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: transparent;
 }
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    &-primary {
+        @extend .btn;
+        color: var(--color-white);
+        background-color: var(--color-purple-1);
+       
+        &:hover {
+            background-color: var(--color-purple-2);
+        };
+        &:active {
+            background-color: var(--color-purple-1);
+        };
+        &:disabled {
+            background-color: var(--color-gray);
+        }
+        
+    }
+    &-secondary {
+        @extend .btn;
+        color: var(--color-purple-1);
+        background-color: transparent;
+        border: 1px solid var(--color-purple-2);
+        
+        &:hover {
+            color: var(--color-white);
+            background-color: var(--color-purple-3);
+            border-color: var(--color-purple-3);
+        };
+        &:active {
+            color: var(--color-white);
+            background-color: var(--color-purple-1);
+            border-color: var(--color-purple-1);
+        }; 
+        &:disabled {
+            color: var(--color-gray);
+            background-color: transparent;
+            border-color: var(--color-gray);
+        }   
+    }
+    &-icon {
+        @extend .btn;
+        border-radius: 100%;
+        aspect-ratio: 1 / 1;
+        padding: 0;
+        width: 32px;
+        background-color: transparent;
+        svg {
+            flex-shrink: 0;
+        }
+        &:hover {
+            background-color: var(--color-bg);
+            svg path, 
+            svg rect {
+                fill: var(--color-purple-3);
+            }
+        }
+    }
+}
+
