@@ -148,11 +148,14 @@
         background-color: var(--color-bg);
         svg path,
         svg rect {
-          stroke-width: 4px !important;
+          stroke: var(--color-purple-3);
+          stroke-width: 0.5px;
           fill: var(--color-purple-3);
         }
       }
     }
   }
+  
+
   
   
