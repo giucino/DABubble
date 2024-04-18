@@ -11,6 +11,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    &-direct {
+        @extend .channel-header;
+        padding: 32px 45px 20px 45px;
+    }
 }
 
 .channel-name-container {
@@ -39,6 +43,11 @@
             fill: var(--color-black);
         }
     }
+}
+
+.hashtag-icon {
+    width: 32px;
+    height: 32px;
 }
 
 .channel-members-container {
@@ -78,5 +87,17 @@
     }
 }
 
+/* direct - channel */ 
 
+.channel-member {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.profile-img-container {
+    position: relative;
+}
 
