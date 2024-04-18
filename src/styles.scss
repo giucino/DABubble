@@ -210,3 +210,22 @@ button {
       border: 2px solid var(--color-white);
   }
 } 
+
+/* online status */ 
+.online-status {
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background-color: var(--color-gray);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  &-wborder {
+      @extend .online-status;
+      border: 2px solid var(--color-white);
+  }
+}
+
+.online {
+  background-color: var(--color-online) !important;
+}
