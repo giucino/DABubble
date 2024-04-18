@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sign-in.component.scss'
 })
 export class SignInComponent {
-
+  
   constructor(private router: Router) { }
 
   goToLogin() {

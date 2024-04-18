@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -18,17 +18,21 @@ import { CommonModule } from '@angular/common';
 export class LoginPageComponent {
   hideElement = false;
   constructor(private router: Router) { 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hideElement = this.router.url !== '/login';
+      }
+    });
   }
 
   goToSignin() {
     this.router.navigate(['/signin']);
-    this.hideElement = true;
-
   }
+
   ngOnInit(): void {
     this.router.navigate(['/login']);
-    this.hideElement = false;
   }
+  
   // goToImprint() {
   //   this.router.navigate(['/imprint']);
   // }
