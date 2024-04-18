@@ -18,7 +18,7 @@
         font-weight: 700;
     }
 
-    p {
+    >p {
         // align-items: center;
         text-align: center;
         font-weight: 400;
@@ -30,6 +30,10 @@ form{
     display: flex;
     flex-direction: column;
     gap: 40px;
+    >div{
+        position: relative;
+        gap: 4px;
+    }
 }
 
 input {
@@ -68,7 +72,10 @@ input[type="email"] {
 }
 
 .errorMsg{
+    position: absolute;
     color: var(--color-error);
+    font-size: 14px;
+    margin-top: 4px;
 }
 .pw-forgot {
     text-decoration: none;

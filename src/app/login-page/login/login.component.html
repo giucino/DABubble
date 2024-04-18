@@ -4,16 +4,20 @@
     <p>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
 
     <form action="">
-        <input type="email" name="" id="" placeholder="beispielname@email.com">
-        <!-- <p *ngFor="" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p> -->
+        <div>
+            <input type="email" #email="ngModel" ngModel required name="email" id="" placeholder="beispielname@email.com">
+            <p *ngIf="!email.valid && email.touched" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p>
+        </div>
 
-
-        <input type="password" name="" id="" placeholder="Passwort">
-        <!-- <p *ngFor="" class="errorMsg">Falsches Passwort. Bitte noch einmal versuchen.</p> -->
+        <div>
+            <input type="password" #password="ngModel" ngModel required name="password" id="" placeholder="Passwort">
+            <p *ngIf="!password.valid && password.touched" class="errorMsg">Falsches Passwort. Bitte noch einmal versuchen.</p>
+        </div>
+        
     </form>
     
 
-    <a href="" class="pw-forgot">Passwort vergessen?</a>
+    <a href="" class="pw-forgot" [routerLink]="['/login-page/reset-password']">Passwort vergessen?</a>
 
     <div class="spacer"><p>ODER</p></div>
 
@@ -22,7 +26,7 @@
     <div class="login-btns">
         <button class="login-button">Anmelden</button>
 
-        <button class="guest-login">Gäste-Login</button>
+        <button class="guest-login" [routerLink]="['/main-page']">Gäste-Login</button>
     </div>
 
 </div>
