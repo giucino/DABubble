@@ -20,7 +20,7 @@ export class LoginPageComponent {
   constructor(private router: Router) { 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.hideElement = this.router.url !== '/login';
+        this.hideElement = this.router.url == '';
       }
     });
   }
@@ -30,7 +30,7 @@ export class LoginPageComponent {
   }
 
   ngOnInit(): void {
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
   }
   
   // goToImprint() {

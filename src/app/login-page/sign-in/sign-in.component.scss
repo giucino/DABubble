@@ -39,7 +39,22 @@ form{
     display: flex;
     flex-direction: column;
     gap: 40px;
+
+    >div{
+        position: relative;
+        // display: flex;
+        // flex-direction: column;
+        gap: 4px;
+    }
 }
+.errorMsg{
+    position: absolute;
+    color: var(--color-error);
+    font-size: 14px;
+    // bottom: -4px;
+    margin-top: 4px;
+}
+
 input{
     background-color: var(--color-bg);
     width: 500px;
@@ -109,5 +124,9 @@ input[type="name"]{
         font-weight: 700;
         line-height: 24.55px;
         color: white;
+        &:disabled{
+            background-color: var(--color-gray);
+            cursor: unset;
+        }
     }
 }
