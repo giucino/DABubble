@@ -71,24 +71,40 @@
     display: flex;
     align-items: flex-end;
     flex-direction: column;
+    gap: 20px;
+    p{
+        font-size: 18px;
+        line-height: 24.55px;
+        font-weight: 400;
+    }
     button{
         a{
             text-decoration: none;
+            font-size: 18px;
+            line-height: 21.6px;
+            font-weight: 400;
+            font-family: 'Figtree', sans-serif;
+            color: var(--color-purple-1);
         }
     }
 }
 
-// .login-content{
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     display: flex;
-//     flex-direction: column;
-//     width: 606px;
-//     border-radius: 30px;
-//     background-color: white;
-// }
+.data-links{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+    bottom: 40px;
+    a{
+        text-decoration: none;
+        padding: 10px 15px;
+        color: var(--color-purple-1);
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21.6px;
+    }
+}
 
 
 @keyframes fadeOut {

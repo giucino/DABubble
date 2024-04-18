@@ -9,7 +9,7 @@
     border-radius: 30px;
     background-color: white;
     align-items: center;
-    gap: 30px;
+    gap: 40px;
     padding: 50px 60px;
     h1{
         color: var(--color-purple-1);
@@ -30,10 +30,11 @@ input{
     gap: 6px;
     border-radius: 100px;
     border: unset;
-    padding: 18px 60px;
+    padding: 20px 70px;
+    
         &::placeholder{
         font-family: 'Nunito';
-        font-size: 14px;
+        font-size: 18px;
         font-weight: 400;
         line-height: 21.6px;
         &:focus{
@@ -44,27 +45,55 @@ input{
 }
 input[type="password"]{
     background-image: url("/assets/img/lock.png");
-    background-position: left 20px center;
-    background-size: 20px 16px;
+    background-position: left 30px center;
+    background-size: 24px 24px;
     background-repeat: no-repeat;
 }
 input[type="email"]{
     background-image: url("/assets/img/mail.png");
-    background-position: left 20px center;
-    background-size: 20px 16px;
+    background-position: left 30px center;
+    background-size: 24px 24px;
     background-repeat: no-repeat;
 }
 .pw-forgot{
     text-decoration: none;
     color: var(--color-purple-2);
 }
+.spacer{
+    height: 2px;
+    width: 100%;
+    background-color: var(--color-light-purple);
+    position: relative;
+    margin: 30px 0;
+    p{
+        background-color: white;
+        padding: 10px;
+        position: absolute;
+        left: calc(50% - 40px);
+        transform: translate(0, -50%);
+    }
+}
 .google-btn{
     width: 500px;
     border-radius: 100px;
     padding: 11px 32px;
-    gap: 10px;
+    gap: 20px;
     background-color: var(--color-bg);
-    color: var(--color-purple-2);
+    color: var(--color-purple-1);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img{
+        width: 38px;
+        height: 38px;
+    }
+    &:focus{
+        border: 1px solid var(--color-bg);
+    }
+
 }
 .login-btns{
     display: flex;
@@ -76,6 +105,9 @@ input[type="email"]{
     color: white;
     border-radius: 25px;
     padding: 12px 25px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24.55px;
 }
 .guest-login{
     background-color: rgba(0, 0, 0, 0);
@@ -83,4 +115,7 @@ input[type="email"]{
     border: 1px solid var(--color-purple-1);
     border-radius: 25px;
     padding: 12px 25px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24.55px;
 }
