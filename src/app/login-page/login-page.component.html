@@ -9,7 +9,13 @@
     </div>
 </div>
 
-<div class="create-new-account-container">
+<div class="create-new-account-container" [ngClass]="{'d-none': hideElement}">
         <p>Neu bei DABubble?</p>
-        <a  href="">Konto erstellen</a>
+        <button (click)="goToSignin()">Konto erstellen</button>
+</div>
+
+<router-outlet></router-outlet>
+<div class="data-links">
+    <a href="">Impressum</a>
+    <a href="">Datenschutz</a>
 </div>
