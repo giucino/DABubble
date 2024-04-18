@@ -1,4 +1,4 @@
-.login-container{
+.login-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,12 +11,14 @@
     align-items: center;
     gap: 40px;
     padding: 50px 60px;
-    h1{
+
+    h1 {
         color: var(--color-purple-1);
         font-size: 46px;
         font-weight: 700;
     }
-    p{
+
+    p {
         // align-items: center;
         text-align: center;
         font-weight: 400;
@@ -24,48 +26,63 @@
 
     }
 }
-input{
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+input {
     background-color: var(--color-bg);
     width: 500px;
     gap: 6px;
     border-radius: 100px;
     border: unset;
     padding: 20px 70px;
-    
-        &::placeholder{
+    display: flex;
+    align-items: center;
+    background-position: left 30px center;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    &::placeholder {
         font-family: 'Nunito';
         font-size: 18px;
         font-weight: 400;
         line-height: 21.6px;
-        &:focus{
-            border: 0.5px solid var(--color-purple-2);
-            outline: none;
-        }
+
+    }
+
+    &:focus {
+        border: 1px solid var(--color-purple-2);
+        outline: none;
     }
 }
-input[type="password"]{
+
+input[type="password"] {
     background-image: url("/assets/img/lock.png");
-    background-position: left 30px center;
-    background-size: 24px 24px;
-    background-repeat: no-repeat;
 }
-input[type="email"]{
+
+input[type="email"] {
     background-image: url("/assets/img/mail.png");
-    background-position: left 30px center;
-    background-size: 24px 24px;
-    background-repeat: no-repeat;
+    
 }
-.pw-forgot{
+
+.errorMsg{
+    color: var(--color-error);
+}
+.pw-forgot {
     text-decoration: none;
     color: var(--color-purple-2);
 }
-.spacer{
+
+.spacer {
     height: 2px;
     width: 100%;
     background-color: var(--color-light-purple);
     position: relative;
     margin: 30px 0;
-    p{
+
+    p {
         background-color: white;
         padding: 10px;
         position: absolute;
@@ -73,7 +90,8 @@ input[type="email"]{
         transform: translate(0, -50%);
     }
 }
-.google-btn{
+
+.google-btn {
     width: 500px;
     border-radius: 100px;
     padding: 11px 32px;
@@ -86,21 +104,25 @@ input[type="email"]{
     display: flex;
     align-items: center;
     justify-content: center;
-    img{
+
+    img {
         width: 38px;
         height: 38px;
     }
-    &:focus{
+
+    &:focus {
         border: 1px solid var(--color-bg);
     }
 
 }
-.login-btns{
+
+.login-btns {
     display: flex;
     flex-direction: row;
     gap: 30px;
 }
-.login-button{
+
+.login-button {
     background-color: var(--color-purple-1);
     color: white;
     border-radius: 25px;
@@ -109,7 +131,8 @@ input[type="email"]{
     font-weight: 700;
     line-height: 24.55px;
 }
-.guest-login{
+
+.guest-login {
     background-color: rgba(0, 0, 0, 0);
     color: var(--color-purple-1);
     border: 1px solid var(--color-purple-1);

@@ -1,12 +1,22 @@
 <div class="signin-container">
-    <button class="backtologin"></button>
+    <button class="back-to-login" (click)="goToLogin()"><img src="assets/img/arrow_back.svg" class="btn-icon" alt=""></button>
     <h1>Konto erstellen</h1>
     <p>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
-    <input type="name" name="" id="">
-    <input type="email" name="" id="">
-    <input type="password" name="" id="">
-    <div>
+
+    <form action="">
+        <input type="name" name="" id="" placeholder="Name und Nachname">
+        <!-- <p *ngFor=""></p> -->
+        <input type="email" name="" id="" placeholder="beispielname@email.com">
+        <!-- <p *ngFor=""></p> -->
+        <input type="password" name="" id="" placeholder="Passwort">
+        <!-- <p *ngFor=""></p> -->
+    </form>
+    
+    <div class="check-div">
         <input type="checkbox" name="" id=""><p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
     </div>
-    <button>Weiter</button>
+    <div class="next-btn-container">
+        <button>Weiter</button>
+    </div>
+    
 </div>
