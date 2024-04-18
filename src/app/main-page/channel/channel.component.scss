@@ -93,11 +93,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     font-weight: 700;
+    border-radius: 30px;
+    padding: 4px 8px;
+    &:hover {
+        background-color: var(--color-bg);
+    }
 }
 
 .profile-img-container {
     position: relative;
+    max-width: 50px;
+    max-height: 50px;
+    .profile-img {
+        width: 50px;
+    }
 }
 
