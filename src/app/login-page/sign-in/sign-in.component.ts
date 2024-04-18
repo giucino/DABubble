@@ -17,7 +17,7 @@ export class SignInComponent {
   constructor(private router: Router) { }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login-page/login']);
    
   }
 }

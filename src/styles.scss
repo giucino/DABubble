@@ -52,6 +52,7 @@
 html,
 body {
   height: 100%;
+  background-color: var(--color-bg)
 }
 
 /* fonts */
@@ -228,4 +229,8 @@ button {
 
 .online {
   background-color: var(--color-online) !important;
+}
+
+.d-none {
+  display: none !important;
 }

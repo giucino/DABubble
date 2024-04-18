@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 
 @Component({
@@ -11,4 +11,9 @@ import { LoginPageComponent } from './login-page/login-page.component';
 })
 export class AppComponent {
   title = 'DABubble';
+  constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    this.router.navigate(['/login-page']);
+  }
 }
