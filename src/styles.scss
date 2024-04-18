@@ -139,11 +139,9 @@
       border-radius: 100%;
       aspect-ratio: 1 / 1;
       padding: 0;
+      margin: 0;
       width: 32px;
       background-color: transparent;
-      svg {
-        flex-shrink: 0;
-      }
       &:hover {
         background-color: var(--color-bg);
         svg path,
@@ -152,6 +150,32 @@
           stroke-width: 0.5px;
           fill: var(--color-purple-3);
         }
+      }
+      &-v2{
+        @extend .btn-icon;
+        &:active {
+          background-color: transparent;
+          svg path {
+            stroke: var(--color-black);
+            stroke-width: 0.5px;
+            fill: var(--color-black);
+          }
+        }
+      }
+      &-v3{
+        @extend .btn-icon;
+        &:active {
+          background-color: var(--color-bg);
+          svg path {
+            stroke: var(--color-black);
+            stroke-width: 0.5px;
+            fill: var(--color-black);
+          }
+        }
+      }
+      &-v4{
+        @extend .btn-icon;
+        background-color: var(--color-bg);
       }
     }
   }
