@@ -1,0 +1,113 @@
+.signin-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    background-color: white;
+    gap: 40px;
+    padding: 40px 30px;
+    width: 606px;
+    h1{
+        color: var(--color-purple-1);
+        font-size: 46px;
+        font-weight: 700;
+    }
+    >p{
+        text-align: center;
+        font-weight: 400;
+        font-size: 20px;
+        width: 90%;
+    }
+}
+.back-to-login{
+    position: absolute;
+    left: 32px;
+    top: 45px;
+    padding: 16px;
+    img{
+        width: 24px;
+        height: 24px;
+        
+    }
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+input{
+    background-color: var(--color-bg);
+    width: 500px;
+    gap: 10px;
+    padding: 20px 70px;
+    border-radius: 100px;
+    border: unset;
+    display: flex;
+    align-items: center;
+    background-position: left 30px center;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    &::placeholder{
+        font-family: 'Nunito';
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21.6px;
+        
+    }
+    &:focus{
+        border: 0.5px solid var(--color-purple-2);
+        outline: none;
+    }
+}
+input[type="password"]{
+    background-image: url("/assets/img/lock.png");
+}
+input[type="email"]{
+    background-image: url("/assets/img/mail.png");
+}
+input[type="name"]{
+    background-image: url("/assets/img/person_filled.png");
+    
+}
+
+.check-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 500px;
+    gap: 8px;
+    input{
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--color-purple-2);
+    }
+    p{
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.2px;
+    }
+    a{
+        text-decoration: none;
+        color: var(--color-purple-2);
+    }
+}
+
+.next-btn-container{
+    width: 500px;
+    display: flex;
+    justify-content: flex-end;
+    button{
+        background-color: var(--color-purple-1);
+        border-radius: 25px;
+        padding: 12px 25px;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 24.55px;
+        color: white;
+    }
+}

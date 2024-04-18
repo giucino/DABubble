@@ -42,6 +42,11 @@
   html,
   body {
     height: 100%;
+    background-color: var(--color-bg);
+  }
+
+  .d-none {
+    display: none;
   }
   
   /* fonts */
