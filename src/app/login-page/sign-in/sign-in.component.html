@@ -16,21 +16,6 @@
             <input type="password" #password="ngModel" ngModel required name="password" id="" placeholder="Passwort">
             <p class="errorMsg" *ngIf="!password.valid && password.touched">Bite geben Sie ein Passwort ein.</p>
         </div>
-        
-    <form #signin="ngForm">
-        <div>
-            <input type="name" #name="ngModel" ngModel required name="name" id="" placeholder="Name und Nachname">
-            <p class="errorMsg" *ngIf="!name.valid && name.touched">Bitte schreiben Sie einen Namen</p>
-        </div>
-        <div>
-            <input type="email" #email="ngModel" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="email" id="" placeholder="beispielname@email.com">
-            <p class="errorMsg" *ngIf="!email.valid && email.touched">*Diese E-Mail-Adresse ist leider ungültig.</p>
-        </div>
-        <div>
-            <input type="password" #password="ngModel" ngModel required name="password" id="" placeholder="Passwort">
-            <p class="errorMsg" *ngIf="!password.valid && password.touched">Bite geben Sie ein Passwort ein.</p>
-        </div>
-        
     </form>
     
     <div class="check-div">
