@@ -6,9 +6,14 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 
 export const routes: Routes = [
-    { path: '' , component: LoginPageComponent},
-    { path: 'login', component: LoginComponent},
-    { path: 'signin', component: SignInComponent },
+
+    { path: 'login-page' , component: LoginPageComponent, children: [
+        { path: 'login', component: LoginComponent},
+        { path: 'signin', component: SignInComponent }
+    ]
+    },
+    // { path: 'index/login', component: LoginComponent},
+    // { path: 'index/signin', component: SignInComponent },
     
     { path: 'main-page' , component: MainPageComponent}
 

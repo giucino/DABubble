@@ -11,11 +11,9 @@ import { LoginPageComponent } from './login-page/login-page.component';
 })
 export class AppComponent {
   title = 'DABubble';
+  constructor(private router: Router) { }
 
-  constructor(private router: Router) { 
-  }
-  
   ngOnInit(): void {
-    this.router.navigate(['']);
+    this.router.navigate(['/login-page']);
   }
 }
