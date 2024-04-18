@@ -1,0 +1,38 @@
+.main-page {
+    padding: 20px;
+    background-color: var(--color-bg);
+    height: 100dvh;
+    width: 100dvw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header-placeholder {
+    height: 70px;
+    width: 100%;
+    background-color: green;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.main-menu-placeholder {
+    width: 366px;
+    background-color: red;
+    height: 100%;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
