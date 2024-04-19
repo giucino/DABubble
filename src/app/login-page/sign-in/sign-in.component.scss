@@ -9,9 +9,10 @@
     transform: translate(-50%, -50%);
     border-radius: 30px;
     background-color: white;
-    gap: 40px;
+    gap: 20px;
     padding: 40px 30px;
     width: 606px;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
     h1{
         color: var(--color-purple-1);
         font-size: 46px;
@@ -27,11 +28,12 @@
 .back-to-login{
     position: absolute;
     left: 32px;
-    top: 45px;
-    padding: 16px;
+    top: 50px;
+    width: 40px;
+    height: 40px;
     img{
-        width: 24px;
-        height: 24px;
+        width: 24px !important;
+        height: 24px !important;
         
     }
 }
@@ -39,12 +41,37 @@ form{
     display: flex;
     flex-direction: column;
     gap: 40px;
-
+    margin-bottom: 20px;
     >div{
         position: relative;
         // display: flex;
         // flex-direction: column;
         gap: 4px;
+        >input{
+            background-color: var(--color-bg);
+            width: 500px;
+            gap: 10px;
+            padding: 20px 70px;
+            border-radius: 100px;
+            border: unset;
+            display: flex;
+            align-items: center;
+            background-position: left 30px center;
+            background-size: 24px 24px;
+            background-repeat: no-repeat;
+            border: 1px solid transparent;
+            &::placeholder{
+                font-family: 'Nunito';
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 21.6px;
+                
+            }
+            &:focus{
+                border: 1px solid var(--color-purple-2);
+                outline: none;
+            }
+        }
     }
 }
 .errorMsg{
@@ -55,30 +82,7 @@ form{
     margin-top: 4px;
 }
 
-input{
-    background-color: var(--color-bg);
-    width: 500px;
-    gap: 10px;
-    padding: 20px 70px;
-    border-radius: 100px;
-    border: unset;
-    display: flex;
-    align-items: center;
-    background-position: left 30px center;
-    background-size: 24px 24px;
-    background-repeat: no-repeat;
-    &::placeholder{
-        font-family: 'Nunito';
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 21.6px;
-        
-    }
-    &:focus{
-        border: 0.5px solid var(--color-purple-2);
-        outline: none;
-    }
-}
+
 input[type="password"]{
     background-image: url("/assets/img/lock.png");
 }
@@ -96,11 +100,17 @@ input[type="name"]{
     justify-content: flex-start;
     width: 500px;
     gap: 8px;
-    input{
+    position: relative;
+    input[type="checkbox"]{
         width: 18px;
         height: 18px;
+        // appearance: none;
         border: 2px solid var(--color-purple-2);
+        position: relative;
+        outline: var(--color-purple-2);
+        cursor: pointer;
     }
+   
     p{
         font-size: 16px;
         font-weight: 400;
@@ -109,6 +119,12 @@ input[type="name"]{
     a{
         text-decoration: none;
         color: var(--color-purple-2);
+        padding: 0 2px;
+        &:hover{
+            font-weight: 700;
+            background-color: var(--color-bg);
+            border-radius: 10px;
+        }
     }
 }
 
