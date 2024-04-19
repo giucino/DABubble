@@ -1,13 +1,10 @@
 @import "../../../../styles.scss";
 
-@import "../../../../styles.scss";
-
 // .mat-expansion-panel.no-shadow {
 //   box-shadow: none;
 // }
 
 .menu-channel-container {
-  // @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -15,14 +12,12 @@
   gap: 25px;
 
   .menu-channel-header {
-    // @include dFlex($jc: space-between);
     display: flex;
     width: 100%;
     padding: 3px 0px;
     justify-content: space-between;
 
     .menu-channel-header-left {
-      // @include dFlex($jc: flex-start, $gap: 15px);
       display: flex;
       justify-content: flex-start;
       gap: 15px;
@@ -37,7 +32,6 @@
       }
 
       .menu-channel-title {
-        // @include dFlex($jc: flex-start, $gap: 15px);
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -75,7 +69,6 @@
   }
 
   .menu-channel-content {
-    // @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
     font-size: 18px;
     font-weight: 400;
     padding-left: 25px;
@@ -86,13 +79,12 @@
     gap: 13px;
 
     .channel {
-      // @include dFlex($jc: flex-start, $gap: 15px);
       border-radius: 20px;
       padding: 4px 20px 4px 20px;
       display: flex;
       justify-content: flex-start;
       gap: 15px;
-      // background-color: transparent;
+      background-color: transparent;
 
       &:hover {
         background-color: var(--color-bg);
