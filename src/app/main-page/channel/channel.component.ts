@@ -9,5 +9,5 @@ import { Component } from '@angular/core';
 })
 export class ChannelComponent {
 
-  channelType : 'main' | 'direct' | 'thread' = 'direct';
+  channelType : 'main' | 'direct' | 'thread' | 'new' = 'new';
 }
