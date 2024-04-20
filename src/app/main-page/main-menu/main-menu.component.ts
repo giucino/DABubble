@@ -3,6 +3,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MainMenuHeaderComponent } from './main-menu-header/main-menu-header.component';
 import { MainMenuChannelsComponent } from './main-menu-channels/main-menu-channels.component';
 import { MainMenuDmComponent } from './main-menu-dm/main-menu-dm.component';
+import { DynamicContentComponent } from '../../shared/dynamic-content/dynamic-content.component';
+
 
 @Component({
   selector: 'app-main-menu',
@@ -12,6 +14,7 @@ import { MainMenuDmComponent } from './main-menu-dm/main-menu-dm.component';
     MainMenuHeaderComponent,
     MainMenuChannelsComponent,
     MainMenuDmComponent,
+    DynamicContentComponent
   ],
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.scss',
