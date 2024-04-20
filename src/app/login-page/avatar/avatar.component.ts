@@ -20,18 +20,31 @@ export class AvatarComponent {
     'assets/img/avatar-6.jpg',
   ];
   selectedAvatar = this.avatars[0];
+  uploadedAvatar = '';
 
   constructor(private router: Router) { }
 
   goToSignIn(){
-    this.router.navigate(['/login-page/login']);
+    this.router.navigate(['/login-page/sigin']);
   }
 
   uploadAvatar(){
+    // open picture upload dialog?
     console.log('Avatar uploaded');
+    this.uploadedAvatar = this.selectedAvatar
   }
 
   changeAvatar(i:number){
     this.selectedAvatar = this.avatars[i];
+  }
+
+  createUser(){
+    // save this.selectedAvatar to user singeuserRef
+
+    setTimeout(() => {
+      this.router.navigate(['/login-page/login']);
+      // window.location.reload();
+    }, 5000);
+    
   }
 }

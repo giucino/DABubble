@@ -5,7 +5,7 @@
 
     <form action="">
         <div>
-            <input type="email" class="fs-18" #email="ngModel" ngModel required name="email" id="" placeholder="beispielname@email.com">
+            <input type="email" class="fs-18" #email="ngModel" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" ngModel required name="email" id="" placeholder="beispielname@email.com">
             <p *ngIf="!email.valid && email.touched" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p>
         </div>
 
@@ -17,7 +17,7 @@
     </form>
     
 
-    <a href="" class="pw-forgot" [routerLink]="['/login-page/reset-password']">Passwort vergessen?</a>
+    <a href="" class="pw-forgot" [routerLink]="['/login-page/check-email']">Passwort vergessen?</a>
 
     <div class="spacer"><p>ODER</p></div>
 

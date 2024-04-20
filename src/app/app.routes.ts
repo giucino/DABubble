@@ -7,6 +7,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { ResetPasswordComponent } from './login-page/reset-password/reset-password.component';
 import { AvatarComponent } from './login-page/avatar/avatar.component';
 import { EmailSentComponent } from './email-sent/email-sent.component';
+import { CheckEmailComponent } from './login-page/check-email/check-email.component';
 
 export const routes: Routes = [
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
         { path: 'reset-password', component: ResetPasswordComponent },
         { path: 'avatar', component: AvatarComponent },
         { path: 'email-sent', component: EmailSentComponent },
+        { path: 'check-email', component: CheckEmailComponent },
     ]
     },
     
