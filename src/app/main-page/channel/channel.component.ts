@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MessageComponent } from './message/message.component';
 
 @Component({
   selector: 'app-channel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MessageComponent],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss'
 })
