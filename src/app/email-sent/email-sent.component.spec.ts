@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SendEmailComponent } from './send-email.component';
+import { EmailSentComponent } from './email-sent.component';
 
-describe('SendEmailComponent', () => {
-  let component: SendEmailComponent;
-  let fixture: ComponentFixture<SendEmailComponent>;
+describe('EmailSentComponent', () => {
+  let component: EmailSentComponent;
+  let fixture: ComponentFixture<EmailSentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SendEmailComponent]
+      imports: [EmailSentComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SendEmailComponent);
+    fixture = TestBed.createComponent(EmailSentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
