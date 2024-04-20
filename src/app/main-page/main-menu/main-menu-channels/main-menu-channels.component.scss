@@ -1,29 +1,16 @@
 @import "../../../../styles.scss";
 
-// .mat-expansion-panel.no-shadow {
-//   box-shadow: none;
-// }
-
 .menu-channel-container {
-  // @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
-  display: flex;
+  @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
   width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 25px;
 
   .menu-channel-header {
-    // @include dFlex($jc: space-between);
-    display: flex;
+    @include dFlex($jc: space-between);
     width: 100%;
     padding: 3px 0px;
-    justify-content: space-between;
 
     .menu-channel-header-left {
-      // @include dFlex($jc: flex-start, $gap: 15px);
-      display: flex;
-      justify-content: flex-start;
-      gap: 15px;
+      @include dFlex($jc: flex-start, $gap: 15px);
 
       &:hover {
         color: var(--color-purple-3);
@@ -35,11 +22,7 @@
       }
 
       .menu-channel-title {
-        // @include dFlex($jc: flex-start, $gap: 15px);
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 10px;
+        @include dFlex($jc: flex-start, $gap: 10px);
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -53,44 +36,19 @@
         color: var(--color-black);
       }
     }
-
-    // .svg-circle {
-    //   border-radius: 100%;
-    //   aspect-ratio: 1 / 1;
-    //   padding: 0;
-    //   margin: 0;
-    //   background-color: transparent;
-    //   cursor: pointer;
-
-    //   &:hover {
-    //     background-color: var(--color-bg);
-
-    //     path {
-    //       fill: var(--color-purple-3);
-    //     }
-    //   }
-    // }
   }
 
   .menu-channel-content {
-    // @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
+    @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
     font-size: 18px;
     font-weight: 400;
     padding-left: 25px;
-    display: flex;
-    // width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 13px;
 
     .channel {
-      // @include dFlex($jc: flex-start, $gap: 15px);
+      @include dFlex($jc: flex-start, $gap: 15px);
       border-radius: 20px;
-      padding: 4px 20px 4px 20px;
-      display: flex;
-      justify-content: flex-start;
-      gap: 15px;
-      // background-color: transparent;
+      padding: 4px 20px;
+      background-color: transparent;
 
       &:hover {
         background-color: var(--color-bg);
@@ -103,13 +61,9 @@
       }
     }
 
-    .active {
-      background-color: var(--color-purple-3);
-
-      .channel-name {
-        color: var(--color-black);
-        font-weight: 700;
-      }
+    .channel-name {
+      color: var(--color-black);
+      font-weight: 700;
     }
   }
 
@@ -117,11 +71,9 @@
     padding-left: 25px;
 
     .menu-channel-add {
-      display: flex;
-      justify-content: flex-start;
-      gap: 15px;
+      @include dFlex($jc: flex-start, $gap: 15px);
       border-radius: 20px;
-      padding: 4px 20px 4px 20px;
+      padding: 4px 20px;
 
       .channel-add-text {
         font-size: 18px;
@@ -147,3 +99,88 @@
     }
   }
 }
+
+// @import '../../../shared/dynamic-content/dynamic-content.component.scss';  
+
+// .container {
+//   .header {
+//   .header-left {
+//     &:hover {
+//       color: var(--color-purple-3);
+
+//       .svg-color path {
+//         fill: var(--color-purple-3);
+//       }
+//     }
+
+//     .title {
+//       @include dFlex($jc: flex-start, $gap: 10px);
+//       font-size: 20px;
+//       font-style: normal;
+//       font-weight: 700;
+//       line-height: normal;
+//     }
+//     &:hover {
+//               cursor: pointer;
+//             }
+      
+//             &:active {
+//               color: var(--color-black);
+//             }
+//   }
+// }
+
+//   .main-content {
+//     .item {
+//       @include dFlex($jc: flex-start, $gap: 15px);
+//       border-radius: 20px;
+//       padding: 4px 20px;
+//       background-color: transparent;
+
+//       &:hover {
+//         background-color: var(--color-bg);
+//         cursor: pointer;
+
+//         .item-name {
+//           color: var(--color-purple-3);
+//           font-weight: 700;
+//         }
+//       }
+
+//       .item-name {
+//         color: var(--color-black);
+//         font-weight: 700;
+//       }
+//     }
+//   }
+
+//   .add-content-container {
+//     .add-item {
+//       @include dFlex($jc: flex-start, $gap: 15px);
+//       border-radius: 20px;
+//       padding: 4px 20px;
+
+//       .add-text {
+//         font-size: 18px;
+//       }
+
+//       &:hover {
+//         color: var(--color-purple-3);
+//         cursor: pointer;
+
+//         .svg-color path {
+//           fill: var(--color-purple-3);
+//         }
+
+//         .svg-color {
+//           transform: scale(1.1);
+//           transition: transform 0.3s ease;
+//         }
+//       }
+
+//       &:active {
+//         color: var(--color-black);
+//       }
+//     }
+//   }
+// }
