@@ -10,5 +10,7 @@ import { Component } from '@angular/core';
 })
 export class MessageComponent {
 
-  isCurrentUser : boolean = false;
+  isCurrentUser : boolean = true;
+  editMessage : boolean = true;
+  
 }
