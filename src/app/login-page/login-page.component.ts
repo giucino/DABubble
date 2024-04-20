@@ -17,10 +17,16 @@ import { EmailSentComponent } from '../email-sent/email-sent.component';
 })
 export class LoginPageComponent {
   hideElement = false;
+  hideExtras = false;
   constructor(private router: Router) { 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hideElement = this.router.url !== '/login-page/login';
+      }
+    });
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hideExtras = this.router.url == '/login-page/imprint' || this.router.url == '/login-page/privacy-policy';
       }
     });
   }
@@ -32,12 +38,4 @@ export class LoginPageComponent {
   ngOnInit(): void {
     this.router.navigate(['login-page/login']);
   }
-  
-  // goToImprint() {
-  //   this.router.navigate(['/imprint']);
-  // }
-
-  // goToPrivacy() {
-  //   this.router.navigate(['/privacy']);
-  // }
 }

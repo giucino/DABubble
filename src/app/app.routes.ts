@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { LoginComponent } from './login-page/login/login.component';
 import { SignInComponent } from './login-page/sign-in/sign-in.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -8,6 +7,8 @@ import { ResetPasswordComponent } from './login-page/reset-password/reset-passwo
 import { AvatarComponent } from './login-page/avatar/avatar.component';
 import { EmailSentComponent } from './email-sent/email-sent.component';
 import { CheckEmailComponent } from './login-page/check-email/check-email.component';
+import { ImprintComponent } from './shared/imprint/imprint.component';
+import { PrivacyPolicyComponent } from './shared/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
 
@@ -18,8 +19,11 @@ export const routes: Routes = [
         { path: 'avatar', component: AvatarComponent },
         { path: 'email-sent', component: EmailSentComponent },
         { path: 'check-email', component: CheckEmailComponent },
+        { path: 'imprint' , component: ImprintComponent},
+        { path: 'privacy-policy' , component: PrivacyPolicyComponent},
     ]
     },
+    
     
     { path: 'main-page' , component: MainPageComponent}
 
