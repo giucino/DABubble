@@ -58,7 +58,9 @@ input {
         line-height: 21.6px;
 
     }
-
+    &:hover{
+        border: 1px solid var(--color-purple-2);
+    }
     &:focus {
         border: 1px solid var(--color-purple-2);
         outline: none;
