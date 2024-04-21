@@ -59,20 +59,30 @@ input {
 
     }
     &:hover{
-        border: 1px solid var(--color-purple-2);
+        border: 1px solid var(--color-black);
     }
     &:focus {
         border: 1px solid var(--color-purple-2);
         outline: none;
+        font-weight: 700;
+    }
+    &:active{
+        color: var(--color-black);
     }
 }
 
 input[type="password"] {
     background-image: url("/assets/img/lock.png");
+    &:focus{
+        background-image: url("/assets/img/lock_b.png");
+    }
 }
 
 input[type="email"] {
     background-image: url("/assets/img/mail.png");
+    &:focus{
+        background-image: url("/assets/img/mail_b.png");
+    }
     
 }
 

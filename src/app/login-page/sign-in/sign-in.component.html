@@ -20,10 +20,10 @@
     
     <div class="check-div">
         <input [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" type="checkbox" name="checkbox" id="checkbox">
-        <p>Ich stimme der <a [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" [routerLink]="['/login-page/privacy-policy']" id="link">Datenschutzerklärung</a> zu.</p>
+        <p (mouseover)="hoverState = true" (mouseout)="hoverState = false">Ich stimme der <a [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" [routerLink]="['/login-page/privacy-policy']" id="link">Datenschutzerklärung</a> zu.</p>
     </div>
     <div class="next-btn-container">
-        <button class="btn" (click)="goToAvatar()">Weiter</button>
+        <button class="btn-primary fs-18" (click)="goToAvatar()">Weiter</button>
         <!-- [disabled]="!signin.valid" -->
     </div>
     

@@ -76,11 +76,12 @@ form {
 
             }
             &:hover{
-                border: 1px solid var(--color-purple-2);
+                border: 1px solid var(--color-black);
             }
             &:focus{
                 border: 1px solid var(--color-purple-2);
                 outline: none;
+                font-weight: 700;
             }
         }
     }
@@ -97,14 +98,23 @@ form {
 
 input[type="password"] {
     background-image: url("/assets/img/lock.png");
+    &:focus{
+        background-image: url("/assets/img/lock_b.png");
+    }
 }
 
 input[type="email"] {
     background-image: url("/assets/img/mail.png");
+    &:focus{
+        background-image: url("/assets/img/mail_b.png");
+    }
 }
 
 input[type="name"] {
     background-image: url("/assets/img/person_filled.png");
+    &:focus{
+        background-image: url("/assets/img/person_filled_b.png");
+    }
 
 }
 
@@ -209,19 +219,4 @@ input[type="name"] {
     width: 500px;
     display: flex;
     justify-content: flex-end;
-
-    button {
-        background-color: var(--color-purple-1);
-        border-radius: 25px;
-        padding: 12px 25px;
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 24.55px;
-        color: white;
-
-        &:disabled {
-            background-color: var(--color-gray);
-            cursor: unset;
-        }
-    }
 }

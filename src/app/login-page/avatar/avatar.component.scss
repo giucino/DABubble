@@ -37,6 +37,12 @@
         width: 168px;
         height: 168px;
         border-radius: 100px;
+        &:hover{
+            box-shadow: 0 0 0 8px rgba(230, 230, 230, 1);
+        }
+        &:active{
+            box-shadow: 0 0 0 8px var(--color-bg);
+        }
     }
 }
 .avatar-list{
@@ -50,6 +56,12 @@
             width: 64px;
             height: 64px;
             border-radius: 41px;
+            &:hover{
+                box-shadow: 0 0 0 4px rgba(230, 230, 230, 1);
+            }
+            &:active{
+                box-shadow: 0 0 0 4px var(--color-bg);
+            }
         }
     }
 }
@@ -79,17 +91,4 @@
     width: 500px;
     display: flex;
     justify-content: flex-end;
-    button{
-        background-color: var(--color-purple-1);
-        border-radius: 25px;
-        padding: 12px 25px;
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 24.55px;
-        color: white;
-        &:disabled{
-            background-color: var(--color-gray);
-            cursor: unset;
-        }
-    }
 }
