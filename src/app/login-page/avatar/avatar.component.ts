@@ -30,6 +30,13 @@ export class AvatarComponent {
     this.router.navigate(['/login-page/sigin']);
   }
 
+  goToLogin(){
+    setTimeout(() => {
+      this.router.navigate(['/login-page/login']);
+      // window.location.reload();
+    }, 5000);
+  }
+
   uploadAvatar(){
     // open picture upload dialog?
     console.log('Avatar uploaded');
@@ -43,11 +50,19 @@ export class AvatarComponent {
   createUser(){
     // save this.selectedAvatar to user singeuserRef
     this.confirmPopup();
-    setTimeout(() => {
-      this.router.navigate(['/login-page/login']);
-      // window.location.reload();
-    }, 5000);
-    
+    this.triggerAnimation();
+    this.goToLogin();
+  }
+
+  triggerAnimation() {
+    const element = document.querySelector('.cdk-overlay-container');
+    if (element) {
+      element.classList.add('animate');
+  
+      setTimeout(() => {
+        element.classList.remove('animate');
+      }, 2000);
+    }
   }
 
   confirmPopup(){

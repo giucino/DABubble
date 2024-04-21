@@ -23,6 +23,7 @@ export class CheckEmailComponent {
     // Send reset email logic here
     this.confirmPopup();
     this.returnToResetPassword();
+    this.triggerAnimation();
   }
 
   returnToResetPassword(){
@@ -31,6 +32,16 @@ export class CheckEmailComponent {
     }, 2000);
   }
 
+  triggerAnimation() {
+    const element = document.querySelector('.cdk-overlay-container');
+    if (element) {
+      element.classList.add('animate');
+  
+      setTimeout(() => {
+        element.classList.remove('animate');
+      }, 2000);
+    }
+  }
 
   confirmPopup(){
     this._snackBar.openFromComponent(EmailSnackbarComponent, {

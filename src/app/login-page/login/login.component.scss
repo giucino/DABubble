@@ -83,6 +83,12 @@ input[type="email"] {
 .pw-forgot {
     text-decoration: none;
     color: var(--color-purple-2);
+    padding: 5px 15px;
+    &:hover{
+        font-weight: 700;
+        background-color: var(--color-bg);
+        border-radius: 20px;
+    }
 }
 
 .spacer {

@@ -33,10 +33,22 @@ export class ResetPasswordComponent {
     });
   }
 
+  triggerAnimation() {
+    const element = document.querySelector('.cdk-overlay-container');
+    if (element) {
+      element.classList.add('animate');
+  
+      setTimeout(() => {
+        element.classList.remove('animate');
+      }, 2000);
+    }
+  }
+
   changePassword(){
     // Change password logic here
     // rgba background 
     this.confirmPopup();
     this.returnToLogin();
+    this.triggerAnimation();
   }
 }
