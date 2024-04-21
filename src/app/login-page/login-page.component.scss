@@ -17,8 +17,6 @@
     background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
     animation-timing-function: ease-out;
     animation: fadeOut 1s forwards 4000ms;
-    pointer-events: none;
-    touch-action: none;
 }
 
 .intro-logo-container{
@@ -122,8 +120,14 @@
     0% {
       opacity: 1;
     }
+    99% {
+        pointer-events: all;
+        touch-action: auto;
+    }
     100% {
       opacity: 0;
+      pointer-events: none;
+      touch-action: none;
     }
   }
 
