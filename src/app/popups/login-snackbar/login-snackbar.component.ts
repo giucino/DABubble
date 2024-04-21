@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-snackbar',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './login-snackbar.component.scss'
 })
 export class LoginSnackbarComponent {
-
+  snackBarRef = inject(MatSnackBarRef);
 }

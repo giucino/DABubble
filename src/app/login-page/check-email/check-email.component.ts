@@ -2,19 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarLabel,
-  MatSnackBarModule,
-  MatSnackBarRef,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar,MatSnackBarModule} from '@angular/material/snack-bar';
 import { EmailSnackbarComponent } from '../../popups/email-snackbar/email-snackbar.component';
-import { LoginPageComponent } from '../login-page.component';
-import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-check-email',
@@ -24,10 +13,7 @@ import { AppComponent } from '../../app.component';
   styleUrl: './check-email.component.scss'
 })
 export class CheckEmailComponent {
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  // direction: MatSnackBar 'rtl';
-  constructor(private router: Router, private loginPage: AppComponent) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar) { }
 
   goToLogin(){
     this.router.navigate(['/login-page/login']);
@@ -35,8 +21,7 @@ export class CheckEmailComponent {
 
   sendResetEmail(){
     // Send reset email logic here
-    // this.confirmPopup();
-    this.loginPage.confirmPopup();
+    this.confirmPopup();
     this.returnToResetPassword();
   }
 
@@ -47,13 +32,13 @@ export class CheckEmailComponent {
   }
 
 
-  // confirmPopup(){
-  //   this._snackBar.openFromComponent(EmailSnackbarComponent, {
-  //     duration: 200000,
-  //     horizontalPosition: 'right',
-  //     verticalPosition: 'bottom',
-  //     direction: 'rtl'
-  //   });
-  // }
+  confirmPopup(){
+    this._snackBar.openFromComponent(EmailSnackbarComponent, {
+      duration: 2000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      direction: 'rtl'
+    });
+  }
   
 }

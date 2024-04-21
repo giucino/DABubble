@@ -6,8 +6,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AvatarComponent } from './avatar/avatar.component';
 import { CommonModule } from '@angular/common';
 import { EmailSentComponent } from '../email-sent/email-sent.component';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { EmailSnackbarComponent } from '../popups/email-snackbar/email-snackbar.component';
 
 @Component({
   selector: 'app-login-page',
@@ -20,9 +18,7 @@ import { EmailSnackbarComponent } from '../popups/email-snackbar/email-snackbar.
 export class LoginPageComponent {
   hideElement = false;
   hideExtras = false;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  constructor(private router: Router, private _snackBar: MatSnackBar) { 
+  constructor(private router: Router) { 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hideElement = this.router.url !== '/login-page/login';
@@ -43,12 +39,4 @@ export class LoginPageComponent {
     this.router.navigate(['login-page/login']);
   }
 
-  // confirmPopup(){
-  //   this._snackBar.openFromComponent(EmailSnackbarComponent, {
-  //     duration: 200000,
-  //     horizontalPosition: 'right',
-  //     verticalPosition: 'bottom',
-  //     direction: 'rtl'
-  //   });
-  // }
 }

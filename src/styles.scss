@@ -51,7 +51,8 @@
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
+  width: 100%;
   background-color: var(--color-bg)
 }
 
@@ -237,6 +238,18 @@ button {
 
 .d-none {
   display: none !important;
+}
+
+/* Snackbar Solution */
+.cdk-overlay-container{
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  // background-color: var(--color-bg) !important;
+}
+.mdc-snackbar__surface, .mdc-snackbar__surfac::before {
+  box-shadow: unset !important;
 }
 
 /* flex mixin */

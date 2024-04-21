@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserCreatedSnackbarComponent } from '../../popups/user-created-snackbar/user-created-snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-avatar',
@@ -22,7 +24,7 @@ export class AvatarComponent {
   selectedAvatar = this.avatars[0];
   uploadedAvatar = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar) { }
 
   goToSignIn(){
     this.router.navigate(['/login-page/sigin']);
@@ -40,11 +42,20 @@ export class AvatarComponent {
 
   createUser(){
     // save this.selectedAvatar to user singeuserRef
-
+    this.confirmPopup();
     setTimeout(() => {
       this.router.navigate(['/login-page/login']);
       // window.location.reload();
     }, 5000);
     
+  }
+
+  confirmPopup(){
+    this._snackBar.openFromComponent(UserCreatedSnackbarComponent, {
+      duration: 2000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      direction: 'rtl'
+    });
   }
 }
