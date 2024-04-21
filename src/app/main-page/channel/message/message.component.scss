@@ -171,6 +171,7 @@ input, textarea {
 }
 
 .reaction {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,6 +182,9 @@ input, textarea {
   background-color: var(--color-white);
   &:hover {
     border-color: var(--color-purple-3);
+    .reaction-hover-info-container {
+      display: flex;
+    }
   }
   &:active {
     border-color: var(--color-purple-1);
@@ -189,5 +193,28 @@ input, textarea {
   .emojicon {
     width: 24px;
     height: 24px;
+  }
+
+  .reaction-hover-info-container {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 50%;
+    transform: translateY(-100%);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: max-content;
+    min-width: 160px;
+    padding: 15px 10px;
+    border-radius: 30px 30px 30px 0;
+    background-color: var(--color-purple-1);
+    color: var(--color-white);
+    text-align: center;
+    .reaction-user {
+      font-weight: 700;
+    }
   }
 }
