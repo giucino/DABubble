@@ -334,6 +334,7 @@ button {
   position: fixed;
   animation: change-background 2s;
   z-index: 50;
+  height: 100dvh;
 }
 
 .mdc-snackbar__surface,

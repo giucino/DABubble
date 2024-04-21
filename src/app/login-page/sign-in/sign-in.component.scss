@@ -1,4 +1,4 @@
-.signin-container{
+.signin-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,41 +13,48 @@
     padding: 40px 30px;
     width: 606px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-    h1{
+
+    h1 {
         color: var(--color-purple-1);
         font-size: 46px;
         font-weight: 700;
     }
-    >p{
+
+    >p {
         text-align: center;
         font-weight: 400;
         font-size: 20px;
         width: 90%;
     }
 }
-.back-to-login{
+
+.back-to-login {
     position: absolute;
     left: 32px;
     top: 50px;
     width: 40px;
     height: 40px;
-    img{
+
+    img {
         width: 24px !important;
         height: 24px !important;
-        
+
     }
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
     gap: 40px;
     margin-bottom: 20px;
-    >div{
+
+    >div {
         position: relative;
         // display: flex;
         // flex-direction: column;
         gap: 4px;
-        >input{
+
+        >input {
             background-color: var(--color-bg);
             width: 500px;
             gap: 10px;
@@ -60,21 +67,24 @@ form{
             background-size: 24px 24px;
             background-repeat: no-repeat;
             border: 1px solid transparent;
-            &::placeholder{
+
+            &::placeholder {
                 font-family: 'Nunito';
                 font-size: 18px;
                 font-weight: 400;
                 line-height: 21.6px;
-                
+
             }
-            &:focus{
+
+            &:focus {
                 border: 1px solid var(--color-purple-2);
                 outline: none;
             }
         }
     }
 }
-.errorMsg{
+
+.errorMsg {
     position: absolute;
     color: var(--color-error);
     font-size: 14px;
@@ -83,44 +93,90 @@ form{
 }
 
 
-input[type="password"]{
+input[type="password"] {
     background-image: url("/assets/img/lock.png");
 }
-input[type="email"]{
+
+input[type="email"] {
     background-image: url("/assets/img/mail.png");
 }
-input[type="name"]{
+
+input[type="name"] {
     background-image: url("/assets/img/person_filled.png");
-    
+
 }
 
-.check-div{
+.check-div {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     width: 500px;
     gap: 8px;
     position: relative;
-    input[type="checkbox"]{
+
+    input[type="checkbox"] {
         width: 18px;
         height: 18px;
-        // appearance: none;
-        border: 2px solid var(--color-purple-2);
         position: relative;
-        outline: var(--color-purple-2);
         cursor: pointer;
+        appearance: none;
+        border: 2px solid var(--color-purple-2);
+        background-size: contain;
+        background-color: rgba(0, 0, 0, 0) !important;
+
+        &:checked {
+            background: url('/assets/img/checked.png') no-repeat center center;
+
+            &:hover {
+                background-color: var(--color-bg) !important;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: -7.5px;
+                left: -7.5px;
+                width: calc(100% + 15px);
+                height: calc(100% + 15px);
+                background-color: transparent !important;
+                border-radius: 50%;
+                z-index: -1;
+            }
+
+            &:hover::after {
+                background-color: var(--color-bg) !important;
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: -7.5px;
+            left: -7.5px;
+            width: calc(100% + 15px);
+            height: calc(100% + 15px);
+            background-color: transparent !important;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        &:hover::after {
+            background-color: var(--color-bg) !important;
+        }
     }
-   
-    p{
+
+    p {
         font-size: 16px;
         font-weight: 400;
         line-height: 19.2px;
     }
-    a{
+
+    a {
         text-decoration: none;
         color: var(--color-purple-2);
         padding: 0 2px;
-        &:hover{
+
+        &:hover {
             font-weight: 700;
             background-color: var(--color-bg);
             border-radius: 10px;
@@ -128,11 +184,31 @@ input[type="name"]{
     }
 }
 
-.next-btn-container{
+
+#checkbox.hover-effect::after {
+    content: "";
+    position: absolute;
+    top: -7.5px;
+    left: -7.5px;
+    width: calc(100% + 15px);
+    height: calc(100% + 15px);
+    background-color: var(--color-bg) !important;
+    border-radius: 50%;
+    z-index: -1;
+}
+#link.hover-effect::after{
+    font-weight: 700;
+    background-color: var(--color-bg);
+    border-radius: 10px;
+}
+
+
+.next-btn-container {
     width: 500px;
     display: flex;
     justify-content: flex-end;
-    button{
+
+    button {
         background-color: var(--color-purple-1);
         border-radius: 25px;
         padding: 12px 25px;
@@ -140,7 +216,8 @@ input[type="name"]{
         font-weight: 700;
         line-height: 24.55px;
         color: white;
-        &:disabled{
+
+        &:disabled {
             background-color: var(--color-gray);
             cursor: unset;
         }

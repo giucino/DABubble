@@ -16,7 +16,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 export class SignInComponent {
   checked = false;
   disabled = false;
-  constructor(private router: Router, private renderer: Renderer2, private el: ElementRef) { }
+  hoverState = false;
+  constructor(private router: Router) { }
 
   goToLogin() {
     this.router.navigate(['/login-page/login']);
@@ -26,25 +27,6 @@ export class SignInComponent {
     this.router.navigate(['/login-page/avatar']);
   }
 
-  ngAfterViewInit() {
-      const aElements = this.el.nativeElement.querySelectorAll('a');
-  
-      aElements.forEach((aElement: { parentElement: { previousElementSibling: any; }; }) => {
-          this.renderer.listen(aElement, 'mouseover', () => {
-              const inputElement = aElement.parentElement.previousElementSibling;
-              if (inputElement && inputElement.type === 'checkbox') {
-                  this.renderer.setStyle(inputElement, 'background-color', 'var(--color-bg)');
-              }
-          });
-  
-          this.renderer.listen(aElement, 'mouseout', () => {
-              const inputElement = aElement.parentElement.previousElementSibling;
-              if (inputElement && inputElement.type === 'checkbox') {
-                  this.renderer.setStyle(inputElement, 'background-color', 'white');
-              }
-          });
-      });
-  }
 }
 
 
