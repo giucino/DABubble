@@ -191,6 +191,7 @@ input, textarea {
     flex-direction: column;
     justify-content: flex-end;
     gap: 20px;
+    overflow: auto;
 }
 
 .channel-info-container {

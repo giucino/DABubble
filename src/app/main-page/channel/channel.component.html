@@ -215,7 +215,7 @@
         <div class="h-line"></div>
       </div>
     }  
-    <app-message></app-message>
+    <app-message [channelType]="channelType"></app-message>
     @if (channelType != 'thread') {
       <div class="time-separator">
         <div class="h-line"></div>
@@ -223,7 +223,7 @@
         <div class="h-line"></div>
       </div>
     }
-    <app-message></app-message>
+    <app-message [channelType]="channelType"></app-message>
   </div>
 
 
