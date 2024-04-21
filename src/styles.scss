@@ -323,7 +323,7 @@ button {
 /* Snackbar Solution */
 
 .cdk-overlay-container {
-  height: 100vh;
+  height: 0px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -334,6 +334,7 @@ button {
   position: fixed;
   animation: change-background 2s;
   z-index: 50;
+  height: 100vh;
 }
 
 .mdc-snackbar__surface,
