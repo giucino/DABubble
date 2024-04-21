@@ -165,7 +165,8 @@
 
   <!-- channel messages -->
   <div class="channel-messages-container">
-    @if(false) {
+    <!-- channel first message -->
+    @if(true) {
       <div class="channel-info-container">
         <div class="channel-name-container">
           <svg class="hashtag-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,6 +193,17 @@
             <span class="channel-name">Office-team</span>
           </span>
           <span>.</span>
+        </div>
+      </div>
+    }
+    @if (true) {
+      <div class="channel-info-container">
+        <div class="channel-name-container">
+          <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img w100">
+          <div class="channel-name fs-24">Sofia Müller</div>
+        </div>
+        <div class="channel-info fs-20">
+          <span>Diese Unterhaltung findet nur zwischen <span class="btn-text">&commat;Sofia Müller</span> und dir statt.</span>
         </div>
       </div>
     }

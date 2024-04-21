@@ -194,10 +194,12 @@ input, textarea {
 }
 
 .channel-info-container {
+  padding: 0 45px;
   .channel-name-container {
     background-color: transparent;
     padding: 0;
     margin-bottom: 7px;
+    align-items: flex-end;
   }
   .channel-info {
     .channel-name-container {

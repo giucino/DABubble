@@ -223,9 +223,21 @@ button {
     }
 }
 
+.btn-text {
+  color: var(--color-purple-3);
+  &:hover {
+    font-weight: 700;
+    color: var(--color-purple-1);
+  }
+}
+
 /* width classes*/
 .w40 {
-  width: 40px;
+  width: 40px !important;
+}
+
+.w100 {
+  width: 100px !important;
 }
 
 /* profile img */
