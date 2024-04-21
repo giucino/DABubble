@@ -105,12 +105,18 @@ body {
     font-size: 18px;
     line-height: 21.6px;
   }
-
+  &-16 {
+    font-size: 16px;
+    line-height: 21.82px;
+  }
   &-15 {
     font-size: 15px;
     line-height: 18px;
   }
-
+  &-14 {
+    font-size: 14px;
+    line-height: 19.1px;
+  }
   &-12 {
     font-size: 12px;
     line-height: 14.4px;
@@ -230,12 +236,51 @@ button {
       @extend .btn-icon;
       background-color: var(--color-bg);
     }
+    &-v5 {
+      @extend .btn-icon;
+      background-color: var(--color-white);
+    }
+  }
+}
+
+.btn-icon-v6 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  aspect-ratio: 1 / 1;
+  width: 32px;
+  background-color: transparent;
+    &:hover {
+      background-color: var(--color-bg);
+    }
+}
+
+.btn-text {
+  color: var(--color-purple-3);
+  &:hover {
+    font-weight: 700;
+    color: var(--color-purple-1);
+  }
+  &-v2 {
+    @extend .btn-text;
+    width: max-content;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-weight: 600;
+    &:hover {
+      background-color: var(--color-bg);
+    }
   }
 }
 
 /* width classes*/
 .w40 {
-  width: 40px;
+  width: 40px !important;
+}
+
+.w100 {
+  width: 100px !important;
 }
 
 /* profile img */
