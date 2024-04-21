@@ -166,7 +166,7 @@
   <!-- channel messages -->
   <div class="channel-messages-container">
     <!-- channel first message -->
-    @if(true) {
+    @if(channelType == 'main') {
       <div class="channel-info-container">
         <div class="channel-name-container">
           <svg class="hashtag-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -196,7 +196,7 @@
         </div>
       </div>
     }
-    @if (true) {
+    @if (channelType == 'direct') {
       <div class="channel-info-container">
         <div class="channel-name-container">
           <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img w100">
@@ -207,17 +207,22 @@
         </div>
       </div>
     }
-    <div class="time-separator">
-      <div class="h-line"></div>
-      <div class="message-time fs-18">Dienstag, 14 Januar</div>
-      <div class="h-line"></div>
-    </div>
+    <!-- messages -->
+    @if (channelType != 'thread') {
+      <div class="time-separator">
+        <div class="h-line"></div>
+        <div class="message-time fs-18">Dienstag, 14 Januar</div>
+        <div class="h-line"></div>
+      </div>
+    }  
     <app-message></app-message>
-    <div class="time-separator">
-      <div class="h-line"></div>
-      <div class="message-time fs-18">Heute</div>
-      <div class="h-line"></div>
-    </div>
+    @if (channelType != 'thread') {
+      <div class="time-separator">
+        <div class="h-line"></div>
+        <div class="message-time fs-18">Heute</div>
+        <div class="h-line"></div>
+      </div>
+    }
     <app-message></app-message>
   </div>
 

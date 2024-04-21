@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MessageComponent } from './message/message.component';
 
 @Component({
@@ -11,5 +11,5 @@ import { MessageComponent } from './message/message.component';
 })
 export class ChannelComponent {
 
-  channelType : 'main' | 'direct' | 'thread' | 'new' = 'main';
+  @Input() channelType : 'main' | 'direct' | 'thread' | 'new' = 'main';
 }
