@@ -229,6 +229,16 @@ button {
     font-weight: 700;
     color: var(--color-purple-1);
   }
+  &-v2 {
+    @extend .btn-text;
+    width: max-content;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-weight: 600;
+    &:hover {
+      background-color: var(--color-bg);
+    }
+  }
 }
 
 /* width classes*/
