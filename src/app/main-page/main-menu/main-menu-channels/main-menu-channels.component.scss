@@ -1,0 +1,186 @@
+@import "../../../../styles.scss";
+
+.menu-channel-container {
+  @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
+  width: 100%;
+
+  .menu-channel-header {
+    @include dFlex($jc: space-between);
+    width: 100%;
+    padding: 3px 0px;
+
+    .menu-channel-header-left {
+      @include dFlex($jc: flex-start, $gap: 15px);
+
+      &:hover {
+        color: var(--color-purple-3);
+        cursor: pointer;
+
+        .svg-color path {
+          fill: var(--color-purple-3);
+        }
+      }
+
+      .menu-channel-title {
+        @include dFlex($jc: flex-start, $gap: 10px);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:active {
+        color: var(--color-black);
+      }
+    }
+  }
+
+  .menu-channel-content {
+    @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
+    font-size: 18px;
+    font-weight: 400;
+    padding-left: 25px;
+
+    .channel {
+      @include dFlex($jc: flex-start, $gap: 15px);
+      border-radius: 20px;
+      padding: 4px 20px;
+      background-color: transparent;
+
+      &:hover {
+        background-color: var(--color-bg);
+        cursor: pointer;
+
+        .channel-name {
+          color: var(--color-purple-3);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .channel-name {
+      color: var(--color-black);
+      font-weight: 700;
+    }
+  }
+
+  .menu-channel-add-container {
+    padding-left: 25px;
+
+    .menu-channel-add {
+      @include dFlex($jc: flex-start, $gap: 15px);
+      border-radius: 20px;
+      padding: 4px 20px;
+
+      .channel-add-text {
+        font-size: 18px;
+      }
+
+      &:hover {
+        color: var(--color-purple-3);
+        cursor: pointer;
+
+        .svg-color path {
+          fill: var(--color-purple-3);
+        }
+
+        .svg-color {
+          transform: scale(1.1);
+          transition: transform 0.3s ease;
+        }
+      }
+
+      &:active {
+        color: var(--color-black);
+      }
+    }
+  }
+}
+
+// @import '../../../shared/dynamic-content/dynamic-content.component.scss';  
+
+// .container {
+//   .header {
+//   .header-left {
+//     &:hover {
+//       color: var(--color-purple-3);
+
+//       .svg-color path {
+//         fill: var(--color-purple-3);
+//       }
+//     }
+
+//     .title {
+//       @include dFlex($jc: flex-start, $gap: 10px);
+//       font-size: 20px;
+//       font-style: normal;
+//       font-weight: 700;
+//       line-height: normal;
+//     }
+//     &:hover {
+//               cursor: pointer;
+//             }
+      
+//             &:active {
+//               color: var(--color-black);
+//             }
+//   }
+// }
+
+//   .main-content {
+//     .item {
+//       @include dFlex($jc: flex-start, $gap: 15px);
+//       border-radius: 20px;
+//       padding: 4px 20px;
+//       background-color: transparent;
+
+//       &:hover {
+//         background-color: var(--color-bg);
+//         cursor: pointer;
+
+//         .item-name {
+//           color: var(--color-purple-3);
+//           font-weight: 700;
+//         }
+//       }
+
+//       .item-name {
+//         color: var(--color-black);
+//         font-weight: 700;
+//       }
+//     }
+//   }
+
+//   .add-content-container {
+//     .add-item {
+//       @include dFlex($jc: flex-start, $gap: 15px);
+//       border-radius: 20px;
+//       padding: 4px 20px;
+
+//       .add-text {
+//         font-size: 18px;
+//       }
+
+//       &:hover {
+//         color: var(--color-purple-3);
+//         cursor: pointer;
+
+//         .svg-color path {
+//           fill: var(--color-purple-3);
+//         }
+
+//         .svg-color {
+//           transform: scale(1.1);
+//           transition: transform 0.3s ease;
+//         }
+//       }
+
+//       &:active {
+//         color: var(--color-black);
+//       }
+//     }
+//   }
+// }

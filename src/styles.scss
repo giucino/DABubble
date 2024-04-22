@@ -2,35 +2,42 @@
 
 /* nunito-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
-  src: url("./assets/fonts/nunito-v26-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./assets/fonts/nunito-v26-latin-regular.woff2") format("woff2");
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* nunito-600 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: "Nunito";
   font-style: normal;
   font-weight: 600;
-  src: url("./assets/fonts/nunito-v26-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./assets/fonts/nunito-v26-latin-600.woff2") format("woff2");
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* nunito-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  src: url("./assets/fonts/nunito-v26-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("./assets/fonts/nunito-v26-latin-700.woff2") format("woff2");
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 :root {
   --color-white: #ffffff;
   --color-bg: #eceefe;
-  --color-light-purple: #adb0d9; /* lines */
+  --color-light-purple: #adb0d9;
+  /* lines */
   --color-black: #000000;
   --color-gray: #686868;
   --color-purple-1: #444df2;
@@ -51,7 +58,9 @@
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg)
 }
 
 /* fonts */
@@ -61,30 +70,37 @@ body {
     font-size: 46px;
     line-height: 55.2px; //1.2
   }
+
   &-38 {
     font-size: 38px;
     line-height: 45.6px;
   }
+
   &-32 {
     font-size: 32px;
     line-height: 38.4px;
   }
+
   &-26 {
     font-size: 26px;
     line-height: 31.2px;
   }
+
   &-24 {
     font-size: 24px;
     line-height: 32.74px;
   }
+
   &-22 {
     font-size: 22px;
     line-height: 26.4px;
   }
+
   &-20 {
     font-size: 20px;
     line-height: 27.28px;
   }
+
   &-18 {
     font-size: 18px;
     line-height: 21.6px;
@@ -124,20 +140,25 @@ button {
   border-radius: 50px;
   font-weight: 700;
   border: 1px solid transparent;
+
   &-primary {
     @extend .btn;
     color: var(--color-white);
     background-color: var(--color-purple-1);
+
     &:hover {
       background-color: var(--color-purple-2);
     }
+
     &:active {
       background-color: var(--color-purple-1);
     }
+
     &:disabled {
       background-color: var(--color-gray);
     }
   }
+
   &-secondary {
     @extend .btn;
     color: var(--color-purple-1);
@@ -149,17 +170,20 @@ button {
       background-color: var(--color-purple-3);
       border-color: var(--color-purple-3);
     }
+
     &:active {
       color: var(--color-white);
       background-color: var(--color-purple-1);
       border-color: var(--color-purple-1);
     }
+
     &:disabled {
       color: var(--color-gray);
       background-color: transparent;
       border-color: var(--color-gray);
     }
   }
+
   &-icon {
     @extend .btn;
     border-radius: 100%;
@@ -168,8 +192,10 @@ button {
     margin: 0;
     width: 32px;
     background-color: transparent;
+
     &:hover {
       background-color: var(--color-bg);
+
       svg path,
       svg rect {
         stroke: var(--color-purple-3);
@@ -177,10 +203,13 @@ button {
         fill: var(--color-purple-3);
       }
     }
+
     &-v2 {
       @extend .btn-icon;
+
       &:active {
         background-color: transparent;
+
         svg path {
           stroke: var(--color-black);
           stroke-width: 0.5px;
@@ -188,10 +217,13 @@ button {
         }
       }
     }
+
     &-v3 {
       @extend .btn-icon;
+
       &:active {
         background-color: var(--color-bg);
+
         svg path {
           stroke: var(--color-black);
           stroke-width: 0.5px;
@@ -199,6 +231,7 @@ button {
         }
       }
     }
+
     &-v4 {
       @extend .btn-icon;
       background-color: var(--color-bg);
@@ -256,13 +289,14 @@ button {
   width: 40px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  &-wborder {
-      @extend .profile-img;
-      border: 2px solid var(--color-white);
-  }
-} 
 
-/* online status */ 
+  &-wborder {
+    @extend .profile-img;
+    border: 2px solid var(--color-white);
+  }
+}
+
+/* online status */
 .online-status {
   width: 16px;
   height: 16px;
@@ -271,15 +305,17 @@ button {
   position: absolute;
   bottom: 0;
   right: 0;
+
   &-wborder {
-      @extend .online-status;
-      border: 2px solid var(--color-white);
+    @extend .online-status;
+    border: 2px solid var(--color-white);
   }
 }
 
 .online {
   background-color: var(--color-online) !important;
 }
+
 
 /* scrollbar */ 
 ::-webkit-scrollbar {
@@ -294,3 +330,55 @@ button {
   background-color: var(--color-light-purple);
   border-radius: 30px;
 }
+
+/* generic classes */
+
+.d-none {
+  display: none !important;
+}
+
+/* Snackbar Solution */
+
+.cdk-overlay-container {
+  height: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.cdk-overlay-container.animate {
+  position: fixed;
+  animation: change-background 2s;
+  z-index: 50;
+  height: 100vh;
+}
+
+.mdc-snackbar__surface,
+.mdc-snackbar__surfac::before {
+  box-shadow: unset !important;
+}
+
+@keyframes change-background {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  99% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  100% {
+    background-color: initial;
+  }
+}
+
+/* flex mixin */
+@mixin dFlex($fd: row, $jc: center, $ai: center, $gap: 0) {
+  display: flex;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $gap;
+}
+

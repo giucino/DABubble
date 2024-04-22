@@ -1,0 +1,11 @@
+@import "./../../../../styles.scss";
+
+.search-bar {
+    display: flex;
+    padding: 17.5px 45px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 42px;
+    background: var(--color-white, #fff);
+  }
+  

@@ -1,0 +1,62 @@
+@import "./../../../styles.scss";
+
+.header-content {
+  position: relative;
+  padding: 20px 20px 0px 20px;
+  @include dFlex($gap: 20px, $jc: space-between);
+  z-index: 2;
+}
+
+.logo-container {
+  min-width: 366px;
+  height: 70px;
+  padding-left: 25px;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-black);
+  }
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.user-head {
+  flex: 1;
+  @include dFlex($gap: 10px, $jc: flex-end);
+  height: 70px;
+  cursor: pointer;
+
+  .name {
+    white-space: nowrap;
+    font-size: 22px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    display: block;
+  }
+
+  .avatar {
+    @include dFlex();
+
+    img {
+      width: 66px;
+      height: 66px;
+      border-radius: 40px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}

@@ -1,21 +1,23 @@
-<div class="intro-bg-container">
-</div>
-<div class="intro-logo-container">
-    <div class="intro-logo"> 
-        <img class="intro-logo-img" src="assets/img/logo.png" alt="">
-        <div class="intro-logo-text-container">
-            <p class="intro-logo-text">DABubble</p>
+
+    <div class="intro-bg-container">
+    </div>
+    <div class="intro-logo-container">
+        <div class="intro-logo">
+            <img class="intro-logo-img" src="assets/img/logo.png" alt="">
+            <div class="intro-logo-text-container">
+                <p class="intro-logo-text">DABubble</p>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="create-new-account-container" [ngClass]="{'d-none': hideElement}">
+    <div class="create-new-account-container" [ngClass]="{'d-none': hideElement}">
         <p>Neu bei DABubble?</p>
         <button (click)="goToSignin()">Konto erstellen</button>
-</div>
+    </div>
 
-<router-outlet></router-outlet>
-<div class="data-links">
-    <a href="">Impressum</a>
-    <a href="">Datenschutz</a>
-</div>
+    <router-outlet></router-outlet>
+
+    <div class="data-links" [ngClass]="{'d-none': hideExtras}">
+        <a href="" [routerLink]="['/login-page/imprint']">Impressum</a>
+        <a href="" [routerLink]="['/login-page/privacy-policy']">Datenschutz</a>
+    </div>

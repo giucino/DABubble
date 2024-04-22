@@ -1,29 +1,29 @@
 <div class="signin-container">
-    <button class="back-to-login" (click)="goToLogin()"><img src="assets/img/arrow_back.svg" class="btn-icon" alt=""></button>
+    <button class="back-to-login btn-icon" (click)="goToLogin()"><img src="assets/img/arrow_back.svg" class="" alt=""></button>
     <h1>Konto erstellen</h1>
     <p>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
 
     <form #signin="ngForm">
         <div>
-            <input type="name" #name="ngModel" ngModel required name="name" id="" placeholder="Name und Nachname">
+            <input type="name" #name="ngModel" class="fs-18" ngModel required name="name" id="" placeholder="Name und Nachname">
             <p class="errorMsg" *ngIf="!name.valid && name.touched">Bitte schreiben Sie einen Namen</p>
         </div>
         <div>
-            <input type="email" #email="ngModel" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="email" id="" placeholder="beispielname@email.com">
+            <input type="email" #email="ngModel" class="fs-18" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="email" id="" placeholder="beispielname@email.com">
             <p class="errorMsg" *ngIf="!email.valid && email.touched">*Diese E-Mail-Adresse ist leider ungültig.</p>
         </div>
         <div>
-            <input type="password" #password="ngModel" ngModel required name="password" id="" placeholder="Passwort">
+            <input type="password" #password="ngModel" class="fs-18" ngModel required name="password" id="" placeholder="Passwort">
             <p class="errorMsg" *ngIf="!password.valid && password.touched">Bite geben Sie ein Passwort ein.</p>
         </div>
-        
     </form>
     
     <div class="check-div">
-        <input type="checkbox" name="" id=""><p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
+        <input [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" type="checkbox" name="checkbox" id="checkbox">
+        <p (mouseover)="hoverState = true" (mouseout)="hoverState = false">Ich stimme der <a [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" [routerLink]="['/login-page/privacy-policy']" id="link">Datenschutzerklärung</a> zu.</p>
     </div>
     <div class="next-btn-container">
-        <button [disabled]="!signin.valid">Weiter</button>
+        <button class="btn-primary fs-18" (click)="goToAvatar()">Weiter</button>
+        <!-- [disabled]="!signin.valid" -->
     </div>
     
-</div>
