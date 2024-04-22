@@ -316,6 +316,23 @@ button {
   background-color: var(--color-online) !important;
 }
 
+
+/* scrollbar */ 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-light-purple);
+  border-radius: 30px;
+}
+
+/* generic classes */
+
 .d-none {
   display: none !important;
 }
@@ -364,3 +381,4 @@ button {
   align-items: $ai;
   gap: $gap;
 }
+

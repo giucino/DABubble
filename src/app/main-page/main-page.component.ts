@@ -10,4 +10,13 @@ import { MainHeaderComponent } from './main-header/main-header.component';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
 })
-export class MainPageComponent {}
+
+export class MainPageComponent {
+  
+  threadClosed :boolean = false;
+
+  isThreadClosed(value : boolean) {
+    this.threadClosed = value;
+  }
+}
+

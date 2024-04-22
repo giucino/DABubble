@@ -79,6 +79,21 @@
   }
 }
 
+input, textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  line-height: 24.55px;
+  &::placeholder {
+      font-family: "Nunito", "Helvetica Neue", sans-serif;
+      color: var(--color-gray);
+  }
+  &:focus::placeholder {
+      color: transparent;
+  }
+}
+
 .message-edit-container {
   background-color: var(--color-white);
   border: 1px solid var(--color-light-purple);
@@ -111,22 +126,14 @@
     background-color: var(--color-light-purple);
     border-radius: 30px;
   }
+
+  &-thread {
+    @extend .message-edit-container;
+    max-width: 100%;
+  }
 }
 
-input, textarea {
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: 18px;
-    line-height: 24.55px;
-    &::placeholder {
-        font-family: "Nunito", "Helvetica Neue", sans-serif;
-        color: var(--color-gray);
-    }
-    &:focus::placeholder {
-        color: transparent;
-    }
-}
+
 
 .message-edit-buttons {
     display: flex;
