@@ -197,15 +197,31 @@
       </div>
     }
     @if (channelType == 'direct') {
-      <div class="channel-info-container">
-        <div class="channel-name-container">
-          <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img w100">
-          <div class="channel-name fs-24">Sofia Müller</div>
+      <!-- person to person -->
+      @if (false) {
+        <div class="channel-info-container">
+          <div class="channel-name-container">
+            <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img w100">
+            <div class="channel-name fs-24">Sofia Müller</div>
+          </div>
+          <div class="channel-info fs-20">
+            <span>Diese Unterhaltung findet nur zwischen <span class="btn-text">&commat;Sofia Müller</span> und dir statt.</span>
+          </div>
         </div>
-        <div class="channel-info fs-20">
-          <span>Diese Unterhaltung findet nur zwischen <span class="btn-text">&commat;Sofia Müller</span> und dir statt.</span>
+      }
+      @else {
+        <!-- personal channel -->
+        <div class="channel-info-container">
+          <div class="channel-name-container">
+            <img src="./assets/img/avatar-1.jpg" alt="" class="profile-img w100">
+            <div class="channel-name fs-24">Frederick Beck (Du)</div>
+          </div>
+          <div class="channel-info fs-20">
+            <span><b>Dieser Raum ist nur für dich da.</b> Diese Unterhaltung findet nur zwischen Mache dir Notizen, liste deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst besprechen.</span>
+          </div>
         </div>
-      </div>
+      }
+
     }
     <!-- messages -->
     @if (channelType != 'thread') {

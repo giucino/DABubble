@@ -1,5 +1,7 @@
 <div [ngClass]="{'message-container' : !isCurrentUser, 'message-container-reverse' : isCurrentUser}">
     <img class="profile-img" src="./assets/img/avatar-1.jpg" alt="">
+
+    
     <!-- message -->
     @if(!editMessage) {
         <div class="message-content">
@@ -199,6 +201,8 @@
             }
         </div>
     }
+
+
     <!-- edit - message -->
     @if(editMessage) {
         <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">

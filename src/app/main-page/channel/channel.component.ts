@@ -11,5 +11,5 @@ import { MessageComponent } from './message/message.component';
 })
 export class ChannelComponent {
 
-  @Input() channelType : 'main' | 'direct' | 'thread' | 'new' = 'main';
+  @Input() channelType : 'main' | 'direct' | 'thread' | 'new' = 'direct';
 }
