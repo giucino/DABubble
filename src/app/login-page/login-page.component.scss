@@ -1,10 +1,12 @@
+
 .front-page-container {
     position: relative;
     width: 100dvh;
     height: 100dvh;
     max-width: 1920px;
 }
-.test{
+
+.test {
     width: 100%;
     height: 100vh;
 }
@@ -19,7 +21,7 @@
     animation: fadeOut 1s forwards 4000ms;
 }
 
-.intro-logo-container{
+.intro-logo-container {
     height: 100vh;
     width: 100dvw;
     position: absolute;
@@ -27,7 +29,7 @@
     overflow: hidden;
     pointer-events: none;
     touch-action: none;
-   
+
 }
 
 .intro-logo {
@@ -60,6 +62,7 @@
 }
 
 .intro-logo-text {
+    font-weight: 700;
     display: block;
     width: 100%;
     max-width: 0%;
@@ -68,51 +71,49 @@
     transform: translateX(-100%);
     animation: revealText 1000ms forwards 1500ms;
 }
-.create-new-account-container{
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    button{
-        a{
-            text-decoration: none;
-        }
-    }
-}
 
-.create-new-account-container{
+.create-new-account-container {
     display: flex;
     align-items: flex-end;
     flex-direction: column;
     gap: 20px;
-    p{
+    position: absolute;
+    top: 75px;
+    right: 75px;
+    p {
         font-size: 18px;
         line-height: 24.55px;
         font-weight: 400;
     }
-    button{
-            font-size: 18px;
-            line-height: 21.6px;
-            font-weight: 400;
-            font-family: 'Figtree', sans-serif;
-            color: var(--color-purple-2);
-            border: 1px solid transparent;
-            padding: 10px 15px;
-            &:hover{
-                border: 1px solid var(--color-black);
-                border-radius: 20px;
-                color: var(--color-purple-1);
-            }
+
+    button {
+        font-size: 18px;
+        line-height: 21.6px;
+        font-weight: 400;
+        font-family: 'Figtree', sans-serif;
+        color: var(--color-purple-2);
+        border: 1px solid transparent;
+        padding: 10px 15px;
+        a {
+            text-decoration: none;
+        }
+        &:hover {
+            border: 1px solid var(--color-black);
+            border-radius: 20px;
+            color: var(--color-purple-1);
+        }
     }
 }
 
-.data-links{
+.data-links {
     position: absolute;
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 16px;
     bottom: 40px;
-    a{
+
+    a {
         text-decoration: none;
         padding: 10px 15px;
         color: var(--color-purple-2);
@@ -120,7 +121,8 @@
         font-size: 18px;
         line-height: 21.6px;
         border: 1px solid transparent;
-        &:hover{
+
+        &:hover {
             border: 1px solid var(--color-black);
             border-radius: 20px;
             color: var(--color-purple-1);
@@ -131,32 +133,72 @@
 
 @keyframes fadeOut {
     0% {
-      opacity: 1;
+        opacity: 1;
+        // display: block;
+        // background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
     }
+
     99% {
         pointer-events: all;
         touch-action: auto;
     }
+
     100% {
-      opacity: 0;
-      pointer-events: none;
-      touch-action: none;
+        opacity: 0;
+        pointer-events: none;
+        touch-action: none;
+        display: none;
     }
-  }
+}
 
 @keyframes moveToTopLeft {
     0% {
-        top: 50%;
-        bottom: 50%;
+    
     }
+
     100% {
         top: 75px;
         left: 75px;
-        transform: translate(0,0);
+        transform: translate(0, 0);
         height: 70px;
         font-size: 32px;
         color: var(--color-black);
         gap: 16px
+    }
+}
+
+@keyframes moveToTopMobile{
+    0% {
+        // font-size: 60px;
+    }
+
+    100% {
+        top: 75px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        height: 70px;
+        font-size: 32px !important;
+        color: var(--color-black);
+        gap: 16px
+    }
+}
+@keyframes moveToTopMobileSmall{
+    0% {
+    }
+
+    99% {
+        top: 40px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        height: 70px;
+        font-size: 32px !important;
+        color: var(--color-black);
+        gap: 16px
+    }
+    100%{
+        position: unset;
+        display: flex;
+        align-items: center;
     }
 }
 
@@ -170,16 +212,91 @@
     10% {
         max-width: 100%;
     }
+
     100% {
         max-width: 100%;
         transform: translateX(0%);
     }
 }
 
-// new account
 
-.create-new-account-container {
-    position: absolute;
-    top: 75px;
-    right: 75px;
+/* MEDIA QUERY WIDTH */
+
+@media (max-width: 768px) {
+    section{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .intro-logo-container-mobile {
+        position: unset;
+        height: 70px;
+    }
+    .intro-logo-img-mobile{
+        height: 70%;
+    }   
+    .intro-logo-mobile{
+        font-size: 60px !important;
+    }
+    router-outlet{
+        height: 769px;
+        width: 100%;
+    }
+    .intro-bg-container {
+        animation: fadeOut 1s forwards 2s;
+    }
+    .intro-logo {
+        animation: moveToTopMobile 1s forwards 2s;
+
+    }
+    .intro-logo-text-container {
+        animation: moveLogoToLeft 1s forwards 500ms;
+    }
+    .intro-logo-text {
+        animation: revealText 1s forwards 500ms;
+    }
+    .create-new-account-container{
+        position: unset;
+        align-items: center;
+        justify-content: flex-end;
+        bottom: 75px;
+        width: 100%;
+        top: unset;
+        right: unset;
+        button{
+            border: 1px solid var(--color-black);
+            border-radius: 20px;
+            &:active{
+                background-color: var(--color-purple-1);
+                color: var(--color-white);
+            }
+        }
+
+    }
+    .data-links {
+        display: none;
+    }
+}
+@media (max-width: 500px){
+    router-outlet{
+        height: 600px;
+    }
+    .intro-logo-img-mobile{
+        width: 56px;
+        height: 56px;
+    }   
+    .intro-logo-mobile{
+        font-size: 32px !important;
+    }
+}
+@media (max-width: 420px){
+    router-outlet{
+        height: 580px;
+    }
+    .intro-logo{
+        animation: moveToTopMobileSmall 1s forwards 2s;
+    }
 }

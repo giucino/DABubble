@@ -151,3 +151,136 @@ input[type="email"] {
     flex-direction: row;
     gap: 30px;
 }
+
+@media (max-width: 630px) {
+    .login-container{
+        width: calc(100% - 32px);
+        padding: 30px 16px;
+        height: auto;
+        >p{
+            width: 90%;
+        }
+    }
+    form{
+        width: 100%;
+        >div{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            input{
+                width: 90%;
+            }
+        }
+
+    }
+    .errorMsg{
+        text-align: start;
+        width: 90%;
+        margin-top: 65px;
+    }
+    .google-btn{
+        width: 90%;
+    }
+}
+@media (max-width: 500px) {
+    .login-container{
+        gap: 15px;
+        h1{
+            font-size: 32px;
+        }
+        >p{
+            font-size: 17px;
+        }
+    }
+    form{
+        gap: 30px;
+        margin-bottom: 10px;
+        >div{
+            input{
+                background-position: left 20px center;
+                padding: 13px 32px 13px 70px;
+                text-align: start;
+                &::placeholder {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    .spacer{
+        margin: 20px 0;
+    }
+    .errorMsg{
+        margin-top: 50px;
+    }
+}
+@media (max-width: 420px) {
+    form{
+        >div{
+            input{
+                padding: 13px 24px 13px 55px;
+            }
+        }
+    }
+    .google-btn{
+        padding: 11px 24px;
+        font-size: 16px;
+        gap: 10px;
+        img{
+            width: 32px;
+            height: 32px;
+        }
+    }
+    .login-btns{
+        gap: 0;
+        width: 85%;
+        justify-content: space-between;
+        button{
+            font-size: 16px;
+            padding: 8px 16px;
+        }
+    }
+    .errorMsg{
+        font-size: 12px;
+    }
+}
+@media (max-width: 350px) {
+    .login-container{
+        padding: 20px 16px;
+        h1{
+            font-size: 30px;
+        }
+        >p{
+            font-size: 15px;
+        }
+    }
+    form{
+        gap: 20px;
+        >div{
+            input{
+                background-position: left 15px center;
+                padding: 13px 24px 13px 50px;
+                &::placeholder {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    .errorMsg{
+        font-size: 10px;
+    }
+    .login-btns{
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        button{
+            width: 70%;
+        }
+    }
+    .google-btn{
+        >img{
+            display: none;
+        }
+    }
+
+}

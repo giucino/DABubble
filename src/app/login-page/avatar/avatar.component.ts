@@ -27,7 +27,7 @@ export class AvatarComponent {
   constructor(private router: Router, private _snackBar: MatSnackBar) { }
 
   goToSignIn(){
-    this.router.navigate(['/login-page/sigin']);
+    this.router.navigate(['/login-page/signin']);
   }
 
   goToLogin(){
