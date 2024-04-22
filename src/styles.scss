@@ -53,7 +53,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Nunito", "Helvetica Neue", sans-serif;
+  font-family: "Nunito", "Helvetica Neue", sans-serif !important;
 }
 
 html,
@@ -354,10 +354,15 @@ button {
 //   height: 100vh;
 // }
 
-// .mdc-snackbar__surface,
-// .mdc-snackbar__surfac::before {
-//   box-shadow: unset !important;
-// }
+.mdc-snackbar__surface,
+.mdc-snackbar__surfac::before {
+  box-shadow: unset !important;
+  background-color: transparent !important;
+}
+
+.mat-typography p {
+  margin: 0;
+}
 
 // @keyframes change-background {
 //   0% {

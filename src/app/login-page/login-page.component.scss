@@ -55,6 +55,9 @@
 .intro-logo-text-container {
     width: 0%;
     max-width: 496px;
+    height: 100%;
+    display: flex;
+    align-items: center;
     overflow: hidden;
     animation: moveLogoToLeft 1s forwards 500ms;
 }
@@ -64,6 +67,9 @@
     width: 100%;
     max-width: 0%;
     margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
     overflow: hidden;
     transform: translateX(-100%);
     animation: revealText 1000ms forwards 1500ms;
