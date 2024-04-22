@@ -279,15 +279,6 @@ input, textarea {
         resize: vertical;
         padding-right: 10px;
     } 
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background-color: var(--color-light-purple);
-      border-radius: 30px;
-    }
 }
 
 .message-input-buttons {
