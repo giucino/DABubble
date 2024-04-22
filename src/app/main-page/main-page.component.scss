@@ -24,6 +24,8 @@
     align-items: center;
     gap: 20px;
     height: 100%;
+    max-height: calc(100% - 90px);
+    flex-grow: 1;
 }
 
 .main-menu-placeholder {
