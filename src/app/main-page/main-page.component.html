@@ -12,6 +12,10 @@
     <!-- channel -->
     <app-channel class="channel"></app-channel>
     <!-- thread -->
-    <app-channel class="thread" [channelType]="'thread'"></app-channel>
+  @if(!threadClosed) {
+   <app-channel class="thread" [channelType]="'thread'" (closeThreadEvent)="isThreadClosed($event)"></app-channel>
+  }
+      
+
   </div>
 </div>

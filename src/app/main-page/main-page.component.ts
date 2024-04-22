@@ -9,5 +9,10 @@ import { ChannelComponent } from './channel/channel.component';
   styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
+  
+  threadClosed :boolean = false;
 
+  isThreadClosed(value : boolean) {
+    this.threadClosed = value;
+  }
 }

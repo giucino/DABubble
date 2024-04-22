@@ -138,7 +138,7 @@
         </svg>
         <div class="channel-name fs-14">Entwicklerteam</div>  
     </div>
-    <button class="btn-icon w40">
+    <button class="btn-icon w40" (click)="closeThread(true)">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
             <rect width="24" height="24" fill="var(--color-black)"/>
@@ -199,7 +199,7 @@
       }
       @if (channelType == 'direct') {
         <!-- person to person -->
-        @if (false) {
+        @if (true) {
           <div class="channel-info-container">
             <div class="channel-name-container">
               <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img w100">
