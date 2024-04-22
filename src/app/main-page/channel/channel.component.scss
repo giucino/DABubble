@@ -187,14 +187,20 @@ input, textarea {
 /*-- channel messages --*/ 
 .channel-messages-container {
     flex-grow: 1;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 20px;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+    .channel-messages-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 }
 
 .channel-info-container {
-  padding: 0 45px;
+  margin-top: auto;
+  padding: 20px 45px 0;
   .channel-name-container {
     background-color: transparent;
     padding: 0;
@@ -202,6 +208,7 @@ input, textarea {
     align-items: flex-end;
   }
   .channel-info {
+    color: var(--color-gray);
     .channel-name-container {
       display: inline-flex;
       margin-bottom: 0;
@@ -272,15 +279,6 @@ input, textarea {
         resize: vertical;
         padding-right: 10px;
     } 
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background-color: var(--color-light-purple);
-      border-radius: 30px;
-    }
 }
 
 .message-input-buttons {

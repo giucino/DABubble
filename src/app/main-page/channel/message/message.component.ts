@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-message',
@@ -13,5 +13,6 @@ export class MessageComponent {
   isCurrentUser : boolean = true;
   showMoreOptions : boolean = false;
   editMessage : boolean = false;
+  @Input() channelType : 'main' | 'direct' | 'thread' | 'new' = 'main';
   
 }
