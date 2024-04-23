@@ -7,6 +7,7 @@ import {
   MatDialogContent,
   MatDialogActions,
   MatDialogRef,
+  MatDialogModule
 } from '@angular/material/dialog';
 
 @Component({
@@ -19,6 +20,7 @@ import {
     MatButtonModule,
     MatDialogContent,
     MatDialogActions,
+    MatDialogModule
   ],
   templateUrl: './add-channel-card.component.html',
   styleUrl: './add-channel-card.component.scss',
