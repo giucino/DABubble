@@ -1,0 +1,24 @@
+<mat-card>
+    <mat-card-title>
+        <h2 mat-dialog-title>Channel erstellen</h2>
+        <mat-icon (click)="onNoClick()" class="close-icon">close</mat-icon>
+    </mat-card-title>
+
+    <mat-dialog-content>
+        <p>Beschreibungstext für den Channel.</p>
+        <mat-form-field>
+            <input matInput placeholder="Eingabe für Feld 1">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-content>
+        <p>Beschreibungstext für den Channel.</p>
+        <mat-form-field>
+            <input matInput placeholder="Eingabe für Feld 1">
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="createChannel()">Erstellen</button>
+    </mat-dialog-actions>
+</mat-card>

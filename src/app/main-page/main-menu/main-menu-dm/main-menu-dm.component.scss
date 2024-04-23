@@ -36,39 +36,6 @@
       }
     }
   }
-
-  .menu-channel-content {
-    @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
-    padding-left: 25px;
-    font-size: 18px;
-    font-weight: 400;
-
-    .channel {
-      @include dFlex($jc: flex-start, $gap: 15px);
-      border-radius: 20px;
-      padding: 4px 20px;
-      background-color: transparent;
-
-      &:hover {
-        background-color: var(--color-bg);
-        cursor: pointer;
-
-        .channel-name {
-          color: var(--color-purple-3);
-          font-weight: 700;
-        }
-      }
-    }
-
-    .active {
-      background-color: var(--color-purple-3);
-
-      .channel-name {
-        color: var(--color-black);
-        font-weight: 700;
-      }
-    }
-  }
 }
 
 .channel-header-direct {

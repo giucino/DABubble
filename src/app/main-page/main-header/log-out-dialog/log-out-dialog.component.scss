@@ -1,0 +1,29 @@
+@import "./../../../../styles.scss";
+
+.dropdown {
+  @include dFlex($fd: column, $jc: center);
+//   position: relative;
+//   top: 60px;
+//   right: 0;
+  padding: 10px;
+  border-radius: 50px;
+  width: 200px;
+  height: 100px;
+  
+  .dropdown-item {
+    @include dFlex($jc: flex-start, $ai: center, $gap: 15px);
+
+    span {
+      padding: 8px;
+      cursor: pointer;
+      font-size: 22px;
+      text-align: center;
+      border-radius: 20px;
+
+      &:hover {
+        color: var(--color-purple-3);
+        background-color: var(--color-bg);
+      }
+    }
+  }
+}
