@@ -1,29 +1,78 @@
-mat-card {
-  position: relative;
-  padding: 40px;
+.mat-card-custom {
+  display: flex;
   width: 100%;
   min-width: 450px;
   height: 100%;
+  padding: 40px;
   gap: 20px;
-  border-radius: 20%;
+  border-radius: 30px;
+  background: var(--color-white);
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
 
-  .close-icon {
-    position: absolute;
-    top: 8px;
-    right: 8px;
+  .mat-card-title-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    .mat-dialog-title-custom {
+      color: var(--Black, #000);
+      font-family: Nunito;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .close-icon-custom {
     cursor: pointer;
   }
 
-  mat-dialog-content, mat-form-field, input {
-    width: 100%;
+  .description-text {
+    color: var(--color-black);
+    font-family: Nunito;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 
-  mat-dialog-content {
+  .mat-dialog-content-custom {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
     width: 100%;
+
+    .input-label {
+      color: var(--color-black);
+      font-family: Nunito;
+      font-family: Nunito;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+
+    .input-wrapper {
+      display: flex;
+      width: 100%;
+      gap: 15px;
+      padding: 18px 20px;
+      border: 1px solid var(--color-light-purple);
+      border-radius: 40px;
+    }
+
+    .input-description {
+      width: 100%;
+      font-weight: 400;
+      border: none;
+      outline: none;
+      font-size: 18px;
+    }
   }
 }
