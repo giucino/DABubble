@@ -1,4 +1,4 @@
-.avatar-container{
+.avatar-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,13 +13,15 @@
     padding: 40px 30px;
     width: 606px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-    h1{
+
+    h1 {
         color: var(--color-purple-1);
         font-size: 46px;
         font-weight: 700;
     }
 }
-.avatar-window{
+
+.avatar-window {
     width: 472px;
     display: flex;
     justify-content: center;
@@ -27,68 +29,109 @@
     flex-direction: column;
     gap: 20px;
 }
-.picked-avatar{
+
+.picked-avatar {
     width: 168px;
     height: 168px;
     border-radius: 100px;
     // padding: 16px;
     background-color: var(--color-purple-2);
-    >img{
+
+    >img {
         width: 168px;
         height: 168px;
         border-radius: 100px;
-        &:hover{
+
+        &:hover {
             box-shadow: 0 0 0 8px rgba(230, 230, 230, 1);
         }
-        &:active{
+
+        &:active {
             box-shadow: 0 0 0 8px var(--color-bg);
         }
     }
 }
-.avatar-list{
+
+.avatar-list {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     gap: 20px;
-    >button{
-        >img{
+
+    >button {
+        >img {
             width: 64px;
             height: 64px;
             border-radius: 41px;
-            &:hover{
+
+            &:hover {
                 box-shadow: 0 0 0 4px rgba(230, 230, 230, 1);
             }
-            &:active{
+
+            &:active {
                 box-shadow: 0 0 0 4px var(--color-bg);
             }
         }
     }
 }
-.j-left{
+
+.j-left {
     width: 100%;
     display: flex;
     justify-content: flex-start;
 }
-.upload-container{
+
+.upload-container {
     align-items: center;
     flex-direction: row;
     gap: 24px;
 }
-.back-to-signin{
+
+.back-to-signin {
     position: absolute;
     left: 32px;
     top: 50px;
     width: 40px;
     height: 40px;
-    img{
+
+    img {
         width: 24px !important;
         height: 24px !important;
-        
+
     }
 }
-.next-btn-container{
+
+.next-btn-container {
     width: 500px;
     display: flex;
     justify-content: flex-end;
+}
+@media (max-height: 920px){
+
+}
+
+@media (max-width: 630px) {
+    .avatar-container {
+        width: calc(100% - 32px);
+        padding: 20px 16px;
+        height: auto;
+        >h1{
+            font-size: 40px;
+        }
+        >p {
+            width: 90%;
+        }
+    }
+    .back-to-signin {
+        top: 25px;
+        img{
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+    .avatar-window{
+        // width: 90%;
+
+    }
 }
