@@ -35,5 +35,6 @@ export class AddChannelCardComponent {
 
   createChannel() {
     console.log('Channel created');
+    this.dialogRef.close();
   }
 }
