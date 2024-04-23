@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
 import { MessageComponent } from './message/message.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
 
 @Component({
@@ -15,14 +15,37 @@ export class ChannelComponent {
 
   @Input() channelType : 'main' | 'direct' | 'thread' | 'new' = 'main';
   @Output() closeThreadEvent = new EventEmitter<boolean>();
+  dialogRef : MatDialogRef<DialogAddMemberComponent> | null = null;
 
   constructor (public dialog: MatDialog) {
 
   }
 
-  openDialog() {
-    this.dialog.open(DialogAddMemberComponent);
+  openDialog(button : HTMLElement) {
+    const rect = button.getBoundingClientRect();
+    this.dialogRef = this.dialog.open(DialogAddMemberComponent, {
+      panelClass: 'custom-dialog-anchorTopRight',
+      position: {
+        top: rect.bottom + 'px',
+        left: rect.right + 'px',
+      },
+      
+    });
+    if (this.dialogRef) {
+      window.addEventListener('resize', () => this.updateDialogPosition(button))
+    }
   }
+
+    // Funktion zum Aktualisieren der Dialogposition
+    updateDialogPosition(button: HTMLElement): void {
+      if (this.dialogRef) {
+        const rect = button.getBoundingClientRect();
+        this.dialogRef.updatePosition({
+          top: rect.bottom + 'px',
+          left: rect.right + 'px'
+        });
+      }
+    }
 
   closeThread(value : boolean) {
     this.closeThreadEvent.emit(value);

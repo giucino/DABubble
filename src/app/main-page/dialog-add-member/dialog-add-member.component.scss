@@ -1,0 +1,56 @@
+.dialog-add-member {
+    width: 554px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+    border-radius: 30px 0px 30px 30px;
+    background-color: var(--color-white);
+    .btn-primary {
+        width: fit-content;
+        margin-left: auto;
+    }
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
+
+.channel-name-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--color-purple-2);
+    svg path {
+        fill: var(--color-purple-2);
+    }
+    .channel-name {
+        height: 18px;
+    }
+}
+
+.name-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid var(--color-light-purple);
+    border-radius: 30px;
+    font-size: 18px;
+    line-height: 24.55px;
+    outline: none;
+    &:hover {
+        border-color: var(--color-purple-2);
+    }
+    &:focus {
+        border-color: var(--color-purple-1);
+    }
+    &::placeholder {
+        font-family: "Nunito", "Helvetica Neue", sans-serif;
+        color: var(--color-gray);
+    }
+    &:focus::placeholder {
+        color: transparent;
+    }
+}
