@@ -68,9 +68,9 @@ export class AvatarComponent {
   confirmPopup(){
     this._snackBar.openFromComponent(UserCreatedSnackbarComponent, {
       duration: 2000,
-      horizontalPosition: 'end',
+      horizontalPosition: 'start',
       verticalPosition: 'bottom',
-      direction: 'rtl'
+      direction: 'rtl',
     });
   }
 }

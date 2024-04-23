@@ -27,9 +27,9 @@ export class ResetPasswordComponent {
   confirmPopup(){
     this._snackBar.openFromComponent(LoginSnackbarComponent, {
       duration: 2000,
-      horizontalPosition: 'end',
+      horizontalPosition: 'start',
       verticalPosition: 'bottom',
-      direction: 'rtl'
+      direction: 'rtl',
     });
   }
 

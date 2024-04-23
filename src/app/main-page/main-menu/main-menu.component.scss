@@ -3,12 +3,13 @@
 .main-menu {
   @include dFlex($fd: column, $jc: flex-start, $ai: flex-start, $gap: 25px);
   background-color: var(--color-white);
-  width: 350px;
-  height: 90dvh;
+  max-width: 350px;
+  min-width: 350px;
+  height: 100%;
   border-radius: 20px;
   padding: 32px 30px;
   color: var(--color-black);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .menu-channels, .menu-header, .menu-dm {
