@@ -131,7 +131,110 @@
         }
     }
     .avatar-window{
-        // width: 90%;
+        width: 90%;
 
     }
+    .picked-avatar{
+        width: 140px;
+        height: 140px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .avatar-list{
+        width: 100%;
+        gap: 0;
+        justify-content: space-between;
+    }
+    .next-btn-container{
+        width: 90%;
+    }
 }
+@media (max-width: 550px){
+    .avatar-container{
+        >h1{
+            width: 85%;
+            text-align: center;
+        }
+    }
+    .avatar-window{
+        gap: 10px;
+    }
+    .upload-container{
+        gap: unset;
+        justify-content: space-between;
+        
+    }
+    .j-left{
+        >p{
+            font-size: 18px;
+        }
+        button{
+            padding: 10px 20px;
+        }
+    }
+    .avatar-list {
+        >button {
+            >img {
+                width: 56px;
+                height: 56px;
+            }
+        }
+    }
+    .back-to-signin {
+        left: 10px;
+        img {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+}
+@media (max-width: 500px){
+    .avatar-container{
+        width: calc(100% - 24px);
+        padding: 20px 12px;
+        >h1{
+            font-size: 32px;
+        }
+    }
+    .avatar-window{
+        width: 100%;
+    }
+}
+@media (max-width: 430px){
+    .upload-container{
+        >p{
+            width: 35%;
+        }
+    }
+    .avatar-list {
+        >button {
+            >img {
+                width: 48px;
+                height: 48px;
+            }
+        }
+    }
+}
+@media (max-width: 350px) {
+    .upload-container{
+        flex-direction: column;
+        >p{
+            width: 100%;
+            text-align: center;
+        }
+    }
+    .avatar-list {
+        height: 110px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .back-to-signin {
+        top: unset;
+        bottom: 30px;
+        left: 32px;
+    }
+}
+
