@@ -1,0 +1,29 @@
+mat-card {
+  position: relative;
+  padding: 40px;
+  width: 100%;
+  min-width: 450px;
+  height: 100%;
+  gap: 20px;
+  border-radius: 20%;
+
+  .close-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+  }
+
+  mat-dialog-content, mat-form-field, input {
+    width: 100%;
+  }
+
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+  }
+}

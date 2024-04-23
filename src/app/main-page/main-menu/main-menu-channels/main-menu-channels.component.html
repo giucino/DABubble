@@ -1,4 +1,4 @@
-<!-- <mat-expansion-panel class="no-shadow" hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<!-- <mat-expansion-panel class="no-shadow " hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
         <img src="./../../../../assets/img/lock.png" alt="">
         <mat-panel-title>Channels</mat-panel-title>
@@ -8,8 +8,8 @@
 
 <section class="menu-channel-container">
     <div class="menu-channel-header">
-        <div class="menu-channel-header-left">
-            <svg class="svg-color" width="30" height="30" viewBox="0 0 30 30" fill="none"
+        <div class="menu-channel-header-left" (click)="toggleExpansion()">
+            <svg class="svg-color" width="30" height="30" viewBox="0 0 30 30" fill="none" [ngStyle]="{ transform: !isExpanded ? 'rotate(-90deg)' : 'rotate(0deg)' }"
                 xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_235_344" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30"
                     height="30">
@@ -37,7 +37,7 @@
                 Channels
             </div>
         </div>
-        <button class="btn-icon-v3">
+        <button class="btn-icon-v3" (click)="openDialog()">
             <svg class="svg-circle" width="30" height="30" viewBox="0 0 30 30" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_813_12245)">
@@ -60,6 +60,7 @@
         </button>
     </div>
 
+    @if (isExpanded) {
     <div class="menu-channel-content">
         <div class="channel">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +78,8 @@
         </div>
     </div>
 
-    <div class="menu-channel-add-container">
+
+    <div class="menu-channel-add-container" (click)="openDialog()">
         <div class="menu-channel-add">
             <svg class="svg-color" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -94,6 +96,7 @@
             <span class="channel-add-text">Channel hinzufügen</span>
         </div>
     </div>
+}
 </section>
 
 <!-- <app-dynamic-content>

@@ -1,16 +1,43 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DynamicContentComponent } from '../../../shared/dynamic-content/dynamic-content.component';
+import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main-menu-channels',
   standalone: true,
-  imports: [MatCardModule, MatExpansionModule, DynamicContentComponent],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatExpansionModule,
+    DynamicContentComponent,
+  ],
   templateUrl: './main-menu-channels.component.html',
   styleUrl: './main-menu-channels.component.scss',
 })
 export class MainMenuChannelsComponent {
-  panelOpenState = false;
+  // panelOpenState = false;
+  isExpanded = true;
 
+  constructor(public dialog: MatDialog) {}
+
+  toggleExpansion() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  // openDialog() {
+  //   this.dialog.open(AddChannelCardComponent);
+  // }
+
+  openDialog(): void {
+    console.log('Opening dialog');
+    const dialogRef = this.dialog.open(AddChannelCardComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
 }
