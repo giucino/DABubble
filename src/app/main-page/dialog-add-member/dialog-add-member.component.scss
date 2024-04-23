@@ -32,6 +32,27 @@
     }
 }
 
+.input-container {
+    position: relative;
+    .users-list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px 21px;
+        border-radius: 0 20px 20px 20px;
+        border: 1px solid var(--color-light-purple);
+        background-color: var(--color-white);
+        box-shadow: 0 2px 10px 0 rgba(0,0,0,0.08);
+        position: absolute;
+        left: 21px;
+        top: calc(100% - 6px);
+        max-height: 171px;
+        .users-list {
+            overflow-y: auto;
+        }
+    }
+}
+
 .name-input {
     width: 100%;
     padding: 15px 20px;
@@ -52,5 +73,69 @@
     }
     &:focus::placeholder {
         color: transparent;
+    }
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 30px;
+    padding: 4px 20px;
+    &:hover {
+        background-color: var(--color-bg);
+    }
+    .profile-img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.user-img-container {
+    position: relative;
+}
+
+
+.selected-users-container {
+    overflow: hidden;
+    border-radius: 30px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.selected-users {
+    display: flex;
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+    padding: 7.5px 20px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.selected-user {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+    gap: 10px;
+    padding: 3px 10px;
+    background-color: var(--color-bg);
+    border-radius: 35px;
+    .profile-img {
+        width: 34px;
+        height: 34px;
+    }
+    .btn-icon {
+        width: 30px;
+        height: 30px;
+        svg {
+            width: 16px;
+            height: 16px;
+        }
     }
 }
