@@ -186,7 +186,7 @@
     0% {
     }
 
-    99% {
+    100% {
         top: 40px;
         left: 50%;
         transform: translate(-50%, 0);
@@ -196,9 +196,10 @@
         gap: 16px
     }
     100%{
-        position: unset;
-        display: flex;
-        align-items: center;
+        // position: unset;
+        // display: flex;
+        // align-items: center;
+        // transform: unset;
     }
 }
 
