@@ -337,23 +337,6 @@ button {
   display: none !important;
 }
 
-/* Snackbar Solution */
-
-// .cdk-overlay-container {
-//   height: 0px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: flex-end;
-// }
-
-// .cdk-overlay-container.animate {
-//   position: fixed;
-//   animation: change-background 2s;
-//   z-index: 50;
-//   height: 100vh;
-// }
-
 .mdc-snackbar__surface,
 .mdc-snackbar__surfac::before {
   box-shadow: unset !important;
@@ -364,19 +347,24 @@ button {
   margin: 0;
 }
 
-// @keyframes change-background {
-//   0% {
-//     background-color: rgba(0, 0, 0, 0.1);
-//   }
+.custom-dialog {
+  position: absolute !important;
+  .mat-mdc-dialog-container
+  .mdc-dialog__container
+  .mat-mdc-dialog-surface {
+  background-color: transparent;
+  box-shadow: none;
+  width: fit-content;
+  overflow: visible;
+}
+  &-anchorTopRight {
+    @extend .custom-dialog;
+    transform: translateX(-100%);
+  }
+}
 
-//   99% {
-//     background-color: rgba(0, 0, 0, 0.1);
-//   }
 
-//   100% {
-//     background-color: initial;
-//   }
-// }
+
 
 /* flex mixin */
 @mixin dFlex($fd: row, $jc: center, $ai: center, $gap: 0) {
