@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { MessageComponent } from './message/message.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
+import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 import { CustomDialogService } from '../../services/custom-dialog.service'
+import { DialogShowMembersComponent } from './dialog-show-members/dialog-show-members.component';
 
 @Component({
   selector: 'app-channel',
@@ -24,6 +24,11 @@ export class ChannelComponent {
   
   openAddUserDialog(button : HTMLElement) {
     const component = DialogAddMemberComponent;
+    this.customDialogService.openDialogAbsolute(button,component);
+  }
+
+  openShowMembersDialog(button : HTMLElement) {
+    const component = DialogShowMembersComponent;
     this.customDialogService.openDialogAbsolute(button,component);
   }
 
