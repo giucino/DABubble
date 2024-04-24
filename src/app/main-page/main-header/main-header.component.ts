@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { LogOutDialogComponent } from './log-out-dialog/log-out-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CustomDialogService } from '../../services/custom-dialog.service';
 
 
 @Component({
@@ -15,15 +16,20 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MainHeaderComponent {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public customDialogService: CustomDialogService) {}
 
-  openDialog(): void {
-    console.log('Opening dialog');
-    const dialogRef = this.dialog.open(LogOutDialogComponent);
+  // openDialog(): void {
+  //   console.log('Opening dialog');
+  //   const dialogRef = this.dialog.open(LogOutDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+
+  openLogOutDialog(button : HTMLElement) {
+    const component = LogOutDialogComponent;
+    this.customDialogService.openDialog(button,component);
   }
 
 }
