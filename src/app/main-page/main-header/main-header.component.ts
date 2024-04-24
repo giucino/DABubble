@@ -29,7 +29,7 @@ export class MainHeaderComponent {
 
   openLogOutDialog(button : HTMLElement) {
     const component = LogOutDialogComponent;
-    this.customDialogService.openDialog(button,component);
+    this.customDialogService.openDialogAbsolute(button,component);
   }
 
 }

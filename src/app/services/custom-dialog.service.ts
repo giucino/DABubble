@@ -11,7 +11,13 @@ export class CustomDialogService {
   constructor(public dialog: MatDialog) {
   }
 
-  public openDialog(button: HTMLElement,dialogComponent : ComponentType<any>) {
+  public openDialog(dialogComponent : ComponentType<any>) {
+    this.dialog.open(dialogComponent, {
+      panelClass: 'custom-dialog',
+    });
+  }
+
+  public openDialogAbsolute(button: HTMLElement,dialogComponent : ComponentType<any>) {
     const rect = button.getBoundingClientRect();
     this.dialogRef = this.dialog.open(dialogComponent, {
       panelClass: 'custom-dialog-anchorTopRight',
