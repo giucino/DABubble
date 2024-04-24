@@ -60,7 +60,7 @@ html,
 body {
   height: 100vh;
   width: 100%;
-  background-color: var(--color-bg)
+  background-color: var(--color-bg);
 }
 
 /* fonts */
@@ -251,9 +251,9 @@ button {
   aspect-ratio: 1 / 1;
   width: 32px;
   background-color: transparent;
-    &:hover {
-      background-color: var(--color-bg);
-    }
+  &:hover {
+    background-color: var(--color-bg);
+  }
 }
 
 .btn-text {
@@ -316,14 +316,13 @@ button {
   background-color: var(--color-online) !important;
 }
 
-
-/* scrollbar */ 
+/* scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(0,0,0,0.02);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -337,23 +336,6 @@ button {
   display: none !important;
 }
 
-/* Snackbar Solution */
-
-// .cdk-overlay-container {
-//   height: 0px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: flex-end;
-// }
-
-// .cdk-overlay-container.animate {
-//   position: fixed;
-//   animation: change-background 2s;
-//   z-index: 50;
-//   height: 100vh;
-// }
-
 .mdc-snackbar__surface,
 .mdc-snackbar__surfac::before {
   box-shadow: unset !important;
@@ -364,19 +346,24 @@ button {
   margin: 0;
 }
 
-// @keyframes change-background {
-//   0% {
-//     background-color: rgba(0, 0, 0, 0.1);
-//   }
+.custom-dialog {
+  .mat-mdc-dialog-container .mdc-dialog__container .mat-mdc-dialog-surface {
+    background-color: transparent;
+    box-shadow: none;
+    width: fit-content;
+    overflow: visible;
+  }
 
-//   99% {
-//     background-color: rgba(0, 0, 0, 0.1);
-//   }
-
-//   100% {
-//     background-color: initial;
-//   }
-// }
+  &-anchorTopLeft {
+    @extend .custom-dialog;
+    position: absolute !important;
+  }
+  &-anchorTopRight {
+    @extend .custom-dialog;
+    position: absolute !important;
+    transform: translateX(-100%);
+  }
+}
 
 /* flex mixin */
 @mixin dFlex($fd: row, $jc: center, $ai: center, $gap: 0) {
@@ -386,4 +373,3 @@ button {
   align-items: $ai;
   gap: $gap;
 }
-
