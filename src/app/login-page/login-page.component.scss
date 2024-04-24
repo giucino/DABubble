@@ -163,7 +163,7 @@
     }
 
     100% {
-        top: 75px;
+        top: 65px;
         left: 75px;
         transform: translate(0, 0);
         height: 70px;
@@ -179,7 +179,7 @@
     }
 
     100% {
-        top: 75px;
+        top: 20px;
         left: 50%;
         transform: translate(-50%, 0);
         height: 70px;
@@ -193,7 +193,9 @@
     }
 
     100% {
-        top: 40px;
+        // position: unset;
+        // transform: unset;
+        top: 10px;
         left: 50%;
         transform: translate(-50%, 0);
         height: 70px;
@@ -234,9 +236,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100dvh;
+        height: 1024px;
         flex-direction: column;
-        gap: 30px;
+        gap: 20px;
     }
     .intro-logo-container-mobile {
         position: unset;
@@ -246,14 +248,14 @@
         height: 70%;
     }   
     .intro-logo-mobile{
-        font-size: 60px !important;
+        font-size: 40px !important;
     }
     router-outlet{
-        height: 769px;
         width: 100%;
     }
     .intro-bg-container {
         animation: fadeOut 1s forwards 2s;
+        height: 1024px;
     }
     .intro-logo {
         animation: moveToTopMobile 1s forwards 2s;
@@ -267,9 +269,10 @@
     }
     .create-new-account-container{
         position: unset;
+        transform: unset;
         align-items: center;
         justify-content: flex-end;
-        bottom: 75px;
+        bottom: 35px;
         width: 100%;
         top: unset;
         right: unset;
@@ -284,12 +287,17 @@
 
     }
     .data-links {
-        display: none;
+        display: none; 
     }
 }
 @media (max-width: 500px){
-    router-outlet{
-        height: 600px;
+    section{
+        max-height: 100dvh;
+        min-height: 800px;
+    }
+    .intro-bg-container{
+        height: calc(100% + 1px);
+        min-height: 800px;
     }
     .intro-logo-img-mobile{
         width: 56px;
@@ -300,10 +308,31 @@
     }
 }
 @media (max-width: 420px){
-    router-outlet{
-        height: 580px;
-    }
     .intro-logo{
         animation: moveToTopMobileSmall 1s forwards 2s;
+    }
+}
+
+
+@media (max-height: 1100px) {
+    .create-new-account-container {
+        top: 50px;
+    }
+    section {
+        max-height: 1101px;
+    }
+    .intro-bg-container {
+        max-height: 1101px;
+        animation: fadeOut 1s forwards 2s;
+    }
+    .intro-logo {
+        // animation: moveToTopMobile 1s forwards 2s;
+        font-size: 50px;
+    }
+    .intro-logo-text-container {
+        animation: moveLogoToLeft 1s forwards 500ms;
+    }
+    .intro-logo-text {
+        animation: revealText 1s forwards 500ms;
     }
 }

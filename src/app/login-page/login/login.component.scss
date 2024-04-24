@@ -151,12 +151,17 @@ input[type="email"] {
     flex-direction: row;
     gap: 30px;
 }
-
+@media (max-width: 768px) {
+    .login-container{
+       padding: 30px 16px;
+       height: auto; 
+       position: relative;
+    //    transform: unset;
+    }
+}
 @media (max-width: 630px) {
     .login-container{
         width: calc(100% - 32px);
-        padding: 30px 16px;
-        height: auto;
         >p{
             width: 90%;
         }
