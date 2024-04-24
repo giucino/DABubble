@@ -6,6 +6,7 @@
     padding: 40px;
     border-radius: 30px 0px 30px 30px;
     background-color: var(--color-white);
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2);
     .btn-primary {
         width: fit-content;
         margin-left: auto;
@@ -48,6 +49,9 @@
         top: calc(100% - 6px);
         max-height: 171px;
         .users-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             overflow-y: auto;
         }
     }
@@ -93,6 +97,7 @@
 
 .user-img-container {
     position: relative;
+    height: 50px;
 }
 
 
