@@ -4,6 +4,7 @@ import { MessageComponent } from './message/message.component';
 import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 import { CustomDialogService } from '../../services/custom-dialog.service'
 import { DialogShowMembersComponent } from './dialog-show-members/dialog-show-members.component';
+import { DialogEditChannelComponent } from './dialog-edit-channel/dialog-edit-channel.component';
 
 @Component({
   selector: 'app-channel',
@@ -24,12 +25,17 @@ export class ChannelComponent {
   
   openAddUserDialog(button : HTMLElement) {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute(button,component);
+    this.customDialogService.openDialogAbsolute(button,component, 'right');
   }
 
   openShowMembersDialog(button : HTMLElement) {
     const component = DialogShowMembersComponent;
-    this.customDialogService.openDialogAbsolute(button,component);
+    this.customDialogService.openDialogAbsolute(button,component,'right');
+  }
+
+  openEditChannelDialog(button : HTMLElement) {
+    const component = DialogEditChannelComponent;
+    this.customDialogService.openDialogAbsolute(button,component,'left');
   }
 
 

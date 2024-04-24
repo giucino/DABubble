@@ -3,7 +3,8 @@
   <!-- channel header - main channel -->
   @if (channelType == 'main') {
   <div class="channel-header">
-    <div class="channel-name-container">
+    <!-- btn edit channel -->
+    <div class="channel-name-container" #editChannelBtn (click)="openEditChannelDialog(editChannelBtn)">
       <!-- # - icon -->
       <svg
         class="hashtag-icon"
@@ -60,7 +61,8 @@
       </svg>
     </div>
     <div  class="channel-members-container" >
-      <div #showMembersBtn class="channel-members-info" (click)="openShowMembersDialog(showMembersBtn)">
+      <!-- btn show-members -->
+      <div  class="channel-members-info" #showMembersBtn (click)="openShowMembersDialog(showMembersBtn)">
         <div class="channel-members-preview">
           <img
             src="./assets/img/avatar-1.jpg"
@@ -80,7 +82,7 @@
         </div>
         <div class="channel-members-count fs-20">3</div>
       </div>
-      <!-- add-member-button -->
+      <!-- btn add-member -->
       <button class="btn-icon-v4 w40" #addMemberBtn (click)="openAddUserDialog(addMemberBtn)">
         <svg
           width="24"
