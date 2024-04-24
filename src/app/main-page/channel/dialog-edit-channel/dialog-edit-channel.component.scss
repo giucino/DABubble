@@ -1,0 +1,135 @@
+.dialog-edit-channel {
+  width: 872px;
+  height: 616px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  border-radius: 0px 30px 30px 30px;
+  background-color: var(--color-white);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  .dialog-headline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  .hashtag-icon {
+    width: 30px;
+    height: 30px;
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .channel-name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--color-light-purple);
+    border-radius: 20px;
+    transition: padding 250ms ease-in-out;
+    .channel-name-container-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .headline {
+        font-weight: 700;
+      }
+    }
+    .channel-name {
+      position: relative;
+      .hashtag-icon {
+        position: absolute;
+        left: 20px;
+        top: calc(50% - 12px);
+      }
+    }
+
+    &-edit {
+      @extend .channel-name-container;
+      padding: 0;
+      border: none;
+      .channel-description {
+          border-radius: 20px;
+          border: 1px solid var(--color-light-purple);
+          padding: 20px;
+      }
+    }
+  }
+}
+
+input {
+  border: none;
+  outline: none;
+  padding: 18px 20px 18px 69px;
+  border-radius: 40px;
+  border: 1px solid var(--color-light-purple);
+  width: 100%;
+  font-size: 18px;
+  line-height: 21.6px;
+  &::placeholder {
+    font-family: "Nunito", "Helvetica Neue", sans-serif !important;
+  }
+  &:hover {
+    border-color: var(--color-purple-2);
+  }
+  &:focus {
+    border-color: var(--color-purple-1);
+  }
+  &:read-only {
+    border: 1px solid transparent;
+    &::placeholder {
+      font-size: 18px;
+      line-height: 21.6px;
+      color: var(--color-black);
+    }
+  }
+}
+
+
+.channel-description {
+  &-edit {
+    @extend .channel-description;
+    border-radius: 20px;
+    border: 1px solid var(--color-light-purple);
+    padding: 20px;
+  }
+
+}
+
+textarea {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 18px;
+  line-height: 21.6px;
+  resize: vertical;
+  // min-height: 60px;
+  // max-height: 200px;
+  &::placeholder {
+    font-family: "Nunito", "Helvetica Neue", sans-serif !important;
+  }
+  &:read-only {
+    resize: none;
+    &::placeholder {
+      font-size: 18px;
+      line-height: 21.6px;
+      color: var(--color-black);
+    }
+  }
+}

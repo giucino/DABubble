@@ -272,6 +272,11 @@ button {
       background-color: var(--color-bg);
     }
   }
+  &-v3 {
+    @extend .btn-text;
+    width: max-content;
+    font-weight: 600;
+  }
 }
 
 /* width classes*/

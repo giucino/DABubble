@@ -17,15 +17,33 @@ export class CustomDialogService {
     });
   }
 
-  public openDialogAbsolute(button: HTMLElement,dialogComponent : ComponentType<any>) {
+  public openDialogAbsolute(button: HTMLElement,dialogComponent : ComponentType<any>, position: 'left' | 'right') {
     const rect = button.getBoundingClientRect();
-    this.dialogRef = this.dialog.open(dialogComponent, {
-      panelClass: 'custom-dialog-anchorTopRight',
-      position: {
-        top: rect.bottom + 'px',
-        left: rect.right + 'px',
-      },
-    });
+    if (position == 'left') {
+      this.dialogRef = this.dialog.open(dialogComponent, {
+        panelClass: 'custom-dialog-anchorTopLeft',
+        position: {
+          top: rect.bottom + 'px',
+          left: rect.left + 'px',
+        },
+      });
+    }
+    if (position == 'right') {
+      this.dialogRef = this.dialog.open(dialogComponent, {
+        panelClass: 'custom-dialog-anchorTopRight',
+        position: {
+          top: rect.bottom + 'px',
+          left: rect.right + 'px',
+        },
+      });
+    }
+    // this.dialogRef = this.dialog.open(dialogComponent, {
+    //   panelClass: 'custom-dialog-anchorTopRight',
+    //   position: {
+    //     top: rect.bottom + 'px',
+    //     left: rect.right + 'px',
+    //   },
+    // });
     if (this.dialogRef) {
       window.addEventListener('resize', () =>
         this.updateDialogPosition(button)
