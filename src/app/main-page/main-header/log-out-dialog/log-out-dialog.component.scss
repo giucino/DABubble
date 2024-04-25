@@ -1,24 +1,23 @@
 @import "./../../../../styles.scss";
 
-.dropdown {
-  @include dFlex($fd: column, $jc: center);
-//   position: relative;
-//   top: 60px;
-//   right: 0;
-  padding: 10px;
-  border-radius: 50px;
-  width: 200px;
-  height: 100px;
-  
+mat-card {
+  @include dFlex($fd: column, $ai: flex-start, $gap: 15px);
+  padding: 30px;
+  border-radius: 30px 0px 30px 30px;
+  background: var(--color-white);
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+
   .dropdown-item {
-    @include dFlex($jc: flex-start, $ai: center, $gap: 15px);
+    // @include dFlex($gap: 15px);
+    padding: 10px 45px;
 
     span {
       padding: 8px;
       cursor: pointer;
-      font-size: 22px;
+      font-size: 24px;
       text-align: center;
       border-radius: 20px;
+      width: 150px;
 
       &:hover {
         color: var(--color-purple-3);

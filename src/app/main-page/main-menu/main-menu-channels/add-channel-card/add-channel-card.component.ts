@@ -7,7 +7,8 @@ import {
   MatDialogContent,
   MatDialogActions,
   MatDialogRef,
-  MatDialogModule
+  MatDialogModule,
+  MatDialog
 } from '@angular/material/dialog';
 
 @Component({
@@ -26,7 +27,9 @@ import {
   styleUrl: './add-channel-card.component.scss',
 })
 export class AddChannelCardComponent {
-  constructor(public dialogRef: MatDialogRef<AddChannelCardComponent>) {}
+  constructor(public dialogRef: MatDialogRef<AddChannelCardComponent>,
+    public dialog: MatDialog,
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
