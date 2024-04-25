@@ -11,7 +11,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 export class DialogAddMemberComponent {
 
   constructor(public dialogRef : MatDialogRef<DialogAddMemberComponent>) {
-
+    
   }
 
 }

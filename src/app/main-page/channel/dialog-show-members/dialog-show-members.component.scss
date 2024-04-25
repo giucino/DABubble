@@ -1,0 +1,88 @@
+.dialog-show-members {
+    width: 415px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+    border-radius: 30px 0px 30px 30px;
+    background-color: var(--color-white);
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.2);
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
+
+.members-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 220px;
+    .members-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        overflow-y: auto;
+        margin-right: 16px;
+    }
+}
+
+.member {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 30px;
+    padding: 4px 20px;
+    width: fit-content;
+    &:hover {
+        background-color: var(--color-bg);
+    }
+    .profile-img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.member-img-container {
+    position: relative;
+    height: 50px;
+}
+
+
+.btn-add-member {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    border-radius: 100px;
+    width: fit-content;
+    .btn-icon-v3 {
+        background-color: var(--color-bg);
+    }
+    &:hover {
+        background-color: var(--color-bg);
+        color: var(--color-purple-3);
+        .btn-icon-v3 {
+            svg path,
+            svg rect {
+              stroke: var(--color-purple-3);
+              stroke-width: 0.5px;
+              fill: var(--color-purple-3);
+            }
+        }
+    }
+    &:active {
+        color: var(--color-black);
+        background-color: transparent;
+        .btn-icon-v3 {
+            svg path {
+                stroke: var(--color-black);
+                stroke-width: 0.5px;
+                fill: var(--color-black);
+              }
+        }
+    }
+}

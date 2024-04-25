@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 
-export class EmojiService implements OnDestroy {
+export class ReactionService implements OnDestroy {
     // firestore: Firestore = inject(Firestore);
 
     ngOnDestroy(): void {

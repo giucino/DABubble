@@ -2,7 +2,6 @@
 
 .header-content {
   position: relative;
-  padding: 20px 20px 0px 20px;
   @include dFlex($gap: 20px, $jc: space-between);
   z-index: 2;
 }
@@ -33,6 +32,8 @@
 }
 
 .user-head {
+  min-width: 485px;
+
   flex: 1;
   @include dFlex($gap: 10px, $jc: flex-end);
   height: 70px;

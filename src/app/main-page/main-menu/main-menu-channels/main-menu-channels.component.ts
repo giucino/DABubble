@@ -5,6 +5,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DynamicContentComponent } from '../../../shared/dynamic-content/dynamic-content.component';
 import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CustomDialogService } from '../../../services/custom-dialog.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -22,7 +23,7 @@ export class MainMenuChannelsComponent {
   // panelOpenState = false;
   isExpanded = true;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private customDialogService : CustomDialogService) {}
 
   toggleExpansion() {
     this.isExpanded = !this.isExpanded;
@@ -32,14 +33,19 @@ export class MainMenuChannelsComponent {
   //   this.dialog.open(AddChannelCardComponent);
   // }
 
-  openDialog(): void {
-    console.log('Opening dialog');
-    const dialogRef = this.dialog.open(AddChannelCardComponent, {
+  // openDialog(): void {
+  //   console.log('Opening dialog');
+  //   const dialogRef = this.dialog.open(AddChannelCardComponent, {
       panelClass: 'card-round-corners',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+
+  openAddChannelDialog() {
+    const component = AddChannelCardComponent;
+    this.customDialogService.openDialog(component);
   }
 }
