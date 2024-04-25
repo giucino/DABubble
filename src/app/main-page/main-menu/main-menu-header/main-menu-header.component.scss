@@ -1,13 +1,12 @@
 @import "../../../../styles.scss";
+@import "../../../../assets/scss/mixin.scss";
 
 header {
   @include dFlex($jc: space-between );
 
   .menu-header-left {
-    display: flex;
+    @include dFlex($gap: 15px);
     padding-right: 20px;
-    align-items: center;
-    gap: 15px;
     flex-shrink: 0;
     cursor: pointer;
     &:hover {
@@ -31,7 +30,7 @@ header {
     }
 
     .menu-title {
-      color: var(--color-black, #000);
+      color: var(--color-black);
       font-family: Nunito;
       font-size: 24px;
       font-style: normal;
