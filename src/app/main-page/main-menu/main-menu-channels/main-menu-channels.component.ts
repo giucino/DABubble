@@ -36,8 +36,8 @@ export class MainMenuChannelsComponent {
   // openDialog(): void {
   //   console.log('Opening dialog');
   //   const dialogRef = this.dialog.open(AddChannelCardComponent, {
-      panelClass: 'card-round-corners',
-    });
+    //   panelClass: 'card-round-corners',
+    // });
 
   //   dialogRef.afterClosed().subscribe((result) => {
   //     console.log('The dialog was closed');

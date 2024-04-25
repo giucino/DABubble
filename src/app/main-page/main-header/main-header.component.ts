@@ -28,15 +28,15 @@ export class MainHeaderComponent {
   //   });
   // }
 
-  openDialog() {
+  // openDialog() {
   //   const dialogRef = this.dialog.open(LogOutDialogComponent);
 
   //   dialogRef.afterClosed().subscribe(() => {
   //     console.log('Dialog geschlossen');
-    });
+    // });
 
-    dialogRef.componentInstance.showProfileClicked.subscribe(() => {
-      console.log('Profil anzeigen');
+    // dialogRef.componentInstance.showProfileClicked.subscribe(() => {
+    //   console.log('Profil anzeigen');
       // Weitere Aktionen durchführen
   //   });
   // }
