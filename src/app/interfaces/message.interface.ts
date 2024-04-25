@@ -5,7 +5,6 @@ export interface Message {
     thread_id?: string,
     message: {
         text: string, // 'This is an example <@user_id> <#channel_id>'
-        user_name: string,
         reactions?: string[], // 'reaction_id_1', 'reaction_id_2' ...
         attachements?: string[], // 'img.jpg' , 'document.pdf' ...
     }
