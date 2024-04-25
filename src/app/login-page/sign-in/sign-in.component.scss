@@ -50,8 +50,6 @@ form {
 
     >div {
         position: relative;
-        // display: flex;
-        // flex-direction: column;
         gap: 4px;
 
         >input {
@@ -114,8 +112,6 @@ input[type="name"] {
     background-image: url("/assets/img/person_filled.png");
     &:focus{
         background-image: url("/assets/img/person_filled_b.png");
-        background-size: 16px 16px !important;
-        background-position: left 34px center !important;
     }
 
 }
@@ -221,154 +217,4 @@ input[type="name"] {
     width: 500px;
     display: flex;
     justify-content: flex-end;
-}
-@media (max-width: 630px) {
-    .signin-container{
-        width: calc(100% - 32px);
-        padding: 30px 16px;
-        height: auto;
-        >p{
-            width: 90%;
-        }
-    }
-    .back-to-login {
-        top: 40px;
-        img{
-            width: 20px !important;
-            height: 20px !important;
-        }
-
-    }
-    form{
-        width: 100%;
-        >div{
-            width: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            input{
-                width: 90%;
-            }
-        }
-
-    }
-    .check-div{
-        display: none;
-    }
-    .errorMsg{
-        text-align: start;
-        width: 90%;
-        margin-top: 65px;
-    }
-    .next-btn-container{
-        width: 90%;
-    }
-}
-@media (max-width: 520px) {
-    .back-to-login {
-        top: 30px;
-        >img{
-            width: 20px !important;
-            height: 20px !important;
-        
-        }
-    }
-    .signin-container{
-        h1{
-            font-size: 32px;
-        }
-        >p{
-            font-size: 17px;
-        }
-    }
-    form{
-        gap: 30px;
-        margin-bottom: 10px;
-        >div{
-            input{
-                background-position: left 20px center;
-                padding: 13px 32px 13px 70px;
-                text-align: start;
-                &::placeholder {
-                    font-size: 16px;
-                }
-            }
-        }
-    }
-    input[type="name"]{
-        &:focus{
-            background-position: left 24px center !important;
-        }
-    }
-    .errorMsg{
-        margin-top: 50px;
-    }
-    .back-to-login{
-        left: 16px;
-    }
-}
-@media (max-width: 420px) {
-    .login-container{
-        padding: 20px 16px;
-        h1{
-            font-size: 30px;
-        }
-        >p{
-            font-size: 15px;
-        }
-    }
-    form{
-        >div{
-            input{
-                
-                padding: 13px 24px 13px 55px;
-
-            }
-        }
-    }
-    .errorMsg{
-        font-size: 12px;
-    }
-    .next-btn-container{
-        >button{
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    }
-    .back-to-login {
-        // top: 30px;
-        left: 10px;
-        >img{
-            width: 16px !important;
-            height: 16px !important;
-        
-        }
-    }
-}
-@media (max-width: 350px) {
-    .back-to-login {
-        top: unset;
-        bottom: 30px;
-        left: 24px;
-    }
-    form{
-        gap: 20px;
-        >div{
-            input{
-                background-position: left 15px center;
-                padding: 13px 24px 13px 50px;
-                &::placeholder {
-                    font-size: 14px;
-                }
-            }
-        }
-    }
-    .errorMsg{
-        font-size: 10px;
-    }
-    input[type="name"]{
-        &:focus{
-            background-position: left 20px center !important;
-        }
-    }
 }
