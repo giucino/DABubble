@@ -1,9 +1,8 @@
 @import "./../../../styles.scss";
+@import "../../../assets/scss/mixin.scss";
 
 .header-content {
-  position: relative;
   @include dFlex($gap: 20px, $jc: space-between);
-  z-index: 2;
 }
 
 .logo-container {
@@ -33,7 +32,6 @@
 
 .user-head {
   min-width: 485px;
-
   flex: 1;
   @include dFlex($gap: 10px, $jc: flex-end);
   height: 70px;
