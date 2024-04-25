@@ -16,11 +16,6 @@ export class LogOutDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<LogOutDialogComponent>) {}
 
-  // onNoClick(): void {
-  //   this.dialogRef.close();
-  //   console.log('Dialog closed'); 
-  // }
-
   openCurrentUser(): void {
     this.showProfileClicked.emit();
     console.log('aktueller User', this.showProfileClicked);
