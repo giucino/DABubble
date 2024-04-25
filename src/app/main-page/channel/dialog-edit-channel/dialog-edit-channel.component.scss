@@ -1,6 +1,6 @@
 .dialog-edit-channel {
   width: 872px;
-  height: 616px;
+  // height: 616px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  .channel-name-container {
+  .channel-edit-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -43,7 +43,7 @@
     border: 1px solid var(--color-light-purple);
     border-radius: 20px;
     transition: padding 250ms ease-in-out;
-    .channel-name-container-header {
+    .channel-edit-container-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -61,7 +61,7 @@
     }
 
     &-edit {
-      @extend .channel-name-container;
+      @extend .channel-edit-container;
       padding: 0;
       border: none;
       .channel-description {
@@ -131,5 +131,22 @@ textarea {
       line-height: 21.6px;
       color: var(--color-black);
     }
+  }
+}
+
+.h-separator {
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-light-purple);
+}
+
+.channel-creator {
+  color: var(--color-purple-3);
+}
+
+.dialog-edit-channel {
+  .btn-primary {
+    width: fit-content;
+    margin-left: auto;
   }
 }

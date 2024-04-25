@@ -37,13 +37,6 @@ export class CustomDialogService {
         },
       });
     }
-    // this.dialogRef = this.dialog.open(dialogComponent, {
-    //   panelClass: 'custom-dialog-anchorTopRight',
-    //   position: {
-    //     top: rect.bottom + 'px',
-    //     left: rect.right + 'px',
-    //   },
-    // });
     if (this.dialogRef) {
       window.addEventListener('resize', () =>
         this.updateDialogPosition(button)
