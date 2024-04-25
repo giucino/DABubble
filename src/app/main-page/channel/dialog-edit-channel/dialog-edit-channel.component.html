@@ -63,11 +63,11 @@
     <!-- channel name -->
     <div
       [ngClass]="{
-        'channel-name-container': !editChannelName,
-        'channel-name-container-edit': editChannelName
+        'channel-edit-container': !editChannelName,
+        'channel-edit-container-edit': editChannelName
       }"
     >
-      <div class="channel-name-container-header">
+      <div class="channel-edit-container-header">
         <div class="headline">Channel-Name</div>
         @if (!editChannelName) {
         <button class="btn-text-v3 fs-18" (click)="editChannelName = true">
@@ -118,11 +118,11 @@
     <!-- channel description -->
     <div
       [ngClass]="{
-        'channel-name-container': !editChannelDescription,
-        'channel-name-container-edit': editChannelDescription
+        'channel-edit-container': !editChannelDescription,
+        'channel-edit-container-edit': editChannelDescription
       }"
     >
-      <div class="channel-name-container-header">
+      <div class="channel-edit-container-header">
         <div class="headline">Channel-Description</div>
         @if (!editChannelDescription) {
         <button
@@ -151,6 +151,11 @@
           [readOnly]="!editChannelDescription"
         >Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.</textarea>
       </div>
+      <div class="h-separator"></div>
+      <div class="headline">Erstellt von</div>
+      <div class="channel-creator fs-24">Noah Braun</div>
     </div>
   </div>
+  <!-- leaving channel btn -->
+  <button class="btn-primary">Channel verlassen</button>
 </div>
