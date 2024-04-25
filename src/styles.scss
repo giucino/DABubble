@@ -378,3 +378,11 @@ button {
   align-items: $ai;
   gap: $gap;
 }
+
+
+app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

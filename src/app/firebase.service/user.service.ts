@@ -48,6 +48,6 @@ export class UserService implements OnDestroy {
 
     async updateUser(userId: string, updatedUser: UserService){
         let singleUserRef = doc(this.getUserRef(), userId);
-        await updateDoc(singleUserRef, updatedUser);
+        // await updateDoc(singleUserRef, updatedUser);
     }
 }

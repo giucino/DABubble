@@ -84,7 +84,7 @@
     flex-direction: column;
     gap: 20px;
     position: absolute;
-    top: 75px;
+    top: 50px;
     right: 75px;
     p {
         font-size: 18px;
@@ -314,25 +314,25 @@
 }
 
 
-@media (max-height: 1100px) {
-    .create-new-account-container {
-        top: 50px;
-    }
-    section {
-        max-height: 1101px;
-    }
-    .intro-bg-container {
-        max-height: 1101px;
-        animation: fadeOut 1s forwards 2s;
-    }
-    .intro-logo {
-        // animation: moveToTopMobile 1s forwards 2s;
-        font-size: 50px;
-    }
-    .intro-logo-text-container {
-        animation: moveLogoToLeft 1s forwards 500ms;
-    }
-    .intro-logo-text {
-        animation: revealText 1s forwards 500ms;
-    }
-}
+// @media (max-height: 1100px) {
+//     .create-new-account-container {
+//         top: 50px;
+//     }
+//     section {
+//         max-height: 1101px;
+//     }
+//     .intro-bg-container {
+//         max-height: 1101px;
+//         animation: fadeOut 1s forwards 2s;
+//     }
+//     .intro-logo {
+//         // animation: moveToTopMobile 1s forwards 2s;
+//         font-size: 50px;
+//     }
+//     .intro-logo-text-container {
+//         animation: moveLogoToLeft 1s forwards 500ms;
+//     }
+//     .intro-logo-text {
+//         animation: revealText 1s forwards 500ms;
+//     }
+// }
