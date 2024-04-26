@@ -1,6 +1,6 @@
 <div class="log-out-dialog">
     <div class="dropdown">
-        <button class="btn-text-v2 fs-24" (click)="openCurrentUser()">Profil</button>
+        <button #profileBtn class="btn-text-v2 fs-24" (click)="openCurrentUser(profileBtn)">Profil</button>
         <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
     </div>
 </div>

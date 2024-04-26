@@ -6,13 +6,13 @@
   padding: 30px;
   background-color: var(--color-white);
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-}
 
-.dropdown {
-  @include dFlex($fd: column, $jc: center, $gap: 15px);
-  width: 200px;
-  height: 100px;
-  button {
-    width: 100%;
+  .dropdown {
+    @include dFlex($fd: column, $jc: center, $gap: 15px);
+    width: 200px;
+    height: 100px;
+    button {
+      width: 100%;
+    }
   }
 }
