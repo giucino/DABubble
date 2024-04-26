@@ -1,0 +1,146 @@
+@import "../../../styles.scss";
+@import "../../../assets/scss/mixin.scss";
+
+.show-profile-dialog {
+  width: 500px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 38px;
+  padding: 45px 40px;
+  border-radius: 30px 0px 30px 30px;
+  background-color: var(--color-white);
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+
+  .profile-head {
+    width: 100%;
+    @include dFlex($jc: space-between);
+
+    .profile-headline {
+      color: var(--color-black);
+      font-family: Nunito;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      cursor: default;
+    }
+  }
+
+  .img-container {
+    width: 100%;
+    @include dFlex($fd: column, $gap: 20px);
+
+    .profile-img {
+      width: 200px;
+      height: 200px;
+      flex-shrink: 0;
+    }
+  }
+
+  .name-container {
+    width: 100%;
+    @include dFlex($fd: column, $ai: flex-start, $gap: 15px);
+
+    .name {
+      width: 100%;
+      @include dFlex($jc: space-between);
+
+      .first-name {
+        color: var(--color-black);
+        font-family: Nunito;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        cursor: default;
+      }
+
+      .edit {
+        color: var(--color-purple-3);
+        font-weight: 600;
+        cursor: pointer;
+        &:hover {
+          font-weight: 700;
+        }
+      }
+    }
+
+    .status-container {
+      @include dFlex($gap: 15px);
+
+      .online-stat {
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        background-color: var(--color-gray);
+        bottom: 0;
+        right: 0;
+
+        &-wborder {
+          @extend .online-stat;
+          border: 2px solid var(--color-white);
+        }
+      }
+
+      .status {
+        color: var(--color-online);
+        font-family: Nunito;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        cursor: default;
+      }
+    }
+  }
+
+  .email-container {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 15px;
+    .email {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 20px;
+
+      svg {
+        width: 30px;
+        height: 30px;
+
+        path {
+          fill: var(--color-black);
+        }
+      }
+
+      .email-label {
+        color: var(--color-black);
+        font-family: Nunito;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        cursor: default;
+      }
+    }
+
+    .email-address {
+      color: var(--color-email);
+      font-family: Nunito;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+      padding-left: 50px;
+      cursor: default;
+    }
+  }
+
+  .message-btn-container {
+    @include dFlex();
+    width: 100%;
+  }
+}
+
+.own-border-radius {
+  border-radius: 30px 0px 30px 30px;
+}
+
+.view-border-radius {
+  border-radius: 30px 30px 30px 30px;
+}

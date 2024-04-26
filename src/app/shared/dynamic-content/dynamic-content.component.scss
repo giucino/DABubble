@@ -102,6 +102,7 @@
 
 
 @import "../../../styles.scss";
+@import "../../../assets/scss/mixin.scss";
 
 .container {
   @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
