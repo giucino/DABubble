@@ -113,7 +113,7 @@
 
 @media (max-width: 630px) {
     .avatar-container {
-        width: calc(100% - 32px);
+        width: calc(100dvw - 32px);
         padding: 20px 16px;
         height: auto;
         >h1{
@@ -192,7 +192,7 @@
 }
 @media (max-width: 500px){
     .avatar-container{
-        width: calc(100% - 24px);
+        width: calc(100dvw - 24px);
         padding: 20px 12px;
         >h1{
             font-size: 32px;

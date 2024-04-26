@@ -140,8 +140,6 @@
 @keyframes fadeOut {
     0% {
         opacity: 1;
-        // display: block;
-        // background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
     }
 
     99% {
@@ -157,59 +155,39 @@
     }
 }
 
+
 @keyframes moveToTopLeft {
     0% {
     
     }
 
     100% {
-        top: 65px;
-        left: 75px;
-        transform: translate(0, 0);
+        top: var(--moveToTop);
+        left: var(--changeLeft);
+        transform: var(--changeTransform);
+        height: 70px;
+        font-size: var(--changeFontSize);
+        color: var(--color-black);
+        gap: 16px;
+    }
+}
+
+@keyframes Test {
+    0%{
+
+    }
+    100%{
+        position: static;
+        top: unset;
+        left: unset;
+        transform: unset;
         height: 70px;
         font-size: 32px;
         color: var(--color-black);
-        gap: 16px
+        gap: 16px;
     }
 }
 
-@keyframes moveToTopMobile{
-    0% {
-        // font-size: 60px;
-    }
-
-    100% {
-        top: 20px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        height: 70px;
-        font-size: 32px !important;
-        color: var(--color-black);
-        gap: 16px
-    }
-}
-@keyframes moveToTopMobileSmall{
-    0% {
-    }
-
-    100% {
-        // position: unset;
-        // transform: unset;
-        top: 10px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        height: 70px;
-        font-size: 32px !important;
-        color: var(--color-black);
-        gap: 16px
-    }
-    100%{
-        // position: unset;
-        // display: flex;
-        // align-items: center;
-        // transform: unset;
-    }
-}
 
 @keyframes moveLogoToLeft {
     100% {
@@ -231,16 +209,28 @@
 
 /* MEDIA QUERY WIDTH */
 
+@media (max-width: 1050px){
+    .create-new-account-container{
+        top: 15px;
+    }
+    .intro-logo {
+        --moveToTop: 30px;
+    }
+
+}
 @media (max-width: 768px) {
     section{
         display: flex;
-        justify-content: center;
+        // justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        height: 1024px;
+        min-height: 930px;
+        height: 100%;
         flex-direction: column;
         gap: 20px;
+        overflow-x: hidden;
     }
-    .intro-logo-container-mobile {
+    .intro-logo-container {
         position: unset;
         height: 70px;
     }
@@ -250,16 +240,16 @@
     .intro-logo-mobile{
         font-size: 40px !important;
     }
-    router-outlet{
-        width: 100%;
-    }
     .intro-bg-container {
         animation: fadeOut 1s forwards 2s;
-        height: 1024px;
+        min-height: 920px;
+        height: 100%;
     }
     .intro-logo {
-        animation: moveToTopMobile 1s forwards 2s;
-
+        --changeLeft: 50%;
+        --changeTransform: translate(-50%, 0);
+        --changeFontSize: 22px !important;
+        animation: moveToTopLeft 1s forwards 2s;
     }
     .intro-logo-text-container {
         animation: moveLogoToLeft 1s forwards 500ms;
@@ -272,7 +262,7 @@
         transform: unset;
         align-items: center;
         justify-content: flex-end;
-        bottom: 35px;
+        // bottom: 35px;
         width: 100%;
         top: unset;
         right: unset;
@@ -292,12 +282,11 @@
 }
 @media (max-width: 500px){
     section{
-        max-height: 100dvh;
         min-height: 800px;
     }
     .intro-bg-container{
         height: calc(100% + 1px);
-        min-height: 800px;
+        top: 0;
     }
     .intro-logo-img-mobile{
         width: 56px;
@@ -308,31 +297,8 @@
     }
 }
 @media (max-width: 420px){
-    .intro-logo{
-        animation: moveToTopMobileSmall 1s forwards 2s;
+    .intro-logo {
+        --moveToTop: 10px;
     }
 }
 
-
-// @media (max-height: 1100px) {
-//     .create-new-account-container {
-//         top: 50px;
-//     }
-//     section {
-//         max-height: 1101px;
-//     }
-//     .intro-bg-container {
-//         max-height: 1101px;
-//         animation: fadeOut 1s forwards 2s;
-//     }
-//     .intro-logo {
-//         // animation: moveToTopMobile 1s forwards 2s;
-//         font-size: 50px;
-//     }
-//     .intro-logo-text-container {
-//         animation: moveLogoToLeft 1s forwards 500ms;
-//     }
-//     .intro-logo-text {
-//         animation: revealText 1s forwards 500ms;
-//     }
-// }

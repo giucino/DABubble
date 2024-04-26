@@ -1,8 +1,8 @@
 .login-container {
-    // position: absolute;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     width: 606px;
@@ -155,13 +155,13 @@ input[type="email"] {
     .login-container{
        padding: 30px 16px;
        height: auto; 
-       position: relative;
+    //    position: relative;
     //    transform: unset;
     }
 }
 @media (max-width: 630px) {
     .login-container{
-        width: calc(100% - 32px);
+        width: calc(100dvw - 32px);
         >p{
             width: 90%;
         }
