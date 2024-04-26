@@ -56,7 +56,7 @@
     </div>
 
     <!-- Button zum Senden einer Nachricht nur anzeigen, wenn isOwnProfile = false ist -->
-    @if (isOwnProfile()) {
+    @if (!isOwnProfile()) {
     <div class="message-btn-container">
         <button class="btn-primary fs-18">
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
