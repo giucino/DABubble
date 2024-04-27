@@ -26,43 +26,41 @@ export class AvatarComponent {
   ];
   selectedAvatar = this.avatars[0];
   uploadedAvatar = '';
+  // newUser: string | any;
   userId: string | any;
   user: User = new User();
-  newUser = this.userService.allUsers;
-  userName: string | any;
+  currentUser: any;
+  currentUserId: string | any;
 
-  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, 
+    private userService: UserService) { 
+      const navigation = this.router.getCurrentNavigation();
+      this.currentUser = navigation?.extras.state?.['user'];
+      // console.log(JSON.stringify(this.currentUser, null, 2)); // endlich
+    }
 
 
   ngonInit() {
     this.userService.getUsers();
-    this.userName = this.route.snapshot.params['name'];
+    
+    // this.newUser = this.userService.allUsers[this.userService.allUsers.length - 1];
     // this.userId = this.route.snapshot.params['id'];
-    // this.getUser(this.userName);
-    console.log(this.userName);
-    this.getUserId();
     // this.getUser(this.userId);
-  }
-
-  async getUserId(){
-    let currentUser = this.userService.allUsers.find(user => user.name === this.userName);
-    this.userId = currentUser ? currentUser.id : null;
-    // return this.userId;
-    this.getUser(this.userId);
+    // console.log('aus avatar component :' + this.userId);
+    // this.userService.loadUser(this.userId);
   }
 
   async getUser(userId: any) {
-    return onSnapshot(this.userService.getSingleUserRef('users', userId), (doc) => {
+    return onSnapshot(this.userService.getSingleUserRef(userId), (doc) => {
       this.user = doc.data() as User;
-      // this.userId = doc.id;
+      console.log(this.user);
     });
   }
 
-  getAllUsers(){
-    return this.userService.allUsers;
-  }
-
   goToSignIn(){
+    // delte user from db
+    this.findCurrentUserId();
+    this.userService.deleteUser(this.currentUserId);
     this.router.navigate(['/login-page/signin']);
   }
 
@@ -72,8 +70,10 @@ export class AvatarComponent {
     }, 5000);
   }
 
-  uploadAvatar(){
-    // open picture upload dialog?
+  async uploadAvatar(event: any) {
+    const file = event.target.files[0];
+    const imageUrl = await this.userService.uploadImage(file);
+    this.selectedAvatar = imageUrl;
     console.log('Avatar uploaded');
     this.uploadedAvatar = this.selectedAvatar
   }
@@ -82,8 +82,26 @@ export class AvatarComponent {
     this.selectedAvatar = this.avatars[i];
   }
 
+  findCurrentUserId(): void {
+    for (let user of this.userService.allUsers) {
+      if (user.data.email === this.currentUser.email) {
+        this.currentUserId = user.id;
+        // console.log('currentUserId: ' + this.currentUserId);
+        break;
+        
+      }
+    }
+  }
+
+  setAvatarToUser(){
+    this.findCurrentUserId();
+    this.user.profile_img = this.selectedAvatar;
+    this.userService.addAvatarToUser(this.currentUserId, this.selectedAvatar);
+  }
+
   createUser(){
     // save this.selectedAvatar to user singleuserRef
+    this.setAvatarToUser();
     this.confirmPopup();
     this.triggerAnimation();
     this.goToLogin();

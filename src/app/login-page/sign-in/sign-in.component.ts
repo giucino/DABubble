@@ -18,16 +18,14 @@ import { User } from '../../models/user';
 })
 
 export class SignInComponent {
+  checkbox = {checked: false};
   checked = false;
   disabled = false;
   hoverState = false;
   firestore: Firestore = inject(Firestore);
   user = new User();
-  userId: string | any;
-  signEmail: string | any;
-  // user.email: string | any;
-  currentUserId: string | any;
-  // @ViewChild('signEmail') signEmail: ElementRef | undefined;
+  emailExists: boolean = false;
+  // userId: string | any;
 
   constructor(
     private router: Router, private userService: UserService, private route: ActivatedRoute) {
@@ -35,50 +33,39 @@ export class SignInComponent {
   }
 
   ngonInit() {
-    // this.userId = this.route.snapshot.params['id'];
-    // this.getUser(this.userId);
-    // console.log(this.userId);
     this.userService.getUsers();
+
   }
 
-  async getUser(userId: any) {
-    return onSnapshot(this.userService.getSingleUserRef('users', userId), (doc) => {
-      this.user = doc.data() as User;
-      // this.userId = doc.id;
-    });
-  }
+  // async getUser(userId: any) {
+  //   return onSnapshot(this.userService.getSingleUserRef(userId), (doc) => {
+  //     this.user = doc.data() as User;
+  //     this.userId = doc.id;
+  //   });
+  // }
 
   goToLogin() {
     this.router.navigate(['/login-page/login']);
   }
 
-  async getUserId(){
-    // let email = this.signEmail?.nativeElement?.value;
-    // let user = this.userService.allUsers.find(user => user.email === email);
-    this.signEmail = this.user.email;
-    let currentUser = this.userService.allUsers.find(user => user.email === this.signEmail);
-    this.currentUserId = currentUser ? currentUser.id : null;
-    return this.currentUserId;
+  checkEmail() {
+    const userExists = this.userService.allUsers.some(user => user.data.email === this.user.email);
+    if (userExists) {
+      console.log('User already exists');
+      this.emailExists = true;
+    }
+    return userExists;
   }
 
   async goToAvatar() {
-    // hier name email und password zu json speichern
-    await this.userService.addUser(this.user); //add geht
-    let test = this.userService.allUsers;
-    // this.getCurrentUser();
-    console.log(test);
-    // console.log(this.user);
-    // this.userId = this.user.id;
-    // this.userId = this.userService.getUserRef().doc().id;
-    this.userService.getUsers();
-    // let userId = await this.getUserId();
-    // setTimeout(() => {
-    //   this.getUserId();
-    // }, 1500);
+    if (this.checkEmail()) {return;}
+    await this.userService.addUser(this.user);
     setTimeout(() => {
-      // this.getCurrentUser();
-      this.router.navigate(['/login-page/avatar/' + this.user.name]); //geht noch nicht
+      //ladebalken maybe
+      this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
     }, 2000);
+    
+
 
   }
 

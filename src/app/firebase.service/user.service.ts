@@ -3,6 +3,7 @@ import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc
 import { Observable } from 'rxjs';
 import { getFirestore } from "firebase/firestore";
 import { User } from '../models/user';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,7 @@ export class UserService implements OnDestroy {
     constructor() {
             this.unsubUsers = this.getUsers()
     }
-    
+
     getUsers() {
         return onSnapshot(this.getUserRef(), (list) => {
             this.allUsers = [];
@@ -39,18 +40,17 @@ export class UserService implements OnDestroy {
         return collection(this.firestore, 'users');
     }
 
-    getSingleUserRef(colId: string, userId: string) {
-        return doc(collection(this.firestore, colId), userId);
+    getSingleUserRef(userId: string) {
+        return doc(collection(this.firestore, 'users'), userId);
     }
 
     async addUser(user: User){
-        // await addDoc(this.getUserRef(), user); // user.toJSON eventuell
         await addDoc(this.getUserRef(), user.toJSON());
     }
 
-    async updateUser(userId: string, updatedUser: User){
+    addAvatarToUser(userId: string, avatar: string){
         let singleUserRef = doc(this.getUserRef(), userId);
-        await updateDoc(singleUserRef, updatedUser.toJSON());
+        updateDoc(singleUserRef, {profile_img: avatar});
     }
 
     getCleanJson(user: User):{}{
@@ -65,17 +65,39 @@ export class UserService implements OnDestroy {
         }
     }
 
+    uploadImage(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+          const storage = getStorage();
+          const storageRef = ref(storage, 'images/' + file.name);
+      
+          const uploadTask = uploadBytesResumable(storageRef, file);
+      
+          uploadTask.on('state_changed', 
+            (snapshot) => {
+              // You can use this section to display the upload progress
+            }, 
+            (error) => {
+              reject(error);
+            }, 
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                resolve(downloadURL);
+              });
+            }
+          );
+        });
+      }
+
     async loadUser(userId: string){
-        this.getSingleUserRef('users', userId);
+        this.getSingleUserRef(userId);
     }
 
     async deleteUser(userId: string){
-        // try{
-            // await deleteDoc(doc(this.firestore, "users", userId));
-            // console.log("User deleted successfully.");
-        // }
-        //  catch (error) {
-            // console.error("Error removing document: ", error);
-        // }
+        try{
+            await deleteDoc(doc(this.firestore, "users", userId));
+        }
+         catch (error) {
+            console.error("Error removing document: ", error);
+        }
     }
 }

@@ -11,6 +11,7 @@
         <div>
             <input [(ngModel)]="user.email" type="email" #signEmail="ngModel" class="fs-18" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="signEmail" id="signEmail" placeholder="beispielname@email.com">
             <p class="errorMsg" *ngIf="!signEmail.valid && signEmail.touched">*Diese E-Mail-Adresse ist leider ungültig.</p>
+            <p class="errorMsg" *ngIf="emailExists">*Diese E-Mail-Adresse existiert bereits.</p>
         </div>
         <div>
             <input [(ngModel)]="user.password" type="password" #signPassword="ngModel" class="fs-18" ngModel required name="signPassword" id="signPassword" placeholder="Passwort">
@@ -19,11 +20,10 @@
     </form>
     
     <div class="check-div">
-        <input [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" type="checkbox" name="checkbox" id="checkbox">
+        <input [(ngModel)]="checkbox.checked" [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" type="checkbox" name="checkbox" id="checkbox">
         <p (mouseover)="hoverState = true" (mouseout)="hoverState = false">Ich stimme der <a [ngClass]="{'hover-effect': hoverState}" (mouseover)="hoverState = true" (mouseout)="hoverState = false" [routerLink]="['/login-page/privacy-policy']" id="link">Datenschutzerklärung</a> zu.</p>
     </div>
     <div class="next-btn-container">
-        <button class="btn-primary fs-18" (click)="goToAvatar()">Weiter</button>
-        <!-- [disabled]="!signin.valid" -->
+        <button [disabled]="!signin.valid || !checkbox.checked" class="btn-primary fs-18" (click)="goToAvatar()">Weiter</button>
     </div>
     
