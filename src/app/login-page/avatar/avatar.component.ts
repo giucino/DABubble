@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserCreatedSnackbarComponent } from '../../popups/user-created-snackbar/user-created-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../firebase.service/user.service';
+import { onSnapshot } from '@angular/fire/firestore';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-avatar',
@@ -23,8 +26,23 @@ export class AvatarComponent {
   ];
   selectedAvatar = this.avatars[0];
   uploadedAvatar = '';
+  userId: string | any;
+  user: User = new User();
 
-  constructor(private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private userService: UserService) { }
+
+
+  ngonInit() {
+    this.userService.getUsers();
+    this.getUser(this.userId);
+    this.userId = this.route.snapshot.params['id'];
+  }
+
+  async getUser(userId: any) {
+    return onSnapshot(this.userService.getSingleUserRef('users', userId), (doc) => {
+      this.user = doc.data() as User;
+    });
+  }
 
   goToSignIn(){
     this.router.navigate(['/login-page/signin']);
@@ -33,7 +51,6 @@ export class AvatarComponent {
   goToLogin(){
     setTimeout(() => {
       this.router.navigate(['/login-page/login']);
-      // window.location.reload();
     }, 5000);
   }
 
@@ -48,7 +65,7 @@ export class AvatarComponent {
   }
 
   createUser(){
-    // save this.selectedAvatar to user singeuserRef
+    // save this.selectedAvatar to user singleuserRef
     this.confirmPopup();
     this.triggerAnimation();
     this.goToLogin();

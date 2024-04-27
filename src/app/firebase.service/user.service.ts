@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { getFirestore } from "firebase/firestore";
-import { User } from '@angular/fire/auth';
+import { User } from '../models/user';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +10,13 @@ import { User } from '@angular/fire/auth';
 export class UserService implements OnDestroy {
     firestore: Firestore = inject(Firestore);
     allUsers: any[] = [];
-    userInt = new UserService();
+    user = new User();
 
-    // unsubUsers;
+
+    unsubUsers;
 
     constructor() {
-            // this.unsubUsers = this.getUsers()
+            this.unsubUsers = this.getUsers()
     }
     
     getUsers() {
@@ -31,7 +32,7 @@ export class UserService implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        // throw new Error('Method not implemented.');
+        this.unsubUsers();
     }
 
     getUserRef() {
@@ -42,12 +43,39 @@ export class UserService implements OnDestroy {
         return doc(collection(this.firestore, colId), userId);
     }
 
-    async addUser(user: UserService){
-        await addDoc(this.getUserRef(), user); // user.toJSON eventuell
+    async addUser(user: User){
+        // await addDoc(this.getUserRef(), user); // user.toJSON eventuell
+        await addDoc(this.getUserRef(), user.toJSON());
     }
 
-    async updateUser(userId: string, updatedUser: UserService){
+    async updateUser(userId: string, updatedUser: User){
         let singleUserRef = doc(this.getUserRef(), userId);
-        // await updateDoc(singleUserRef, updatedUser);
+        await updateDoc(singleUserRef, updatedUser.toJSON());
+    }
+
+    getCleanJson(user: User):{}{
+        return {
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            logged_in: user.logged_in,
+            is_typing: user.is_typing,
+            profile_img: user.profile_img,
+            // last_channel: userInt.last_channel
+        }
+    }
+
+    async loadUser(userId: string){
+        this.getSingleUserRef('users', userId);
+    }
+
+    async deleteUser(userId: string){
+        // try{
+            // await deleteDoc(doc(this.firestore, "users", userId));
+            // console.log("User deleted successfully.");
+        // }
+        //  catch (error) {
+            // console.error("Error removing document: ", error);
+        // }
     }
 }

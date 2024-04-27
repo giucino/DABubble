@@ -5,16 +5,16 @@
 
     <form #signin="ngForm">
         <div>
-            <input type="name" #name="ngModel" class="fs-18" ngModel required name="name" id="" placeholder="Name und Nachname">
-            <p class="errorMsg" *ngIf="!name.valid && name.touched">Bitte schreiben Sie einen Namen</p>
+            <input [(ngModel)]="user.name" type="name" #signName="ngModel" class="fs-18" ngModel required name="signName" id="signName" placeholder="Name und Nachname">
+            <p class="errorMsg" *ngIf="!signName.valid && signName.touched">Bitte schreiben Sie einen Namen</p>
         </div>
         <div>
-            <input type="email" #email="ngModel" class="fs-18" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="email" id="" placeholder="beispielname@email.com">
-            <p class="errorMsg" *ngIf="!email.valid && email.touched">*Diese E-Mail-Adresse ist leider ungültig.</p>
+            <input [(ngModel)]="user.email" type="email" #signEmail="ngModel" class="fs-18" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="signEmail" id="signEmail" placeholder="beispielname@email.com">
+            <p class="errorMsg" *ngIf="!signEmail.valid && signEmail.touched">*Diese E-Mail-Adresse ist leider ungültig.</p>
         </div>
         <div>
-            <input type="password" #password="ngModel" class="fs-18" ngModel required name="password" id="" placeholder="Passwort">
-            <p class="errorMsg" *ngIf="!password.valid && password.touched">Bite geben Sie ein Passwort ein.</p>
+            <input [(ngModel)]="user.password" type="password" #signPassword="ngModel" class="fs-18" ngModel required name="signPassword" id="signPassword" placeholder="Passwort">
+            <p class="errorMsg" *ngIf="!signPassword.valid && signPassword.touched">Bite geben Sie ein Passwort ein.</p>
         </div>
     </form>
     
