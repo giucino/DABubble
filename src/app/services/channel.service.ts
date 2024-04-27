@@ -7,12 +7,12 @@ import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 })
 export class ChannelService {
   channelsSig = signal<Channel[]>([]);
-  channelSig = signal<ChannelTypeEnum>(ChannelTypeEnum.main);
+  channelTypSig = signal<ChannelTypeEnum>(ChannelTypeEnum.main);
 
   constructor() {}
 
   // changeChannel(channelName: ChannelTypeEnum): void {
-  //   this.channelSig.set(channelName);
+  //   this.channelTypSig.set(channelName);
   // }
 
   addChannel(
