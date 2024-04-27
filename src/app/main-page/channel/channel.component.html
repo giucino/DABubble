@@ -234,23 +234,7 @@
           <div class="h-line"></div>
         </div>
       }  
-      <app-message [channelType]="channelType"></app-message>
-      @if (channelType != 'thread') {
-        <div class="time-separator">
-          <div class="h-line"></div>
-          <div class="message-time fs-18">Heute</div>
-          <div class="h-line"></div>
-        </div>
-      }
-      <app-message [channelType]="channelType"></app-message>
-      @if (channelType != 'thread') {
-        <div class="time-separator">
-          <div class="h-line"></div>
-          <div class="message-time fs-18">Heute</div>
-          <div class="h-line"></div>
-        </div>
-      }
-      <app-message [channelType]="channelType"></app-message>
+      <app-message  *ngFor="let message of messageService.messages" [message]="message" [channelType]="channelType"></app-message>
     </div> 
 </div>
 
@@ -258,7 +242,7 @@
   <!-- channel footer -->
   <div class="channel-footer">
     <div class="message-input-container">
-        <textarea type="text" placeholder="Nachricht an #Entwicklerteam"></textarea>
+        <textarea type="text" placeholder="Nachricht an #Entwicklerteam" [(ngModel)]="messageInput"></textarea>
         <div class="message-input-buttons">
           <div class="left-side">
             <!-- add document -->
@@ -303,7 +287,7 @@
               </svg>                
             </button>
           </div>
-          <button class="btn-send-message w40">
+          <button class="btn-send-message w40" (click)="saveMessage()">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_813_12250" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
               <rect width="30" height="30" fill="#D9D9D9"/>
