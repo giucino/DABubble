@@ -28,20 +28,38 @@ export class AvatarComponent {
   uploadedAvatar = '';
   userId: string | any;
   user: User = new User();
+  newUser = this.userService.allUsers;
+  userName: string | any;
 
   constructor(private router: Router, private _snackBar: MatSnackBar, private route: ActivatedRoute, private userService: UserService) { }
 
 
   ngonInit() {
     this.userService.getUsers();
+    this.userName = this.route.snapshot.params['name'];
+    // this.userId = this.route.snapshot.params['id'];
+    // this.getUser(this.userName);
+    console.log(this.userName);
+    this.getUserId();
+    // this.getUser(this.userId);
+  }
+
+  async getUserId(){
+    let currentUser = this.userService.allUsers.find(user => user.name === this.userName);
+    this.userId = currentUser ? currentUser.id : null;
+    // return this.userId;
     this.getUser(this.userId);
-    this.userId = this.route.snapshot.params['id'];
   }
 
   async getUser(userId: any) {
     return onSnapshot(this.userService.getSingleUserRef('users', userId), (doc) => {
       this.user = doc.data() as User;
+      // this.userId = doc.id;
     });
+  }
+
+  getAllUsers(){
+    return this.userService.allUsers;
   }
 
   goToSignIn(){
