@@ -21,7 +21,7 @@
         Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.
     </p>
 
-    <mat-dialog-content  class="mat-dialog-content-custom">
+    <mat-dialog-content class="mat-dialog-content-custom">
         <p class="input-label">Channel-Name</p>
         <div class="input-wrapper">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,14 +35,14 @@
                         fill="black" />
                 </g>
             </svg>
-            <input class="input-description" placeholder="z.B. Kooperationsprojekte">
+            <input type="text" [(ngModel)]="name" class="input-description" placeholder="z.B. Kooperationsprojekte">
         </div>
     </mat-dialog-content>
 
     <mat-dialog-content class="mat-dialog-content-custom">
         <p class="input-label">Beschreibung</p>
         <div class="input-wrapper">
-            <input class="input-description" matInput placeholder="Dein Text hier">
+            <input type="text" [(ngModel)]="description" class="input-description" matInput placeholder="Dein Text hier">
         </div>
     </mat-dialog-content>
 
