@@ -1,5 +1,5 @@
 <div [ngClass]="{'message-container' : !isCurrentUser(), 'message-container-reverse' : isCurrentUser()}">
-    <img class="profile-img" src="./assets/img/avatar-1.jpg" alt="">
+    <img class="profile-img" [src]="currentUser.profile_img" alt="">
     <!-- message -->
     @if(!editMessage) {
         <div class="message-content">
@@ -206,7 +206,7 @@
     <!-- edit - message -->
     @if(editMessage) {
         <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">
-            <textarea placeholder="" [(ngModel)]="message.message.text"></textarea>
+            <textarea placeholder="" [(ngModel)]="editableMessage.message.text"></textarea>
             <div class="message-edit-buttons">
                 <!-- add emoticon -->
                 <button class="btn-icon w40">

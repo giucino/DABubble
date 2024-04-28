@@ -63,6 +63,7 @@ export class SignInComponent {
     if (this.checkEmail()) {return;}
     
     await this.userAuth.registerUser(this.user.email, this.user.password).then(async () => {
+      
       await this.userService.addUser(this.user);
     await this.userAuth.saveUser(this.user.name)}).then(() => {
       this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });

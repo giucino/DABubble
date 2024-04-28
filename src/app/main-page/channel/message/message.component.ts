@@ -30,7 +30,9 @@ export class MessageComponent {
     modified_at: 0,
     is_deleted: false,
     total_replies: 0,
-  }
+  };
+
+  editableMessage : Message = JSON.parse(JSON.stringify(this.message));
 
   // TODO: replace with userService.currentUser
   currentUser : User = {
@@ -40,7 +42,7 @@ export class MessageComponent {
     password: 'password',
     logged_in: true,
     is_typing: false,
-    profile_img: 'avatar-1.jpg',
+    profile_img: '/assets/img/avatar-1.jpg',
     // last_channel: string,
   }
 
@@ -53,7 +55,7 @@ export class MessageComponent {
       password: 'password1',
       logged_in: true,
       is_typing: false,
-      profile_img: 'avatar-1.jpg',
+      profile_img: '/assets/img/avatar-1.jpg',
     },
     {
       id: 'user_02',
@@ -62,7 +64,7 @@ export class MessageComponent {
       password: 'password2',
       logged_in: false,
       is_typing: false,
-      profile_img: 'avatar-2.jpg',
+      profile_img: '/assets/img/avatar-2.jpg',
     },
     {
       id: 'user_03',
@@ -71,7 +73,7 @@ export class MessageComponent {
       password: 'password3',
       logged_in: true,
       is_typing: false,
-      profile_img: 'avatar-3.jpg',
+      profile_img: '/assets/img/avatar-3.jpg',
     },
   ]
 
@@ -82,6 +84,7 @@ export class MessageComponent {
  
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
+    this.editableMessage = JSON.parse(JSON.stringify(this.message));
   }
 
   isCurrentUser() : boolean {
@@ -107,7 +110,7 @@ export class MessageComponent {
 
   updateMessage() {
     // console.log(this.message);
-    this.messageService.updateMessage(this.message);
+    this.messageService.updateMessage(this.editableMessage);
     this.editMessage = false;
     this.showMoreOptions = false;
   }

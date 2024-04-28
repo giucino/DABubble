@@ -64,7 +64,7 @@ export class UserService implements OnDestroy {
         return {
             name: user.name,
             email: user.email,
-            password: user.password,
+            password: '',
             logged_in: user.logged_in,
             is_typing: user.is_typing,
             profile_img: user.profile_img,
