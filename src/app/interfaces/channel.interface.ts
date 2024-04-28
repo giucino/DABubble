@@ -6,5 +6,5 @@ export interface Channel {
     creator: string, // 'user_id'
     members: string[], 
     active_members: string[],
-    channel_type: 'main' | 'direct' | 'thread' ,
+    channel_type: 'main' | 'direct' | 'thread' | 'new' ,
 }

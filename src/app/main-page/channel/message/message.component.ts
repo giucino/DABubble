@@ -55,7 +55,7 @@ export class MessageComponent {
       password: 'password1',
       logged_in: true,
       is_typing: false,
-      profile_img: 'avatar-1.jpg',
+      profile_img: '/assets/img/avatar-1.jpg',
     },
     {
       id: 'user_02',
@@ -64,7 +64,7 @@ export class MessageComponent {
       password: 'password2',
       logged_in: false,
       is_typing: false,
-      profile_img: 'avatar-2.jpg',
+      profile_img: '/assets/img/avatar-2.jpg',
     },
     {
       id: 'user_03',
@@ -73,7 +73,7 @@ export class MessageComponent {
       password: 'password3',
       logged_in: true,
       is_typing: false,
-      profile_img: 'avatar-3.jpg',
+      profile_img: '/assets/img/avatar-3.jpg',
     },
   ]
 

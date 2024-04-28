@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MessageComponent } from './message/message.component';
 import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
-import { CustomDialogService } from '../../services/custom-dialog.service'
+import { CustomDialogService } from '../../services/custom-dialog.service';
 import { DialogShowMembersComponent } from './dialog-show-members/dialog-show-members.component';
 import { DialogEditChannelComponent } from './dialog-edit-channel/dialog-edit-channel.component';
 import { MessageService } from '../../firebase.service/message.service';
@@ -16,16 +16,16 @@ import { Channel } from '../../interfaces/channel.interface';
   standalone: true,
   imports: [CommonModule, MessageComponent, FormsModule],
   templateUrl: './channel.component.html',
-  styleUrl: './channel.component.scss'
+  styleUrl: './channel.component.scss',
 })
 export class ChannelComponent {
-
-  @Input() channelType : 'main' | 'direct' | 'thread' | 'new' = 'main';
+  @Input() channelType: 'main' | 'direct' | 'thread' | 'new' = 'main';
   @Output() closeThreadEvent = new EventEmitter<boolean>();
-  
-  messageInput : string = '';
 
-  currentUser : User = {
+  messageInput: string = '';
+
+  // TODO: replace dummy data
+  currentUser: User = {
     id: 'user_01',
     name: 'Max Mustermann',
     email: 'max@mustermann.de',
@@ -34,54 +34,87 @@ export class ChannelComponent {
     is_typing: false,
     profile_img: 'avatar-1.jpg',
     // last_channel: string,
-  }
+  };
 
-  currentChannel : Channel = {
+  // TODO: replace with userService.users
+  users: User[] = [
+    {
+      id: 'user_01',
+      name: 'User 01',
+      email: 'user@01.de',
+      password: 'password1',
+      logged_in: true,
+      is_typing: false,
+      profile_img: '/assets/img/avatar-1.jpg',
+    },
+    {
+      id: 'user_02',
+      name: 'User 02',
+      email: 'user@02.de',
+      password: 'password2',
+      logged_in: false,
+      is_typing: false,
+      profile_img: '/assets/img/avatar-2.jpg',
+    },
+    {
+      id: 'user_03',
+      name: 'User 03',
+      email: 'user@03.de',
+      password: 'password3',
+      logged_in: true,
+      is_typing: false,
+      profile_img: '/assets/img/avatar-3.jpg',
+    },
+  ];
+
+  currentChannel: Channel = {
     id: 'channel_01',
-    name : 'Channel 01',
-    description : 'Das ist Channel 01',
+    name: 'Channel 01',
+    description: 'Das ist Channel 01',
     created_at: 1714048300000,
     creator: 'user_01', // 'user_id'
-    members: ['user_01', 'user_02', 'user_03'], 
+    members: ['user_01', 'user_02', 'user_03'],
     active_members: ['user_01', 'user_02'],
     channel_type: 'main',
-  }
+  };
 
-  message : Message = {
+  message: Message = {
     user_id: '',
     channel_id: 'channel_02',
     message: {
-        text: 'Text',
-        attachements: [], 
+      text: 'Text',
+      attachements: [],
     },
     created_at: 0,
     modified_at: 0,
     is_deleted: false,
-  }
+  };
 
-  currentDate : string = '1970/01/01';
+  currentDate: string = '1970/01/01';
 
-  constructor (public customDialogService: CustomDialogService, public messageService : MessageService) {
+  constructor(
+    public customDialogService: CustomDialogService,
+    public messageService: MessageService
+  ) {
     this.messageService.getMessagesFromChannel('channel_02');
   }
 
-  
-  openAddUserDialog(button : HTMLElement) {
+  openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute(button,component, 'right');
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
   }
 
-  openShowMembersDialog(button : HTMLElement) {
+  openShowMembersDialog(button: HTMLElement) {
     const component = DialogShowMembersComponent;
-    this.customDialogService.openDialogAbsolute(button,component,'right');
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
   }
 
-  openEditChannelDialog(button : HTMLElement) {
+  openEditChannelDialog(button: HTMLElement) {
     const component = DialogEditChannelComponent;
-    this.customDialogService.openDialogAbsolute(button,component,'left');
+    this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
 
-  closeThread(value : boolean) {
+  closeThread(value: boolean) {
     this.closeThreadEvent.emit(value);
   }
 
@@ -94,7 +127,7 @@ export class ChannelComponent {
     this.messageInput = '';
   }
 
-  isNewDate(date : number) {
+  isNewDate(date: number) {
     let currentDate = this.currentDate;
     let messageDate = this.convertToDate(date);
     this.currentDate = messageDate;
@@ -102,29 +135,52 @@ export class ChannelComponent {
   }
 
   getDateFormat(dateInput: number) {
-    const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag' ]
-    const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ]
+    const weekdays = [
+      'Sonntag',
+      'Montag',
+      'Dienstag',
+      'Mittwoch',
+      'Donnerstag',
+      'Freitag',
+      'Samstag',
+    ];
+    const months = [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
     let d = new Date(dateInput);
     let date = d.getDate();
-    let day : number | string = d.getDay();
-    let month : number | string = d.getMonth() + 1;
+    let day: number | string = d.getDay();
+    let month: number | string = d.getMonth() + 1;
     day = weekdays[day];
-    month = months[month]
+    month = months[month];
     let result = day + ',' + ' ' + date + ' ' + month;
     return result;
   }
 
-  convertToDate(dateAsNumber : number) {
+  convertToDate(dateAsNumber: number) {
     let date = new Date(dateAsNumber);
-    let d : number | string = date.getDate();
-    let m : number | string = date.getMonth() + 1;
-    let y : number | string = date.getFullYear();
+    let d: number | string = date.getDate();
+    let m: number | string = date.getMonth() + 1;
+    let y: number | string = date.getFullYear();
     if (d < 10) d = '0' + d;
     if (m < 10) m = '0' + m;
     let result = y + '/' + m + '/' + d;
     return result;
   }
 
-
-  
+  // TODO: move to userService
+  getUser(user_id : string) {
+    return this.users.find((user) => user.id == user_id);
+  }
 }
