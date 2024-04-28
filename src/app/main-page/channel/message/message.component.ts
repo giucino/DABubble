@@ -42,7 +42,7 @@ export class MessageComponent {
     password: 'password',
     logged_in: true,
     is_typing: false,
-    profile_img: 'avatar-1.jpg',
+    profile_img: '/assets/img/avatar-1.jpg',
     // last_channel: string,
   }
 
