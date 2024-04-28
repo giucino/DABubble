@@ -30,7 +30,9 @@ export class MessageComponent {
     modified_at: 0,
     is_deleted: false,
     total_replies: 0,
-  }
+  };
+
+  editableMessage : Message = JSON.parse(JSON.stringify(this.message));
 
   // TODO: replace with userService.currentUser
   currentUser : User = {
@@ -82,6 +84,8 @@ export class MessageComponent {
  
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
+    this.editableMessage = JSON.parse(JSON.stringify(this.message));
+    console.log(this.editableMessage)
   }
 
   isCurrentUser() : boolean {
@@ -107,7 +111,7 @@ export class MessageComponent {
 
   updateMessage() {
     // console.log(this.message);
-    this.messageService.updateMessage(this.message);
+    this.messageService.updateMessage(this.editableMessage);
     this.editMessage = false;
     this.showMoreOptions = false;
   }

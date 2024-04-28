@@ -62,7 +62,7 @@ export class ChannelComponent {
   currentDate : string = '1970/01/01';
 
   constructor (public customDialogService: CustomDialogService, public messageService : MessageService) {
-
+    this.messageService.getMessagesFromChannel('channel_02');
   }
 
   

@@ -28,10 +28,14 @@ export class MessageService implements OnDestroy {
         total_replies: 0,
     }
 
-    unsubMessages;
+    unsubMessages : any;
 
     constructor() {
-        this.unsubMessages = this.subMessages('channel_02');
+
+    }
+
+    getMessagesFromChannel(channel_id : string) {
+        this.unsubMessages = this.subMessages(channel_id);
     }
 
     ngOnDestroy(): void {
