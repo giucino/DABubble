@@ -27,8 +27,7 @@
         </div>
     </div>
     <div class="next-btn-container">
-        <button class="btn-primary fs-18" (click)="createUser()">Weiter</button>
-        <!-- [disabled]="!signin.valid" -->
+        <button class="btn-primary fs-18" [disabled]="!imageChanged" (click)="createUser()">Weiter</button>
     </div>
 
 </div>

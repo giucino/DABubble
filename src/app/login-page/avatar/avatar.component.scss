@@ -36,11 +36,14 @@
     border-radius: 100px;
     // padding: 16px;
     background-color: var(--color-purple-2);
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     >img {
         width: 168px;
         height: 168px;
         border-radius: 100px;
+        object-fit: cover;
 
         &:hover {
             box-shadow: 0 0 0 8px rgba(230, 230, 230, 1);

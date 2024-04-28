@@ -26,6 +26,7 @@ export class AvatarComponent {
   ];
   selectedAvatar = this.avatars[0];
   uploadedAvatar = '';
+  imageChanged: boolean = false;
   // newUser: string | any;
   userId: string | any;
   user: User = new User();
@@ -50,12 +51,12 @@ export class AvatarComponent {
     // this.userService.loadUser(this.userId);
   }
 
-  async getUser(userId: any) {
-    return onSnapshot(this.userService.getSingleUserRef(userId), (doc) => {
-      this.user = doc.data() as User;
-      console.log(this.user);
-    });
-  }
+  // async getUser(userId: any) {
+  //   return onSnapshot(this.userService.getSingleUserRef(userId), (doc) => {
+  //     this.user = doc.data() as User;
+  //     console.log(this.user);
+  //   });
+  // }
 
   goToSignIn(){
     // delte user from db
@@ -75,11 +76,13 @@ export class AvatarComponent {
     const imageUrl = await this.userService.uploadImage(file);
     this.selectedAvatar = imageUrl;
     console.log('Avatar uploaded');
-    this.uploadedAvatar = this.selectedAvatar
+    this.uploadedAvatar = this.selectedAvatar;
+    this.imageChanged = true;
   }
 
   changeAvatar(i:number){
     this.selectedAvatar = this.avatars[i];
+    this.imageChanged = true;
   }
 
   findCurrentUserId(): void {
