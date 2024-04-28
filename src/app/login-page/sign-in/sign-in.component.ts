@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Firestore, onSnapshot, doc } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
 import { User } from '../../models/user';
+import { UserAuthService } from '../../firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -28,7 +29,8 @@ export class SignInComponent {
   // userId: string | any;
 
   constructor(
-    private router: Router, private userService: UserService, private route: ActivatedRoute) {
+    private router: Router, private userService: UserService, 
+    private route: ActivatedRoute, private userAuth: UserAuthService) {
 
   }
 
@@ -59,11 +61,16 @@ export class SignInComponent {
 
   async goToAvatar() {
     if (this.checkEmail()) {return;}
-    await this.userService.addUser(this.user);
-    setTimeout(() => {
-      //ladebalken maybe
+    
+    await this.userAuth.registerUser(this.user.email, this.user.password).then(async () => {
+      await this.userService.addUser(this.user);
+    await this.userAuth.saveUser(this.user.name)}).then(() => {
       this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
-    }, 2000);
+    });
+    // setTimeout(() => {
+      //ladebalken maybe
+      // this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
+    // }, 2000);
     
 
 

@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogRef } from '@angular/material/dialog';
 import { DialogShowProfileComponent } from '../../../shared/dialog-show-profile/dialog-show-profile.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { ProfileService } from '../../../services/profile.service';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { UserAuthService } from '../../../firebase.service/user.auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-log-out-dialog',
@@ -14,11 +17,10 @@ import { ProfileService } from '../../../services/profile.service';
 })
 export class LogOutDialogComponent {
   @Output() showProfileClicked = new EventEmitter<void>();
-
   constructor(
     public dialogRef: MatDialogRef<LogOutDialogComponent>,
     private customDialogService: CustomDialogService,
-    private profileService: ProfileService
+    private profileService: ProfileService, private userAuth: UserAuthService, private router: Router
   ) {}
 
   openCurrentUser(button: HTMLElement) {
@@ -30,8 +32,16 @@ export class LogOutDialogComponent {
     this.dialogRef.close();
   }
 
-  logOut(): void {
-    console.log('Log out');
+  logOut() {
+    console.log('Logging out');
+    
+    // sobald logged in user funktioniert
+    // this.userAuth.logout().then(() => { 
+    //   this.router.navigate(['/login']);
+    //   this.dialogRef.close();
+    // });
+
+    this.router.navigate(['/login']);
     this.dialogRef.close();
   }
 }

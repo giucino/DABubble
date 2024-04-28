@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router} from '@angular/router';
 import { LoginSnackbarComponent } from '../../popups/login-snackbar/login-snackbar.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserService } from '../../firebase.service/user.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,7 +14,10 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
-  constructor(private router: Router, private _snackBar: MatSnackBar) { }
+  userId: string | any;
+  resetPassword: string = '';
+  resetPasswordAgain: string = '';
+  constructor(private router: Router, private _snackBar: MatSnackBar, private userService: UserService) { }
 
   goToCheckEmail(){
     this.router.navigate(['/login-page/check-email']);
@@ -44,9 +48,14 @@ export class ResetPasswordComponent {
     }
   }
 
+  updateUserPassword(){
+    // get user id from link? email?
+    this.userId = '';
+    this.userService.updatePassword(this.userId, this.resetPasswordAgain);
+  }
+
   changePassword(){
-    // Change password logic here
-    // rgba background 
+    this.updateUserPassword();
     this.confirmPopup();
     this.returnToLogin();
     this.triggerAnimation();
