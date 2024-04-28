@@ -85,7 +85,6 @@ export class MessageComponent {
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
-    console.log(this.editableMessage)
   }
 
   isCurrentUser() : boolean {
