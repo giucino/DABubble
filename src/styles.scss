@@ -46,6 +46,12 @@
   --color-online: #92c83e;
   --color-error: #ed1e79;
   --color-email: #1381ff;
+
+  /* kreyframes */
+  --moveToTop: 65px;
+  --changeLeft: 75px;
+  --changeTransform: translate(0 ,0);
+  --changeFontSize: 32px;
 }
 
 *,
@@ -368,5 +374,60 @@ button {
     @extend .custom-dialog;
     position: absolute !important;
     transform: translateX(-100%);
+  }
+}
+
+/* flex mixin */
+@mixin dFlex($fd: row, $jc: center, $ai: center, $gap: 0) {
+  display: flex;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $gap;
+}
+
+
+app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
+  height: 100dvh;
+  // height: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+
+@media (max-width: 768px) {
+  app-login{
+    height: 690px;
+  }
+  app-sign-in, app-avatar{
+    top: 50px;
+    height: 610px;
+  }
+  app-reset-password, app-check-email{
+    top: 30px;
+    height: 420px;
+  }
+}
+@media (max-width: 500px){
+  app-login{
+    height: 560px;
+  }
+  app-sign-in, app-avatar{
+    height: 475px;
+  }
+  app-reset-password, app-check-email{
+    height: 385px;
+  }
+}
+@media (max-width: 420px){
+  app-sign-in{
+    top: 0;
+  }
+}
+@media (max-width: 350px){
+  app-avatar{
+    top: 70px;
   }
 }

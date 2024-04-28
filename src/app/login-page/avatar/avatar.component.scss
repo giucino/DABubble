@@ -1,4 +1,4 @@
-.avatar-container{
+.avatar-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,13 +13,15 @@
     padding: 40px 30px;
     width: 606px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-    h1{
+
+    h1 {
         color: var(--color-purple-1);
         font-size: 46px;
         font-weight: 700;
     }
 }
-.avatar-window{
+
+.avatar-window {
     width: 472px;
     display: flex;
     justify-content: center;
@@ -27,68 +29,215 @@
     flex-direction: column;
     gap: 20px;
 }
-.picked-avatar{
+
+.picked-avatar {
     width: 168px;
     height: 168px;
     border-radius: 100px;
     // padding: 16px;
     background-color: var(--color-purple-2);
-    >img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    >img {
         width: 168px;
         height: 168px;
         border-radius: 100px;
-        &:hover{
+        object-fit: cover;
+
+        &:hover {
             box-shadow: 0 0 0 8px rgba(230, 230, 230, 1);
         }
-        &:active{
+
+        &:active {
             box-shadow: 0 0 0 8px var(--color-bg);
         }
     }
 }
-.avatar-list{
+
+.avatar-list {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     gap: 20px;
-    >button{
-        >img{
+
+    >button {
+        >img {
             width: 64px;
             height: 64px;
             border-radius: 41px;
-            &:hover{
+
+            &:hover {
                 box-shadow: 0 0 0 4px rgba(230, 230, 230, 1);
             }
-            &:active{
+
+            &:active {
                 box-shadow: 0 0 0 4px var(--color-bg);
             }
         }
     }
 }
-.j-left{
+
+.j-left {
     width: 100%;
     display: flex;
     justify-content: flex-start;
 }
-.upload-container{
+
+.upload-container {
     align-items: center;
     flex-direction: row;
     gap: 24px;
 }
-.back-to-signin{
+
+.back-to-signin {
     position: absolute;
     left: 32px;
     top: 50px;
     width: 40px;
     height: 40px;
-    img{
+
+    img {
         width: 24px !important;
         height: 24px !important;
-        
+
     }
 }
-.next-btn-container{
+
+.next-btn-container {
     width: 500px;
     display: flex;
     justify-content: flex-end;
 }
+@media (max-height: 920px){
+
+}
+
+@media (max-width: 630px) {
+    .avatar-container {
+        width: calc(100dvw - 32px);
+        padding: 20px 16px;
+        height: auto;
+        >h1{
+            font-size: 40px;
+        }
+        >p {
+            width: 90%;
+        }
+    }
+    .back-to-signin {
+        top: 25px;
+        img{
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+    .avatar-window{
+        width: 90%;
+
+    }
+    .picked-avatar{
+        width: 140px;
+        height: 140px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .avatar-list{
+        width: 100%;
+        gap: 0;
+        justify-content: space-between;
+    }
+    .next-btn-container{
+        width: 90%;
+    }
+}
+@media (max-width: 550px){
+    .avatar-container{
+        >h1{
+            width: 85%;
+            text-align: center;
+        }
+    }
+    .avatar-window{
+        gap: 10px;
+    }
+    .upload-container{
+        gap: unset;
+        justify-content: space-between;
+        
+    }
+    .j-left{
+        >p{
+            font-size: 18px;
+        }
+        button{
+            padding: 10px 20px;
+        }
+    }
+    .avatar-list {
+        >button {
+            >img {
+                width: 56px;
+                height: 56px;
+            }
+        }
+    }
+    .back-to-signin {
+        left: 10px;
+        img {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+}
+@media (max-width: 500px){
+    .avatar-container{
+        width: calc(100dvw - 24px);
+        padding: 20px 12px;
+        >h1{
+            font-size: 32px;
+        }
+    }
+    .avatar-window{
+        width: 100%;
+    }
+}
+@media (max-width: 430px){
+    .upload-container{
+        >p{
+            width: 35%;
+        }
+    }
+    .avatar-list {
+        >button {
+            >img {
+                width: 48px;
+                height: 48px;
+            }
+        }
+    }
+}
+@media (max-width: 350px) {
+    .upload-container{
+        flex-direction: column;
+        >p{
+            width: 100%;
+            text-align: center;
+        }
+    }
+    .avatar-list {
+        height: 110px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .back-to-signin {
+        top: unset;
+        bottom: 30px;
+        left: 32px;
+    }
+}
+

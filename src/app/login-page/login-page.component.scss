@@ -1,10 +1,12 @@
+
 .front-page-container {
     position: relative;
     width: 100dvh;
     height: 100dvh;
     max-width: 1920px;
 }
-.test{
+
+.test {
     width: 100%;
     height: 100vh;
 }
@@ -19,7 +21,7 @@
     animation: fadeOut 1s forwards 4000ms;
 }
 
-.intro-logo-container{
+.intro-logo-container {
     height: 100vh;
     width: 100dvw;
     position: absolute;
@@ -27,7 +29,7 @@
     overflow: hidden;
     pointer-events: none;
     touch-action: none;
-   
+
 }
 
 .intro-logo {
@@ -63,6 +65,7 @@
 }
 
 .intro-logo-text {
+    font-weight: 700;
     display: block;
     width: 100%;
     max-width: 0%;
@@ -74,51 +77,49 @@
     transform: translateX(-100%);
     animation: revealText 1000ms forwards 1500ms;
 }
-.create-new-account-container{
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    button{
-        a{
-            text-decoration: none;
-        }
-    }
-}
 
-.create-new-account-container{
+.create-new-account-container {
     display: flex;
     align-items: flex-end;
     flex-direction: column;
     gap: 20px;
-    p{
+    position: absolute;
+    top: 50px;
+    right: 75px;
+    p {
         font-size: 18px;
         line-height: 24.55px;
         font-weight: 400;
     }
-    button{
-            font-size: 18px;
-            line-height: 21.6px;
-            font-weight: 400;
-            font-family: 'Figtree', sans-serif;
-            color: var(--color-purple-2);
-            border: 1px solid transparent;
-            padding: 10px 15px;
-            &:hover{
-                border: 1px solid var(--color-black);
-                border-radius: 20px;
-                color: var(--color-purple-1);
-            }
+
+    button {
+        font-size: 18px;
+        line-height: 21.6px;
+        font-weight: 400;
+        font-family: 'Figtree', sans-serif;
+        color: var(--color-purple-2);
+        border: 1px solid transparent;
+        padding: 10px 15px;
+        a {
+            text-decoration: none;
+        }
+        &:hover {
+            border: 1px solid var(--color-black);
+            border-radius: 20px;
+            color: var(--color-purple-1);
+        }
     }
 }
 
-.data-links{
+.data-links {
     position: absolute;
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 16px;
     bottom: 40px;
-    a{
+
+    a {
         text-decoration: none;
         padding: 10px 15px;
         color: var(--color-purple-2);
@@ -126,7 +127,8 @@
         font-size: 18px;
         line-height: 21.6px;
         border: 1px solid transparent;
-        &:hover{
+
+        &:hover {
             border: 1px solid var(--color-black);
             border-radius: 20px;
             color: var(--color-purple-1);
@@ -137,34 +139,55 @@
 
 @keyframes fadeOut {
     0% {
-      opacity: 1;
+        opacity: 1;
     }
+
     99% {
         pointer-events: all;
         touch-action: auto;
     }
+
     100% {
-      opacity: 0;
-      pointer-events: none;
-      touch-action: none;
+        opacity: 0;
+        pointer-events: none;
+        touch-action: none;
+        display: none;
     }
-  }
+}
+
 
 @keyframes moveToTopLeft {
     0% {
-        top: 50%;
-        bottom: 50%;
+    
     }
+
     100% {
-        top: 75px;
-        left: 75px;
-        transform: translate(0,0);
+        top: var(--moveToTop);
+        left: var(--changeLeft);
+        transform: var(--changeTransform);
+        height: 70px;
+        font-size: var(--changeFontSize);
+        color: var(--color-black);
+        gap: 16px;
+    }
+}
+
+@keyframes Test {
+    0%{
+
+    }
+    100%{
+        position: static;
+        top: unset;
+        left: unset;
+        transform: unset;
         height: 70px;
         font-size: 32px;
         color: var(--color-black);
-        gap: 16px
+        gap: 16px;
     }
 }
+
 
 @keyframes moveLogoToLeft {
     100% {
@@ -176,16 +199,106 @@
     10% {
         max-width: 100%;
     }
+
     100% {
         max-width: 100%;
         transform: translateX(0%);
     }
 }
 
-// new account
 
-.create-new-account-container {
-    position: absolute;
-    top: 75px;
-    right: 75px;
+/* MEDIA QUERY WIDTH */
+
+@media (max-width: 1050px){
+    .create-new-account-container{
+        top: 15px;
+    }
+    .intro-logo {
+        --moveToTop: 30px;
+    }
+
 }
+@media (max-width: 768px) {
+    section{
+        display: flex;
+        // justify-content: center;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 930px;
+        height: 100%;
+        flex-direction: column;
+        gap: 20px;
+        overflow-x: hidden;
+    }
+    .intro-logo-container {
+        position: unset;
+        height: 70px;
+    }
+    .intro-logo-img-mobile{
+        height: 70%;
+    }   
+    .intro-logo-mobile{
+        font-size: 40px !important;
+    }
+    .intro-bg-container {
+        animation: fadeOut 1s forwards 2s;
+        min-height: 920px;
+        height: 100%;
+    }
+    .intro-logo {
+        --changeLeft: 50%;
+        --changeTransform: translate(-50%, 0);
+        --changeFontSize: 22px !important;
+        animation: moveToTopLeft 1s forwards 2s;
+    }
+    .intro-logo-text-container {
+        animation: moveLogoToLeft 1s forwards 500ms;
+    }
+    .intro-logo-text {
+        animation: revealText 1s forwards 500ms;
+    }
+    .create-new-account-container{
+        position: unset;
+        transform: unset;
+        align-items: center;
+        justify-content: flex-end;
+        // bottom: 35px;
+        width: 100%;
+        top: unset;
+        right: unset;
+        button{
+            border: 1px solid var(--color-black);
+            border-radius: 20px;
+            &:active{
+                background-color: var(--color-purple-1);
+                color: var(--color-white);
+            }
+        }
+
+    }
+    .data-links {
+        display: none; 
+    }
+}
+@media (max-width: 500px){
+    section{
+        min-height: 800px;
+    }
+    .intro-bg-container{
+        height: calc(100% + 1px);
+        top: 0;
+    }
+    .intro-logo-img-mobile{
+        width: 56px;
+        height: 56px;
+    }   
+    .intro-logo-mobile{
+        font-size: 32px !important;
+    }
+}
+@media (max-width: 420px){
+    .intro-logo {
+        --moveToTop: 10px;
+    }
+}
+

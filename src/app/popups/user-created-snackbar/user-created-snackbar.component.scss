@@ -19,3 +19,37 @@ div {
         color: var(--color-white);
     }
 }
+
+@media (max-width: 768px) {
+    div{
+
+        width: max-content;
+        padding: 20px 30px;
+        img{
+            width: 20px;
+            height: 20px;
+        }
+        p {
+            font-size: 22px;
+            line-height: 30px;
+        }
+    }
+}
+@media (max-width: 500px) {
+    div{
+        padding: 10px 20px;
+        p {
+            font-size: 18px;
+            line-height: 25px;
+        }
+    }
+}
+@media (max-width: 420px) {
+    div{
+        padding: 5px 10px;
+        p {
+            font-size: 16px;
+            line-height: 25px;
+        }
+    }
+}

@@ -6,7 +6,7 @@
         <div class="picked-avatar">
             <img [src]="selectedAvatar" src="assets/img/person.png" alt="">
         </div>
-        <h2 class="fs-32">User Name</h2>
+        <h2 class="fs-32">{{currentUser?.name}}</h2>
         <div class="j-left">
             <p class="fs-20">Aus der Liste wählen</p>
 
@@ -22,13 +22,12 @@
         </div>
         <div class="j-left upload-container">
             <p class="fs-20">eigenes Bild verwenden</p>
-            <button (click)="uploadAvatar()" class="btn-secondary fs-18">Datei Hochladen</button>
+            <input type="file" #fileInput style="display: none" (change)="uploadAvatar($event)">
+            <button (click)="fileInput.click()" class="btn-secondary fs-18">Datei Hochladen</button>
         </div>
     </div>
     <div class="next-btn-container">
-        <button class="btn-primary fs-18" (click)="createUser()">Weiter</button>
-        <!-- [disabled]="!signin.valid" -->
+        <button class="btn-primary fs-18" [disabled]="!imageChanged" (click)="createUser()">Weiter</button>
     </div>
-
 
 </div>
