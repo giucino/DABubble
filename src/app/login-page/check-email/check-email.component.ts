@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar,MatSnackBarModule} from '@angular/material/snack-bar';
 import { EmailSnackbarComponent } from '../../popups/email-snackbar/email-snackbar.component';
+import { send } from 'process';
 
 @Component({
   selector: 'app-check-email',
@@ -22,8 +23,13 @@ export class CheckEmailComponent {
   sendResetEmail(){
     // Send reset email logic here
     this.confirmPopup();
-    this.returnToResetPassword();
+    // this.returnToResetPassword();
     this.triggerAnimation();
+    // this.sendEmail();
+  }
+
+  sendEmail(){
+    // hier php oder so, send email zu input email
   }
 
   returnToResetPassword(){

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { UserAuthService } from '../../../firebase.service/user.auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-log-out-dialog',
@@ -10,7 +13,8 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
   styleUrl: './log-out-dialog.component.scss'
 })
 export class LogOutDialogComponent {
-  constructor(public dialogRef: MatDialogRef<LogOutDialogComponent>) {}
+  constructor(public dialogRef: MatDialogRef<LogOutDialogComponent>, 
+    private userAuth: UserAuthService, private router: Router) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -24,6 +28,14 @@ export class LogOutDialogComponent {
 
   logOut() {
     console.log('Logging out');
+    
+    // sobald logged in user funktioniert
+    // this.userAuth.logout().then(() => { 
+    //   this.router.navigate(['/login']);
+    //   this.dialogRef.close();
+    // });
+
+    this.router.navigate(['/login']);
     this.dialogRef.close();
   }
 }

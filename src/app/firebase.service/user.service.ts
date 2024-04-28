@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { getFirestore } from "firebase/firestore";
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { UserAuthService } from './user.auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ export class UserService implements OnDestroy {
 
     unsubUsers;
 
-    constructor() {
+    constructor(private userAuth: UserAuthService) {
             this.unsubUsers = this.getUsers()
     }
 
@@ -46,11 +47,17 @@ export class UserService implements OnDestroy {
 
     async addUser(user: User){
         await addDoc(this.getUserRef(), user.toJSON());
+        
     }
 
     addAvatarToUser(userId: string, avatar: string){
         let singleUserRef = doc(this.getUserRef(), userId);
         updateDoc(singleUserRef, {profile_img: avatar});
+    }
+
+    updatePassword(userId: string, password: string){
+        let singleUserRef = doc(this.getUserRef(), userId);
+        updateDoc(singleUserRef, {password: password});
     }
 
     getCleanJson(user: User):{}{
@@ -69,12 +76,10 @@ export class UserService implements OnDestroy {
         return new Promise((resolve, reject) => {
           const storage = getStorage();
           const storageRef = ref(storage, 'images/' + file.name);
-      
           const uploadTask = uploadBytesResumable(storageRef, file);
-      
           uploadTask.on('state_changed', 
             (snapshot) => {
-              // You can use this section to display the upload progress
+              // use this section to display the upload progress
             }, 
             (error) => {
               reject(error);
