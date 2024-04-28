@@ -12,7 +12,7 @@ export class User {
         this.id = obj ? obj.id : '';
         this.name = obj ?obj.name : '';
         this.email = obj ? obj.email : '';
-        this.password = obj ? obj.password : '';
+        this.password = '';
         this.logged_in = obj ? obj.logged_in : '';
         this.is_typing = obj ? obj.is_typing : '';
         this.profile_img = obj ? obj.profile_img : '';
@@ -24,7 +24,7 @@ export class User {
             // id: this.id,
             name: this.name,
             email: this.email,
-            password: this.password,
+            password: 'Hackerman',
             logged_in: this.logged_in,
             is_typing: this.is_typing,
             profile_img: this.profile_img
