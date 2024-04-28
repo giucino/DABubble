@@ -227,14 +227,17 @@
 
       }
       <!-- messages -->
-      @if (channelType != 'thread') {
-        <div class="time-separator">
-          <div class="h-line"></div>
-          <div class="message-time fs-18">Dienstag, 14 Januar</div>
-          <div class="h-line"></div>
-        </div>
-      }  
-      <app-message  *ngFor="let message of messageService.messages" [message]="message" [channelType]="channelType"></app-message>
+      @for(message of messageService.messages; track message.id) {
+        @if (channelType != 'thread' && isNewDate(message.created_at)) {
+          <div class="time-separator">
+            <div class="h-line"></div>
+            <div class="message-time fs-18">{{ getDateFormat(message.created_at) }}</div>
+            <div class="h-line"></div>
+          </div>
+        }  
+        <app-message [message]="message" [channelType]="channelType"></app-message>
+      }
+      
     </div> 
 </div>
 

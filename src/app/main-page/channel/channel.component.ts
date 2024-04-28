@@ -59,6 +59,8 @@ export class ChannelComponent {
     is_deleted: false,
   }
 
+  currentDate : string = '1970/01/01';
+
   constructor (public customDialogService: CustomDialogService, public messageService : MessageService) {
 
   }
@@ -91,4 +93,38 @@ export class ChannelComponent {
     this.messageService.addMessage(this.message);
     this.messageInput = '';
   }
+
+  isNewDate(date : number) {
+    let currentDate = this.currentDate;
+    let messageDate = this.convertToDate(date);
+    this.currentDate = messageDate;
+    return currentDate != messageDate;
+  }
+
+  getDateFormat(dateInput: number) {
+    const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag' ]
+    const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ]
+    let d = new Date(dateInput);
+    let date = d.getDate();
+    let day : number | string = d.getDay();
+    let month : number | string = d.getMonth() + 1;
+    day = weekdays[day];
+    month = months[month]
+    let result = day + ',' + ' ' + date + ' ' + month;
+    return result;
+  }
+
+  convertToDate(dateAsNumber : number) {
+    let date = new Date(dateAsNumber);
+    let d : number | string = date.getDate();
+    let m : number | string = date.getMonth() + 1;
+    let y : number | string = date.getFullYear();
+    if (d < 10) d = '0' + d;
+    if (m < 10) m = '0' + m;
+    let result = y + '/' + m + '/' + d;
+    return result;
+  }
+
+
+  
 }

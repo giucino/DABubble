@@ -106,7 +106,7 @@ export class MessageComponent {
   }
 
   updateMessage() {
-    console.log(this.message)
+    // console.log(this.message);
     this.messageService.updateMessage(this.message);
     this.editMessage = false;
     this.showMoreOptions = false;
