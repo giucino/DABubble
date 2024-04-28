@@ -29,7 +29,9 @@ export class MainMenuChannelsComponent implements OnInit {
   // channelService = inject(ChannelService);
   channelFirebaseService = inject(ChannelFirebaseService);
 
-  constructor(private customDialogService: CustomDialogService) {}
+
+  constructor(private customDialogService: CustomDialogService) {
+  }
 
   ngOnInit(): void {
     this.channels$ = this.channelFirebaseService.getChannels(); 

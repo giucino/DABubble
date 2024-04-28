@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Channel } from '../interfaces/channel.interface';
 import {
   Firestore,
@@ -18,13 +18,10 @@ import { Observable, from } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ChannelFirebaseService implements OnDestroy {
+export class ChannelFirebaseService {
   firestore: Firestore = inject(Firestore);
   channelsCollection = collection(this.firestore, 'channels');
 
-  ngOnDestroy(): void {
-    // throw new Error('Method not implemented.');
-  }
 
   getChannels(): Observable<Channel[]> {
     return collectionData(this.channelsCollection, {

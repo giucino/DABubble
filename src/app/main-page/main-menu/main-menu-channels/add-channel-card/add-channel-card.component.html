@@ -35,14 +35,14 @@
                         fill="black" />
                 </g>
             </svg>
-            <input type="text" [(ngModel)]="name" class="input-description" placeholder="z.B. Kooperationsprojekte">
+            <input type="text" [(ngModel)]="channel.name" required class="input-description" matInput placeholder="z.B. Kooperationsprojekte">
         </div>
     </mat-dialog-content>
 
     <mat-dialog-content class="mat-dialog-content-custom">
         <p class="input-label">Beschreibung</p>
         <div class="input-wrapper">
-            <input type="text" [(ngModel)]="description" class="input-description" matInput placeholder="Dein Text hier">
+            <input type="text" [(ngModel)]="channel.description" required class="input-description" matInput placeholder="Dein Text hier">
         </div>
     </mat-dialog-content>
 

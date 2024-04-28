@@ -1,7 +1,8 @@
 <section class="menu-channel-container">
     <div class="menu-channel-header">
         <div class="menu-channel-header-left" (click)="toggleExpansion()">
-            <svg class="svg-color" width="30" height="30" viewBox="0 0 30 30" fill="none" [ngStyle]="{ transform: !isExpanded ? 'rotate(-90deg)' : 'rotate(0deg)' }"
+            <svg class="svg-color" width="30" height="30" viewBox="0 0 30 30" fill="none"
+                [ngStyle]="{ transform: !isExpanded ? 'rotate(-90deg)' : 'rotate(0deg)' }"
                 xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_235_344" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30"
                     height="30">
@@ -32,25 +33,18 @@
     </div>
 
     @if (isExpanded) {
+    @for(user of userService.allUsers; track user.id) {
     <div class="channel-header-direct">
         <div class="channel-member">
             <div class="profile-img-container">
-                <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img">
+                <img [src]="user.data.profile_img" alt="" class="profile-img">
                 <div class="online-status-wborder online"></div>
             </div>
             <div class="channel-member-name fs-18">
-                Sofia Müller
-            </div>
-        </div>
-        <div class="channel-member">
-            <div class="profile-img-container">
-                <img src="./assets/img/avatar-2.jpg" alt="" class="profile-img">
-                <div class="online-status-wborder online"></div>
-            </div>
-            <div class="channel-member-name fs-18">
-                Sofia Müller
+                {{ user.data.name }}
             </div>
         </div>
     </div>
+    }
     }
 </section>

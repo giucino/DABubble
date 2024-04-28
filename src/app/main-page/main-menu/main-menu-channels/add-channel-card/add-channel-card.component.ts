@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -12,8 +12,10 @@ import {
 } from '@angular/material/dialog';
 import { ChannelService } from '../../../../services/channel.service';
 import { ChannelFirebaseService } from '../../../../firebase.service/channelFirebase.service';
+import { Channel } from '../../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../../shared/enums/channel-type.enum';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-channel-card',
@@ -31,16 +33,20 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-channel-card.component.html',
   styleUrl: './add-channel-card.component.scss',
 })
-export class AddChannelCardComponent implements OnInit {
+export class AddChannelCardComponent implements OnInit, OnDestroy {
   channelService = inject(ChannelService);
   channelFirebaseService = inject(ChannelFirebaseService);
-  name: string = '';
-  description: string = '';
-  created_at: number = Date.now();
-  creator: string = 'user_id';
-  members: string[] = ['user_id'];
-  active_members: string[] = ['user_id'];
-  channel_type: ChannelTypeEnum = ChannelTypeEnum.main;
+  private subscription?: Subscription;
+
+  channel: Channel = {
+    name: '',
+    description: '',
+    created_at: Date.now(),
+    creator: 'user_id',
+    members: ['user_id'],
+    active_members: ['user_id'],
+    channel_type: ChannelTypeEnum.main,
+  };
 
   constructor(
     public dialogRef: MatDialogRef<AddChannelCardComponent>,
@@ -48,10 +54,15 @@ export class AddChannelCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.channelFirebaseService.getChannels().subscribe((channels) => {
-      this.channelService.channelsSig.set(channels);
-      console.log('Channels fetched', channels);
-    });
+    this.subscription = this.channelFirebaseService
+      .getChannels()
+      .subscribe((channels) => {
+        this.channelService.channelsSig.set(channels);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   onNoClick(): void {
@@ -61,23 +72,23 @@ export class AddChannelCardComponent implements OnInit {
   createChannel(): void {
     this.channelFirebaseService
       .addChannel(
-        this.name,
-        this.description,
-        this.created_at,
-        this.creator,
-        this.members,
-        this.active_members,
-        this.channel_type
+        this.channel.name,
+        this.channel.description,
+        this.channel.created_at,
+        this.channel.creator,
+        this.channel.members,
+        this.channel.active_members,
+        this.channel.channel_type
       )
       .subscribe((addedChannelId) => {
         this.channelService.addChannel(
-          'name',
-          'description',
-          Date.now(),
-          'user_id',
-          ['user_id'],
-          ['user_id'],
-          ChannelTypeEnum.main,
+          this.channel.name,
+          this.channel.description,
+          this.channel.created_at,
+          this.channel.creator,
+          this.channel.members,
+          this.channel.active_members,
+          this.channel.channel_type,
           addedChannelId
         );
       });
