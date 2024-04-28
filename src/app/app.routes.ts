@@ -17,6 +17,7 @@ export const routes: Routes = [
         { path: 'signin', component: SignInComponent },
         { path: 'reset-password', component: ResetPasswordComponent },
         { path: 'avatar', component: AvatarComponent },
+        { path: 'avatar/:id', component: AvatarComponent },
         { path: 'email-sent', component: EmailSentComponent },
         { path: 'check-email', component: CheckEmailComponent },
         { path: 'imprint' , component: ImprintComponent},

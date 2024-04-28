@@ -1,22 +1,22 @@
+@import "../../../../../styles.scss";
+@import "../../../../../assets/scss/mixin.scss";
+
 .mat-card-custom {
-  display: flex;
+  @include dFlex($fd: column, $ai: flex-end, $gap: 20px);
   width: 100%;
   min-width: 450px;
   height: 100%;
   padding: 40px;
-  gap: 20px;
-  border-radius: 30px;
+  border-radius: 20px;
   background: var(--color-white);
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
 
   .mat-card-title-custom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include dFlex($jc: space-between);
     align-self: stretch;
 
     .mat-dialog-title-custom {
-      color: var(--Black, #000);
+      color: var(--color-black);
       font-family: Nunito;
       font-size: 24px;
       font-style: normal;
@@ -25,10 +25,10 @@
       margin: 0;
       padding: 0;
     }
-  }
 
-  .close-icon-custom {
-    cursor: pointer;
+    .close-icon-custom {
+      cursor: pointer;
+    }
   }
 
   .description-text {
@@ -41,17 +41,12 @@
   }
 
   .mat-dialog-content-custom {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
+    @include dFlex($fd: column, $ai: flex-start, $gap: 20px);
     width: 100%;
     padding: 0;
 
     .input-label {
       color: var(--color-black);
-      font-family: Nunito;
       font-family: Nunito;
       font-size: 18px;
       font-style: normal;

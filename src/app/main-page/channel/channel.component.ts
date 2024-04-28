@@ -10,6 +10,7 @@ import { Message } from '../../interfaces/message.interface';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
 import { Channel } from '../../interfaces/channel.interface';
+import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 
 @Component({
   selector: 'app-channel',
@@ -75,8 +76,9 @@ export class ChannelComponent {
     creator: 'user_01', // 'user_id'
     members: ['user_01', 'user_02', 'user_03'],
     active_members: ['user_01', 'user_02'],
-    channel_type: 'main',
-  };
+    channel_type: ChannelTypeEnum.main,
+  }
+
 
   message: Message = {
     user_id: '',

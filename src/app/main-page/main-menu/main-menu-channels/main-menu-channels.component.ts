@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DynamicContentComponent } from '../../../shared/dynamic-content/dynamic-content.component';
 import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
-import { MatDialog } from '@angular/material/dialog';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
+import { ChannelService } from '../../../services/channel.service';
+import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
+import { Observable } from 'rxjs';
+import { Channel } from '../../../interfaces/channel.interface';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -19,28 +23,21 @@ import { CustomDialogService } from '../../../services/custom-dialog.service';
   templateUrl: './main-menu-channels.component.html',
   styleUrl: './main-menu-channels.component.scss',
 })
-export class MainMenuChannelsComponent {
-  // panelOpenState = false;
+export class MainMenuChannelsComponent implements OnInit {
   isExpanded = true;
+  public channels$!: Observable<Channel[]>;
+  // channelService = inject(ChannelService);
+  channelFirebaseService = inject(ChannelFirebaseService);
 
-  constructor(private customDialogService : CustomDialogService) {}
+  constructor(private customDialogService: CustomDialogService) {}
+
+  ngOnInit(): void {
+    this.channels$ = this.channelFirebaseService.getChannels(); 
+  }
 
   toggleExpansion() {
     this.isExpanded = !this.isExpanded;
   }
-
-  // openDialog() {
-  //   this.dialog.open(AddChannelCardComponent);
-  // }
-
-  // openDialog(): void {
-  //   console.log('Opening dialog');
-  //   const dialogRef = this.dialog.open(AddChannelCardComponent);
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     console.log('The dialog was closed');
-  //   });
-  // }
 
   openAddChannelDialog() {
     const component = AddChannelCardComponent;

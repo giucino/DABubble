@@ -1,5 +1,5 @@
 <div [ngClass]="{'message-container' : !isCurrentUser(), 'message-container-reverse' : isCurrentUser()}">
-    <img class="profile-img" src="./assets/img/avatar-1.jpg" alt="">
+    <img class="profile-img" [src]="currentUser.profile_img" alt="">
     <!-- message -->
     @if(!editMessage) {
         <div class="message-content">

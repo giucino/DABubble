@@ -1,4 +1,5 @@
 @import '../../../styles.scss';
+@import "../../../assets/scss/mixin.scss";
 
 .main-menu {
   @include dFlex($fd: column, $jc: flex-start, $ai: flex-start, $gap: 25px);

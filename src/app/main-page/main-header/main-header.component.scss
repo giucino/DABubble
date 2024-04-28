@@ -1,63 +1,56 @@
 @import "./../../../styles.scss";
+@import "../../../assets/scss/mixin.scss";
 
 .header-content {
-  position: relative;
-  @include dFlex($gap: 20px, $jc: space-between);
-  z-index: 2;
-}
-
-.logo-container {
-  min-width: 366px;
-  height: 70px;
-  padding-left: 25px;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-
-  .logo {
-    width: 70px;
+  @include dFlex;
+  .logo-container {
+    min-width: 366px;
     height: 70px;
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+
+    .logo {
+      width: 70px;
+      height: 70px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-black);
+    }
   }
 
-  .logo-text {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-black);
-  }
-}
-
-.search-bar {
-  width: 100%;
-}
-
-.user-head {
-  min-width: 485px;
-
-  flex: 1;
-  @include dFlex($gap: 10px, $jc: flex-end);
-  height: 70px;
-  cursor: pointer;
-
-  .name {
-    white-space: nowrap;
-    font-size: 22px;
-    font-weight: 500;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-    display: block;
+  .search-bar {
+    width: 100%;
   }
 
-  .avatar {
-    @include dFlex();
+  .user-head {
+    @include dFlex($gap: 20px, $jc: flex-end);
+    min-width: 485px;
+    cursor: pointer;
+    &:hover {
+      color: var(--color-purple-3);
+    }
 
-    img {
-      width: 66px;
-      height: 66px;
-      border-radius: 40px;
-      object-fit: cover;
-      object-position: center;
+    .name {
+      white-space: nowrap;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      display: block;
+    }
+
+    .avatar {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      .profile-img {
+        width: 70px;
+      }
     }
   }
 }

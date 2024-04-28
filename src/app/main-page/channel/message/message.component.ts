@@ -42,7 +42,7 @@ export class MessageComponent {
     password: 'password',
     logged_in: true,
     is_typing: false,
-    profile_img: 'avatar-1.jpg',
+    profile_img: '/assets/img/avatar-1.jpg',
     // last_channel: string,
   }
 
@@ -85,7 +85,6 @@ export class MessageComponent {
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
-    console.log(this.editableMessage)
   }
 
   isCurrentUser() : boolean {
