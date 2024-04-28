@@ -1,7 +1,7 @@
 <div class="channel-container">
   
   <!-- channel header - main channel -->
-  @if (channelType == 'main') {
+  @if (currentChannel.channel_type == 'main') {
   <div class="channel-header">
     <!-- btn edit channel -->
     <div class="channel-name-container" #editChannelBtn (click)="openEditChannelDialog(editChannelBtn)">
@@ -32,7 +32,7 @@
           />
         </g>
       </svg>
-      <div class="channel-name fs-24">Entwicklerteam</div>
+      <div class="channel-name fs-24">{{ currentChannel.name }}</div>
       <!-- arrow-down icon -->
       <svg
         width="30"
@@ -64,23 +64,17 @@
       <!-- btn show-members -->
       <div  class="channel-members-info" #showMembersBtn (click)="openShowMembersDialog(showMembersBtn)">
         <div class="channel-members-preview">
-          <img
-            src="./assets/img/avatar-1.jpg"
-            alt="profile-img"
-            class="profile-img-wborder"
-          />
-          <img
-            src="./assets/img/avatar-2.jpg"
-            alt="profile-img"
-            class="profile-img-wborder"
-          />
-          <img
-            src="./assets/img/avatar-3.jpg"
-            alt="profile-img"
-            class="profile-img-wborder"
-          />
+          @for(member of currentChannel.members; track member; let index = $index) {
+            @if(index < 3) {
+              <img
+              src="{{ getUser(member)?.profile_img }}"
+              alt="profile-img"
+              class="profile-img-wborder"
+            />
+            }
+          }
         </div>
-        <div class="channel-members-count fs-20">3</div>
+        <div class="channel-members-count fs-20">{{ currentChannel.members.length }}</div>
       </div>
       <!-- btn add-member -->
       <button class="btn-icon-v4 w40" #addMemberBtn (click)="openAddUserDialog(addMemberBtn)">
@@ -114,7 +108,7 @@
   </div>
   }
   <!-- channel header - direct message -->
-  @if (channelType == 'direct') {
+  @if (currentChannel.channel_type == 'direct') {
   <div class="channel-header-direct">
     <div class="channel-member">
       <div class="profile-img-container">
@@ -126,7 +120,7 @@
   </div>
   }
   <!-- channel header - thread -->
-  @if (channelType == 'thread') {
+  @if (currentChannel.channel_type == 'thread') {
   <div class="channel-header-thread">
     <div class="channel-headline-container">
         <div class="channel-headline fs-24">Thread</div>
@@ -153,7 +147,7 @@
   </div>
   }
   <!-- channel header - new message -->
-  @if (channelType == 'new') { 
+  @if (currentChannel.channel_type == 'new') { 
     <div class="channel-header-new">
         <div class="channel-headline-container">
             <div class="channel-headline fs-24">Neue Nachricht</div>  
@@ -169,7 +163,7 @@
   <div class="channel-messages-container">
     <div class="channel-messages-content">
       <!-- channel first message -->
-      @if(channelType == 'main') {
+      @if(currentChannel.channel_type == 'main') {
         <div class="channel-info-container">
           <div class="channel-name-container">
             <svg class="hashtag-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -199,7 +193,7 @@
           </div>
         </div>
       }
-      @if (channelType == 'direct') {
+      @if (currentChannel.channel_type == 'direct') {
         <!-- person to person -->
         @if (true) {
           <div class="channel-info-container">
@@ -228,14 +222,14 @@
       }
       <!-- messages -->
       @for(message of messageService.messages; track message.id) {
-        @if (channelType != 'thread' && isNewDate(message.created_at)) {
+        @if (currentChannel.channel_type != 'thread' && isNewDate(message.created_at)) {
           <div class="time-separator">
             <div class="h-line"></div>
             <div class="message-time fs-18">{{ getDateFormat(message.created_at) }}</div>
             <div class="h-line"></div>
           </div>
         }  
-        <app-message [message]="message" [channelType]="channelType"></app-message>
+        <app-message [message]="message" [channelType]="currentChannel.channel_type"></app-message>
       }
       
     </div> 
