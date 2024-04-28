@@ -206,7 +206,7 @@
     <!-- edit - message -->
     @if(editMessage) {
         <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">
-            <textarea placeholder="" [(ngModel)]="message.message.text"></textarea>
+            <textarea placeholder="" [(ngModel)]="editableMessage.message.text"></textarea>
             <div class="message-edit-buttons">
                 <!-- add emoticon -->
                 <button class="btn-icon w40">
