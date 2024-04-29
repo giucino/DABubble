@@ -85,7 +85,7 @@ export class MessageService implements OnDestroy {
             this.messages = [];
             messages.forEach((message) => {
                 this.messages.push(this.setMessage(message.data(),message.id))
-            })
+            });
         })
     }
 

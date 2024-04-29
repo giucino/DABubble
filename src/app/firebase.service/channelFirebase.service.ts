@@ -41,6 +41,12 @@ export class ChannelFirebaseService {
     this.unsubChannels = this.subChannels();
   }
 
+  setCurrentChannel(channel_id : string) {
+    let channel = this.channels.find((channel) => channel.id == channel_id);
+    if(channel) this.currentChannel = channel;
+    console.log('Current Channel: ', this.currentChannel);
+  }
+
   ngOnDestroy(): void {
     this.unsubChannels();
 }
@@ -53,7 +59,7 @@ export class ChannelFirebaseService {
     return doc(collection(this.firestore, 'channels', channel_id))
   }
 
-  setChannel(data : any, id?: string) : Channel {
+  setChannel(data : any, id: string) : Channel {
     return {
         id: id || '',
         name: data.name || '',
@@ -81,10 +87,11 @@ export class ChannelFirebaseService {
       return onSnapshot( q , (channels) => {
           this.channels = [];
           channels.forEach((channel) => {
-              this.channels.push(this.setChannel(channel.data(),channel.id))
-          })
+              this.channels.push(this.setChannel(channel.data(),channel.id));
+          });
       })
   }
+
 
   /* UPDATE */
   async updateChannel(channel : Channel) {

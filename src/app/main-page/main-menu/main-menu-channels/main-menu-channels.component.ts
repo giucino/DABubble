@@ -27,12 +27,12 @@ export class MainMenuChannelsComponent implements OnInit {
   isExpanded = true;
 
 
-
   constructor(private customDialogService: CustomDialogService, public channelService : ChannelFirebaseService) {
+    
   }
 
   ngOnInit(): void {
-
+    
   }
 
   toggleExpansion() {
