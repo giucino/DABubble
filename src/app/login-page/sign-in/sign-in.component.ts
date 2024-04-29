@@ -26,7 +26,6 @@ export class SignInComponent {
   firestore: Firestore = inject(Firestore);
   user = new User();
   emailExists: boolean = false;
-  // userId: string | any;
 
   constructor(
     private router: Router, private userService: UserService, 
@@ -36,22 +35,16 @@ export class SignInComponent {
 
   ngonInit() {
     this.userService.getUsers();
-
+    // console.log(this.userService.allUsers);
   }
 
-  // async getUser(userId: any) {
-  //   return onSnapshot(this.userService.getSingleUserRef(userId), (doc) => {
-  //     this.user = doc.data() as User;
-  //     this.userId = doc.id;
-  //   });
-  // }
 
   goToLogin() {
     this.router.navigate(['/login-page/login']);
   }
 
   checkEmail() {
-    const userExists = this.userService.allUsers.some(user => user.data.email === this.user.email);
+    const userExists = this.userService.allUsers.some(user => user.email === this.user.email);
     if (userExists) {
       console.log('User already exists');
       this.emailExists = true;
@@ -60,6 +53,7 @@ export class SignInComponent {
   }
 
   async goToAvatar() {
+    console.log(this.userService.allUsers);
     if (this.checkEmail()) {return;}
     
     await this.userAuth.registerUser(this.user.email, this.user.password).then(async () => {
@@ -68,10 +62,8 @@ export class SignInComponent {
     await this.userAuth.saveUser(this.user.name)}).then(() => {
       this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
     });
-    // setTimeout(() => {
       //ladebalken maybe
-      // this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
-    // }, 2000);
+
     
 
 

@@ -1,23 +1,23 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Inject, Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { getFirestore } from "firebase/firestore";
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { UserAuthService } from './user.auth.service';
+
 
 @Injectable({
     providedIn: 'root'
 })
+
 export class UserService implements OnDestroy {
     firestore: Firestore = inject(Firestore);
     allUsers: any[] = [];
     user = new User();
-
+    currentUser: any;
 
     unsubUsers;
 
-    constructor(private userAuth: UserAuthService) {
+    constructor() {
             this.unsubUsers = this.getUsers()
     }
 
@@ -27,10 +27,44 @@ export class UserService implements OnDestroy {
             list.forEach((element) => {
                 let id = element.id;
                 let data = element.data();
-                let userData = { id, data };
-                this.allUsers.push(userData);
+                // let userData = { id, data };
+                this.allUsers.push(this.setUsers(data, id));
             });
         });
+    }
+
+    setUsers(data: any, id?: string) : User {
+        return {
+            id: id || '',
+            name: data.name || '',
+            email: data.email || '',
+            password: '',
+            logged_in: data.logged_in || false,
+            is_typing: data.is_typing || false,
+            profile_img: data.profile_img || '',
+            // last_channel: data.last_channel || ''
+            toJSON() {
+                return {
+                    id: this.id,
+                    name: this.name,
+                    email: this.email,
+                    password: this.password,
+                    logged_in: this.logged_in,
+                    is_typing: this.is_typing,
+                    profile_img: this.profile_img
+                };
+            }
+        }
+    
+    }
+
+    addDatabaseIdToUser(userId: string) {
+        let singleUserRef = doc(this.getUserRef(), userId);
+        updateDoc(singleUserRef, {id: userId});
+    }
+
+    getCurrentUser(email: string) {
+        this.currentUser = this.allUsers.find(user => user.email === email);
     }
 
     ngOnDestroy(): void {
@@ -47,7 +81,6 @@ export class UserService implements OnDestroy {
 
     async addUser(user: User){
         await addDoc(this.getUserRef(), user.toJSON());
-        
     }
 
     addAvatarToUser(userId: string, avatar: string){
@@ -56,8 +89,15 @@ export class UserService implements OnDestroy {
     }
 
     updatePassword(userId: string, password: string){
+        // let singleUserRef = doc(this.getUserRef(), userId);
+        // updateDoc(singleUserRef, {password: password});
+
+        // kein pw in database
+    }
+
+    updateOnlineStatus(userId: string, status: boolean){
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, {password: password});
+        updateDoc(singleUserRef, {logged_in: status});
     }
 
     getCleanJson(user: User):{}{
@@ -105,4 +145,6 @@ export class UserService implements OnDestroy {
             console.error("Error removing document: ", error);
         }
     }
+
+    
 }

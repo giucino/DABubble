@@ -21,7 +21,12 @@ export class UserAuthService {
     return signInAnonymously(this.auth);
   }
 
+  currentUser() {
+    return this.auth.currentUser;
+  }
+
   logout() {
+    // this.changeStatus(false);
     return signOut(this.auth);
   }
 
@@ -43,6 +48,7 @@ export class UserAuthService {
           console.error('Benutzer ist nicht authentifiziert');
       }
   }
+
 
 
   // async getName() {
