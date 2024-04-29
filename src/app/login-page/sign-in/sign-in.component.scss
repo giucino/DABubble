@@ -110,8 +110,11 @@ input[type="email"] {
 
 input[type="name"] {
     background-image: url("/assets/img/person_filled.png");
+    background-size: unset !important;
     &:focus{
         background-image: url("/assets/img/person_filled_b.png");
+        background-size: unset !important;
+        background-position: left 34px center !important;
     }
 
 }
@@ -365,7 +368,7 @@ input[type="name"] {
     }
     input[type="name"]{
         &:focus{
-            background-position: left 20px center !important;
+            background-position: left 19px center !important;
         }
     }
 }

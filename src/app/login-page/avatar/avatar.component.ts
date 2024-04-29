@@ -63,7 +63,7 @@ export class AvatarComponent {
     const file = event.target.files[0];
     const imageUrl = await this.userService.uploadImage(file);
     this.selectedAvatar = imageUrl;
-    console.log('Avatar uploaded');
+    // console.log('Avatar uploaded');
     this.uploadedAvatar = this.selectedAvatar;
     this.imageChanged = true;
   }

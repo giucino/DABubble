@@ -46,14 +46,14 @@ export class SignInComponent {
   checkEmail() {
     const userExists = this.userService.allUsers.some(user => user.email === this.user.email);
     if (userExists) {
-      console.log('User already exists');
+      // console.log('User already exists');
       this.emailExists = true;
     }
     return userExists;
   }
 
   async goToAvatar() {
-    console.log(this.userService.allUsers);
+    // console.log(this.userService.allUsers);
     if (this.checkEmail()) {return;}
     
     await this.userAuth.registerUser(this.user.email, this.user.password).then(async () => {

@@ -38,7 +38,7 @@ export class LoginComponent {
 
       this.userService.getCurrentUser(this.loginEmail); // currentUser is set
       // this.userService.addDatabaseIdToUser(this.userService.currentUser.id); // id is added to user
-      console.log(this.userService.currentUser); // geht
+      // console.log(this.userService.currentUser); // geht
 
     } catch (error) {
       console.error(error);
