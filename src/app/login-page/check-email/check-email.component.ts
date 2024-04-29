@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar,MatSnackBarModule} from '@angular/material/snack-bar';
 import { EmailSnackbarComponent } from '../../popups/email-snackbar/email-snackbar.component';
 import { send } from 'process';
+import { UserAuthService } from '../../firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-check-email',
@@ -14,29 +15,32 @@ import { send } from 'process';
   styleUrl: './check-email.component.scss'
 })
 export class CheckEmailComponent {
-  constructor(private router: Router, private _snackBar: MatSnackBar) { }
+  resetEmail: string = '';
+  error = false;
+
+  constructor(private router: Router, private _snackBar: MatSnackBar, private userAuth: UserAuthService) { }
 
   goToLogin(){
     this.router.navigate(['/login-page/login']);
   }
 
-  sendResetEmail(){
-    // Send reset email logic here
-    this.confirmPopup();
-    // this.returnToResetPassword();
-    this.triggerAnimation();
-    // this.sendEmail();
+  sendPasswordResetEmail(){
+    this.userAuth.resetPassword(this.resetEmail).then(() => {
+      this.confirmPopup();
+      this.triggerAnimation();
+      this.resetEmail = '';
+      this.error = false;
+    }).catch((error) => {
+      this.error = true;
+    });
   }
 
-  sendEmail(){
-    // hier php oder so, send email zu input email
-  }
 
-  returnToResetPassword(){
-    setTimeout(() => {
-      this.router.navigate(['/login-page/reset-password']);
-    }, 2000);
-  }
+  // returnToResetPassword(){
+  //   setTimeout(() => {
+  //     this.router.navigate(['/login-page/reset-password']);
+  //   }, 2000);
+  // }
 
   triggerAnimation() {
     const element = document.querySelector('.cdk-overlay-container');

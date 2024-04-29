@@ -2,15 +2,15 @@
     <button class="back-to-login btn-icon" (click)="goToLogin()"><img src="assets/img/arrow_back.svg" class="" alt=""></button>
         <h1>Passwort zurücksetzen</h1>
         <p class="textMsgAbove">Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
-        <form>
+        <form #emailForm="ngForm">
             <div>
-                <input class="fs-18" name="email" type="email" #email="ngModel" ngModel placeholder="beispielname@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$">
-                <p *ngIf="!email.valid && email.touched" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p>
+                <input [(ngModel)]="resetEmail" class="fs-18" name="email" type="email" #email="ngModel" ngModel placeholder="beispielname@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$">
+                <p *ngIf="!email.valid && email.touched || error" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p>
             </div>
         </form>
         <p class="textMsgBelow">Wir senden Ihnen ein E-Mail, über die Sie Ihr Passwort ändern können</p>
         <div class="next-btn-container">
-            <button class="btn" (click)="sendResetEmail()" >E-Mail senden</button>
+            <button class="btn" (click)="sendPasswordResetEmail()" >E-Mail senden</button>
             <!-- disable bis email mit pattern ok -->
         </div>
 </div>

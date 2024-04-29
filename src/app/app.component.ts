@@ -16,7 +16,16 @@ export class AppComponent {
   constructor(private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.router.navigate(['/login-page']);
+    if (this.router.url === '/main-page') {
+      this.router.navigate(['/login-page']);
+    }
+     if (this.router.url === '/reset-password') {
+      this.router.navigate(['/reset-password']);
+    }
+    if (this.router.url === '') {
+      this.router.navigate(['/login-page']);
+    } 
+    // this.router.navigate(['/login-page']);
   }
 
   confirmPopup(){

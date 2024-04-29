@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, fetchSignInMethodsForEmail, signInAnonymously, signOut, onAuthStateChanged } from "firebase/auth";
 
@@ -49,8 +49,15 @@ export class UserAuthService {
       }
   }
 
-
-
+  async resetPassword(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      console.log('Password Reset Email Sent!');
+    } catch (error) {
+      console.error('Error sending password reset email', error);
+    }
+  }
+  
   // async getName() {
   //     const user_auth: any = this.auth.currentUser;
   //     if (user_auth) {

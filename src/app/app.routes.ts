@@ -15,7 +15,7 @@ export const routes: Routes = [
     { path: 'login-page' , component: LoginPageComponent, children: [
         { path: 'login', component: LoginComponent},
         { path: 'signin', component: SignInComponent },
-        { path: 'reset-password', component: ResetPasswordComponent },
+
         { path: 'avatar', component: AvatarComponent },
         { path: 'avatar/:id', component: AvatarComponent },
         { path: 'email-sent', component: EmailSentComponent },
@@ -24,6 +24,7 @@ export const routes: Routes = [
         { path: 'privacy-policy' , component: PrivacyPolicyComponent},
     ]
     },
+    { path: 'reset-password', component: ResetPasswordComponent },
     
     
     { path: 'main-page' , component: MainPageComponent}
