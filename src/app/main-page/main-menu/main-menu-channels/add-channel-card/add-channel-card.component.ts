@@ -16,6 +16,7 @@ import { Channel } from '../../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../../shared/enums/channel-type.enum';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { UserService } from '../../../../firebase.service/user.service';
 
 @Component({
   selector: 'app-add-channel-card',
@@ -34,17 +35,14 @@ import { Subscription } from 'rxjs';
   styleUrl: './add-channel-card.component.scss',
 })
 export class AddChannelCardComponent implements OnInit, OnDestroy {
-  // channelService = inject(ChannelService);
-  // channelFirebaseService = inject(ChannelFirebaseService);
-  // private subscription?: Subscription;
 
   channel: Channel = {
     name: '',
     description: '',
     created_at: Date.now(),
-    creator: 'user_id',
-    members: ['user_id'],
-    active_members: ['user_id'],
+    creator: this.userService.currentUser.id,
+    members: [this.userService.currentUser.id],
+    active_members: [],
     channel_type: ChannelTypeEnum.main,
   };
 
@@ -52,6 +50,7 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<AddChannelCardComponent>,
     public dialog: MatDialog,
     public channelService : ChannelFirebaseService,
+    public userService : UserService,
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +66,7 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
   }
 
   createChannel(): void {
+    this.channelService.addChannel(this.channel);
     this.dialogRef.close();
   }
 }

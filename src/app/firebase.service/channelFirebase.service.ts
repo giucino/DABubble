@@ -76,7 +76,8 @@ export class ChannelFirebaseService {
 
   /* READ */ 
   subChannels() {
-      const q = query(this.getChannelsRef(), where('members', 'array-contains', 'L77rNtqfcyJAPATVtIri'));
+      const q = query(this.getChannelsRef());
+      // const q = query(this.getChannelsRef(), where('members', 'array-contains', 'L77rNtqfcyJAPATVtIri'));
       return onSnapshot( q , (channels) => {
           this.channels = [];
           channels.forEach((channel) => {
