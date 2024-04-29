@@ -17,8 +17,6 @@ import { UserService } from '../../firebase.service/user.service';
 })
 export class LoginComponent {
   firestore: Firestore = inject(Firestore);
-  email: string = '';
-  password: string = '';
   error = false;
   loginEmail: string = '';
   loginPassword: string = '';
@@ -35,9 +33,13 @@ export class LoginComponent {
       // loading balken true 
     try {
       await this.userAuth.loginUser(email, password);
-      await this.userService.getUsers();
+      this.userService.getUsers();
       this.router.navigate(['/main-page']);
-      console.log('logged on as: ', );
+
+      this.userService.getCurrentUser(this.loginEmail); // currentUser is set
+      // this.userService.addDatabaseIdToUser(this.userService.currentUser.id); // id is added to user
+      console.log(this.userService.currentUser); // geht
+
     } catch (error) {
       console.error(error);
       this.error = true;
@@ -48,13 +50,9 @@ export class LoginComponent {
   loginWithGoogle() {
     this.userAuth.loginWithGoogle().then((result) => {
       this.router.navigate(['/main-page']);
-      // Handle the login result here
     }).catch((error) => {
-      // Handle the error here
       console.error(error);
     });
-
-    // user logged in weierleiten
   }
 
   loginAsGuest() {

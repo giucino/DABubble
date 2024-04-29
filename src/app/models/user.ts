@@ -1,5 +1,5 @@
 export class User {
-    id?: string;
+    id: string;
     name: string;
     email: string;
     password: string;
@@ -21,7 +21,7 @@ export class User {
 
     public toJSON() {
         return {
-            // id: this.id,
+            id: this.id,
             name: this.name,
             email: this.email,
             password: 'Hackerman',

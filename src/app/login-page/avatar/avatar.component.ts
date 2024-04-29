@@ -43,23 +43,10 @@ export class AvatarComponent {
 
   ngonInit() {
     this.userService.getUsers();
-    
-    // this.newUser = this.userService.allUsers[this.userService.allUsers.length - 1];
-    // this.userId = this.route.snapshot.params['id'];
-    // this.getUser(this.userId);
-    // console.log('aus avatar component :' + this.userId);
-    // this.userService.loadUser(this.userId);
   }
 
-  // async getUser(userId: any) {
-  //   return onSnapshot(this.userService.getSingleUserRef(userId), (doc) => {
-  //     this.user = doc.data() as User;
-  //     console.log(this.user);
-  //   });
-  // }
 
   goToSignIn(){
-    // delte user from db
     this.findCurrentUserId();
     this.userService.deleteUser(this.currentUserId);
     this.router.navigate(['/login-page/signin']);
@@ -68,7 +55,8 @@ export class AvatarComponent {
   goToLogin(){
     setTimeout(() => {
       this.router.navigate(['/login-page/login']);
-    }, 5000);
+    }, 2000);
+    // console.log(this.userService.currentUser.email);
   }
 
   async uploadAvatar(event: any) {
@@ -87,9 +75,9 @@ export class AvatarComponent {
 
   findCurrentUserId(): void {
     for (let user of this.userService.allUsers) {
-      if (user.data.email === this.currentUser.email) {
+      if (user.email === this.currentUser.email) {
         this.currentUserId = user.id;
-        // console.log('currentUserId: ' + this.currentUserId);
+        this.userService.addDatabaseIdToUser(this.currentUserId);
         break;
         
       }
