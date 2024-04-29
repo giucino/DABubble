@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
 import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
+import { UserService } from '../../firebase.service/user.service';
 
 @Component({
   selector: 'app-channel',
@@ -33,7 +34,7 @@ export class ChannelComponent {
     password: 'password',
     logged_in: true,
     is_typing: false,
-    profile_img: 'avatar-1.jpg',
+    profile_img: '/assets/img/avatar-1.jpg',
     // last_channel: string,
   };
 
@@ -73,8 +74,8 @@ export class ChannelComponent {
     name: 'Channel 01',
     description: 'Das ist Channel 01',
     created_at: 1714048300000,
-    creator: 'user_01', // 'user_id'
-    members: ['user_01', 'user_02', 'user_03'],
+    creator: 'user_03', // 'user_id'
+    members: ['user_01', 'user_02'],
     active_members: ['user_01', 'user_02'],
     channel_type: ChannelTypeEnum.main,
   }
@@ -90,13 +91,15 @@ export class ChannelComponent {
     created_at: 0,
     modified_at: 0,
     is_deleted: false,
+    last_reply: 0,
   };
 
   currentDate: string = '1970/01/01';
 
   constructor(
     public customDialogService: CustomDialogService,
-    public messageService: MessageService
+    public messageService: MessageService,
+    public userService : UserService,
   ) {
     this.messageService.getMessagesFromChannel('channel_02');
   }
@@ -184,5 +187,47 @@ export class ChannelComponent {
   // TODO: move to userService
   getUser(user_id : string) {
     return this.users.find((user) => user.id == user_id);
+  }
+
+  getDirectChannelUser() {
+    let contact = this.currentChannel.members.find((member) => member != this.currentUser.id);
+    if (contact) return this.getUser(contact);
+    else return this.currentUser;
+  }
+
+  getChannelCreationTime() {
+    const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+    let date = new Date(this.currentChannel.created_at);
+    let d: number | string = date.getDate();
+    let m: number | string = date.getMonth();
+    let y = date.getFullYear();
+    if(this.convertToDate(new Date().getTime()) == this.convertToDate(this.currentChannel.created_at)) {
+      return 'heute';
+    } else {
+      return 'am' + ' ' + d + '. ' + months[m] + ' ' + y;
+    }
+  }
+
+  getTextareaPlaceholderText() {
+    switch(this.currentChannel.channel_type) {
+      case 'main' :
+        return 'Nachricht an ' + '#' + this.currentChannel.name;
+        break;
+      case 'direct' :
+        if (this.currentChannel.members.length == 2) {
+          return 'Nachricht an ' + this.getDirectChannelUser()?.name;
+        } else {
+          return 'Nachricht an ' + 'dich';
+        }
+        break;
+      case 'thread' : 
+        return 'Antworten...';
+        break;
+      case 'new' : 
+        return 'Starte eine neue Nachricht';
+        break;
+      default :
+        return 'Starte eine neue Nachricht';
+    }
   }
 }

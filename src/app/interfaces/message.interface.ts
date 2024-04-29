@@ -12,4 +12,6 @@ export interface Message {
     modified_at?: number,
     is_deleted: boolean,
     total_replies?: number,
+    last_reply?: number,
+    reply_last?: number, 
 }

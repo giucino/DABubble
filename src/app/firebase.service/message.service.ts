@@ -65,6 +65,7 @@ export class MessageService implements OnDestroy {
             modified_at: data.modified_at || 0,
             is_deleted: data.is_deleted || false,
             total_replies: data.total_replies || 0,
+            last_reply: data.last_reply || 0,
         }
     }
 

@@ -1,5 +1,5 @@
 <div [ngClass]="{'message-container' : !isCurrentUser(), 'message-container-reverse' : isCurrentUser()}">
-    <img class="profile-img" [src]="currentUser.profile_img" alt="">
+    <img class="profile-img" [src]="messageCreator?.profile_img" alt="">
     <!-- message -->
     @if(!editMessage) {
         <div class="message-content">
@@ -10,12 +10,15 @@
             <div class="message">
                 {{ message.message.text }}
             </div>
-            @if (message.total_replies && message.total_replies > 0) {
+            @if ( message.total_replies && message.total_replies > 0) {
                 <div class="replies">
                     <span class="count fs-18">{{ message.total_replies }} {{ message.total_replies > 1 ? 'Antworten' : 'Antwort' }}</span>
-                    <span class="last-reply fs-14">Letzte Antwort 14:56</span>
+                    @if ( message.last_reply ) {
+                        <span class="last-reply fs-14">Letzte Antwort {{ getTimeDifferenceForLastReply(this.message.last_reply)}}</span>
+                    }
                 </div>
             }
+            <!-- reactions -->
             @if (message.message.reactions && message.message.reactions.length > 0) {
                 <div class="reaction-container">
                     <!-- rocket -->
@@ -127,6 +130,7 @@
             }
         </div>
         <div class="reaction-bar">
+            <!-- TODO: last used reactions -->
             @if (channelType != 'thread') {
                 <!-- check -->
                 <button class="btn-icon-v6 w40">
