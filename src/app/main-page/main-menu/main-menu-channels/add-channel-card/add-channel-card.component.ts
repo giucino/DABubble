@@ -34,9 +34,9 @@ import { Subscription } from 'rxjs';
   styleUrl: './add-channel-card.component.scss',
 })
 export class AddChannelCardComponent implements OnInit, OnDestroy {
-  channelService = inject(ChannelService);
-  channelFirebaseService = inject(ChannelFirebaseService);
-  private subscription?: Subscription;
+  // channelService = inject(ChannelService);
+  // channelFirebaseService = inject(ChannelFirebaseService);
+  // private subscription?: Subscription;
 
   channel: Channel = {
     name: '',
@@ -50,19 +50,16 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<AddChannelCardComponent>,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public channelService : ChannelFirebaseService,
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.channelFirebaseService
-      .getChannels()
-      .subscribe((channels) => {
-        this.channelService.channelsSig.set(channels);
-      });
+
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+
   }
 
   onNoClick(): void {
@@ -70,28 +67,6 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
   }
 
   createChannel(): void {
-    this.channelFirebaseService
-      .addChannel(
-        this.channel.name,
-        this.channel.description,
-        this.channel.created_at,
-        this.channel.creator,
-        this.channel.members,
-        this.channel.active_members,
-        this.channel.channel_type
-      )
-      .subscribe((addedChannelId) => {
-        this.channelService.addChannel(
-          this.channel.name,
-          this.channel.description,
-          this.channel.created_at,
-          this.channel.creator,
-          this.channel.members,
-          this.channel.active_members,
-          this.channel.channel_type,
-          addedChannelId
-        );
-      });
     this.dialogRef.close();
   }
 }

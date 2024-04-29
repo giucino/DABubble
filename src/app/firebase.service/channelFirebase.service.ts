@@ -11,6 +11,9 @@ import {
   updateDoc,
   deleteDoc,
   getDoc,
+  where,
+  orderBy,
+  query,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { Observable, from } from 'rxjs';
@@ -20,29 +23,73 @@ import { Observable, from } from 'rxjs';
 })
 export class ChannelFirebaseService {
   firestore: Firestore = inject(Firestore);
-  channelsCollection = collection(this.firestore, 'channels');
-
-
-  getChannels(): Observable<Channel[]> {
-    return collectionData(this.channelsCollection, {
-      idField: 'id',
-    }) as Observable<Channel[]>;
+  channels : Channel[] = [];
+  currentChannel : Channel = {
+    id: '',
+    name: '',
+    description: '',
+    created_at: 0,
+    creator: '', // 'user_id'
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.new,
   }
 
-  addChannel(
-    name: string,
-    description: string,
-    created_at: number,
-    creator: string,
-    members: string[],
-    active_members: string[],
-    channel_type: ChannelTypeEnum,
-    id?: string
-  ): Observable<string> {
-    const channelToCreate = { name, description, created_at, creator, members, active_members, channel_type};
-    const promise = addDoc(this.channelsCollection, channelToCreate).then(
-      (response) => response.id
-    );
-    return from(promise);
+  unsubChannels: any;
+
+  constructor() {
+    this.unsubChannels = this.subChannels();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubChannels();
+}
+
+  getChannelsRef() {
+    return collection(this.firestore, 'channels');
+  }
+
+  getChannelRef(channel_id : string) {
+    return doc(collection(this.firestore, 'channels', channel_id))
+  }
+
+  setChannel(data : any, id?: string) : Channel {
+    return {
+        id: id || '',
+        name: data.name || '',
+        description: data.description || '',
+        created_at: data.created_at || 0,
+        creator: data.creator || '', // 'user_id'
+        members: data.members || [],
+        active_members: data.active_members || [],
+        channel_type: data.channel_type || '',
+    }
+  }
+
+  /* CREATE */
+  async addChannel(channel : Channel) {
+    let ref = this.getChannelsRef();
+    await addDoc(ref, channel)
+        .catch((err) => {console.log(err)})
+        .then(()=>{})
+  }
+
+  /* READ */ 
+  subChannels() {
+      const q = query(this.getChannelsRef(), where('members', 'array-contains', 'L77rNtqfcyJAPATVtIri'));
+      return onSnapshot( q , (channels) => {
+          this.channels = [];
+          channels.forEach((channel) => {
+              this.channels.push(this.setChannel(channel.data(),channel.id))
+          })
+      })
+  }
+
+  /* UPDATE */
+  async updateChannel(channel : Channel) {
+      if (channel.id) {
+          let docRef = doc(this.getChannelsRef(), channel.id);
+          await updateDoc(docRef, JSON.parse(JSON.stringify(channel))).catch((err) => console.error(err))
+      }
   }
 }
