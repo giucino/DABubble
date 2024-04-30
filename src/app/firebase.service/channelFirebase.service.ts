@@ -35,10 +35,13 @@ export class ChannelFirebaseService {
     channel_type: ChannelTypeEnum.new,
   }
 
-  unsubChannels;
+  unsubChannels: any;
 
   constructor() {
-    this.unsubChannels = this.subChannels();
+  }
+
+  getChannelsForCurrentUser(user_id: string) {
+    this.unsubChannels = this.subChannels(user_id)
   }
 
   setCurrentChannel(channel_id : string) {
@@ -81,9 +84,9 @@ export class ChannelFirebaseService {
   }
 
   /* READ */ 
-  subChannels() {
-      const q = query(this.getChannelsRef());
-      // const q = query(this.getChannelsRef(), where('members', 'array-contains', 'L77rNtqfcyJAPATVtIri'));
+  subChannels(user_id : string) {
+      // const q = query(this.getChannelsRef());
+      const q = query(this.getChannelsRef(), where('members', 'array-contains', user_id));
       return onSnapshot( q , (channels) => {
           this.channels = [];
           channels.forEach((channel) => {
