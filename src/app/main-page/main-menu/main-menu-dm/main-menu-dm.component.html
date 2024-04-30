@@ -33,18 +33,31 @@
     </div>
 
     @if (isExpanded) {
-    @for(user of userService.allUsers; track user.id) {
-    <div class="channel-header-direct">
-        <div class="channel-member">
-            <div class="profile-img-container">
-                <img [src]="user.profile_img" alt="" class="profile-img">
-                <div class="online-status-wborder online"></div>
-            </div>
-            <div class="channel-member-name fs-18">
-                {{ user.name }}
+        <div class="channel-header-direct">
+            <div class="channel-member">
+                <div class="profile-img-container">
+                    <img [src]="userService.currentUser.profile_img" alt="" class="profile-img">
+                    <div class="online-status-wborder online"></div>
+                </div>
+                <div class="channel-member-name fs-18">
+                    {{ userService.currentUser.name }} (Du)
+                </div>
             </div>
         </div>
-    </div>
+    @for(user of userService.allUsers; track user.id) {
+        @if(user.id != userService.currentUser.id ) {
+            <div class="channel-header-direct">
+                <div class="channel-member">
+                    <div class="profile-img-container">
+                        <img [src]="user.profile_img" alt="" class="profile-img">
+                        <div class="online-status-wborder online"></div>
+                    </div>
+                    <div class="channel-member-name fs-18">
+                        {{ user.name }}
+                    </div>
+                </div>
+            </div>
+        }
     }
     }
 </section>
