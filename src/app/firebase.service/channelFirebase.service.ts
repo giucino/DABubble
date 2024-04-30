@@ -47,6 +47,12 @@ export class ChannelFirebaseService {
 
   async openDirectChannel(currentUser_id: string, dm_target_id : string) {
     let directChannels = this.channels.filter((channel) => channel.channel_type == 'direct');
+    // let channel;
+    // if(currentUser_id = dm_target_id) {
+    //   channel = directChannels.find((channel) => channel.members.length == 1);
+    // } else {
+    //   channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
+    // }
     let channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
     if(channel && channel.id) {this.setCurrentChannel(channel.id);}
     else {
@@ -68,6 +74,12 @@ export class ChannelFirebaseService {
   getDirectChannel(dm_target_id : string) {
     let directChannels = this.channels.filter((channel) => channel.channel_type == 'direct');
     let channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
+     // let channel;
+    // if(currentUser_id = dm_target_id) {
+    //   channel = directChannels.find((channel) => channel.members.length == 1);
+    // } else {
+    //   channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
+    // }
     if(channel && channel.id) {this.setCurrentChannel(channel.id);};
   }
 
