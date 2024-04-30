@@ -36,6 +36,7 @@ export class LogOutDialogComponent {
     console.log('Logging out');
     
     // sobald logged in user funktioniert
+
     // this.userAuth.logout().then(() => { 
     //   this.router.navigate(['/login']);
     //   this.dialogRef.close();

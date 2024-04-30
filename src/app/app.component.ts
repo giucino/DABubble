@@ -16,14 +16,14 @@ export class AppComponent {
   constructor(private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    if (this.router.url === '/main-page') {
+    if (this.router.url === '/main-page') {  //damit man nicht über url auf die main kommt
       this.router.navigate(['/login-page']);
     }
-     if (this.router.url === '/reset-password') {
+     if (this.router.url === '/reset-password') { //für den reset link
       this.router.navigate(['/reset-password']);
     }
     if (this.router.url === '') {
-      this.router.navigate(['/login-page']);
+      this.router.navigate(['/login-page']); // ansonsten immer auf login page
     } 
     // this.router.navigate(['/login-page']);
   }
