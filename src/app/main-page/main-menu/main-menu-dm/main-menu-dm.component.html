@@ -34,7 +34,7 @@
 
     @if (isExpanded) {
         <div class="channel-header-direct">
-            <div class="channel-member">
+            <div class="channel-member" (click)="openDirectChannel(userService.currentUser.id)">
                 <div class="profile-img-container">
                     <img [src]="userService.currentUser.profile_img" alt="" class="profile-img">
                     <div class="online-status-wborder online"></div>
@@ -47,7 +47,7 @@
     @for(user of userService.allUsers; track user.id) {
         @if(user.id != userService.currentUser.id ) {
             <div class="channel-header-direct">
-                <div class="channel-member">
+                <div class="channel-member" (click)="openDirectChannel(user.id)">
                     <div class="profile-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img">
                         <div class="online-status-wborder online"></div>

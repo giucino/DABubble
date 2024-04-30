@@ -17,6 +17,7 @@ import {
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { Observable, from } from 'rxjs';
+import { debug } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,34 @@ export class ChannelFirebaseService {
   getChannelsForCurrentUser(user_id: string) {
     this.unsubChannels = this.subChannels(user_id)
   }
+
+  async openDirectChannel(currentUser_id: string, dm_target_id : string) {
+    let directChannels = this.channels.filter((channel) => channel.channel_type == 'direct');
+    let channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
+    if(channel && channel.id) {this.setCurrentChannel(channel.id);}
+    else {
+      let newDirectChannel : Channel = {
+        name: 'direct channel - ' + currentUser_id + ' & ' + dm_target_id,
+        description: '' ,
+        created_at: new Date().getTime(),
+        creator: currentUser_id,
+        members: [currentUser_id, dm_target_id],
+        active_members: [],
+        channel_type: ChannelTypeEnum.direct, 
+      } 
+      if(currentUser_id == dm_target_id) newDirectChannel.members = [currentUser_id];
+      await this.addChannel(newDirectChannel);
+      this.getDirectChannel(dm_target_id);
+    }
+  }
+
+  getDirectChannel(dm_target_id : string) {
+    let directChannels = this.channels.filter((channel) => channel.channel_type == 'direct');
+    let channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
+    if(channel && channel.id) {this.setCurrentChannel(channel.id);};
+  }
+
+
 
   setCurrentChannel(channel_id : string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
@@ -80,7 +109,7 @@ export class ChannelFirebaseService {
     let ref = this.getChannelsRef();
     await addDoc(ref, channel)
         .catch((err) => {console.log(err)})
-        .then(()=>{})
+        .then(()=>{ console.log()})
   }
 
   /* READ */ 
