@@ -25,16 +25,14 @@ import { Channel } from '../../../interfaces/channel.interface';
 })
 export class MainMenuChannelsComponent implements OnInit {
   isExpanded = true;
-  public channels$!: Observable<Channel[]>;
-  // channelService = inject(ChannelService);
-  channelFirebaseService = inject(ChannelFirebaseService);
 
 
-  constructor(private customDialogService: CustomDialogService) {
+  constructor(private customDialogService: CustomDialogService, public channelService : ChannelFirebaseService) {
+    
   }
 
   ngOnInit(): void {
-    this.channels$ = this.channelFirebaseService.getChannels(); 
+    
   }
 
   toggleExpansion() {

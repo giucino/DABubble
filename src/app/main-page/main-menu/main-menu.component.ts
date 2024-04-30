@@ -22,13 +22,13 @@ import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.s
   styleUrl: './main-menu.component.scss',
 })
 export class MainMenuComponent implements OnInit {
-  channelService = inject(ChannelService);
-  channelFirebaseService = inject(ChannelFirebaseService);
+
+  constructor(public channelService : ChannelFirebaseService) {
+   
+
+  }
 
   ngOnInit(): void {
-    // this.channelFirebaseService.getChannels().subscribe((channels) => {
-    //   this.channelService.channelsSig.set(channels);
-    //   console.log(channels);
-    // });
+
   }
 }
