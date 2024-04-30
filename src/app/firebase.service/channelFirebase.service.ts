@@ -35,7 +35,7 @@ export class ChannelFirebaseService {
     channel_type: ChannelTypeEnum.new,
   }
 
-  unsubChannels: any;
+  unsubChannels;
 
   constructor() {
     this.unsubChannels = this.subChannels();
@@ -89,6 +89,7 @@ export class ChannelFirebaseService {
           channels.forEach((channel) => {
               this.channels.push(this.setChannel(channel.data(),channel.id));
           });
+          if (this.currentChannel.id == '') this.setCurrentChannel(this.channels[0].id || '');
       })
   }
 
