@@ -38,11 +38,11 @@ export class LogOutDialogComponent {
     // sobald logged in user funktioniert
 
     // this.userAuth.logout().then(() => { 
-    //   this.router.navigate(['/login']);
+    //   this.router.navigate(['/login-page']);
     //   this.dialogRef.close();
     // });
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login-page']);
     this.dialogRef.close();
   }
 }

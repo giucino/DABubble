@@ -12,6 +12,7 @@ import { User } from '../../interfaces/user.interface';
 import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { UserService } from '../../firebase.service/user.service';
+import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 
 @Component({
   selector: 'app-channel',
@@ -100,7 +101,11 @@ export class ChannelComponent {
     public customDialogService: CustomDialogService,
     public messageService: MessageService,
     public userService : UserService,
+    public channelService : ChannelFirebaseService,
   ) {
+    // this.users = this.userService.allUsers;
+    // this.currentChannel = this.channelService.currentChannel;
+    // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
     this.messageService.getMessagesFromChannel('channel_02');
   }
 
