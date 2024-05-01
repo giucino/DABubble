@@ -29,6 +29,7 @@ export class LoginPageComponent {
         this.hideExtras = this.router.url == '/login-page/imprint' || this.router.url == '/login-page/privacy-policy';
       }
     });
+    this.resetUser();
   }
 
   goToSignin() {
@@ -39,4 +40,9 @@ export class LoginPageComponent {
     this.router.navigate(['login-page/login']);
   }
 
+  resetUser(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('currentUser');
+    }
+  }
 }

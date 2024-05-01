@@ -18,7 +18,9 @@ export class UserService implements OnDestroy {
     unsubUsers;
 
     constructor() {
-            this.unsubUsers = this.getUsers()
+        this.unsubUsers = this.getUsers();
+        this.getCurrentUser();
+
     }
 
     getUsers() {
@@ -33,7 +35,7 @@ export class UserService implements OnDestroy {
         });
     }
 
-    setUsers(data: any, id?: string) : User {
+    setUsers(data: any, id?: string): User {
         return {
             id: id || '',
             name: data.name || '',
@@ -55,16 +57,27 @@ export class UserService implements OnDestroy {
                 };
             }
         }
-    
+
     }
 
     addDatabaseIdToUser(userId: string) {
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, {id: userId});
+        updateDoc(singleUserRef, { id: userId });
     }
 
-    getCurrentUser(email: string) {
-        this.currentUser = this.allUsers.find(user => user.email === email);
+    getCurrentUser(email?: string) {
+        // this.currentUser = this.allUsers.find(user => user.email === email);
+        // Check if the user is logged in
+        if (typeof window !== 'undefined' && window.localStorage) {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                // If the user is logged in, set this.currentUser to the stored user
+                this.currentUser = JSON.parse(storedUser);
+            } else {
+                // If the user is not logged in, find the user in this.allUsers
+                this.currentUser = this.allUsers.find(user => user.email === email);
+            }
+        }
     }
 
     ngOnDestroy(): void {
@@ -79,28 +92,28 @@ export class UserService implements OnDestroy {
         return doc(collection(this.firestore, 'users'), userId);
     }
 
-    async addUser(user: User){
+    async addUser(user: User) {
         await addDoc(this.getUserRef(), user.toJSON());
     }
 
-    addAvatarToUser(userId: string, avatar: string){
+    addAvatarToUser(userId: string, avatar: string) {
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, {profile_img: avatar});
+        updateDoc(singleUserRef, { profile_img: avatar });
     }
 
-    updatePassword(userId: string, password: string){
+    updatePassword(userId: string, password: string) {
         // let singleUserRef = doc(this.getUserRef(), userId);
         // updateDoc(singleUserRef, {password: password});
 
         // kein pw in database
     }
 
-    updateOnlineStatus(userId: string, status: boolean){
+    updateOnlineStatus(userId: string, status: boolean) {
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, {logged_in: status});
+        updateDoc(singleUserRef, { logged_in: status });
     }
 
-    getCleanJson(user: User):{}{
+    getCleanJson(user: User): {} {
         return {
             name: user.name,
             email: user.email,
@@ -114,37 +127,37 @@ export class UserService implements OnDestroy {
 
     uploadImage(file: File): Promise<string> {
         return new Promise((resolve, reject) => {
-          const storage = getStorage();
-          const storageRef = ref(storage, 'images/' + file.name);
-          const uploadTask = uploadBytesResumable(storageRef, file);
-          uploadTask.on('state_changed', 
-            (snapshot) => {
-              // use this section to display the upload progress
-            }, 
-            (error) => {
-              reject(error);
-            }, 
-            () => {
-              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                resolve(downloadURL);
-              });
-            }
-          );
+            const storage = getStorage();
+            const storageRef = ref(storage, 'images/' + file.name);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // use this section to display the upload progress
+                },
+                (error) => {
+                    reject(error);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        resolve(downloadURL);
+                    });
+                }
+            );
         });
-      }
+    }
 
-    async loadUser(userId: string){
+    async loadUser(userId: string) {
         this.getSingleUserRef(userId);
     }
 
-    async deleteUser(userId: string){
-        try{
+    async deleteUser(userId: string) {
+        try {
             await deleteDoc(doc(this.firestore, "users", userId));
         }
-         catch (error) {
+        catch (error) {
             console.error("Error removing document: ", error);
         }
     }
 
-    
+
 }

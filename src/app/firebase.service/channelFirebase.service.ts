@@ -42,7 +42,7 @@ export class ChannelFirebaseService {
   }
 
   getChannelsForCurrentUser(user_id: string) {
-    this.unsubChannels = this.subChannels(user_id)
+    this.unsubChannels = this.subChannels(user_id);
   }
 
   async openDirectChannel(currentUser_id: string, dm_target_id : string) {
@@ -92,7 +92,7 @@ export class ChannelFirebaseService {
   }
 
   ngOnDestroy(): void {
-    this.unsubChannels();
+    this.unsubChannels;
 }
 
   getChannelsRef() {
@@ -133,7 +133,10 @@ export class ChannelFirebaseService {
           channels.forEach((channel) => {
               this.channels.push(this.setChannel(channel.data(),channel.id));
           });
-          if (this.currentChannel.id == '') this.setCurrentChannel(this.channels[0].id || '');
+          if (this.channels.length > 0){
+            if (this.currentChannel.id == '') this.setCurrentChannel(this.channels[0].id || '');
+          }
+          
       })
   }
 

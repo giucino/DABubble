@@ -34,12 +34,12 @@ export class LoginComponent {
     try {
       await this.userAuth.loginUser(email, password);
       this.userService.getUsers();
-      this.router.navigate(['/main-page']);
 
       this.userService.getCurrentUser(this.loginEmail); // currentUser is set
-      // this.userService.addDatabaseIdToUser(this.userService.currentUser.id); // id is added to user
-      // console.log(this.userService.currentUser); // geht
+      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
+      this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
 
+      this.router.navigate(['/main-page']);
     } catch (error) {
       console.error(error);
       this.error = true;

@@ -6,6 +6,7 @@ import { ProfileService } from '../../../services/profile.service';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { UserAuthService } from '../../../firebase.service/user.auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../../firebase.service/user.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class LogOutDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<LogOutDialogComponent>,
     private customDialogService: CustomDialogService,
-    private profileService: ProfileService, private userAuth: UserAuthService, private router: Router
+    private profileService: ProfileService, private userAuth: UserAuthService, private router: Router, private userService: UserService
   ) {}
 
   openCurrentUser(button: HTMLElement) {
@@ -33,16 +34,17 @@ export class LogOutDialogComponent {
   }
 
   logOut() {
-    console.log('Logging out');
-    
+    // console.log('Logging out');
+    localStorage.removeItem('currentUser');
     // sobald logged in user funktioniert
 
-    // this.userAuth.logout().then(() => { 
-    //   this.router.navigate(['/login-page']);
-    //   this.dialogRef.close();
-    // });
+    this.userAuth.logout().then(() => { 
+      this.router.navigate(['/login-page']);
+      this.dialogRef.close();
+      this.userService.updateOnlineStatus(this.userService.currentUser.id, false);
+    });
 
-    this.router.navigate(['/login-page']);
-    this.dialogRef.close();
+    // this.router.navigate(['/login-page']);
+    // this.dialogRef.close();
   }
 }

@@ -14,15 +14,22 @@ import { UserService } from '../firebase.service/user.service';
 })
 
 export class MainPageComponent {
+  
 
-  constructor(public userService : UserService ,public channelService : ChannelFirebaseService) {
-    this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
+  constructor(public userService: UserService, public channelService: ChannelFirebaseService) {
+    // this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
+    if (this.userService.currentUser) {
+      this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
+    }
+
   }
 
-  
-  threadClosed :boolean = false;
 
-  isThreadClosed(value : boolean) {
+  threadClosed: boolean = false;
+
+
+
+  isThreadClosed(value: boolean) {
     this.threadClosed = value;
   }
 }

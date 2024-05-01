@@ -3,6 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserAuthService } from './firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AppComponent {
   title = 'DABubble';
-  constructor(private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService) { }
 
   ngOnInit(): void {
-    if (this.router.url === '/main-page') {  //damit man nicht über url auf die main kommt
+    if (this.router.url === '/main-page') {  //damit man nicht über url auf die main kommt, if user logged in
       this.router.navigate(['/login-page']);
     }
      if (this.router.url === '/reset-password') { //für den reset link
@@ -30,7 +31,7 @@ export class AppComponent {
 
   confirmPopup(){
     this._snackBar.openFromComponent(EmailSnackbarComponent, {
-      duration: 200000,
+      duration: 2000,
       horizontalPosition: 'right',
       verticalPosition: 'bottom',
       direction: 'rtl'
