@@ -18,6 +18,7 @@ import {
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { Observable, from } from 'rxjs';
 import { debug } from 'console';
+import { ChannelComponent } from '../main-page/channel/channel.component';
 
 @Injectable({
   providedIn: 'root',
@@ -25,20 +26,22 @@ import { debug } from 'console';
 export class ChannelFirebaseService {
   firestore: Firestore = inject(Firestore);
   channels : Channel[] = [];
-  currentChannel : Channel = {
-    id: '',
-    name: '',
-    description: '',
-    created_at: 0,
-    creator: '', // 'user_id'
-    members: [],
-    active_members: [],
-    channel_type: ChannelTypeEnum.new,
-  }
+  currentChannel : Channel;
+  //  = {
+    // id: '',
+    // name: '',
+    // description: '',
+    // created_at: 0,
+    // creator: '', // 'user_id'
+    // members: [],
+    // active_members: [],
+    // channel_type: ChannelTypeEnum.new,
+  // }
 
   unsubChannels: any;
 
   constructor() {
+    
   }
 
   getChannelsForCurrentUser(user_id: string) {
@@ -89,6 +92,7 @@ export class ChannelFirebaseService {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if(channel) this.currentChannel = channel;
     console.log('Current Channel: ', this.currentChannel);
+
   }
 
   ngOnDestroy(): void {

@@ -28,49 +28,49 @@ export class ChannelComponent {
   messageInput: string = '';
 
   // TODO: replace dummy data
-  currentUser: User = {
-    id: 'user_01',
-    name: 'Max Mustermann',
-    email: 'max@mustermann.de',
-    password: 'password',
-    logged_in: true,
-    is_typing: false,
-    profile_img: '/assets/img/avatar-1.jpg',
-    // last_channel: string,
-  };
-
+  // currentUser: User = {
+  //   id: 'user_01',
+  //   name: 'Max Mustermann',
+  //   email: 'max@mustermann.de',
+  //   password: 'password',
+  //   logged_in: true,
+  //   is_typing: false,
+  //   profile_img: '/assets/img/avatar-1.jpg',
+  //   // last_channel: string,
+  // };
+  currentUser: User = this.userService.currentUser;
+  users: User[] = this.userService.allUsers;
   // TODO: replace with userService.users
-  users: User[] = [
-    {
-      id: 'user_01',
-      name: 'User 01',
-      email: 'user@01.de',
-      password: 'password1',
-      logged_in: true,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-1.jpg',
-    },
-    {
-      id: 'user_02',
-      name: 'User 02',
-      email: 'user@02.de',
-      password: 'password2',
-      logged_in: false,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-2.jpg',
-    },
-    {
-      id: 'user_03',
-      name: 'User 03',
-      email: 'user@03.de',
-      password: 'password3',
-      logged_in: true,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-3.jpg',
-    },
-  ];
-
-  currentChannel: Channel = {
+  // users: User[] = [
+  //   {
+  //     id: 'user_01',
+  //     name: 'User 01',
+  //     email: 'user@01.de',
+  //     password: 'password1',
+  //     logged_in: true,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-1.jpg',
+  //   },
+  //   {
+  //     id: 'user_02',
+  //     name: 'User 02',
+  //     email: 'user@02.de',
+  //     password: 'password2',
+  //     logged_in: false,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-2.jpg',
+  //   },
+  //   {
+  //     id: 'user_03',
+  //     name: 'User 03',
+  //     email: 'user@03.de',
+  //     password: 'password3',
+  //     logged_in: true,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-3.jpg',
+  //   },
+  // ];
+  dummyChannel: Channel = {
     id: 'channel_01',
     name: 'Channel 01',
     description: 'Das ist Channel 01',
@@ -80,6 +80,8 @@ export class ChannelComponent {
     active_members: ['user_01', 'user_02'],
     channel_type: ChannelTypeEnum.main,
   }
+
+  currentChannel: Channel = this.channelService.currentChannel || this.dummyChannel;
 
 
   message: Message = {
@@ -104,9 +106,13 @@ export class ChannelComponent {
     public channelService : ChannelFirebaseService,
   ) {
     // this.users = this.userService.allUsers;
-    // this.currentChannel = this.channelService.currentChannel;
+    // this.currentChannel = this.channelService.currentChannel || this.currentChannel;
     // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
     this.messageService.getMessagesFromChannel('channel_02');
+  }
+
+  ngOnInit() {
+    // this.currentChannel = this.dummyChannel;
   }
 
   openAddUserDialog(button: HTMLElement) {

@@ -36,48 +36,50 @@ export class MessageComponent {
 
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
-  // TODO: replace with userService.currentUser
-  currentUser: User = {
-    id: 'user_01',
-    name: 'Max Mustermann',
-    email: 'max@mustermann.de',
-    password: 'password',
-    logged_in: true,
-    is_typing: false,
-    profile_img: '/assets/img/avatar-1.jpg',
-    // last_channel: string,
-  };
+  // // TODO: replace with userService.currentUser
+  // currentUser: User = {
+  //   id: 'user_01',
+  //   name: 'Max Mustermann',
+  //   email: 'max@mustermann.de',
+  //   password: 'password',
+  //   logged_in: true,
+  //   is_typing: false,
+  //   profile_img: '/assets/img/avatar-1.jpg',
+  //   // last_channel: string,
+  // };
+  currentUser : User = this.userService.currentUser;
 
-  // TODO: replace with userService.users
-  users: User[] = [
-    {
-      id: 'user_01',
-      name: 'User 01',
-      email: 'user@01.de',
-      password: 'password1',
-      logged_in: true,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-1.jpg',
-    },
-    {
-      id: 'user_02',
-      name: 'User 02',
-      email: 'user@02.de',
-      password: 'password2',
-      logged_in: false,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-2.jpg',
-    },
-    {
-      id: 'user_03',
-      name: 'User 03',
-      email: 'user@03.de',
-      password: 'password3',
-      logged_in: true,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-3.jpg',
-    },
-  ];
+  // TODO: replace with userService.users oder users in message id?
+  users: User[] = this.userService.allUsers;
+  // [
+  //   {
+  //     id: 'user_01',
+  //     name: 'User 01',
+  //     email: 'user@01.de',
+  //     password: 'password1',
+  //     logged_in: true,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-1.jpg',
+  //   },
+  //   {
+  //     id: 'user_02',
+  //     name: 'User 02',
+  //     email: 'user@02.de',
+  //     password: 'password2',
+  //     logged_in: false,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-2.jpg',
+  //   },
+  //   {
+  //     id: 'user_03',
+  //     name: 'User 03',
+  //     email: 'user@03.de',
+  //     password: 'password3',
+  //     logged_in: true,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-3.jpg',
+  //   },
+  // ];
 
   messageCreator: User | undefined = undefined;
 
