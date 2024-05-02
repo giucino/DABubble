@@ -8,9 +8,9 @@
     <app-search-bar class="search-bar "></app-search-bar>
 
     <div #userHead class="user-head" (click)="openLogOutDialog(userHead)">
-        <span class="name fs-32">{{userService.currentUser ? userService.currentUser.name : 'Anonym'}}</span>
+        <span class="name fs-32">{{userService.currentUser?.name}}</span>
         <div class="avatar">
-            <img [src]="userService.currentUser ? userService.currentUser.profile_img : anonymImg" class="profile-img">
+            <img [src]="userService.currentUser.profile_img" class="profile-img">
             <div class="online-status-wborder online"></div>
         </div>
         <div class="menu-btn">
