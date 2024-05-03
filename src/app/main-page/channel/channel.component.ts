@@ -81,7 +81,7 @@ export class ChannelComponent {
     channel_type: ChannelTypeEnum.main,
   }
 
-  currentChannel: Channel = this.channelService.currentChannel || this.dummyChannel;
+  currentChannel: Channel = this.channelService.currentChannel;
 
 
   message: Message = this.messageService.message;
@@ -116,8 +116,11 @@ export class ChannelComponent {
   }
 
   ngOnInit() {
-    // this.currentChannel = this.dummyChannel;
-    
+    this.getCurrentChannel();
+  }
+
+  getCurrentChannel() {
+    return this.channelService.currentChannel;
   }
 
   openAddUserDialog(button: HTMLElement) {
@@ -146,6 +149,7 @@ export class ChannelComponent {
     this.message.modified_at = this.message.created_at;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
+    console.log(this.currentChannel)
     // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
     // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }

@@ -41,6 +41,7 @@ export class MainMenuChannelsComponent implements OnInit {
     this.channelService.setCurrentChannel(channel_id);
     this.messageService.getMessagesFromChannel(channel_id); // hier wird der geklickte channel geöffnet
     // console.log(channel_id);
+    
   }
 
   toggleExpansion() {
