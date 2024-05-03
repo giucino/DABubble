@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicContentComponent } from '../../../shared/dynamic-content/dynamic-content.component';
 import { UserService } from '../../../firebase.service/user.service';
 import { User } from '../../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
@@ -8,7 +7,7 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 @Component({
   selector: 'app-main-menu-dm',
   standalone: true,
-  imports: [CommonModule, DynamicContentComponent],
+  imports: [CommonModule],
   templateUrl: './main-menu-dm.component.html',
   styleUrl: './main-menu-dm.component.scss',
 })

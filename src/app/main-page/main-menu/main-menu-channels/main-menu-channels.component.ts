@@ -1,14 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { DynamicContentComponent } from '../../../shared/dynamic-content/dynamic-content.component';
 import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
-import { ChannelService } from '../../../services/channel.service';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
-import { Observable } from 'rxjs';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelComponent } from '../../channel/channel.component';
 import { MessageService } from '../../../firebase.service/message.service';
@@ -20,7 +17,6 @@ import { MessageService } from '../../../firebase.service/message.service';
     CommonModule,
     MatCardModule,
     MatExpansionModule,
-    DynamicContentComponent,
   ],
   templateUrl: './main-menu-channels.component.html',
   styleUrl: './main-menu-channels.component.scss',
