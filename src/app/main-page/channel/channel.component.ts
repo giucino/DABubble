@@ -84,18 +84,21 @@ export class ChannelComponent {
   currentChannel: Channel = this.channelService.currentChannel || this.dummyChannel;
 
 
-  message: Message = {
-    user_id: '',
-    channel_id: 'channel_02',
-    message: {
-      text: 'Text',
-      attachements: [],
-    },
-    created_at: 0,
-    modified_at: 0,
-    is_deleted: false,
-    last_reply: 0,
-  };
+  message: Message = this.messageService.message;
+  // {
+  //   user_id: '',
+  //   channel_id: '', // channel_02
+  //   message: {
+  //     text: 'Text',
+  //     attachements: [],
+  //   },
+  //   created_at: 0,
+  //   modified_at: 0,
+  //   is_deleted: false,
+  //   last_reply: 0,
+  // };
+
+
 
   currentDate: string = '1970/01/01';
 
@@ -108,11 +111,13 @@ export class ChannelComponent {
     // this.users = this.userService.allUsers;
     // this.currentChannel = this.channelService.currentChannel || this.currentChannel;
     // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
-    this.messageService.getMessagesFromChannel('channel_02');
+
+    
   }
 
   ngOnInit() {
     // this.currentChannel = this.dummyChannel;
+    
   }
 
   openAddUserDialog(button: HTMLElement) {
@@ -141,6 +146,8 @@ export class ChannelComponent {
     this.message.modified_at = this.message.created_at;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
+    // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
+    // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }
 
   isNewDate(date: number) {

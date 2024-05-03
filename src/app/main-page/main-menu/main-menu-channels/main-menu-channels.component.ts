@@ -10,6 +10,8 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { Observable } from 'rxjs';
 import { Channel } from '../../../interfaces/channel.interface';
+import { ChannelComponent } from '../../channel/channel.component';
+import { MessageService } from '../../../firebase.service/message.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -26,13 +28,19 @@ import { Channel } from '../../../interfaces/channel.interface';
 export class MainMenuChannelsComponent implements OnInit {
   isExpanded = true;
 
-
-  constructor(private customDialogService: CustomDialogService, public channelService : ChannelFirebaseService) {
+  constructor(private customDialogService: CustomDialogService,
+     public channelService : ChannelFirebaseService, public messageService: MessageService) {
     
   }
 
   ngOnInit(): void {
     
+  }
+
+  openChannel(channel_id: string) {
+    this.channelService.setCurrentChannel(channel_id);
+    this.messageService.getMessagesFromChannel(channel_id); // hier wird der geklickte channel geöffnet
+    // console.log(channel_id);
   }
 
   toggleExpansion() {

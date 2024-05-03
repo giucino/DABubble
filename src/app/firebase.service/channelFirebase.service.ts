@@ -26,17 +26,18 @@ import { ChannelComponent } from '../main-page/channel/channel.component';
 export class ChannelFirebaseService {
   firestore: Firestore = inject(Firestore);
   channels : Channel[] = [];
-  currentChannel : Channel;
-  //  = {
-    // id: '',
-    // name: '',
-    // description: '',
-    // created_at: 0,
-    // creator: '', // 'user_id'
-    // members: [],
-    // active_members: [],
-    // channel_type: ChannelTypeEnum.new,
-  // }
+  currentChannel : Channel
+   = {
+    id: '',
+    name: '',
+    description: '',
+    created_at: 0,
+    creator: '', // 'user_id'
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.new,
+  }
+  channelMessages: any;
 
   unsubChannels: any;
 
@@ -91,7 +92,8 @@ export class ChannelFirebaseService {
   setCurrentChannel(channel_id : string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if(channel) this.currentChannel = channel;
-    console.log('Current Channel: ', this.currentChannel);
+    
+    // console.log('Current Channel: ', this.currentChannel);
 
   }
 
