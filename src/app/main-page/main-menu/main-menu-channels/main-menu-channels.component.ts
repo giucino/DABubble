@@ -5,8 +5,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
-import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
-import { Channel } from '../../../interfaces/channel.interface';
 
 @Component({
   selector: 'app-main-menu-channels',

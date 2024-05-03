@@ -1,8 +1,8 @@
 <mat-card class="mat-card-custom">
     <mat-card-title class="mat-card-title-custom">
         <h2 class="mat-dialog-title-custom">Channel erstellen</h2>
-        <button class="btn-icon-v3">
-            <svg (click)="onNoClick()" class="close-icon-custom" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        <button class="btn-icon-v3" [mat-dialog-close]>
+            <svg class="close-icon-custom" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                     height="24">
@@ -40,13 +40,13 @@
     </mat-dialog-content>
 
     <mat-dialog-content class="mat-dialog-content-custom">
-        <p class="input-label">Beschreibung</p>
+        <p class="input-label">Beschreibung (optional)</p>
         <div class="input-wrapper">
             <input type="text" [(ngModel)]="channel.description" required class="input-description" matInput placeholder="Dein Text hier">
         </div>
     </mat-dialog-content>
 
     <mat-dialog-actions class="mat-dialog-actions-custom" align="end">
-        <button class="btn-primary fs-18" #addMemberBtn (click)="createChannel(addMemberBtn)">Erstellen</button>
+        <button class="btn-primary fs-18" [disabled]="!channel.name" #addMemberBtn (click)="createChannel(addMemberBtn)">Erstellen</button>
     </mat-dialog-actions>
 </mat-card>

@@ -16,7 +16,6 @@ import {
   query,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
-import { Observable, from } from 'rxjs';
 import { debug } from 'console';
 
 @Injectable({
@@ -97,7 +96,7 @@ export class ChannelFirebaseService {
   setCurrentChannel(channel_id: string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if (channel) this.currentChannel = channel;
-    console.log('Current Channel: ', this.currentChannel);
+    // console.log('Current Channel: ', this.currentChannel);
   }
 
   ngOnDestroy(): void {
@@ -136,7 +135,7 @@ export class ChannelFirebaseService {
   async addChannel(channel: Channel): Promise<string> {
     let ref = this.getChannelsRef();
     const docRef = await addDoc(ref, channel);
-    console.log('Channel added with ID:', docRef.id);
+    // console.log('Channel added with ID:', docRef.id);
     return docRef.id;
   }
 
@@ -184,7 +183,7 @@ export class ChannelFirebaseService {
 
       const docRef = doc(this.getChannelsRef(), channelId);
       await updateDoc(docRef, { members: updatedMemberIds });
-      console.log('Mitgliederliste erfolgreich aktualisiert:', updatedMemberIds);
+      // console.log('Mitgliederliste erfolgreich aktualisiert:', updatedMemberIds);
 
       currentChannel.members = updatedMemberIds;
     } catch (error) {
