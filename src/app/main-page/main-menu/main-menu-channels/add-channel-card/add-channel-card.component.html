@@ -47,6 +47,6 @@
     </mat-dialog-content>
 
     <mat-dialog-actions class="mat-dialog-actions-custom" align="end">
-        <button class="btn-primary fs-18" (click)="createChannel()">Erstellen</button>
+        <button class="btn-primary fs-18" #addMemberBtn (click)="createChannel(addMemberBtn)">Erstellen</button>
     </mat-dialog-actions>
 </mat-card>
