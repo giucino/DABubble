@@ -3,7 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MainMenuHeaderComponent } from './main-menu-header/main-menu-header.component';
 import { MainMenuChannelsComponent } from './main-menu-channels/main-menu-channels.component';
 import { MainMenuDmComponent } from './main-menu-dm/main-menu-dm.component';
-import { ChannelService } from '../../services/channel.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 
 

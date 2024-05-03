@@ -62,10 +62,6 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
 
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   // createChannel(button: HTMLElement): void {
   //   this.channelService.addChannel(this.channel);
   //   this.dialogRef.close();
@@ -78,7 +74,7 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
       const channelId = await this.channelService.addChannel(this.channel);
   
       this.channelService.setCurrentChannel(channelId);
-      console.log('Channel created and set as currentChannel', this.channelService.currentChannel);
+      // console.log('Channel created and set as currentChannel', this.channelService.currentChannel);
   
       this.dialogRef.close();
       this.openAddUserDialog(button);
