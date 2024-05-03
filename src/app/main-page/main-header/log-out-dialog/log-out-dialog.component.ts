@@ -29,7 +29,6 @@ export class LogOutDialogComponent {
     const component = DialogShowProfileComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'right');    
     this.showProfileClicked.emit();
-    console.log('aktueller User', this.showProfileClicked);
     this.dialogRef.close();
   }
 
