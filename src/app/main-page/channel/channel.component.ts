@@ -13,6 +13,8 @@ import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { user } from '@angular/fire/auth';
+import { channel } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-channel',
@@ -28,7 +30,9 @@ export class ChannelComponent {
   messageInput: string = '';
 
   // TODO: replace dummy data
-  // currentUser: User = {
+  // 
+  // currentUser: User = this.userService.currentUser;
+  // {
   //   id: 'user_01',
   //   name: 'Max Mustermann',
   //   email: 'max@mustermann.de',
@@ -39,7 +43,7 @@ export class ChannelComponent {
   //   // last_channel: string,
   // };
   currentUser: User = this.userService.currentUser;
-  users: User[] = this.userService.allUsers;
+  // users: User[] = this.userService.allUsers;
   // TODO: replace with userService.users
   // users: User[] = [
   //   {
@@ -70,21 +74,28 @@ export class ChannelComponent {
   //     profile_img: '/assets/img/avatar-3.jpg',
   //   },
   // ];
-  dummyChannel: Channel = {
-    id: 'channel_01',
-    name: 'Channel 01',
-    description: 'Das ist Channel 01',
-    created_at: 1714048300000,
-    creator: 'user_03', // 'user_id'
-    members: ['user_01', 'user_02'],
-    active_members: ['user_01', 'user_02'],
-    channel_type: ChannelTypeEnum.main,
-  }
 
   currentChannel: Channel = this.channelService.currentChannel;
+  // {
+  //   id: this.channelService.currentChannel.id,
+  //   name: this.channelService.currentChannel.name,
+  //   description: this.channelService.currentChannel.description,
+  //   created_at: this.channelService.currentChannel.created_at,
+  //   creator: this.channelService.currentChannel.creator, // 'user_id'
+  //   members: this.channelService.currentChannel.members,
+  //   active_members: this.channelService.currentChannel.active_members,
+  //   channel_type: this.channelService.currentChannel.channel_type as ChannelTypeEnum,
+  // }
 
 
-  message: Message = this.messageService.message;
+// alle user die im channel sind
+  channelMembers = this.currentChannel.members;
+  users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
+
+  // currentChannel: Channel = this.channelService.currentChannel;
+
+
+  // message: Message = this.messageService.message;
   // {
   //   user_id: '',
   //   channel_id: '', // channel_02
@@ -99,6 +110,18 @@ export class ChannelComponent {
   // };
 
 
+  message: Message = {
+    user_id: '',
+    channel_id: this.currentChannel.id,
+    message: {
+      text: '',
+      attachements: [],
+    },
+    created_at: 0,
+    modified_at: 0,
+    is_deleted: false,
+    last_reply: 0,
+  };
 
   currentDate: string = '1970/01/01';
 
@@ -111,16 +134,7 @@ export class ChannelComponent {
     // this.users = this.userService.allUsers;
     // this.currentChannel = this.channelService.currentChannel || this.currentChannel;
     // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
-
-    
-  }
-
-  ngOnInit() {
-    this.getCurrentChannel();
-  }
-
-  getCurrentChannel() {
-    return this.channelService.currentChannel;
+    this.messageService.getMessagesFromChannel(this.currentChannel.id);
   }
 
   openAddUserDialog(button: HTMLElement) {
@@ -143,10 +157,11 @@ export class ChannelComponent {
   }
 
   saveMessage() {
-    this.message.user_id = this.currentUser.id || '';
+    this.message.user_id = this.currentUser.id;
     this.message.message.text = this.messageInput;
     this.message.created_at = new Date().getTime();
     this.message.modified_at = this.message.created_at;
+    this.message.channel_id = this.currentChannel.id;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
     console.log(this.currentChannel)

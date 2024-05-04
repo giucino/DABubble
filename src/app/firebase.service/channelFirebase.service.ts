@@ -62,6 +62,7 @@ export class ChannelFirebaseService {
       this.setCurrentChannel(channel.id);
     } else {
       let newDirectChannel: Channel = {
+        id: '',
         name: 'direct channel - ' + currentUser_id + ' & ' + dm_target_id,
         description: '',
         created_at: new Date().getTime(),

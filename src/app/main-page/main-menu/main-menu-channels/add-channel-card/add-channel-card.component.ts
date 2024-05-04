@@ -37,6 +37,7 @@ import { AddMemberCardComponent } from '../add-member-card/add-member-card.compo
 export class AddChannelCardComponent implements OnInit, OnDestroy {
 
   channel: Channel = {
+    id: '',
     name: '',
     description: '',
     created_at: Date.now(),

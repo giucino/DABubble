@@ -36,8 +36,9 @@ export class MessageComponent {
 
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
-  // // TODO: replace with userService.currentUser
-  // currentUser: User = {
+  // TODO: replace with userService.currentUser
+  currentUser: User = this.userService.currentUser;
+  // {
   //   id: 'user_01',
   //   name: 'Max Mustermann',
   //   email: 'max@mustermann.de',
@@ -47,10 +48,12 @@ export class MessageComponent {
   //   profile_img: '/assets/img/avatar-1.jpg',
   //   // last_channel: string,
   // };
-  currentUser : User = this.userService.currentUser;
+  currentChannel = this.channelService.currentChannel;
+  // TODO: replace with userService.users
+  channelMembers = this.currentChannel.members;
+  users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id));
 
-  // TODO: replace with userService.users oder users in message id?
-  users: User[] = this.userService.allUsers;
+  // users: User[] = 
   // [
   //   {
   //     id: 'user_01',

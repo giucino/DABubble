@@ -35,7 +35,7 @@ export class MessageService implements OnDestroy {
 
     }
 
-    getMessagesFromChannel(channel_id : string) {
+    getMessagesFromChannel(channel_id : any) {
         this.unsubMessages = this.subMessages(channel_id);
     }
 
