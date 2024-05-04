@@ -36,6 +36,7 @@ export class ChannelFirebaseService {
   };
 
   unsubChannels: any;
+  unsubscribeAllChannels!: () => void;
 
   constructor() {}
 
@@ -101,6 +102,10 @@ export class ChannelFirebaseService {
 
   ngOnDestroy(): void {
     this.unsubChannels;
+    if (this.unsubscribeAllChannels) {
+      this.unsubscribeAllChannels();
+    }
+    console.log('unsubscribed');
   }
 
   getChannelsRef() {
@@ -168,7 +173,10 @@ export class ChannelFirebaseService {
     }
   }
 
-  async updateChannelMembers(channelId: string, newMemberIds: string[]): Promise<void> {
+  async updateChannelMembers(
+    channelId: string,
+    newMemberIds: string[]
+  ): Promise<void> {
     try {
       const currentChannel = this.channels.find(
         (channel) => channel.id === channelId
@@ -189,5 +197,16 @@ export class ChannelFirebaseService {
     } catch (error) {
       console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
     }
+  }
+
+  getAllChannels() {
+    const allChannelsQuery = query(this.getChannelsRef());
+    this.unsubscribeAllChannels = onSnapshot(allChannelsQuery, (querySnapshot) => {
+      this.channels = [];
+      querySnapshot.forEach((doc) => {
+        const channel = this.setChannel(doc.data(), doc.id);
+        this.channels.push(channel);
+      });
+    });
   }
 }

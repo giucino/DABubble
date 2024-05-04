@@ -26,7 +26,7 @@ export class DialogShowProfileComponent {
     return this.profileService.getOwnProfileStatus();
   }
 
-  editCurrentUser(button: HTMLElement) {
+  editCurrentUser(button: HTMLElement): void {
     const component = DialogEditProfileComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'right');    
     this.dialogRef.close();

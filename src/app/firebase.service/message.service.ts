@@ -29,6 +29,7 @@ export class MessageService implements OnDestroy {
     }
 
     unsubMessages : any;
+    private unsubscribeAllMessages!: () => void;
 
     constructor() {
 
@@ -40,6 +41,10 @@ export class MessageService implements OnDestroy {
 
     ngOnDestroy(): void {
         this.unsubMessages();
+        if (this.unsubscribeAllMessages) {
+            this.unsubscribeAllMessages();
+        }
+        console.log('unsubscribed');
     }
 
     getMessagesRef() {
@@ -96,5 +101,16 @@ export class MessageService implements OnDestroy {
             await updateDoc(docRef, JSON.parse(JSON.stringify(message))).catch((err) => console.error(err))
         }
     }
+
+    getAllMessages() {
+        const allMessagesQuery = query(this.getMessagesRef());
+        this.unsubscribeAllMessages = onSnapshot(allMessagesQuery, (querySnapshot) => {
+          this.messages = [];
+          querySnapshot.forEach((doc) => {
+            const message = this.setMessage(doc.data(), doc.id);
+            this.messages.push(message);
+          });
+        });
+      }
 
 }
