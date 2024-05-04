@@ -5,6 +5,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
+import { Channel } from '../../../interfaces/channel.interface';
+import { ChannelComponent } from '../../channel/channel.component';
+import { MessageService } from '../../../firebase.service/message.service';
+import { UserService } from '../../../firebase.service/user.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -20,14 +25,24 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 export class MainMenuChannelsComponent implements OnInit {
   isExpanded: boolean = true;
 
-
-  constructor(private customDialogService: CustomDialogService, public channelService : ChannelFirebaseService) {
-    
+  constructor(private customDialogService: CustomDialogService,
+     public channelService : ChannelFirebaseService, public messageService: MessageService, public userService: UserService) {
   }
 
   ngOnInit(): void {
     
   }
+
+  openChannel(channel_id: string): void {
+    this.channelService.setCurrentChannel(channel_id);
+    // this.channelService.getCurrentChannel(channel_id);
+    this.channelService.getAllChannels();
+    this.userService.saveLastChannel(this.userService.currentUser.id, channel_id);
+  
+  }
+
+
+
 
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;

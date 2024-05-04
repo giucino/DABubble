@@ -13,6 +13,8 @@ import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { user } from '@angular/fire/auth';
+import { channel } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-channel',
@@ -28,65 +30,91 @@ export class ChannelComponent {
   messageInput: string = '';
 
   // TODO: replace dummy data
-  currentUser: User = {
-    id: 'user_01',
-    name: 'Max Mustermann',
-    email: 'max@mustermann.de',
-    password: 'password',
-    logged_in: true,
-    is_typing: false,
-    profile_img: '/assets/img/avatar-1.jpg',
-    // last_channel: string,
-  };
-
+  // 
+  // currentUser: User = this.userService.currentUser;
+  // {
+  //   id: 'user_01',
+  //   name: 'Max Mustermann',
+  //   email: 'max@mustermann.de',
+  //   password: 'password',
+  //   logged_in: true,
+  //   is_typing: false,
+  //   profile_img: '/assets/img/avatar-1.jpg',
+  //   // last_channel: string,
+  // };
+  currentUser: User = this.userService.currentUser;
+  // users: User[] = this.userService.allUsers;
   // TODO: replace with userService.users
-  users: User[] = [
-    {
-      id: 'user_01',
-      name: 'User 01',
-      email: 'user@01.de',
-      password: 'password1',
-      logged_in: true,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-1.jpg',
-    },
-    {
-      id: 'user_02',
-      name: 'User 02',
-      email: 'user@02.de',
-      password: 'password2',
-      logged_in: false,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-2.jpg',
-    },
-    {
-      id: 'user_03',
-      name: 'User 03',
-      email: 'user@03.de',
-      password: 'password3',
-      logged_in: true,
-      is_typing: false,
-      profile_img: '/assets/img/avatar-3.jpg',
-    },
-  ];
+  // users: User[] = [
+  //   {
+  //     id: 'user_01',
+  //     name: 'User 01',
+  //     email: 'user@01.de',
+  //     password: 'password1',
+  //     logged_in: true,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-1.jpg',
+  //   },
+  //   {
+  //     id: 'user_02',
+  //     name: 'User 02',
+  //     email: 'user@02.de',
+  //     password: 'password2',
+  //     logged_in: false,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-2.jpg',
+  //   },
+  //   {
+  //     id: 'user_03',
+  //     name: 'User 03',
+  //     email: 'user@03.de',
+  //     password: 'password3',
+  //     logged_in: true,
+  //     is_typing: false,
+  //     profile_img: '/assets/img/avatar-3.jpg',
+  //   },
+  // ];
 
-  currentChannel: Channel = {
-    id: 'channel_01',
-    name: 'Channel 01',
-    description: 'Das ist Channel 01',
-    created_at: 1714048300000,
-    creator: 'user_03', // 'user_id'
-    members: ['user_01', 'user_02'],
-    active_members: ['user_01', 'user_02'],
-    channel_type: ChannelTypeEnum.main,
-  }
+  currentChannel: Channel = this.channelService.currentChannel;
+  // {
+  //   id: this.channelService.currentChannel.id,
+  //   name: this.channelService.currentChannel.name,
+  //   description: this.channelService.currentChannel.description,
+  //   created_at: this.channelService.currentChannel.created_at,
+  //   creator: this.channelService.currentChannel.creator, // 'user_id'
+  //   members: this.channelService.currentChannel.members,
+  //   active_members: this.channelService.currentChannel.active_members,
+  //   channel_type: this.channelService.currentChannel.channel_type as ChannelTypeEnum,
+  // }
+
+
+// alle user die im channel sind
+  channelMembers = this.currentChannel.members;
+  users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
+
+  // currentChannel: Channel = this.channelService.currentChannel;
+
+
+  // message: Message = this.messageService.message;
+  // {
+  //   user_id: '',
+  //   channel_id: '', // channel_02
+  //   message: {
+  //     text: 'Text',
+  //     attachements: [],
+  //   },
+  //   created_at: 0,
+  //   modified_at: 0,
+  //   is_deleted: false,
+  //   last_reply: 0,
+  // };
 
 
   message: Message = {
     user_id: '',
-    channel_id: 'channel_02',
+    channel_id: this.currentChannel.id,
     message: {
-      text: 'Text',
+      text: '',
       attachements: [],
     },
     created_at: 0,
@@ -94,6 +122,9 @@ export class ChannelComponent {
     is_deleted: false,
     last_reply: 0,
   };
+
+  lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
+
 
   currentDate: string = '1970/01/01';
 
@@ -104,9 +135,13 @@ export class ChannelComponent {
     public channelService : ChannelFirebaseService,
   ) {
     // this.users = this.userService.allUsers;
-    // this.currentChannel = this.channelService.currentChannel;
+    // this.currentChannel = this.channelService.currentChannel || this.currentChannel;
     // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
-    this.messageService.getMessagesFromChannel('channel_02');
+    
+    // this.currentChannel.id = this.lastChannelId;
+    // this.channelService.setCurrentChannel(this.lastChannelId);
+    this.messageService.getMessagesFromChannel(this.currentChannel.id);
+    // this.channelService.getCurrentChannel(this.currentChannel.id);
   }
 
   openAddUserDialog(button: HTMLElement) {
@@ -129,12 +164,16 @@ export class ChannelComponent {
   }
 
   saveMessage() {
-    this.message.user_id = this.currentUser.id || '';
+    this.message.user_id = this.currentUser.id;
     this.message.message.text = this.messageInput;
     this.message.created_at = new Date().getTime();
     this.message.modified_at = this.message.created_at;
+    this.message.channel_id = this.currentChannel.id;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
+    // console.log(this.currentChannel)
+    // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
+    // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }
 
   isNewDate(date: number) {

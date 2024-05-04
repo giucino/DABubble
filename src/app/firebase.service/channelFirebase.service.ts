@@ -17,6 +17,7 @@ import {
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { debug } from 'console';
+import { ChannelComponent } from '../main-page/channel/channel.component';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +38,11 @@ export class ChannelFirebaseService {
 
   unsubChannels: any;
   unsubscribeAllChannels!: () => void;
+  unsubCurrentChannel;
 
-  constructor() {}
+  constructor() {
+    this.unsubCurrentChannel = this.getCurrentChannel();
+  }
 
   getChannelsForCurrentUser(user_id: string) {
     this.unsubChannels = this.subChannels(user_id);
@@ -61,6 +65,7 @@ export class ChannelFirebaseService {
       this.setCurrentChannel(channel.id);
     } else {
       let newDirectChannel: Channel = {
+        id: '',
         name: 'direct channel - ' + currentUser_id + ' & ' + dm_target_id,
         description: '',
         created_at: new Date().getTime(),
@@ -97,7 +102,13 @@ export class ChannelFirebaseService {
   setCurrentChannel(channel_id: string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if (channel) this.currentChannel = channel;
-    // console.log('Current Channel: ', this.currentChannel);
+    console.log('Current Channel: ', this.currentChannel);
+  }
+
+  getCurrentChannel() {
+    return onSnapshot(this.getChannelRef(this.currentChannel.id), (channel) => {
+      // this.currentChannel = this.setChannel(channel.data(), channel.id);
+    });
   }
 
   ngOnDestroy(): void {
@@ -105,6 +116,7 @@ export class ChannelFirebaseService {
     if (this.unsubscribeAllChannels) {
       this.unsubscribeAllChannels();
     }
+    this.unsubCurrentChannel();
     console.log('unsubscribed');
   }
 
