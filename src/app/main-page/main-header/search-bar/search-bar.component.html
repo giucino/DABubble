@@ -1,6 +1,6 @@
 <div class="search-bar-container">
     <input type="text" matInput placeholder="DABubble durchsuchen" maxlength="20" autocomplete="off"
-        [(ngModel)]="searchInput" (ngModelChange)="filter()">
+    [formControl]="searchControl">
 
     <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_813_12244" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="35"
@@ -13,9 +13,10 @@
                 fill="#686868" />
         </g>
     </svg>
-    @if (searchInput && (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0)) {
+    
+    @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0)) {
     <div class="search-container">
-
+        @if (filteredUsers.length > 0) {
         <ul class="filtered">
             <span class="categoryName">Users:</span>
             @for(user of filteredUsers; track user.id) {
@@ -25,12 +26,14 @@
                         <img [src]="user.profile_img" alt="" class="profile-img" />
                         <div class="online-status-wborder online"></div>
                     </div>
-                    <div class="user-name fs-18 ">{{user.name}}</div>
+                    <div class="user-name fs-18">{{user.name}}</div>
                 </div>
             </li>
             }
         </ul>
+        }
 
+        @if (filteredChannels.length > 0) {
         <ul class="filtered">
             <span class="categoryName">Channels:</span>
             @for(channel of filteredChannels; track channel.id) {
@@ -42,7 +45,9 @@
             </li>
             }
         </ul>
+        }
 
+        @if (filteredMessages.length > 0) {
         <ul class="filtered">
             <span class="categoryName">Messages:</span>
             @for(message of filteredMessages; track message.id) {
@@ -61,6 +66,7 @@
             </li>
             }
         </ul>
+        }
     </div>
     }
 </div>
