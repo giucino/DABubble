@@ -98,7 +98,7 @@ export class ChannelFirebaseService {
   setCurrentChannel(channel_id: string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if (channel) this.currentChannel = channel;
-    // console.log('Current Channel: ', this.currentChannel);
+    console.log('Current Channel: ', this.currentChannel);
   }
 
   ngOnDestroy(): void {

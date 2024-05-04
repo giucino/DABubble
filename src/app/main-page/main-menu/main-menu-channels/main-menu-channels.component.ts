@@ -26,21 +26,20 @@ export class MainMenuChannelsComponent implements OnInit {
 
   constructor(private customDialogService: CustomDialogService,
      public channelService : ChannelFirebaseService, public messageService: MessageService) {
-    
   }
 
   ngOnInit(): void {
     
   }
 
-  openChannel(channel_id: string) {
-    this.channelService.setCurrentChannel(channel_id);
-    this.messageService.getMessagesFromChannel(channel_id); // hier wird der geklickte channel geöffnet
+  
+  openChannel(channel_id: any) {
+    this.channelService.setCurrentChannel(channel_id); // hier wird der geklickte channel geöffnet, eigentlich
+    this.messageService.getMessagesFromChannel(channel_id); 
     // console.log(channel_id);
     
   }
 
-  // toggleExpansion() {
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }
