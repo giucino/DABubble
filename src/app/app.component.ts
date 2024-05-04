@@ -23,7 +23,7 @@ export class AppComponent {
      if (this.router.url === '/reset-password') { //für den reset link
       this.router.navigate(['/reset-password']);
     }
-    if (this.router.url === '') {
+    if (this.router.url === '/') {
       this.router.navigate(['/login-page']); // ansonsten immer auf login page
     } 
     // this.router.navigate(['/login-page']);
