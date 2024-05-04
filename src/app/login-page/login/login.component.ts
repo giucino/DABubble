@@ -57,6 +57,8 @@ export class LoginComponent {
 
   loginAsGuest() {
     this.userAuth.guestLogin().then(() => {
+      this.userService.getUsers();
+      this.userService.getCurrentUser('guest');
       this.router.navigate(['/main-page']);
     });
   }
