@@ -24,7 +24,7 @@ export class LogOutDialogComponent {
     private profileService: ProfileService, private userAuth: UserAuthService, private router: Router, private userService: UserService
   ) {}
 
-  openCurrentUser(button: HTMLElement) {
+  openCurrentUser(button: HTMLElement): void {
     this.profileService.setOwnProfileStatus(true); 
     const component = DialogShowProfileComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'right');    
@@ -32,7 +32,7 @@ export class LogOutDialogComponent {
     this.dialogRef.close();
   }
 
-  logOut() {
+  logOut(): void {
     // console.log('Logging out');
     localStorage.removeItem('currentUser');
     // sobald logged in user funktioniert

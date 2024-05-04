@@ -32,7 +32,7 @@ export class AddMemberCardComponent {
     public channelService: ChannelFirebaseService
   ) {}
 
-  filterUsers() {
+  filterUsers(): void {
     const searchTerm = this.searchInput ? this.searchInput.trim().toLowerCase() : '';
     this.filteredUsers = this.userService.allUsers.filter((user) => {
       const isPartOfNameMatched = user.name

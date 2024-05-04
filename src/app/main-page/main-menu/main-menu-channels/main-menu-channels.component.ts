@@ -18,7 +18,7 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
   styleUrl: './main-menu-channels.component.scss',
 })
 export class MainMenuChannelsComponent implements OnInit {
-  isExpanded = true;
+  isExpanded: boolean = true;
 
 
   constructor(private customDialogService: CustomDialogService, public channelService : ChannelFirebaseService) {
@@ -29,11 +29,11 @@ export class MainMenuChannelsComponent implements OnInit {
     
   }
 
-  toggleExpansion() {
+  toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }
 
-  openAddChannelDialog() {
+  openAddChannelDialog(): void {
     const component = AddChannelCardComponent;
     this.customDialogService.openDialog(component);
   }
