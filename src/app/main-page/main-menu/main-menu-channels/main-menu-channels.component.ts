@@ -9,6 +9,7 @@ import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelComponent } from '../../channel/channel.component';
 import { MessageService } from '../../../firebase.service/message.service';
+import { UserService } from '../../../firebase.service/user.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -25,7 +26,7 @@ export class MainMenuChannelsComponent implements OnInit {
   isExpanded: boolean = true;
 
   constructor(private customDialogService: CustomDialogService,
-     public channelService : ChannelFirebaseService, public messageService: MessageService) {
+     public channelService : ChannelFirebaseService, public messageService: MessageService, public userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -34,8 +35,14 @@ export class MainMenuChannelsComponent implements OnInit {
 
   openChannel(channel_id: string): void {
     this.channelService.setCurrentChannel(channel_id);
+    // this.channelService.getCurrentChannel(channel_id);
     this.channelService.getAllChannels();
+    this.userService.saveLastChannel(this.userService.currentUser.id, channel_id);
+  
   }
+
+
+
 
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;

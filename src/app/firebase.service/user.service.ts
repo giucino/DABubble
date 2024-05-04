@@ -35,16 +35,16 @@ export class UserService implements OnDestroy {
         });
     }
 
-    setUsers(data: any, id?: string): User {
+    setUsers(data: any, id: string): User {
         return {
-            id: id || '',
+            id: id,
             name: data.name || '',
             email: data.email || '',
             password: '',
             logged_in: data.logged_in || false,
             is_typing: data.is_typing || false,
-            profile_img: data.profile_img || '',
-            // last_channel: data.last_channel || ''
+            profile_img: data.profile_img,
+            last_channel: data.last_channel || '',
             toJSON() {
                 return {
                     id: this.id,
@@ -53,7 +53,8 @@ export class UserService implements OnDestroy {
                     password: this.password,
                     logged_in: this.logged_in,
                     is_typing: this.is_typing,
-                    profile_img: this.profile_img
+                    profile_img: this.profile_img,
+                    last_channel: this.last_channel,
                 };
             }
         }
@@ -113,6 +114,11 @@ export class UserService implements OnDestroy {
         updateDoc(singleUserRef, { logged_in: status });
     }
 
+    saveLastChannel(userId: string, channelId: string) {
+        let singleUserRef = doc(this.getUserRef(), userId);
+        updateDoc(singleUserRef, { last_channel: channelId });
+    }
+
     getCleanJson(user: User): {} {
         return {
             name: user.name,
@@ -121,7 +127,7 @@ export class UserService implements OnDestroy {
             logged_in: user.logged_in,
             is_typing: user.is_typing,
             profile_img: user.profile_img,
-            // last_channel: userInt.last_channel
+            last_channel: user.last_channel
         }
     }
 

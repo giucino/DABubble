@@ -123,6 +123,9 @@ export class ChannelComponent {
     last_reply: 0,
   };
 
+  lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
+
+
   currentDate: string = '1970/01/01';
 
   constructor(
@@ -134,7 +137,11 @@ export class ChannelComponent {
     // this.users = this.userService.allUsers;
     // this.currentChannel = this.channelService.currentChannel || this.currentChannel;
     // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
+    
+    // this.currentChannel.id = this.lastChannelId;
+    // this.channelService.setCurrentChannel(this.lastChannelId);
     this.messageService.getMessagesFromChannel(this.currentChannel.id);
+    // this.channelService.getCurrentChannel(this.currentChannel.id);
   }
 
   openAddUserDialog(button: HTMLElement) {
@@ -164,7 +171,7 @@ export class ChannelComponent {
     this.message.channel_id = this.currentChannel.id;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
-    console.log(this.currentChannel)
+    // console.log(this.currentChannel)
     // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
     // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }

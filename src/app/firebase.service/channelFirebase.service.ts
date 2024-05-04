@@ -38,8 +38,11 @@ export class ChannelFirebaseService {
 
   unsubChannels: any;
   unsubscribeAllChannels!: () => void;
+  unsubCurrentChannel;
 
-  constructor() {}
+  constructor() {
+    this.unsubCurrentChannel = this.getCurrentChannel();
+  }
 
   getChannelsForCurrentUser(user_id: string) {
     this.unsubChannels = this.subChannels(user_id);
@@ -102,11 +105,18 @@ export class ChannelFirebaseService {
     console.log('Current Channel: ', this.currentChannel);
   }
 
+  getCurrentChannel() {
+    return onSnapshot(this.getChannelRef(this.currentChannel.id), (channel) => {
+      // this.currentChannel = this.setChannel(channel.data(), channel.id);
+    });
+  }
+
   ngOnDestroy(): void {
     this.unsubChannels;
     if (this.unsubscribeAllChannels) {
       this.unsubscribeAllChannels();
     }
+    this.unsubCurrentChannel();
     console.log('unsubscribed');
   }
 
