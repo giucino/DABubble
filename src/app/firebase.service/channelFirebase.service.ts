@@ -16,7 +16,6 @@ import {
   query,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
-import { Observable, from } from 'rxjs';
 import { debug } from 'console';
 import { ChannelComponent } from '../main-page/channel/channel.component';
 
@@ -38,6 +37,7 @@ export class ChannelFirebaseService {
   };
 
   unsubChannels: any;
+  unsubscribeAllChannels!: () => void;
 
   constructor() {}
 
@@ -98,11 +98,15 @@ export class ChannelFirebaseService {
   setCurrentChannel(channel_id: string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if (channel) this.currentChannel = channel;
-    console.log('Current Channel: ', this.currentChannel);
+    // console.log('Current Channel: ', this.currentChannel);
   }
 
   ngOnDestroy(): void {
     this.unsubChannels;
+    if (this.unsubscribeAllChannels) {
+      this.unsubscribeAllChannels();
+    }
+    console.log('unsubscribed');
   }
 
   getChannelsRef() {
@@ -137,7 +141,7 @@ export class ChannelFirebaseService {
   async addChannel(channel: Channel): Promise<string> {
     let ref = this.getChannelsRef();
     const docRef = await addDoc(ref, channel);
-    console.log('Channel added with ID:', docRef.id);
+    // console.log('Channel added with ID:', docRef.id);
     return docRef.id;
   }
 
@@ -170,7 +174,10 @@ export class ChannelFirebaseService {
     }
   }
 
-  async updateChannelMembers(channelId: string, newMemberIds: string[]): Promise<void> {
+  async updateChannelMembers(
+    channelId: string,
+    newMemberIds: string[]
+  ): Promise<void> {
     try {
       const currentChannel = this.channels.find(
         (channel) => channel.id === channelId
@@ -185,11 +192,22 @@ export class ChannelFirebaseService {
 
       const docRef = doc(this.getChannelsRef(), channelId);
       await updateDoc(docRef, { members: updatedMemberIds });
-      console.log('Mitgliederliste erfolgreich aktualisiert:', updatedMemberIds);
+      // console.log('Mitgliederliste erfolgreich aktualisiert:', updatedMemberIds);
 
       currentChannel.members = updatedMemberIds;
     } catch (error) {
       console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
     }
+  }
+
+  getAllChannels() {
+    const allChannelsQuery = query(this.getChannelsRef());
+    this.unsubscribeAllChannels = onSnapshot(allChannelsQuery, (querySnapshot) => {
+      this.channels = [];
+      querySnapshot.forEach((doc) => {
+        const channel = this.setChannel(doc.data(), doc.id);
+        this.channels.push(channel);
+      });
+    });
   }
 }

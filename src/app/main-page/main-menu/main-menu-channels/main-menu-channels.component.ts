@@ -22,7 +22,7 @@ import { MessageService } from '../../../firebase.service/message.service';
   styleUrl: './main-menu-channels.component.scss',
 })
 export class MainMenuChannelsComponent implements OnInit {
-  isExpanded = true;
+  isExpanded: boolean = true;
 
   constructor(private customDialogService: CustomDialogService,
      public channelService : ChannelFirebaseService, public messageService: MessageService) {
@@ -40,11 +40,12 @@ export class MainMenuChannelsComponent implements OnInit {
     
   }
 
-  toggleExpansion() {
+  // toggleExpansion() {
+  toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }
 
-  openAddChannelDialog() {
+  openAddChannelDialog(): void {
     const component = AddChannelCardComponent;
     this.customDialogService.openDialog(component);
   }

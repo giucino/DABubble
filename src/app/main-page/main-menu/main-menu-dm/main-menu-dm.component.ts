@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../firebase.service/user.service';
 import { User } from '../../../interfaces/user.interface';
@@ -12,23 +12,28 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
   styleUrl: './main-menu-dm.component.scss',
 })
 export class MainMenuDmComponent implements OnInit, OnDestroy {
-  isExpanded = true;
-
+  isExpanded: boolean = true;
   users: User[] = [];
 
-  constructor(public userService: UserService, public channelService : ChannelFirebaseService) {}
+  constructor(
+    public userService: UserService,
+    public channelService: ChannelFirebaseService
+  ) {}
 
   ngOnInit(): void {
-    this.users = this.userService.allUsers; 
+    this.users = this.userService.allUsers;
   }
-  
+
   ngOnDestroy(): void {}
 
-  toggleExpansion() {
+  toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }
 
-  openDirectChannel( user_id: string ) {
-    this.channelService.openDirectChannel(this.userService.currentUser.id, user_id);
+  openDirectChannel(user_id: string): void {
+    this.channelService.openDirectChannel(
+      this.userService.currentUser.id,
+      user_id
+    );
   }
 }

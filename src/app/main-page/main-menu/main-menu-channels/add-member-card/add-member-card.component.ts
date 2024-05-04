@@ -9,8 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../../firebase.service/user.service';
 import { User } from '../../../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../../../firebase.service/channelFirebase.service';
-import { Channel } from '../../../../interfaces/channel.interface';
-import { ChannelTypeEnum } from '../../../../shared/enums/channel-type.enum';
 
 @Component({
   selector: 'app-add-member-card',
@@ -34,17 +32,20 @@ export class AddMemberCardComponent {
     public channelService: ChannelFirebaseService
   ) {}
 
-  filterUsers() {
-    const searchTerm = this.searchInput ? this.searchInput.trim() : '';
+  filterUsers(): void {
+    const searchTerm = this.searchInput ? this.searchInput.trim().toLowerCase() : '';
     this.filteredUsers = this.userService.allUsers.filter((user) => {
-      return user.name
+      const isPartOfNameMatched = user.name
         .split(' ')
-        .some((part: string) =>
-          part.toLowerCase().startsWith(searchTerm.toLowerCase())
-        );
+        .some((part: string) => part.toLowerCase().startsWith(searchTerm));
+  
+      const isNotSelected = !this.selectedUsers.some(selected => selected.id === user.id);
+      const isNotCreator = this.channelService.currentChannel.creator !== user.id;
+  
+      return isPartOfNameMatched && isNotSelected && isNotCreator;
     });
   }
-
+  
   selectUser(user: User): void {
     if (!this.selectedUsers.find((u) => u.id === user.id)) {
       this.selectedUsers.push(user);
@@ -57,32 +58,33 @@ export class AddMemberCardComponent {
   }
 
   handleMemberUpdate(): void {
-    if (!this.channelService.currentChannel.id) {
-      console.error(
-        'Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.'
-      );
+    const channelId = this.getCurrentChannelId();
+    if (!channelId) {
+      console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
       return;
     }
+    const memberIds = this.getMemberIds();
+    this.updateMembers(channelId, memberIds);
+  }
 
-    let memberIds: string[];
+  getCurrentChannelId(): string | undefined {
+    return this.channelService.currentChannel.id;
+  }
+
+  getMemberIds(): string[] {
     if (this.selectedOption === 'all') {
-      memberIds = this.userService.allUsers.map((user) => user.id);
+      return this.userService.allUsers.map(user => user.id).filter((id): id is string => id !== undefined);
     } else {
-      memberIds = this.selectedUsers
-        .map((user) => user.id)
-        .filter((id): id is string => id !== undefined);
+      return this.selectedUsers.map(user => user.id).filter((id): id is string => id !== undefined);
     }
+  }
 
-    this.channelService
-      .updateChannelMembers(this.channelService.currentChannel.id, memberIds)
+  updateMembers(channelId: string, memberIds: string[]): void {
+    this.channelService.updateChannelMembers(channelId, memberIds)
       .then(() => {
-        console.log(
-          'Mitgliederliste erfolgreich aktualisiert für Channel ID:',
-          this.channelService.currentChannel.id
-        );
         this.dialogRef.close();
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
       });
   }

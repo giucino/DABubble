@@ -4,6 +4,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ProfileService } from '../../services/profile.service';
 import { DialogEditProfileComponent } from '../../shared/dialog-edit-profile/dialog-edit-profile.component';
 import { CustomDialogService } from '../../services/custom-dialog.service';
+import { UserService } from '../../firebase.service/user.service';
 
 @Component({
   selector: 'app-dialog-show-profile',
@@ -17,6 +18,7 @@ export class DialogShowProfileComponent {
     public dialogRef: MatDialogRef<DialogShowProfileComponent>,
     private profileService: ProfileService,
     private customDialogService: CustomDialogService,
+    public userService: UserService
 
   ) {}
 
@@ -24,7 +26,7 @@ export class DialogShowProfileComponent {
     return this.profileService.getOwnProfileStatus();
   }
 
-  editCurrentUser(button: HTMLElement) {
+  editCurrentUser(button: HTMLElement): void {
     const component = DialogEditProfileComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'right');    
     this.dialogRef.close();

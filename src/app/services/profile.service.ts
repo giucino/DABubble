@@ -8,7 +8,7 @@ export class ProfileService {
 
   constructor() {}
 
-  setOwnProfileStatus(status: boolean) {
+  setOwnProfileStatus(status: boolean): void {
     this.isOwnProfile = status;
   }
 
