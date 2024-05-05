@@ -4,12 +4,13 @@
 .header-content {
   @include dFlex;
   .logo-container {
-    min-width: 366px;
+    // min-width: 366px;
     height: 70px;
     flex: 1;
     display: inline-flex;
     align-items: center;
     gap: 16px;
+    margin-right: 20px;
 
     .logo {
       width: 70px;
@@ -29,7 +30,8 @@
 
   .user-head {
     @include dFlex($gap: 20px, $jc: flex-end);
-    min-width: 485px;
+    margin-left: 20px;
+    // min-width: 485px;
     cursor: pointer;
     &:hover {
       color: var(--color-purple-3);
@@ -40,7 +42,7 @@
       font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 200px;
+      // max-width: 200px;
       display: block;
     }
 
@@ -52,5 +54,11 @@
         width: 70px;
       }
     }
+  }
+}
+
+@media (max-width: 1000px) {
+  .search-bar {
+    display: none;
   }
 }
