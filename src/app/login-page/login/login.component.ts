@@ -109,6 +109,7 @@ export class LoginComponent {
     this.userAuth.guestLogin().then(() => {
       this.userService.getUsers();
       this.userService.getCurrentUser('guest');
+      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
       this.channelService.getChannelsForCurrentUser();
       setTimeout(() => {
         this.router.navigate(['/main-page']);

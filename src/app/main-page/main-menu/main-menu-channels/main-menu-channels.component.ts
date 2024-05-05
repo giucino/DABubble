@@ -35,10 +35,11 @@ export class MainMenuChannelsComponent implements OnInit {
 
   openChannel(channel_id: string): void {
     this.channelService.setCurrentChannel(channel_id);
-    // this.channelService.getCurrentChannel(channel_id);
-    this.channelService.getAllChannels();
+    console.log('channel_id', channel_id)
+    // this.channelService.getCurrentChannel();
+    // this.channelService.getAllChannels();
     this.userService.saveLastChannel(this.userService.currentUser.id, channel_id);
-  
+    
   }
 
 
