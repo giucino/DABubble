@@ -7,6 +7,10 @@ import { Auth, GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect 
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
+import { last } from 'rxjs';
+import { log } from 'console';
+import { User } from '../../models/user';
+import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 
 @Component({
   selector: 'app-login',
@@ -21,16 +25,17 @@ export class LoginComponent {
   loginEmail: string = '';
   loginPassword: string = '';
 
-  constructor(private userAuth: UserAuthService, private userService: UserService, private router: Router) { }
+  constructor(private userAuth: UserAuthService, private userService: UserService, 
+    private router: Router, private channelService: ChannelFirebaseService) { }
 
   ngonInit() {
     this.error = false;
   }
-    
-    async login() {
-      const email = this.loginEmail;
-      const password = this.loginPassword;
-      // loading balken true 
+
+  async login() {
+    const email = this.loginEmail;
+    const password = this.loginPassword;
+    // loading balken true 
     try {
       await this.userAuth.loginUser(email, password);
       this.userService.getUsers();
@@ -38,8 +43,10 @@ export class LoginComponent {
       this.userService.getCurrentUser(this.loginEmail); // currentUser is set
       localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
       this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
-
-      this.router.navigate(['/main-page']);
+      this.channelService.getChannelsForCurrentUser()
+      setTimeout(() => {
+        this.router.navigate(['/main-page']);
+      }, 2000);
     } catch (error) {
       console.error(error);
       this.error = true;
@@ -49,7 +56,50 @@ export class LoginComponent {
 
   loginWithGoogle() {
     this.userAuth.loginWithGoogle().then((result) => {
-      this.router.navigate(['/main-page']);
+      let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
+      const user = {
+        name: this.userAuth.googleName,
+        email: this.userAuth.googleEmail,
+        profile_img: this.userAuth.googleProfileImg,
+        id: googleUserId,
+        last_channel: '',
+        logged_in: false,
+        is_typing: false,
+        password: '',
+        toJSON() {
+          return {
+            name: this.name,
+            email: this.email,
+            profile_img: this.profile_img,
+            id: this.id,
+            last_channel: this.last_channel,
+            logged_in: this.logged_in,
+            is_typing: this.is_typing,
+            password: this.password
+          };
+        }
+      };
+      this.userService.getUsers();
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.userService.getCurrentUser(this.loginEmail);
+      this.userService.addDatabaseIdToUser(googleUserId);
+
+      if (this.userService.allUsers.some(user => user.email === this.userAuth.googleEmail)) {
+        this.channelService.getChannelsForCurrentUser();
+        setTimeout(() => {
+          this.router.navigate(['/main-page']);
+        }, 2000);
+        
+      } else {
+        this.userService.addGoogleUser(user).then(() => {
+          this.channelService.getChannelsForCurrentUser();
+          setTimeout(() => {
+            this.router.navigate(['/main-page']);
+            
+          }, 2000);
+          
+        });
+      }
     }).catch((error) => {
       console.error(error);
     });
@@ -59,10 +109,14 @@ export class LoginComponent {
     this.userAuth.guestLogin().then(() => {
       this.userService.getUsers();
       this.userService.getCurrentUser('guest');
-      this.router.navigate(['/main-page']);
+      this.channelService.getChannelsForCurrentUser();
+      setTimeout(() => {
+        this.router.navigate(['/main-page']);
+        
+      }, 2000);
     });
   }
 
-  
+
 
 }

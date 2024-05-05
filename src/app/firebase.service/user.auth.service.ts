@@ -9,6 +9,10 @@ import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPasswo
 export class UserAuthService {
   firestore: Firestore = inject(Firestore);
   displayName: string = '';
+  googleName: any = '';
+  googleEmail: any = '';
+  googleProfileImg: any = '';
+  googleId: any = '';
 
 
   constructor(private auth: Auth) { }
@@ -32,21 +36,32 @@ export class UserAuthService {
 
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(this.auth, provider);
+
+    return signInWithPopup(this.auth, provider).then((result) => {
+      var user = result.user;
+      this.googleName = user.displayName;
+      this.googleEmail = user.email;
+      this.googleProfileImg = user.photoURL;
+      // this.googleId = user.uid;
+      // console.log('Google User: ', user);
+    })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-    async saveUser(name: string): Promise<void> {
-      const user_auth: any = this.auth.currentUser;
-      if (user_auth) {
-          try {
-              await updateProfile(user_auth, { displayName: name });
-              this.displayName = user_auth.displayName;
-          } catch (error) {
-              console.error('Fehler bei updateDoc', error);
-          }
-      } else {
-          console.error('Benutzer ist nicht authentifiziert');
+  async saveUser(name: string): Promise<void> {
+    const user_auth: any = this.auth.currentUser;
+    if (user_auth) {
+      try {
+        await updateProfile(user_auth, { displayName: name });
+        this.displayName = user_auth.displayName;
+      } catch (error) {
+        console.error('Fehler bei updateDoc', error);
       }
+    } else {
+      console.error('Benutzer ist nicht authentifiziert');
+    }
   }
 
   async resetPassword(email: string): Promise<void> {
@@ -58,7 +73,7 @@ export class UserAuthService {
       console.error('Error sending password reset email', error);
     }
   }
-  
+
   // async getName() {
   //     const user_auth: any = this.auth.currentUser;
   //     if (user_auth) {
@@ -75,8 +90,8 @@ export class UserAuthService {
   }
 
 
-    async checkEmailExistence(email: string) {
-      return fetchSignInMethodsForEmail(this.auth, email);
+  async checkEmailExistence(email: string) {
+    return fetchSignInMethodsForEmail(this.auth, email);
   }
 
   checkAuth() {

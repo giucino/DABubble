@@ -2,6 +2,7 @@ import { Injectable, OnDestroy, Query, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, where, query, orderBy } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Message } from '../interfaces/message.interface';
+import { UserAuthService } from './user.auth.service';
 // import { getFirestore } from "firebase/firestore";
 
 
@@ -10,10 +11,10 @@ import { Message } from '../interfaces/message.interface';
 })
 
 export class MessageService implements OnDestroy {
-    
+
     firestore: Firestore = inject(Firestore);
-    messages : Message[] = [];
-    message : Message = {
+    messages: Message[] = [];
+    message: Message = {
         user_id: '',
         channel_id: '',
         thread_id: '',
@@ -28,14 +29,14 @@ export class MessageService implements OnDestroy {
         total_replies: 0,
     }
 
-    unsubMessages : any;
+    unsubMessages: any;
     private unsubscribeAllMessages!: () => void;
 
-    constructor() {
+    constructor(private userAuth: UserAuthService) {
 
     }
 
-    getMessagesFromChannel(channel_id : any) {
+    getMessagesFromChannel(channel_id: any) {
         this.unsubMessages = this.subMessages(channel_id);
     }
 
@@ -51,11 +52,11 @@ export class MessageService implements OnDestroy {
         return collection(this.firestore, 'messages')
     }
 
-    getMessageRef(message_id : string) {
+    getMessageRef(message_id: string) {
         return doc(collection(this.firestore, 'messages', message_id))
     }
 
-    setMessage(data : any, id?: string) : Message {
+    setMessage(data: any, id?: string): Message {
         return {
             id: id || '',
             user_id: data.user_id || '',
@@ -76,26 +77,29 @@ export class MessageService implements OnDestroy {
 
 
     /* CREATE */
-    async addMessage(message : Message) {
+    async addMessage(message: Message) {
+        // message.googleName = this.userAuth.googleName;
+        // message.googleProfileImg = this.userAuth.googleProfileImg;
+
         let ref = this.getMessagesRef();
         await addDoc(ref, message)
-            .catch((err) => {console.log(err)})
-            .then(()=>{})
+            .catch((err) => { console.log(err) })
+            .then(() => { })
     }
 
-    /* READ */ 
-    subMessages(channel_id : string) {
+    /* READ */
+    subMessages(channel_id: string) {
         const q = query(this.getMessagesRef(), where('channel_id', '==', channel_id), orderBy("created_at"));
-        return onSnapshot( q , (messages) => {
+        return onSnapshot(q, (messages) => {
             this.messages = [];
             messages.forEach((message) => {
-                this.messages.push(this.setMessage(message.data(),message.id))
+                this.messages.push(this.setMessage(message.data(), message.id))
             });
         })
     }
 
     /* UPDATE */
-    async updateMessage(message : Message) {
+    async updateMessage(message: Message) {
         if (message.id) {
             let docRef = doc(this.getMessagesRef(), message.id);
             await updateDoc(docRef, JSON.parse(JSON.stringify(message))).catch((err) => console.error(err))
@@ -105,12 +109,12 @@ export class MessageService implements OnDestroy {
     getAllMessages() {
         const allMessagesQuery = query(this.getMessagesRef());
         this.unsubscribeAllMessages = onSnapshot(allMessagesQuery, (querySnapshot) => {
-          this.messages = [];
-          querySnapshot.forEach((doc) => {
-            const message = this.setMessage(doc.data(), doc.id);
-            this.messages.push(message);
-          });
+            this.messages = [];
+            querySnapshot.forEach((doc) => {
+                const message = this.setMessage(doc.data(), doc.id);
+                this.messages.push(message);
+            });
         });
-      }
+    }
 
 }

@@ -123,7 +123,7 @@ export class ChannelComponent {
     last_reply: 0,
   };
 
-  lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
+  // lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
 
 
   currentDate: string = '1970/01/01';

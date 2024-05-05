@@ -6,7 +6,7 @@ export class User {
     logged_in: boolean;
     is_typing: boolean;
     profile_img: string;
-    last_channel: string;
+    last_channel?: string;
 
     constructor(obj?: any){
         this.id = obj ? obj.id : '';

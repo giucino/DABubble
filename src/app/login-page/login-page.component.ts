@@ -18,12 +18,15 @@ import { EmailSentComponent } from '../email-sent/email-sent.component';
 export class LoginPageComponent {
   hideElement = false;
   hideExtras = false;
+  
   constructor(private router: Router) { 
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hideElement = this.router.url !== '/login-page/login';
       }
     });
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hideExtras = this.router.url == '/login-page/imprint' || this.router.url == '/login-page/privacy-policy';

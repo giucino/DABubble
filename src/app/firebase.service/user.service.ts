@@ -74,7 +74,8 @@ export class UserService implements OnDestroy {
             if (storedUser) {
                 // If the user is logged in, set this.currentUser to the stored user
                 this.currentUser = JSON.parse(storedUser);
-            } else {
+            } 
+            else {
                 // If the user is not logged in, find the user in this.allUsers
                 this.currentUser = this.allUsers.find(user => user.email === email);
             }
@@ -96,6 +97,16 @@ export class UserService implements OnDestroy {
     async addUser(user: User) {
         await addDoc(this.getUserRef(), user.toJSON());
     }
+
+    async addGoogleUser(user: User) {
+        if (this.getSingleUserRef(user.id)) {
+
+            // user existiert schon
+        } else {
+            await this.addUser(user); 
+        }
+      }
+
 
     addAvatarToUser(userId: string, avatar: string) {
         let singleUserRef = doc(this.getUserRef(), userId);

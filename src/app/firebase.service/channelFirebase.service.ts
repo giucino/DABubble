@@ -44,8 +44,18 @@ export class ChannelFirebaseService {
     this.unsubCurrentChannel = this.getCurrentChannel();
   }
 
-  getChannelsForCurrentUser(user_id: string) {
-    this.unsubChannels = this.subChannels(user_id);
+  // getChannelsForCurrentUser(user_id: string) {
+  //   this.unsubChannels = this.subChannels(user_id);
+  // }
+
+  // ohne user_id
+  getChannelsForCurrentUser(){
+    const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                // If the user is logged in, set this.currentUser to the stored user
+                let currentUser = JSON.parse(storedUser);
+                this.unsubChannels = this.subChannels(currentUser.id);
+            } 
   }
 
   async openDirectChannel(currentUser_id: string, dm_target_id: string) {

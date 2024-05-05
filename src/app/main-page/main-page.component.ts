@@ -19,7 +19,7 @@ export class MainPageComponent {
   constructor(public userService: UserService, public channelService: ChannelFirebaseService) {
     // this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
     if (this.userService.currentUser) {
-      this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
+      this.channelService.getChannelsForCurrentUser();
     }
 
   }

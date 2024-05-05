@@ -13,4 +13,7 @@ export interface Message {
     is_deleted: boolean,
     total_replies?: number,
     last_reply?: number,
+
+    googleName?: string,
+    googleProfileImg?: string,
 }
