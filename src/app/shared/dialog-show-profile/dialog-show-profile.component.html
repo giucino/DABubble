@@ -19,12 +19,12 @@
     </div>
 
     <div class="img-container">
-        <img class="profile-img" src="../../../assets/img/avatar-1.jpg" alt="Profile Image">
+        <img class="profile-img" [src]="userService.currentUser.profile_img" alt="Profile Image">
     </div>
 
     <div class="name-container">
         <div class="name">
-            <div class="first-name fs-32">{{userService.currentUser?.name}}</div>
+            <div class="first-name fs-32">{{userService.currentUser.name}}</div>
             <!-- div zum bearbeiten nur anzeigen, wenn isOwnProfile = true ist -->
             @if (isOwnProfile()) {
             <div class="edit fs-18" #profileBtn (click)="editCurrentUser(profileBtn)">Bearbeiten
@@ -52,7 +52,7 @@
             </svg>
             <div class="email-label fs-20">E-Mail-Adresse</div>
         </div>
-        <div class="email-address fs-18">{{userService.currentUser?.email}}</div>
+        <div class="email-address fs-18">{{userService.currentUser.email}}</div>
     </div>
 
     <!-- Button zum Senden einer Nachricht nur anzeigen, wenn isOwnProfile = false ist -->

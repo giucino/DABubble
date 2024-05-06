@@ -23,6 +23,10 @@ export class UserService implements OnDestroy {
 
     }
 
+    getUser(user_id : string) {
+        return this.allUsers.find((user) => user.id == user_id);
+      }
+
     getUsers() {
         return onSnapshot(this.getUserRef(), (list) => {
             this.allUsers = [];

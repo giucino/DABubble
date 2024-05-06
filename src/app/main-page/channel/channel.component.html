@@ -67,7 +67,7 @@
           @for(member of currentChannel.members; track member; let index = $index) {
             @if(index < 3) {
               <img
-              src="{{ getUser(member)?.profile_img }}"
+              src="{{ userService.getUser(member)?.profile_img }}"
               alt="profile-img"
               class="profile-img-wborder"
             />
@@ -181,7 +181,7 @@
               <span *ngIf="currentChannel.creator == currentUser.id">Du hast diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
             <!-- }  -->
             <!-- @else { -->
-              <span *ngIf="currentChannel.creator !== currentUser.id">{{ getUser(currentChannel.creator)?.name }} hat diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
+              <span *ngIf="currentChannel.creator !== currentUser.id">{{ userService.getUser(currentChannel.creator)?.name }} hat diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
             <!-- } -->
             
             <span class="channel-name-container fs-20">
