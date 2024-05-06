@@ -15,6 +15,7 @@ import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { user } from '@angular/fire/auth';
 import { channel } from 'diagnostics_channel';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-channel',
@@ -75,7 +76,8 @@ export class ChannelComponent {
   //   },
   // ];
 
-  currentChannel: Channel = this.channelService.currentChannel;
+  currentChannel: Channel = 
+  this.channelService.currentChannel;
   // {
   //   id: this.channelService.currentChannel.id,
   //   name: this.channelService.currentChannel.name,
@@ -109,6 +111,8 @@ export class ChannelComponent {
   //   last_reply: 0,
   // };
 
+  messages: Message[] = this.messageService.messages;
+  // this.messageService.messages;
 
   message: Message = {
     user_id: '',
@@ -133,16 +137,25 @@ export class ChannelComponent {
     public messageService: MessageService,
     public userService : UserService,
     public channelService : ChannelFirebaseService,
+    public route: ActivatedRoute
   ) {
-    // this.users = this.userService.allUsers;
-    // this.currentChannel = this.channelService.currentChannel || this.currentChannel;
-    // this.messageService.getMessagesFromChannel(this.currentChannel.id || '');   //TODO: id in channel fix
-    
-    // this.currentChannel.id = this.lastChannelId;
-    // this.channelService.setCurrentChannel(this.lastChannelId);
-    this.messageService.getMessagesFromChannel(this.currentChannel.id);
-    // this.channelService.getCurrentChannel(this.currentChannel.id);
+    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
   }
+
+  ngOnInit() {
+    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
+    // });
+    this.loadMessagesForCurrentChannel();
+  }
+
+  loadMessagesForCurrentChannel() {
+    // const channelId = this.currentChannel.id;
+    // this.messages = this.messageService.currentChannelMessages.filter(message => message.channel_id === channelId);
+    // this.messageService.getMessagesFromChannel(channelId).then(messages => {
+    //   this.messages = messages.filter(message => message.channel_id === channelId);
+    // });
+  }
+  
 
   openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;
@@ -171,7 +184,7 @@ export class ChannelComponent {
     this.message.channel_id = this.currentChannel.id;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
-    // console.log(this.currentChannel)
+    console.log(this.currentChannel) // richtige channel
     // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
     // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }

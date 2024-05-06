@@ -10,11 +10,11 @@ import { UserAuthService } from './user.auth.service';
     providedIn: 'root'
 })
 
-export class MessageService implements OnDestroy {
+export class MessageService {
 
     firestore: Firestore = inject(Firestore);
     messages: Message[] = [];
-    message: Message = {
+        message: Message = {
         user_id: '',
         channel_id: '',
         thread_id: '',
@@ -32,20 +32,12 @@ export class MessageService implements OnDestroy {
     unsubMessages: any;
     private unsubscribeAllMessages!: () => void;
 
-    constructor(private userAuth: UserAuthService) {
+    constructor() {
 
     }
 
     getMessagesFromChannel(channel_id: any) {
         this.unsubMessages = this.subMessages(channel_id);
-    }
-
-    ngOnDestroy(): void {
-        this.unsubMessages();
-        if (this.unsubscribeAllMessages) {
-            this.unsubscribeAllMessages();
-        }
-        console.log('unsubscribed');
     }
 
     getMessagesRef() {

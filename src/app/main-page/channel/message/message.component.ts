@@ -18,7 +18,8 @@ export class MessageComponent {
   showMoreOptions: boolean = false;
   editMessage: boolean = false;
   @Input() channelType: 'main' | 'direct' | 'thread' | 'new' = 'main';
-  @Input() message: Message = {
+  @Input() message: Message = 
+  {
     user_id: '',
     channel_id: '',
     thread_id: '',
@@ -33,6 +34,8 @@ export class MessageComponent {
     total_replies: 0,
     last_reply: 0,
   };
+
+  messages: Message[] = this.messageService.messages;
 
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
@@ -90,7 +93,10 @@ export class MessageComponent {
     public messageService: MessageService,
     public userService: UserService,
     public channelService: ChannelFirebaseService
-  ) {}
+  ) {
+    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
+    // messageService.messages = this.
+  }
 
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);

@@ -39,9 +39,27 @@ export class ChannelFirebaseService {
   unsubChannels: any;
   unsubscribeAllChannels!: () => void;
   unsubCurrentChannel;
+  private unsubscribeCurrentChannel?: () => void;
 
   constructor() {
     this.unsubCurrentChannel = this.getCurrentChannel();
+  }
+
+  //test
+  listenToChannel(channelId: string) {
+    this.unsubscribeCurrentChannel =
+    onSnapshot(this.getChannelRef(channelId), (ele) => {
+      if (!ele.exists()) {
+        this.currentChannel = this.setChannel(ele.data(), ele.id);
+      }
+      
+    });
+  }
+
+  stopListeningToChannel() {
+    if (this.unsubscribeCurrentChannel) {
+      this.unsubscribeCurrentChannel();
+    }
   }
 
   // getChannelsForCurrentUser(user_id: string) {
@@ -49,12 +67,12 @@ export class ChannelFirebaseService {
   // }
 
   // ohne user_id
-  getChannelsForCurrentUser(){
+  async getChannelsForCurrentUser(){
     const storedUser = localStorage.getItem('currentUser');
             if (storedUser) {
                 // If the user is logged in, set this.currentUser to the stored user
-                let currentUser = JSON.parse(storedUser);
-                this.unsubChannels = this.subChannels(currentUser.id);
+                let currentUser = await JSON.parse(storedUser);
+                this.unsubChannels =  this.subChannels(currentUser.id);
             } 
   }
 
@@ -112,7 +130,7 @@ export class ChannelFirebaseService {
   setCurrentChannel(channel_id: string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if (channel) this.currentChannel = channel;
-    console.log('Current Channel: ', this.currentChannel);
+    // console.log('Current Channel: ', this.currentChannel);
   }
 
   getCurrentChannel() {
@@ -127,7 +145,7 @@ export class ChannelFirebaseService {
       this.unsubscribeAllChannels();
     }
     this.unsubCurrentChannel();
-    console.log('unsubscribed');
+    // console.log('unsubscribed');
   }
 
   getChannelsRef() {

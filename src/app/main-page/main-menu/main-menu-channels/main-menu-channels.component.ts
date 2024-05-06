@@ -10,6 +10,8 @@ import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelComponent } from '../../channel/channel.component';
 import { MessageService } from '../../../firebase.service/message.service';
 import { UserService } from '../../../firebase.service/user.service';
+import { Router } from '@angular/router';
+import { Message } from '../../../interfaces/message.interface';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -26,7 +28,8 @@ export class MainMenuChannelsComponent implements OnInit {
   isExpanded: boolean = true;
 
   constructor(private customDialogService: CustomDialogService,
-     public channelService : ChannelFirebaseService, public messageService: MessageService, public userService: UserService) {
+     public channelService : ChannelFirebaseService, public messageService: MessageService, 
+     public userService: UserService, public router: Router) {
   }
 
   ngOnInit(): void {
@@ -34,12 +37,31 @@ export class MainMenuChannelsComponent implements OnInit {
   }
 
   openChannel(channel_id: string): void {
-    this.channelService.setCurrentChannel(channel_id);
-    console.log('channel_id', channel_id)
-    // this.channelService.getCurrentChannel();
-    // this.channelService.getAllChannels();
-    this.userService.saveLastChannel(this.userService.currentUser.id, channel_id);
-    
+    // this.router.navigate(['/main-page']).then(() => {
+    //   this.channelService.setCurrentChannel(channel_id);
+    //     this.router.navigate(['/main-page/', channel_id]);
+    //   this.messageService.getMessagesForChannel(channel_id);
+    // });
+      this.router.navigate(['/main-page']).then(() => {
+        this.channelService.setCurrentChannel(channel_id);
+        // this.messageService.setCurrentMessages(channel_id)
+        this.messageService.getMessagesFromChannel(channel_id);
+        // .then(messages => {
+        //   this.messageService.currentChannelMessages = [];
+        //   this.messageService.currentChannelMessages = messages;
+          this.router.navigate(['/main-page/', channel_id]);
+        // });
+      });
+      console.log('messagees', this.messageService.messages);
+      // console.log('channel_id', channel_id); // richtige id
+
+      //lade bildfschirm für sekunde oder 2 eventuell 
+      //check if currentuser is wirklich im channel, if not dann bleibt auf main-page, wegen url kopie
+
+  }
+
+  ngondDestroy(): void {
+    this.channelService.stopListeningToChannel();
   }
 
 

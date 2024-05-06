@@ -1,8 +1,8 @@
 <div class="channel-container">
   
   <!-- channel header - main channel -->
-  @if (currentChannel.channel_type == 'main') {
-  <div class="channel-header">
+  <!-- @if (currentChannel.channel_type == 'main') { -->
+  <div *ngIf="currentChannel.channel_type == 'main'" class="channel-header">
     <!-- btn edit channel -->
     <div class="channel-name-container" #editChannelBtn (click)="openEditChannelDialog(editChannelBtn)">
       <!-- # - icon -->
@@ -106,10 +106,10 @@
       </button>
     </div>
   </div>
-  }
+  <!-- } -->
   <!-- channel header - direct message -->
-  @if (currentChannel.channel_type == 'direct') {
-  <div class="channel-header-direct">
+  <!-- @if (currentChannel.channel_type == 'direct') { -->
+  <div *ngIf="currentChannel.channel_type == 'direct'" class="channel-header-direct">
     <div class="channel-member">
       <div class="profile-img-container">
         <img src="{{ getDirectChannelUser()?.profile_img }}" alt="" class="profile-img" />
@@ -118,10 +118,10 @@
       <div class="channel-member-name fs-24">{{ getDirectChannelUser()?.name }}</div>
     </div>
   </div>
-  }
+  <!-- } -->
   <!-- channel header - thread -->
-  @if (currentChannel.channel_type == 'thread') {
-  <div class="channel-header-thread">
+  <!-- @if (currentChannel.channel_type == 'thread') { -->
+  <div *ngIf="currentChannel.channel_type == 'thread'" class="channel-header-thread">
     <div class="channel-headline-container">
         <div class="channel-headline fs-24">Thread</div>
         <svg class="hashtag-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -145,10 +145,10 @@
         </svg> 
     </button>
   </div>
-  }
+  <!-- } -->
   <!-- channel header - new message -->
-  @if (currentChannel.channel_type == 'new') { 
-    <div class="channel-header-new">
+  <!-- @if (currentChannel.channel_type == 'new') {  -->
+    <div *ngIf="currentChannel.channel_type == 'new'" class="channel-header-new">
         <div class="channel-headline-container">
             <div class="channel-headline fs-24">Neue Nachricht</div>  
         </div>
@@ -156,15 +156,15 @@
             <input type="text" placeholder="An: #channel, oder @jemand oder E-Mail Adresse">
         </div>
     </div>
-  }
+  <!-- } -->
 
 
   <!-- channel messages -->
   <div class="channel-messages-container">
     <div class="channel-messages-content">
       <!-- channel first message -->
-      @if(currentChannel.channel_type == 'main') {
-        <div class="channel-info-container">
+      <!-- @if(currentChannel.channel_type == 'main') { -->
+        <div *ngIf="currentChannel.channel_type == 'main'" class="channel-info-container">
           <div class="channel-name-container">
             <svg class="hashtag-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_813_12093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
@@ -177,12 +177,12 @@
               <div class="channel-name fs-24">{{ currentChannel.name }}</div>
           </div>
           <div class="channel-info fs-20">
-            @if( currentChannel.creator == currentUser.id) {
-              <span>Du hast diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
-            } 
-            @else {
-              <span>{{ getUser(currentChannel.creator)?.name }} hat diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
-            }
+            <!-- @if( currentChannel.creator == currentUser.id) { -->
+              <span *ngIf="currentChannel.creator == currentUser.id">Du hast diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
+            <!-- }  -->
+            <!-- @else { -->
+              <span *ngIf="currentChannel.creator !== currentUser.id">{{ getUser(currentChannel.creator)?.name }} hat diesen Channel {{ getChannelCreationTime() }} erstellt. Das ist der Anfang des Channels</span>
+            <!-- } -->
             
             <span class="channel-name-container fs-20">
               <svg class="hashtag-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -198,11 +198,11 @@
             <span>.</span>
           </div>
         </div>
-      }
-      @if (currentChannel.channel_type == 'direct') {
+      <!-- } -->
+      <!-- @if (currentChannel.channel_type == 'direct') { -->
         <!-- person to person -->
-        @if (currentChannel.members.length == 2) {
-          <div class="channel-info-container">
+        <!-- @if (currentChannel.members.length == 2) { -->
+          <div *ngIf="currentChannel.channel_type == 'direct' && currentChannel.members.length == 2" class="channel-info-container">
             <div class="channel-name-container">
               <img src="{{ getDirectChannelUser()?.profile_img }}" alt="" class="profile-img w100">
               <div class="channel-name fs-24">{{ getDirectChannelUser()?.name }}</div>
@@ -211,10 +211,10 @@
               <span>Diese Unterhaltung findet nur zwischen <span class="btn-text">&commat;{{ getDirectChannelUser()?.name }}</span> und dir statt.</span>
             </div>
           </div>
-        }
-        @if (currentChannel.members.length == 1 && currentChannel.members[0] == currentUser.id) {
+        <!-- } -->
+        <!-- @if (currentChannel.members.length == 1 && currentChannel.members[0] == currentUser.id) { -->
           <!-- personal channel -->
-          <div class="channel-info-container">
+          <div *ngIf="currentChannel.members.length == 1 && currentChannel.members[0] == currentUser.id" class="channel-info-container">
             <div class="channel-name-container">
               <img src="{{ currentUser.profile_img }}" alt="" class="profile-img w100">
               <div class="channel-name fs-24">{{ currentUser.name }} (Du)</div>
@@ -223,20 +223,32 @@
               <span><b>Dieser Raum ist nur für dich da.</b>Mache dir Notizen, liste deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst besprechen.</span>
             </div>
           </div>
-        }
+        <!-- } -->
 
-      }
+      <!-- } -->
       <!-- messages -->
+
+      
+        <!-- irgendwas ist hier faul -->
+
       @for(message of messageService.messages; track message.id) {
-        @if (currentChannel.channel_type != 'thread' && isNewDate(message.created_at)) {
-          <div class="time-separator">
+
+        <!-- <div *ngFor="let message of messageService.messages; track message.id"> -->
+        <!-- @if (currentChannel.channel_type != 'thread' && isNewDate(message.created_at)) { -->
+
+          <div *ngIf="currentChannel.channel_type != 'thread' && isNewDate(message.created_at)" class="time-separator">
             <div class="h-line"></div>
             <div class="message-time fs-18">{{ getDateFormat(message.created_at) }}</div>
             <div class="h-line"></div>
           </div>
-        }  
+
+        <!-- }   -->
+
         <app-message [message]="message" [channelType]="currentChannel.channel_type"></app-message>
       }
+   
+
+    <!-- </div> -->
     </div> 
 </div>
 

@@ -4,11 +4,13 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
 import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
 import { UserService } from '../firebase.service/user.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [ChannelComponent, MainMenuComponent, MainHeaderComponent],
+  imports: [ChannelComponent, MainMenuComponent, MainHeaderComponent, RouterModule, CommonModule],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
 })
@@ -16,7 +18,7 @@ import { UserService } from '../firebase.service/user.service';
 export class MainPageComponent {
   
 
-  constructor(public userService: UserService, public channelService: ChannelFirebaseService) {
+  constructor(public userService: UserService, public channelService: ChannelFirebaseService, ) {
     // this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
     if (this.userService.currentUser) {
       this.channelService.getChannelsForCurrentUser();

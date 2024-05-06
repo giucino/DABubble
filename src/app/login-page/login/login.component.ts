@@ -46,7 +46,7 @@ export class LoginComponent {
       this.channelService.getChannelsForCurrentUser()
       setTimeout(() => {
         this.router.navigate(['/main-page']);
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.error(error);
       this.error = true;
@@ -54,6 +54,8 @@ export class LoginComponent {
     }
   }
 
+
+  // first channel in list openChannel that channel id
   loginWithGoogle() {
     this.userAuth.loginWithGoogle().then((result) => {
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
@@ -96,7 +98,7 @@ export class LoginComponent {
           setTimeout(() => {
             this.router.navigate(['/main-page']);
             
-          }, 2000);
+          }, 1000);
           
         });
       }
@@ -105,17 +107,18 @@ export class LoginComponent {
     });
   }
 
-  loginAsGuest() {
-    this.userAuth.guestLogin().then(() => {
-      this.userService.getUsers();
-      this.userService.getCurrentUser('guest');
-      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
-      this.channelService.getChannelsForCurrentUser();
-      setTimeout(() => {
-        this.router.navigate(['/main-page']);
-        
-      }, 2000);
-    });
+  async loginAsGuest() {
+    await this.userAuth.guestLogin();
+    this.userService.getUsers();
+    this.userService.getCurrentUser('guest');
+    localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
+    await this.channelService.getChannelsForCurrentUser();
+    
+    setTimeout(() => {
+      this.router.navigate(['/main-page']);
+      // this.channelService.setCurrentChannel(this.channelService.channels[0].id);
+      // this.router.navigate(['/main-page/', this.channelService.channels[0].id]);
+    }, 1000);
   }
 
 
