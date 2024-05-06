@@ -16,30 +16,15 @@
     </div>
     <div class="members-list-container">
         <div class="members-list">
-            @for(user of userService.allUsers; track user.id) {
-            <div class="member">
+            @for(member of currentChannel.members; track member; let index = $index) {            
+                <div class="member">
                 <div class="member-img-container">
-                    <img [src]="user.profile_img" alt="" class="profile-img" />
+                    <img src="{{ userService.getUser(member)?.profile_img }}" alt="" class="profile-img" />
                     <div class="online-status-wborder online"></div>
                 </div>
-                <div class="member-name fs-18 ">{{user.name}}</div>
+                <div class="member-name fs-18 ">{{ userService.getUser(member)?.name }}</div>
             </div>
         }
-            <!-- <div class="member">
-                <div class="member-img-container">
-                    <img src="./assets/img/avatar-3.jpg" alt="" class="profile-img" />
-                    <div class="online-status-wborder online"></div>
-                </div>
-                <div class="member-name fs-18 ">Elias Neumann</div>
-            </div>
-            <div class="member">
-                <div class="member-img-container">
-                    <img src="./assets/img/avatar-3.jpg" alt="" class="profile-img" />
-                    <div class="online-status-wborder online"></div>
-                </div>
-                <div class="member-name fs-18">Elias Neumann</div>
-            </div>
-        </div> -->
     </div>
     <button class="btn-add-member fs-18">
         <div class="btn-icon-v3">

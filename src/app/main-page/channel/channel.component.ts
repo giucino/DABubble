@@ -242,13 +242,13 @@ export class ChannelComponent {
   }
 
   // TODO: move to userService
-  getUser(user_id : string) {
-    return this.users.find((user) => user.id == user_id);
-  }
+  // getUser(user_id : string) {
+  //   return this.users.find((user) => user.id == user_id);
+  // }
 
   getDirectChannelUser() {
     let contact = this.currentChannel.members.find((member) => member != this.currentUser.id);
-    if (contact) return this.getUser(contact);
+    if (contact) return this.userService.getUser(contact);
     else return this.currentUser;
   }
 
