@@ -49,7 +49,8 @@
       border-radius: 30px;
       padding: 4px 20px;
       cursor: pointer;
-      &:hover {
+      &:hover,
+      &.selected {
         background-color: var(--color-bg);
       }
       &:active {
