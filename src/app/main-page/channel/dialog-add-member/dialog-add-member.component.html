@@ -34,7 +34,7 @@
 
     <div class="input-container">
         @if (selectedUsers.length > 0) {
-        @for(user of selectedUsers; track user.id) {
+        @for(user of newlyAddedUsers; track user.id) {
         <div class="selected-user">
             <img [src]="user.profile_img" alt="" class="profile-img" />
             <div class="user-name fs-18 ">{{user.name}}</div>
@@ -76,5 +76,5 @@
         </div>
     </div>
 
-    <button class="btn-primary" [disabled]="selectedUsers.length === 0" (click)="onUpdateMembers()">Hinzufügen</button>
+    <button class="btn-primary" [disabled]="newlyAddedUsers.length === 0" (click)="onUpdateMembers()">Hinzufügen</button>
 </div>

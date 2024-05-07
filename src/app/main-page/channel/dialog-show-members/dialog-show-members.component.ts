@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
-import { User } from '../../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
 import { Channel } from '../../../interfaces/channel.interface';
-
+import { CustomDialogService } from '../../../services/custom-dialog.service';
+import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
 
 @Component({
   selector: 'app-dialog-show-members',
@@ -18,12 +18,18 @@ export class DialogShowMembersComponent {
   currentChannel: Channel = 
   this.channelService.currentChannel;
 
-  channelMembers = this.currentChannel.members;
-  users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
-
   constructor(
     public dialogRef: MatDialogRef<DialogShowMembersComponent>,
+    public customDialogService: CustomDialogService,
+
     public userService: UserService,
-    public channelService: ChannelFirebaseService
+    public channelService: ChannelFirebaseService,
+
   ) {}
+
+  openAddUserDialog(button: HTMLElement) {
+    const component = DialogAddMemberComponent;
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    this.dialogRef.close();
+  }
 }

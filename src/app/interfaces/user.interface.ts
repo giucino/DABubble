@@ -6,5 +6,5 @@ export interface User {
     logged_in: boolean,
     is_typing: boolean,
     profile_img: string,
-    last_channel: string,
+    last_channel?: string,
 }
