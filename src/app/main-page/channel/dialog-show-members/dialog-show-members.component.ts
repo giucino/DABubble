@@ -21,7 +21,6 @@ export class DialogShowMembersComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogShowMembersComponent>,
     public customDialogService: CustomDialogService,
-
     public userService: UserService,
     public channelService: ChannelFirebaseService,
 

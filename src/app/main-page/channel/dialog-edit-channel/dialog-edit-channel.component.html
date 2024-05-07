@@ -28,7 +28,7 @@
           </g>
         </svg>
       </div>
-      <span>Entwicklerteam</span>
+      <span>{{ channelService.currentChannel.name }}</span>
     </div>
     <!-- close button -->
     <button class="btn-icon w40" [mat-dialog-close]>
@@ -109,8 +109,8 @@
         </div>
         <input
           type="text"
-          placeholder="Entwicklerteam"
-          value="Entwicklerteam"
+          placeholder="Channel-Name"
+          value="{{ channelService.currentChannel.name }}"
           [readOnly]="!editChannelName"
         />
       </div>
@@ -123,7 +123,7 @@
       }"
     >
       <div class="channel-edit-container-header">
-        <div class="headline">Channel-Description</div>
+        <div class="headline">Beschreibung</div>
         @if (!editChannelDescription) {
         <button
           class="btn-text-v3 fs-18"
@@ -147,13 +147,13 @@
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="5"
           type="text"
-          placeholder="Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen."
+          placeholder="Beschreibung"
           [readOnly]="!editChannelDescription"
-        >Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.</textarea>
+        >{{ channelService.currentChannel.description }}</textarea>
       </div>
       <div class="h-separator"></div>
       <div class="headline">Erstellt von</div>
-      <div class="channel-creator fs-24">Noah Braun</div>
+      <div class="channel-creator fs-24">{{ getCreatorName(channelService.currentChannel.creator) }}</div>
     </div>
   </div>
   <!-- leaving channel btn -->
