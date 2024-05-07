@@ -49,9 +49,13 @@
       border-radius: 30px;
       padding: 4px 20px;
       cursor: pointer;
-      &:hover,
+      &:hover {
+        background-color: var(--color-bg);
+      }
       &.selected {
         background-color: var(--color-bg);
+        color: var(--color-purple-3);
+        font-weight: 700;
       }
       &:active {
         color: var(--color-purple-3);
