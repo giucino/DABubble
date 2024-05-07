@@ -14,6 +14,7 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 export class MainMenuDmComponent implements OnInit, OnDestroy {
   isExpanded: boolean = true;
   users: User[] = [];
+  selectedUserId: string | null = null;
 
   constructor(
     public userService: UserService,
@@ -31,6 +32,7 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
   }
 
   openDirectChannel(user_id: string): void {
+    this.selectedUserId = user_id;
     this.channelService.openDirectChannel(
       this.userService.currentUser.id,
       user_id
