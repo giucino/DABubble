@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
@@ -15,24 +15,28 @@ import { Channel } from '../../../interfaces/channel.interface';
   templateUrl: './dialog-add-member.component.html',
   styleUrl: './dialog-add-member.component.scss',
 })
-export class DialogAddMemberComponent {
+export class DialogAddMemberComponent implements OnInit {
   searchInput: string = '';
   filteredUsers: User[] = [];
   selectedUsers: User[] = [];
+  newlyAddedUsers: User[] = [];
 
   currentChannel: Channel = 
   this.channelService.currentChannel;
-
-  channelMembers = this.currentChannel.members;
-  users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
-
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddMemberComponent>,
     public userService: UserService,
     public channelService: ChannelFirebaseService,
-    public userManagementService: UserManagementService
+    public userManagementService: UserManagementService,
   ) {}
+
+  ngOnInit(): void {
+    if (this.channelService.currentChannel && this.channelService.currentChannel.members) {
+      this.selectedUsers = this.userService.getUsersByIds(this.channelService.currentChannel.members);
+      this.newlyAddedUsers = [];
+    }
+  }
 
   onFilterUsers(): void {
     this.filteredUsers = this.userManagementService.filterUsers(this.searchInput, this.selectedUsers);
@@ -40,11 +44,16 @@ export class DialogAddMemberComponent {
 
   onSelectUser(user: User): void {
     this.selectedUsers = this.userManagementService.selectUser(this.selectedUsers, user);
+    
+    if (!this.newlyAddedUsers.find(u => u.id === user.id)) {
+        this.newlyAddedUsers.push(user);
+    }
     this.searchInput = '';
-  }
+}
 
   onRemoveSelectedUser(user: User): void {
-    this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);
+    this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);    
+    this.newlyAddedUsers = this.newlyAddedUsers.filter(u => u.id !== user.id);
   }
 
   onUpdateMembers(): void {
