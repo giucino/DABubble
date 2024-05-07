@@ -1,7 +1,6 @@
 @import "../../../../styles.scss";
 @import "../../../../assets/scss/mixin.scss";
 
-
 .menu-channel-container {
   @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
   width: 100%;
@@ -52,9 +51,14 @@
       padding: 4px 20px;
       background-color: transparent;
 
-      &:hover {
+      &:hover,
+      &.active {
         background-color: var(--color-bg);
         cursor: pointer;
+
+        .svg-color path {
+          fill: var(--color-purple-3);
+        }
 
         .channel-name {
           color: var(--color-purple-3);
@@ -62,7 +66,6 @@
         }
       }
     }
-
     .channel-name {
       color: var(--color-black);
       font-weight: 700;
@@ -101,88 +104,3 @@
     }
   }
 }
-
-// @import '../../../shared/dynamic-content/dynamic-content.component.scss';  
-
-// .container {
-//   .header {
-//   .header-left {
-//     &:hover {
-//       color: var(--color-purple-3);
-
-//       .svg-color path {
-//         fill: var(--color-purple-3);
-//       }
-//     }
-
-//     .title {
-//       @include dFlex($jc: flex-start, $gap: 10px);
-//       font-size: 20px;
-//       font-style: normal;
-//       font-weight: 700;
-//       line-height: normal;
-//     }
-//     &:hover {
-//               cursor: pointer;
-//             }
-      
-//             &:active {
-//               color: var(--color-black);
-//             }
-//   }
-// }
-
-//   .main-content {
-//     .item {
-//       @include dFlex($jc: flex-start, $gap: 15px);
-//       border-radius: 20px;
-//       padding: 4px 20px;
-//       background-color: transparent;
-
-//       &:hover {
-//         background-color: var(--color-bg);
-//         cursor: pointer;
-
-//         .item-name {
-//           color: var(--color-purple-3);
-//           font-weight: 700;
-//         }
-//       }
-
-//       .item-name {
-//         color: var(--color-black);
-//         font-weight: 700;
-//       }
-//     }
-//   }
-
-//   .add-content-container {
-//     .add-item {
-//       @include dFlex($jc: flex-start, $gap: 15px);
-//       border-radius: 20px;
-//       padding: 4px 20px;
-
-//       .add-text {
-//         font-size: 18px;
-//       }
-
-//       &:hover {
-//         color: var(--color-purple-3);
-//         cursor: pointer;
-
-//         .svg-color path {
-//           fill: var(--color-purple-3);
-//         }
-
-//         .svg-color {
-//           transform: scale(1.1);
-//           transition: transform 0.3s ease;
-//         }
-//       }
-
-//       &:active {
-//         color: var(--color-black);
-//       }
-//     }
-//   }
-// }
