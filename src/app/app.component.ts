@@ -20,8 +20,8 @@ export class AppComponent {
     if (this.router.url === '/main-page') {  //damit man nicht über url auf die main kommt, if user logged in
       this.router.navigate(['/login-page']);
     }
-     if (this.router.url === '/reset-password') { //für den reset link
-      this.router.navigate(['/reset-password']);
+     if (this.router.url === '/reset-password?mode=action&oobCode=code') { //für den reset link
+      this.router.navigate(['/reset-password?mode=action&oobCode=code']);
     }
     if (this.router.url === '/') {
       this.router.navigate(['/login-page']); // ansonsten immer auf login page

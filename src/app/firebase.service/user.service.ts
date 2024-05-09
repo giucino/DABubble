@@ -67,16 +67,12 @@ export class UserService implements OnDestroy {
     }
 
     getCurrentUser(email?: string) {
-        // this.currentUser = this.allUsers.find(user => user.email === email);
-        // Check if the user is logged in
         if (typeof window !== 'undefined' && window.localStorage) {
             const storedUser = localStorage.getItem('currentUser');
             if (storedUser) {
-                // If the user is logged in, set this.currentUser to the stored user
                 this.currentUser = JSON.parse(storedUser);
             } 
             else {
-                // If the user is not logged in, find the user in this.allUsers
                 this.currentUser = this.allUsers.find(user => user.email === email);
             }
         }

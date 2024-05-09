@@ -45,26 +45,6 @@ export class ChannelFirebaseService {
     this.unsubCurrentChannel = this.getCurrentChannel();
   }
 
-  //test
-  listenToChannel(channelId: string) {
-    this.unsubscribeCurrentChannel =
-    onSnapshot(this.getChannelRef(channelId), (ele) => {
-      if (!ele.exists()) {
-        this.currentChannel = this.setChannel(ele.data(), ele.id);
-      }
-      
-    });
-  }
-
-  stopListeningToChannel() {
-    if (this.unsubscribeCurrentChannel) {
-      this.unsubscribeCurrentChannel();
-    }
-  }
-
-  // getChannelsForCurrentUser(user_id: string) {
-  //   this.unsubChannels = this.subChannels(user_id);
-  // }
 
   // ohne user_id
   async getChannelsForCurrentUser(){
