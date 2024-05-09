@@ -16,8 +16,6 @@ import {
   query,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
-import { debug } from 'console';
-import { ChannelComponent } from '../main-page/channel/channel.component';
 
 @Injectable({
   providedIn: 'root',
@@ -38,11 +36,11 @@ export class ChannelFirebaseService {
 
   unsubChannels: any;
   unsubscribeAllChannels!: () => void;
-  unsubCurrentChannel;
+  unsubCurrentChannel: any;
   private unsubscribeCurrentChannel?: () => void;
 
   constructor() {
-    this.unsubCurrentChannel = this.getCurrentChannel();
+    // this.unsubCurrentChannel = this.getCurrentChannel();
   }
 
   //test
@@ -133,8 +131,10 @@ export class ChannelFirebaseService {
     // console.log('Current Channel: ', this.currentChannel);
   }
 
-  getCurrentChannel() {
-    return onSnapshot(this.getChannelRef(this.currentChannel.id), (channel) => {
+  getCurrentChannel(channel_id : string) {
+    return onSnapshot(this.getChannelRef(channel_id), (channel) => {
+      this.currentChannel = this.setChannel(channel.data(), channel.id);
+      console.log('Current CHannel get: ' , this.currentChannel);
       // this.currentChannel = this.setChannel(channel.data(), channel.id);
     });
   }
@@ -144,7 +144,7 @@ export class ChannelFirebaseService {
     if (this.unsubscribeAllChannels) {
       this.unsubscribeAllChannels();
     }
-    this.unsubCurrentChannel();
+    // this.unsubCurrentChannel();
     // console.log('unsubscribed');
   }
 
@@ -153,7 +153,7 @@ export class ChannelFirebaseService {
   }
 
   getChannelRef(channel_id: string) {
-    return doc(collection(this.firestore, 'channels', channel_id));
+    return doc(collection(this.firestore, 'channels'), channel_id);
   }
 
   setChannel(data: any, id: string): Channel {
@@ -196,10 +196,10 @@ export class ChannelFirebaseService {
       channels.forEach((channel) => {
         this.channels.push(this.setChannel(channel.data(), channel.id));
       });
-      if (this.channels.length > 0) {
-        if (this.currentChannel.id == '')
-          this.setCurrentChannel(this.channels[0].id || '');
-      }
+      // if (this.channels.length > 0) {
+      //   if (this.currentChannel.id == '')
+      //     this.setCurrentChannel(this.channels[0].id || '');
+      // }
     });
   }
 

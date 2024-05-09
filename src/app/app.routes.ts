@@ -28,13 +28,13 @@ export const routes: Routes = [
     { path: 'reset-password', component: ResetPasswordComponent },
 
 
-        {path: 'main-page', component: MainPageComponent, children: [
-            {
-                path: ':id', component: ChannelComponent, children: [
-                    // noch ein path für den thread vom channel?
-                    // { path: ':id', component: ThreadComponent},
-                ]
-            },
-        ]},
+    {path: 'main-page', component: MainPageComponent, children: [
+        {
+            path: ':channelId', component: ChannelComponent, children: [
+                // noch ein path für den thread vom channel?
+                // { path: ':id', component: ThreadComponent},
+            ]
+        },
+    ]},
 
 ];
