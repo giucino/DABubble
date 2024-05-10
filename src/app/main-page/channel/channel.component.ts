@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -58,14 +58,17 @@ export class ChannelComponent {
     public userService : UserService,
     public channelService : ChannelFirebaseService,
     public route: ActivatedRoute,
+    private router: Router,
   ) {
     this.channelId = this.route.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
       this.messageService.getMessagesFromChannel(params['channelId']);
+      this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
     });
   }
 
