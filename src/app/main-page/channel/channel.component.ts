@@ -66,9 +66,11 @@ export class ChannelComponent {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
-      this.messageService.getMessagesFromChannel(params['channelId']);
-      this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+      if (params['channelId']) {
+        this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
+        this.messageService.getMessagesFromChannel(params['channelId']);
+        this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+      }
     });
   }
 
