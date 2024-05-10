@@ -9,14 +9,10 @@ import { MessageService } from '../../firebase.service/message.service';
 import { Message } from '../../interfaces/message.interface';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
-import { Channel } from '../../interfaces/channel.interface';
-import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { user } from '@angular/fire/auth';
-import { channel } from 'diagnostics_channel';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-channel',
@@ -30,10 +26,8 @@ export class ChannelComponent {
   @Output() closeThreadEvent = new EventEmitter<boolean>();
 
   messageInput: string = '';
-
-
   currentUser: User = this.userService.currentUser;
-  // currentChannel: Channel = this.channelService.currentChannel;
+
 
 // alle user die im channel sind
   channelMembers = this.channelService.currentChannel.members;
@@ -57,8 +51,6 @@ export class ChannelComponent {
   channelId : string = '';
 
   currentDate: string = '1970/01/01';
-  
-  channel$ : any;
 
   constructor(
     public customDialogService: CustomDialogService,
@@ -68,30 +60,18 @@ export class ChannelComponent {
     public route: ActivatedRoute,
   ) {
     this.channelId = this.route.snapshot.paramMap.get('channelId') || ''; //get url param
-    // this.currentChannel = this.channelService.currentChannel;
-    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
   }
 
   ngOnInit() {
-    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
-    // });
-    // this.loadMessagesForCurrentChannel();
     this.route.params.subscribe(params => {
       this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
+      this.messageService.getMessagesFromChannel(params['channelId']);
     });
   }
 
   ngOnDestroy() {
     this.channelService.unsubCurrentChannel();
   }
-
-  // loadMessagesForCurrentChannel() {
-  //   // const channelId = this.currentChannel.id;
-  //   // this.messages = this.messageService.currentChannelMessages.filter(message => message.channel_id === channelId);
-  //   // this.messageService.getMessagesFromChannel(channelId).then(messages => {
-  //   //   this.messages = messages.filter(message => message.channel_id === channelId);
-  //   // });
-  // }
   
 
   openAddUserDialog(button: HTMLElement) {
@@ -121,9 +101,6 @@ export class ChannelComponent {
     this.message.channel_id = this.channelService.currentChannel.id;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
-    console.log(this.channelService.currentChannel) // richtige channel
-    // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
-    // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }
 
   isNewDate(date: number) {
