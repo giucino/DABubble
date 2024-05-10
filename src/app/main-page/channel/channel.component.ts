@@ -70,12 +70,15 @@ export class ChannelComponent {
         this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
         this.messageService.getMessagesFromChannel(params['channelId']);
         this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+        console.log(this.channelService.currentChannel);
       }
     });
   }
 
   ngOnDestroy() {
-    this.channelService.unsubCurrentChannel();
+    if(this.channelService.unsubCurrentChannel === typeof function () {}) {
+      this.channelService.unsubCurrentChannel();
+    }
   }
   
 
