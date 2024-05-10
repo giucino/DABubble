@@ -29,7 +29,9 @@ export class UserService implements OnDestroy {
             list.forEach((element) => {
                 let id = element.id;
                 let data = element.data();
-                // let userData = { id, data };
+                // if (this.currentUser && this.currentUser.id !== id) {
+                //     this.updateOnlineStatus(id, false);
+                // }
                 this.allUsers.push(this.setUsers(data, id));
             });
         });
@@ -116,9 +118,9 @@ export class UserService implements OnDestroy {
         // kein pw in database
     }
 
-    updateOnlineStatus(userId: string, status: boolean) {
+    async updateOnlineStatus(userId: string, status: boolean) {
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, { logged_in: status });
+        await updateDoc(singleUserRef, { logged_in: status });
     }
 
     saveLastChannel(userId: string, channelId: string) {

@@ -59,52 +59,52 @@ export class LoginComponent {
   loginWithGoogle() {
     this.userAuth.loginWithGoogle().then((result) => {
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
-      const user = {
-        name: this.userAuth.googleName,
-        email: this.userAuth.googleEmail,
-        profile_img: this.userAuth.googleProfileImg,
-        id: googleUserId,
-        last_channel: '',
-        logged_in: false,
-        is_typing: false,
-        password: '',
-        toJSON() {
-          return {
-            name: this.name,
-            email: this.email,
-            profile_img: this.profile_img,
-            id: this.id,
-            last_channel: this.last_channel,
-            logged_in: this.logged_in,
-            is_typing: this.is_typing,
-            password: this.password
-          };
-        }
-      };
+      const user = this.setGoogleUser();
       this.userService.getUsers();
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.userService.getCurrentUser(this.loginEmail);
       this.userService.addDatabaseIdToUser(googleUserId);
-
       if (this.userService.allUsers.some(user => user.email === this.userAuth.googleEmail)) {
         this.channelService.getChannelsForCurrentUser();
         setTimeout(() => {
           this.router.navigate(['/main-page']);
-        }, 2000);
-        
+        }, 1000);
       } else {
         this.userService.addGoogleUser(user).then(() => {
           this.channelService.getChannelsForCurrentUser();
           setTimeout(() => {
             this.router.navigate(['/main-page']);
-            
           }, 1000);
-          
         });
-      }
-    }).catch((error) => {
+      }}).catch((error) => {
       console.error(error);
     });
+  }
+
+  setGoogleUser() {
+    let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
+    return {
+      name: this.userAuth.googleName,
+      email: this.userAuth.googleEmail,
+      profile_img: this.userAuth.googleProfileImg,
+      id: googleUserId,
+      last_channel: '',
+      logged_in: true,
+      is_typing: false,
+      password: '',
+      toJSON() {
+        return {
+          name: this.name,
+          email: this.email,
+          profile_img: this.profile_img,
+          id: this.id,
+          last_channel: this.last_channel,
+          logged_in: this.logged_in,
+          is_typing: this.is_typing,
+          password: this.password
+        };
+      }
+    };
   }
 
   async loginAsGuest() {
@@ -115,6 +115,10 @@ export class LoginComponent {
     await this.channelService.getChannelsForCurrentUser();
     
     setTimeout(() => {
+      this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
+    }, 500);
+    setTimeout(() => {
+
       this.router.navigate(['/main-page']);
       // this.channelService.setCurrentChannel(this.channelService.channels[0].id);
       // this.router.navigate(['/main-page/', this.channelService.channels[0].id]);
