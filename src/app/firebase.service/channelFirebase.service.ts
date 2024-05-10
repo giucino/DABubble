@@ -37,29 +37,30 @@ export class ChannelFirebaseService {
 
   unsubChannels: any;
   unsubscribeAllChannels!: () => void;
-  unsubCurrentChannel: any;
-  private unsubscribeCurrentChannel?: () => void;
+  unsubCurrentChannel: any = function () {};
+  // private unsubscribeCurrentChannel?: () => void;
 
   constructor() {
     // this.unsubCurrentChannel = this.getCurrentChannel();
+    console.log('currentChannel im Constructor Service' , this.currentChannel)
   }
 
   //test
-  listenToChannel(channelId: string) {
-    this.unsubscribeCurrentChannel =
-    onSnapshot(this.getChannelRef(channelId), (ele) => {
-      if (!ele.exists()) {
-        this.currentChannel = this.setChannel(ele.data(), ele.id);
-      }
+  // listenToChannel(channelId: string) {
+  //   this.unsubscribeCurrentChannel =
+  //   onSnapshot(this.getChannelRef(channelId), (ele) => {
+  //     if (!ele.exists()) {
+  //       this.currentChannel = this.setChannel(ele.data(), ele.id);
+  //     }
       
-    });
-  }
+  //   });
+  // }
 
-  stopListeningToChannel() {
-    if (this.unsubscribeCurrentChannel) {
-      this.unsubscribeCurrentChannel();
-    }
-  }
+  // stopListeningToChannel() {
+  //   if (this.unsubscribeCurrentChannel) {
+  //     this.unsubscribeCurrentChannel();
+  //   }
+  // }
 
   // getChannelsForCurrentUser(user_id: string) {
   //   this.unsubChannels = this.subChannels(user_id);
@@ -100,7 +101,7 @@ export class ChannelFirebaseService {
   }
 
   ngOnDestroy(): void {
-    this.unsubChannels;
+    if(this.unsubChannels === typeof function () {}) this.unsubChannels();
     if (this.unsubscribeAllChannels) {
       this.unsubscribeAllChannels();
     }

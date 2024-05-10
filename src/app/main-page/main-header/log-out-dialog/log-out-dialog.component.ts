@@ -48,6 +48,7 @@ export class LogOutDialogComponent {
         this.userService.currentUser.id,
         false
       );
+      location.reload();
     });
 
     // this.router.navigate(['/login-page']);
