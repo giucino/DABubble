@@ -57,15 +57,15 @@ export class ChannelComponent {
     public messageService: MessageService,
     public userService : UserService,
     public channelService : ChannelFirebaseService,
-    public route: ActivatedRoute,
+    public activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    this.channelId = this.route.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       if (params['channelId']) {
         this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
         this.messageService.getMessagesFromChannel(params['channelId']);
@@ -75,7 +75,7 @@ export class ChannelComponent {
   }
 
   ngOnDestroy() {
-    this.channelService.unsubCurrentChannel();
+      this.channelService.unsubCurrentChannel();
   }
   
 
