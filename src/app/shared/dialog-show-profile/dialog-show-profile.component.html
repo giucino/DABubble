@@ -19,18 +19,26 @@
     </div>
 
     <div class="img-container">
-        <img class="profile-img" src="../../../assets/img/avatar-1.jpg" alt="Profile Image">
+        <img class="profile-img" [src]="isOwnProfile() ? userService.currentUser.profile_img : user?.profile_img"
+            alt="Profile Image">
     </div>
 
     <div class="name-container">
         <div class="name">
-            <div class="first-name fs-32">{{userService.currentUser?.name}}</div>
+            <!-- <div class="first-name fs-32" *ngIf="isOwnProfile(); else otherUserProfile">{{ userService.currentUser.name }} -->
+            <div class="first-name fs-32">{{ isOwnProfile() ? userService.currentUser.name : user?.name }}
+            </div>                                      
             <!-- div zum bearbeiten nur anzeigen, wenn isOwnProfile = true ist -->
             @if (isOwnProfile()) {
             <div class="edit fs-18" #profileBtn (click)="editCurrentUser(profileBtn)">Bearbeiten
             </div>
             }
         </div>
+
+        <!-- <ng-template #otherUserProfile>
+            <div class="name fs-32">{{ user?.name }}</div>
+        </ng-template> -->
+
         <div class="status-container">
             <div class="online-stat-wborder online"></div>
             <div class="status fs-20">Aktiv</div>
@@ -52,7 +60,7 @@
             </svg>
             <div class="email-label fs-20">E-Mail-Adresse</div>
         </div>
-        <div class="email-address fs-18">{{userService.currentUser?.email}}</div>
+        <div class="email-address fs-18">{{ isOwnProfile() ? userService.currentUser.email : user?.email }}</div>
     </div>
 
     <!-- Button zum Senden einer Nachricht nur anzeigen, wenn isOwnProfile = false ist -->

@@ -12,10 +12,12 @@
 
     <!-- channel -->
     <!-- <app-channel class="channel"></app-channel> -->
-    <router-outlet></router-outlet>
+    <div class="channel">
+      <router-outlet></router-outlet>
+    </div>
     <!-- thread -->
-  <!-- @if(!threadClosed) { -->
-   <app-channel *ngIf="!threadClosed" class="thread" [channelType]="'thread'" (closeThreadEvent)="isThreadClosed($event)"></app-channel>
-  <!-- } -->
+  @if(!threadClosed) {
+   <app-channel class="thread" [channelType]="'thread'" (closeThreadEvent)="isThreadClosed($event)"></app-channel>
+  }
   </div>
 </div>

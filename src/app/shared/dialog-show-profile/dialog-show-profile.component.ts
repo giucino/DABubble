@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ProfileService } from '../../services/profile.service';
 import { DialogEditProfileComponent } from '../../shared/dialog-edit-profile/dialog-edit-profile.component';
 import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-dialog-show-profile',
@@ -13,14 +14,23 @@ import { UserService } from '../../firebase.service/user.service';
   templateUrl: './dialog-show-profile.component.html',
   styleUrl: './dialog-show-profile.component.scss',
 })
-export class DialogShowProfileComponent {
+export class DialogShowProfileComponent implements OnInit {
+  user: User | null = null;
+
   constructor(
     public dialogRef: MatDialogRef<DialogShowProfileComponent>,
     private profileService: ProfileService,
     private customDialogService: CustomDialogService,
     public userService: UserService
-
   ) {}
+
+  ngOnInit(): void {
+    const userId = this.profileService.getViewingUserId();
+    if (userId) {
+      this.user = this.userService.getUser(userId);
+      console.log(userId);
+    }
+  }
 
   isOwnProfile(): boolean {
     return this.profileService.getOwnProfileStatus();
@@ -28,7 +38,7 @@ export class DialogShowProfileComponent {
 
   editCurrentUser(button: HTMLElement): void {
     const component = DialogEditProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');    
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
     this.dialogRef.close();
   }
 }

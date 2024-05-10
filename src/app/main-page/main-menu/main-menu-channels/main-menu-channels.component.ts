@@ -10,31 +10,28 @@ import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelComponent } from '../../channel/channel.component';
 import { MessageService } from '../../../firebase.service/message.service';
 import { UserService } from '../../../firebase.service/user.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Message } from '../../../interfaces/message.interface';
 
 @Component({
   selector: 'app-main-menu-channels',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatExpansionModule,
-  ],
+  imports: [CommonModule, MatCardModule, MatExpansionModule, RouterModule],
   templateUrl: './main-menu-channels.component.html',
   styleUrl: './main-menu-channels.component.scss',
 })
 export class MainMenuChannelsComponent implements OnInit {
   isExpanded: boolean = true;
 
-  constructor(private customDialogService: CustomDialogService,
-     public channelService : ChannelFirebaseService, public messageService: MessageService, 
-     public userService: UserService, public router: Router) {
-  }
+  constructor(
+    private customDialogService: CustomDialogService,
+    public channelService: ChannelFirebaseService,
+    public messageService: MessageService,
+    public userService: UserService,
+    public router: Router
+  ) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   openChannel(channel_id: string): void {
       this.router.navigate(['/main-page']).then(() => {
@@ -49,13 +46,6 @@ export class MainMenuChannelsComponent implements OnInit {
       //check if currentuser is wirklich im channel, if not dann bleibt auf main-page, wegen url kopie
 
   }
-
-  ngondDestroy(): void {
-  }
-
-
-
-
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }

@@ -14,10 +14,9 @@ import {
   where,
   orderBy,
   query,
+  getDocs,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
-import { debug } from 'console';
-import { ChannelComponent } from '../main-page/channel/channel.component';
 
 @Injectable({
   providedIn: 'root',
@@ -38,11 +37,12 @@ export class ChannelFirebaseService {
 
   unsubChannels: any;
   unsubscribeAllChannels!: () => void;
-  unsubCurrentChannel;
-  private unsubscribeCurrentChannel?: () => void;
+  unsubCurrentChannel: any = function () {};
+  // private unsubscribeCurrentChannel?: () => void;
 
   constructor() {
-    this.unsubCurrentChannel = this.getCurrentChannel();
+    // this.unsubCurrentChannel = this.getCurrentChannel();
+    console.log('currentChannel im Constructor Service' , this.currentChannel)
   }
 
 
@@ -56,75 +56,36 @@ export class ChannelFirebaseService {
             } 
   }
 
-  async openDirectChannel(currentUser_id: string, dm_target_id: string) {
-    let directChannels = this.channels.filter(
-      (channel) => channel.channel_type == 'direct'
-    );
-    // let channel;
-    // if(currentUser_id = dm_target_id) {
-    //   channel = directChannels.find((channel) => channel.members.length == 1);
-    // } else {
-    //   channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
-    // }
-    let channel = directChannels.find((channel) =>
-      channel.members.includes(dm_target_id)
-    );
-    if (channel && channel.id) {
-      this.setCurrentChannel(channel.id);
-    } else {
-      let newDirectChannel: Channel = {
-        id: '',
-        name: 'direct channel - ' + currentUser_id + ' & ' + dm_target_id,
-        description: '',
-        created_at: new Date().getTime(),
-        creator: currentUser_id,
-        members: [currentUser_id, dm_target_id],
-        active_members: [],
-        channel_type: ChannelTypeEnum.direct,
-      };
-      if (currentUser_id == dm_target_id)
-        newDirectChannel.members = [currentUser_id];
-      await this.addChannel(newDirectChannel);
-      this.getDirectChannel(dm_target_id);
-    }
-  }
 
-  getDirectChannel(dm_target_id: string) {
-    let directChannels = this.channels.filter(
-      (channel) => channel.channel_type == 'direct'
-    );
-    let channel = directChannels.find((channel) =>
-      channel.members.includes(dm_target_id)
-    );
-    // let channel;
-    // if(currentUser_id = dm_target_id) {
-    //   channel = directChannels.find((channel) => channel.members.length == 1);
-    // } else {
-    //   channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
-    // }
-    if (channel && channel.id) {
-      this.setCurrentChannel(channel.id);
-    }
+  getDirectChannelId(currentUser_id: string, dm_target_id: string) : string {
+    let directChannels = this.channels.filter((channel) => channel.channel_type == 'direct');
+    let channel = undefined;
+    if (currentUser_id == dm_target_id) {
+      channel = directChannels.find((channel) => channel.members.length == 1);
+    } else {
+      channel = directChannels.find((channel) => channel.members.includes(dm_target_id));
+    };
+    if (channel) return channel.id;
+    else return '';
   }
 
   setCurrentChannel(channel_id: string) {
     let channel = this.channels.find((channel) => channel.id == channel_id);
     if (channel) this.currentChannel = channel;
-    // console.log('Current Channel: ', this.currentChannel);
   }
 
-  getCurrentChannel() {
-    return onSnapshot(this.getChannelRef(this.currentChannel.id), (channel) => {
-      // this.currentChannel = this.setChannel(channel.data(), channel.id);
+  getCurrentChannel(channel_id : string) {
+    return onSnapshot(this.getChannelRef(channel_id), (channel) => {
+      this.currentChannel = this.setChannel(channel.data(), channel.id);
     });
   }
 
   ngOnDestroy(): void {
-    this.unsubChannels;
+    if(this.unsubChannels === typeof function () {}) this.unsubChannels();
     if (this.unsubscribeAllChannels) {
       this.unsubscribeAllChannels();
     }
-    this.unsubCurrentChannel();
+    // this.unsubCurrentChannel();
     // console.log('unsubscribed');
   }
 
@@ -133,7 +94,7 @@ export class ChannelFirebaseService {
   }
 
   getChannelRef(channel_id: string) {
-    return doc(collection(this.firestore, 'channels', channel_id));
+    return doc(collection(this.firestore, 'channels'), channel_id);
   }
 
   setChannel(data: any, id: string): Channel {
@@ -176,10 +137,10 @@ export class ChannelFirebaseService {
       channels.forEach((channel) => {
         this.channels.push(this.setChannel(channel.data(), channel.id));
       });
-      if (this.channels.length > 0) {
-        if (this.currentChannel.id == '')
-          this.setCurrentChannel(this.channels[0].id || '');
-      }
+      // if (this.channels.length > 0) {
+      //   if (this.currentChannel.id == '')
+      //     this.setCurrentChannel(this.channels[0].id || '');
+      // }
     });
   }
 

@@ -9,13 +9,10 @@ import { MessageService } from '../../firebase.service/message.service';
 import { Message } from '../../interfaces/message.interface';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
-import { Channel } from '../../interfaces/channel.interface';
-import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { user } from '@angular/fire/auth';
-import { channel } from 'diagnostics_channel';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-channel',
@@ -29,94 +26,17 @@ export class ChannelComponent {
   @Output() closeThreadEvent = new EventEmitter<boolean>();
 
   messageInput: string = '';
-
-  // TODO: replace dummy data
-  // 
-  // currentUser: User = this.userService.currentUser;
-  // {
-  //   id: 'user_01',
-  //   name: 'Max Mustermann',
-  //   email: 'max@mustermann.de',
-  //   password: 'password',
-  //   logged_in: true,
-  //   is_typing: false,
-  //   profile_img: '/assets/img/avatar-1.jpg',
-  //   // last_channel: string,
-  // };
   currentUser: User = this.userService.currentUser;
-  // users: User[] = this.userService.allUsers;
-  // TODO: replace with userService.users
-  // users: User[] = [
-  //   {
-  //     id: 'user_01',
-  //     name: 'User 01',
-  //     email: 'user@01.de',
-  //     password: 'password1',
-  //     logged_in: true,
-  //     is_typing: false,
-  //     profile_img: '/assets/img/avatar-1.jpg',
-  //   },
-  //   {
-  //     id: 'user_02',
-  //     name: 'User 02',
-  //     email: 'user@02.de',
-  //     password: 'password2',
-  //     logged_in: false,
-  //     is_typing: false,
-  //     profile_img: '/assets/img/avatar-2.jpg',
-  //   },
-  //   {
-  //     id: 'user_03',
-  //     name: 'User 03',
-  //     email: 'user@03.de',
-  //     password: 'password3',
-  //     logged_in: true,
-  //     is_typing: false,
-  //     profile_img: '/assets/img/avatar-3.jpg',
-  //   },
-  // ];
-
-  currentChannel: Channel = 
-  this.channelService.currentChannel;
-  // {
-  //   id: this.channelService.currentChannel.id,
-  //   name: this.channelService.currentChannel.name,
-  //   description: this.channelService.currentChannel.description,
-  //   created_at: this.channelService.currentChannel.created_at,
-  //   creator: this.channelService.currentChannel.creator, // 'user_id'
-  //   members: this.channelService.currentChannel.members,
-  //   active_members: this.channelService.currentChannel.active_members,
-  //   channel_type: this.channelService.currentChannel.channel_type as ChannelTypeEnum,
-  // }
 
 
 // alle user die im channel sind
-  channelMembers = this.currentChannel.members;
+  channelMembers = this.channelService.currentChannel.members;
   users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
 
-  // currentChannel: Channel = this.channelService.currentChannel;
-
-
-  // message: Message = this.messageService.message;
-  // {
-  //   user_id: '',
-  //   channel_id: '', // channel_02
-  //   message: {
-  //     text: 'Text',
-  //     attachements: [],
-  //   },
-  //   created_at: 0,
-  //   modified_at: 0,
-  //   is_deleted: false,
-  //   last_reply: 0,
-  // };
-
   messages: Message[] = this.messageService.messages;
-  // this.messageService.messages;
-
   message: Message = {
     user_id: '',
-    channel_id: this.currentChannel.id,
+    channel_id: this.channelService.currentChannel.id,
     message: {
       text: '',
       attachements: [],
@@ -128,7 +48,7 @@ export class ChannelComponent {
   };
 
   // lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
-
+  channelId : string = '';
 
   currentDate: string = '1970/01/01';
 
@@ -137,23 +57,25 @@ export class ChannelComponent {
     public messageService: MessageService,
     public userService : UserService,
     public channelService : ChannelFirebaseService,
-    public route: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
-    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
   }
 
   ngOnInit() {
-    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
-    // });
-    this.loadMessagesForCurrentChannel();
+    this.activatedRoute.params.subscribe(params => {
+      if (params['channelId']) {
+        this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
+        this.messageService.getMessagesFromChannel(params['channelId']);
+        this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+      }
+    });
   }
 
-  loadMessagesForCurrentChannel() {
-    // const channelId = this.currentChannel.id;
-    // this.messages = this.messageService.currentChannelMessages.filter(message => message.channel_id === channelId);
-    // this.messageService.getMessagesFromChannel(channelId).then(messages => {
-    //   this.messages = messages.filter(message => message.channel_id === channelId);
-    // });
+  ngOnDestroy() {
+      this.channelService.unsubCurrentChannel();
   }
   
 
@@ -181,12 +103,9 @@ export class ChannelComponent {
     this.message.message.text = this.messageInput;
     this.message.created_at = new Date().getTime();
     this.message.modified_at = this.message.created_at;
-    this.message.channel_id = this.currentChannel.id;
+    this.message.channel_id = this.channelService.currentChannel.id;
     this.messageService.addMessage(this.message);
     this.messageInput = '';
-    console.log(this.currentChannel) // richtige channel
-    // this.messageService.getMessagesFromChannel(this.channelService.currentChannel?.id || '');
-    // this.channelService.setCurrentChannel(this.channelService.currentChannel?.id || '');
   }
 
   isNewDate(date: number) {
@@ -195,6 +114,7 @@ export class ChannelComponent {
     this.currentDate = messageDate;
     return currentDate != messageDate;
   }
+
 
   getDateFormat(dateInput: number) {
     const weekdays = [
@@ -242,23 +162,23 @@ export class ChannelComponent {
   }
 
   // TODO: move to userService
-  getUser(user_id : string) {
-    return this.users.find((user) => user.id == user_id);
-  }
+  // getUser(user_id : string) {
+  //   return this.users.find((user) => user.id == user_id);
+  // }
 
   getDirectChannelUser() {
-    let contact = this.currentChannel.members.find((member) => member != this.currentUser.id);
-    if (contact) return this.getUser(contact);
+    let contact = this.channelService.currentChannel.members.find((member) => member != this.currentUser.id);
+    if (contact) return this.userService.getUser(contact);
     else return this.currentUser;
   }
 
   getChannelCreationTime() {
     const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-    let date = new Date(this.currentChannel.created_at);
+    let date = new Date(this.channelService.currentChannel.created_at);
     let d: number | string = date.getDate();
     let m: number | string = date.getMonth();
     let y = date.getFullYear();
-    if(this.convertToDate(new Date().getTime()) == this.convertToDate(this.currentChannel.created_at)) {
+    if(this.convertToDate(new Date().getTime()) == this.convertToDate(this.channelService.currentChannel.created_at)) {
       return 'heute';
     } else {
       return 'am' + ' ' + d + '. ' + months[m] + ' ' + y;
@@ -266,12 +186,12 @@ export class ChannelComponent {
   }
 
   getTextareaPlaceholderText() {
-    switch(this.currentChannel.channel_type) {
+    switch(this.channelService.currentChannel.channel_type) {
       case 'main' :
-        return 'Nachricht an ' + '#' + this.currentChannel.name;
+        return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
         break;
       case 'direct' :
-        if (this.currentChannel.members.length == 2) {
+        if (this.channelService.currentChannel.members.length == 2) {
           return 'Nachricht an ' + this.getDirectChannelUser()?.name;
         } else {
           return 'Nachricht an ' + 'dich';

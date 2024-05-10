@@ -8,7 +8,6 @@ import { UserAuthService } from '../../../firebase.service/user.auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../firebase.service/user.service';
 
-
 @Component({
   selector: 'app-log-out-dialog',
   standalone: true,
@@ -21,23 +20,34 @@ export class LogOutDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<LogOutDialogComponent>,
     private customDialogService: CustomDialogService,
-    private profileService: ProfileService, private userAuth: UserAuthService, private router: Router, private userService: UserService
+    private profileService: ProfileService,
+    private userAuth: UserAuthService,
+    private router: Router,
+    private userService: UserService
   ) {}
 
   openCurrentUser(button: HTMLElement): void {
-    this.profileService.setOwnProfileStatus(true); 
+    this.profileService.setOwnProfileStatus(true);
+    this.profileService.setViewingUserId(this.userService.currentUser.id);
+
     const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');    
-    this.showProfileClicked.emit();
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
     this.dialogRef.close();
+    this.showProfileClicked.emit();
   }
 
   logOut(): void {
     localStorage.removeItem('currentUser');
-    this.userAuth.logout().then(() => { 
+    // sobald logged in user funktioniert
+
+    this.userAuth.logout().then(() => {
       this.router.navigate(['/login-page']);
       this.dialogRef.close();
-      this.userService.updateOnlineStatus(this.userService.currentUser.id, false);
+      this.userService.updateOnlineStatus(
+        this.userService.currentUser.id,
+        false
+      );
+      location.reload();
     });
   }
 }

@@ -35,7 +35,7 @@
     @if (isExpanded) {
         <!-- THIS IS YOU  -->
         <div class="channel-header-direct">
-            <div class="channel-member" (click)="openDirectChannel(userService.currentUser.id)">
+            <div class="channel-member" [class.selected]="userService.currentUser.id === selectedUserId" (click)="openDirectChannel(userService.currentUser.id)">
                 <div class="profile-img-container">
                     <img [src]="userService.currentUser?.profile_img" alt="" class="profile-img">
                     @if (!userService.currentUser.logged_in){
@@ -56,7 +56,7 @@
     @for(user of userService.allUsers; track user.id) {
         @if(user.id != userService.currentUser?.id ) {
             <div class="channel-header-direct">
-                <div class="channel-member" (click)="openDirectChannel(user.id)">
+                <div class="channel-member" [class.selected]="user.id === selectedUserId" (click)="openDirectChannel(user.id)">
                     <div class="profile-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img">
                         @if (!user.logged_in){
