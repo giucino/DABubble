@@ -4,6 +4,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserAuthService } from './firebase.service/user.auth.service';
+import { UserService } from './firebase.service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,19 +15,25 @@ import { UserAuthService } from './firebase.service/user.auth.service';
 })
 export class AppComponent {
   title = 'DABubble';
-  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService, public userService: UserService) { }
 
   ngOnInit(): void {
-    if (this.router.url === '/main-page') {  //damit man nicht über url auf die main kommt, if user logged in
-      this.router.navigate(['/login-page']);
+    if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password') ){
+      return;
     }
-     if (this.router.url === '/reset-password?mode=action&oobCode=code') { //für den reset link
-      this.router.navigate(['/reset-password?mode=action&oobCode=code']);
-    }
-    if (this.router.url === '/') {
-      this.router.navigate(['/login-page']); // ansonsten immer auf login page
-    } 
-    // this.router.navigate(['/login-page']);
+    this.userAuth.checkAuth().then(isLoggedIn => {
+      if (isLoggedIn) {
+        // console.log('current user', this.userService.currentUser);
+        // console.log('last channel', this.userService.currentUser.last_channel);
+        // if (this.userService.currentUser.last_channel){
+        //   this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
+        // } else {
+        this.router.navigate(['/main-page']);
+        // }
+      } else {
+        this.router.navigate(['/login-page/login']);
+      }
+    });
   }
 
   confirmPopup(){

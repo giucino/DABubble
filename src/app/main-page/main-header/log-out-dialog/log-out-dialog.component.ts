@@ -43,11 +43,8 @@ export class LogOutDialogComponent {
     this.userAuth.logout().then(() => {
       this.router.navigate(['/login-page']);
       this.dialogRef.close();
-      this.userService.updateOnlineStatus(
-        this.userService.currentUser.id,
-        false
-      );
-      location.reload();
+      this.userService.updateOnlineStatus(this.userService.currentUser.id, false);
+      // location.reload();
     });
   }
 }

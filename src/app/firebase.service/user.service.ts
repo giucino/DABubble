@@ -23,7 +23,7 @@ export class UserService implements OnDestroy {
 
     }
 
-    getUser(user_id : string) {
+    getUser(user_id: string) {
         return this.allUsers.find((user) => user.id == user_id);
     }
 
@@ -81,7 +81,7 @@ export class UserService implements OnDestroy {
             const storedUser = localStorage.getItem('currentUser');
             if (storedUser) {
                 this.currentUser = JSON.parse(storedUser);
-            } 
+            }
             else {
                 this.currentUser = this.allUsers.find(user => user.email === email);
             }
@@ -109,9 +109,9 @@ export class UserService implements OnDestroy {
 
             // user existiert schon
         } else {
-            await this.addUser(user); 
+            await this.addUser(user);
         }
-      }
+    }
 
 
     addAvatarToUser(userId: string, avatar: string) {
@@ -126,15 +126,23 @@ export class UserService implements OnDestroy {
         // kein pw in database
     }
 
+    async updateLastChannel(userId: string, channelId: string) {
+        let singleUserRef = doc(this.getUserRef(), userId);
+        await updateDoc(singleUserRef, { last_channel: channelId });
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.last_channel = channelId;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+
     async updateOnlineStatus(userId: string, status: boolean) {
         let singleUserRef = doc(this.getUserRef(), userId);
         await updateDoc(singleUserRef, { logged_in: status });
     }
 
-    saveLastChannel(userId: string, channelId: string) {
-        let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, { last_channel: channelId });
-    }
+    // saveLastChannel(userId: string, channelId: string) {
+    //     let singleUserRef = doc(this.getUserRef(), userId);
+    //     updateDoc(singleUserRef, { last_channel: channelId });
+    // }
 
     getCleanJson(user: User): {} {
         return {
@@ -182,5 +190,5 @@ export class UserService implements OnDestroy {
         }
     }
 
-    
+
 }

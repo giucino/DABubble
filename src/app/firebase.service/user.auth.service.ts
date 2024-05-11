@@ -15,7 +15,7 @@ export class UserAuthService {
   googleId: any = '';
 
 
-  constructor(private auth: Auth) { }
+  constructor(public auth: Auth) { }
 
   loginUser(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
@@ -34,7 +34,7 @@ export class UserAuthService {
     return signOut(this.auth);
   }
 
-  loginWithGoogle() {
+  async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
 
     return signInWithPopup(this.auth, provider).then((result) => {

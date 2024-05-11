@@ -30,6 +30,8 @@ export class LoginComponent {
 
   ngonInit() {
     this.error = false;
+    
+    // this.userAuth.currentUser();
   }
 
   async login() {
@@ -46,6 +48,7 @@ export class LoginComponent {
       this.channelService.getChannelsForCurrentUser()
       setTimeout(() => {
         this.router.navigate(['/main-page']);
+        // console.log('current user', this.userService.currentUser);
       }, 1000);
     } catch (error) {
       console.error(error);

@@ -6,6 +6,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AvatarComponent } from './avatar/avatar.component';
 import { CommonModule } from '@angular/common';
 import { EmailSentComponent } from '../email-sent/email-sent.component';
+import { UserAuthService } from '../firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,7 +20,7 @@ export class LoginPageComponent {
   hideElement = false;
   hideExtras = false;
   
-  constructor(private router: Router) { 
+  constructor(private router: Router, private userAuth: UserAuthService) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

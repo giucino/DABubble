@@ -61,17 +61,24 @@ export class ChannelComponent {
     private router: Router,
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
-    this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    this.userService.getCurrentUser();
+    setTimeout(() => { // ohne gehts nicht
+      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    }, 500);
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      if (params['channelId']) {
-        this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
-        this.messageService.getMessagesFromChannel(params['channelId']);
-        this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
-      }
-    });
+    setTimeout(() => { // ohne werden die users nicht richtig geladen
+      this.activatedRoute.params.subscribe(params => {
+        if (params['channelId']) {
+          this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
+          this.messageService.getMessagesFromChannel(params['channelId']);
+  
+          this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+        }
+      });
+    }, 700);
+
   }
 
   ngOnDestroy() {
