@@ -54,7 +54,7 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
       channel_id = await this.createNewDirectChannel(user_id);
       this.router.navigateByUrl('/main-page/' + channel_id);
     }
-    // this.selectedUserId = user_id;
+    this.selectedUserId = user_id;
   }
 
   async createNewDirectChannel(user_id : string) {
