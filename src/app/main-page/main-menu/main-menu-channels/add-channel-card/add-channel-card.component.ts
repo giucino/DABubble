@@ -63,20 +63,34 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
 
   }
 
-  // createChannel(button: HTMLElement): void {
-  //   this.channelService.addChannel(this.channel);
-  //   this.dialogRef.close();
-  //   this.openAddUserDialog(button);
-  //   console.log('Channel created', this.channelService.currentChannel);
+  // async createChannel(button: HTMLElement): Promise<void> {
+  //   try {
+  //     const channelId = await this.channelService.addChannel(this.channel);
+  
+  //     this.channelService.setCurrentChannel(channelId);
+  //     // console.log('Channel created and set as currentChannel', this.channelService.currentChannel);
+  
+  //     this.dialogRef.close();
+  //     this.openAddUserDialog(button);
+  //   } catch (error) {
+  //     console.error('Fehler beim Erstellen des Channels:', error);
+  //   }
   // }
 
   async createChannel(button: HTMLElement): Promise<void> {
     try {
-      const channelId = await this.channelService.addChannel(this.channel);
+      const allChannels = await this.channelService.getAllChannels();
   
+      const isDuplicate = allChannels.some(channel => channel.name === this.channel.name);
+      if (isDuplicate) {
+        //Todo: Show error message in dialog
+        alert('Ein Kanal mit diesem Namen existiert bereits. Bitte wählen Sie einen anderen Namen.');
+        return;
+      }
+      const channelId = await this.channelService.addChannel(this.channel);
       this.channelService.setCurrentChannel(channelId);
       // console.log('Channel created and set as currentChannel', this.channelService.currentChannel);
-  
+
       this.dialogRef.close();
       this.openAddUserDialog(button);
     } catch (error) {
@@ -84,7 +98,6 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
     }
   }
   
-
   openAddUserDialog(button: HTMLElement): void {
     const component = AddMemberCardComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'right');

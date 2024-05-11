@@ -102,7 +102,7 @@
   box-shadow: 0px 6px 10px #00000030;
   padding: 5px 15px;
   width: 300px;
-  margin-top: -12px;
+  // margin-top: -12px;
   margin-left: 20px;
 
   .users-list {
@@ -130,6 +130,42 @@
           width: 50px;
           height: 50px;
         }
+      }
+    }
+  }
+}
+
+.channel-header-direct {
+  @include dFlex($jc: left, $ai: center, $gap: 13px);
+  width: 100%;
+  flex-wrap: wrap;
+  padding-left: 25px;
+
+  .channel-member {
+    @include dFlex($gap: 10px);
+    font-weight: 400;
+    border-radius: 30px;
+    padding: 4px 10px;
+    cursor: pointer;
+    background-color: var(--color-bg);
+    &:hover {
+      background-color: var(--color-bg);
+    }
+    &.selected {
+      background-color: var(--color-bg);
+      color: var(--color-purple-3);
+      font-weight: 700;
+    }
+    &:active {
+      color: var(--color-purple-3);
+    }
+
+    .profile-img-container {
+      position: relative;
+      max-width: 50px;
+      max-height: 50px;
+      .profile-img {
+        width: 50px;
       }
     }
   }
