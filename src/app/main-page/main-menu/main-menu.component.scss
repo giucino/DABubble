@@ -30,7 +30,7 @@
 
 .menu-overlay {
   @include dFlex($ai: center, $gap: 0px);
-  position: absolute;
+  position: fixed;
   top: 65%; 
   left: -150px; 
   z-index: 1000;

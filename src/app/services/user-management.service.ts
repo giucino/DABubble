@@ -26,6 +26,7 @@ export class UserManagementService {
       return isPartOfNameMatched && isNotSelected && isNotCreator;
     });
   }
+  
 
   selectUser(selectedUsers: User[], user: User): User[] {
     if (!selectedUsers.find((u) => u.id === user.id)) {
