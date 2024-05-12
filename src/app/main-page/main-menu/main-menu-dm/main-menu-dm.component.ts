@@ -6,6 +6,7 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-main-menu-dm',
@@ -34,6 +35,7 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     private router : Router,
+    public threadService : ThreadService,
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +56,7 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
       channel_id = await this.createNewDirectChannel(user_id);
       this.router.navigateByUrl('/main-page/' + channel_id);
     }
+    this.closeThread();
     // this.selectedUserId = user_id;
   }
 
@@ -62,6 +65,11 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
     this.newDirectChannel.created_at = new Date().getTime();
     this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
     return await this.channelService.addChannel(this.newDirectChannel);
+  }
+
+  closeThread() {
+    this.userService.saveLastThread(this.userService.currentUser.id, '');
+    this.threadService.closeThread();
   }
   
 }

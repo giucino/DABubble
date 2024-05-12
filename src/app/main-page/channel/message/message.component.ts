@@ -150,7 +150,6 @@ export class MessageComponent {
 
 
   closeThread() {
-    this.userService.currentUser.last_thread = '';
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }

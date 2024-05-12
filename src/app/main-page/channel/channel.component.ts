@@ -61,7 +61,7 @@ export class ChannelComponent {
     public threadService : ThreadService,
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
-    this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    // this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
   }
 
   ngOnInit() {
@@ -94,8 +94,9 @@ export class ChannelComponent {
     this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
 
-  // closeThread(value: boolean) {
-  //   this.closeThreadEvent.emit(value);
+  // closeThread() {
+  //   this.userService.saveLastThread(this.userService.currentUser.id, '');
+  //   this.threadService.closeThread();
   // }
 
   saveMessage() {

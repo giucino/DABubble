@@ -58,7 +58,6 @@ export class ThreadComponent {
     this.channelService.unsubCurrentThread();
     this.messageService.unsubMessagesThread();
     this.currenThread();
-    // this.userService.currentUserThread$.unsubscribe();
   }
 
   saveMessage() {
@@ -153,7 +152,6 @@ export class ThreadComponent {
   }
 
   closeThread() {
-    this.userService.currentUser.last_thread = '';
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }
