@@ -101,6 +101,7 @@ export class UserService implements OnDestroy {
 
     ngOnDestroy(): void {
         this.unsubUsers();
+        this.currentUserThread$.unsubscribe();
     }
 
     getUserRef() {

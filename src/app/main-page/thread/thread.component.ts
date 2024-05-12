@@ -58,7 +58,7 @@ export class ThreadComponent {
     this.channelService.unsubCurrentThread();
     this.messageService.unsubMessagesThread();
     this.currenThread();
-    this.userService.currentUserThread$.unsubscribe();
+    // this.userService.currentUserThread$.unsubscribe();
   }
 
   saveMessage() {
