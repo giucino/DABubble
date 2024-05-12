@@ -1,8 +1,10 @@
-import { Inject, Injectable, OnDestroy, inject } from '@angular/core';
+import { HostListener, Inject, Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, DocumentReference } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { Auth, authState } from '@angular/fire/auth';
+import { UserAuthService } from './user.auth.service';
 
 
 @Injectable({
@@ -23,7 +25,7 @@ export class UserService implements OnDestroy {
         this.getCurrentUser();
     }
 
-    getUser(user_id : string) {
+    getUser(user_id: string) {
         return this.allUsers.find((user) => user.id == user_id);
     }
 
@@ -37,7 +39,6 @@ export class UserService implements OnDestroy {
             list.forEach((element) => {
                 let id = element.id;
                 let data = element.data();
-                // let userData = { id, data };
                 this.allUsers.push(this.setUsers(data, id));
             });
         });
@@ -83,17 +84,13 @@ export class UserService implements OnDestroy {
         updateDoc(singleUserRef, { id: userId });
     }
 
-    getCurrentUser(email?: string) {
-        // this.currentUser = this.allUsers.find(user => user.email === email);
-        // Check if the user is logged in
+    async getCurrentUser(email?: string) {
         if (typeof window !== 'undefined' && window.localStorage) {
             const storedUser = localStorage.getItem('currentUser');
             if (storedUser) {
-                // If the user is logged in, set this.currentUser to the stored user
                 this.currentUser = JSON.parse(storedUser);
-            } 
+            }
             else {
-                // If the user is not logged in, find the user in this.allUsers
                 this.currentUser = this.allUsers.find(user => user.email === email);
             }
         }
@@ -121,9 +118,9 @@ export class UserService implements OnDestroy {
 
             // user existiert schon
         } else {
-            await this.addUser(user); 
+            await this.addUser(user);
         }
-      }
+    }
 
 
     addAvatarToUser(userId: string, avatar: string) {
@@ -131,21 +128,20 @@ export class UserService implements OnDestroy {
         updateDoc(singleUserRef, { profile_img: avatar });
     }
 
-    updatePassword(userId: string, password: string) {
-        // let singleUserRef = doc(this.getUserRef(), userId);
-        // updateDoc(singleUserRef, {password: password});
-
-        // kein pw in database
+    async updateLastChannel(userId: string, channelId: string) {
+        let singleUserRef = doc(this.getUserRef(), userId);
+        await updateDoc(singleUserRef, { last_channel: channelId });
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.last_channel = channelId;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
-    updateOnlineStatus(userId: string, status: boolean) {
+    async updateOnlineStatus(userId: string, status: boolean) {
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, { logged_in: status });
-    }
-
-    saveLastChannel(userId: string, channelId: string) {
-        let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, { last_channel: channelId });
+        await updateDoc(singleUserRef, { logged_in: status });
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.logged_in = status;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
     saveLastThread(userId: string, threadId: string) {
@@ -200,5 +196,5 @@ export class UserService implements OnDestroy {
         }
     }
 
-    
+
 }

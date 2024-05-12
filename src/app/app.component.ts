@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserAuthService } from './firebase.service/user.auth.service';
+import { UserService } from './firebase.service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,22 +15,69 @@ import { UserAuthService } from './firebase.service/user.auth.service';
 })
 export class AppComponent {
   title = 'DABubble';
-  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService) { }
+  timeoutId: any;
+  userId: any;
+  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService,
+    public userService: UserService) {
+      if (userService.currentUser) {
+        this.userId = userService.currentUser.id;
+      }
+    //   router.events.subscribe(event => {
+    //     if ( event instanceof NavigationStart) {
+    //       let userId = this.userService.currentUser.id;
+    //       setTimeout(() => {
+    //         userAuth.logout();
+    //         userService.updateOnlineStatus(userId, false);
+    //       }, 2000);
+    //       // this.userService.getCurrentUser();
+    //     }
+    // });
+  }
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+  //     // this.userAuth.logout();
+  //     this.userService.updateOnlineStatus(this.userService.currentUser.id, false); // geht
+  // }
 
-  ngOnInit(): void {
-    if (this.router.url === '/main-page') {  //damit man nicht über url auf die main kommt, if user logged in
-      this.router.navigate(['/login-page']);
-    }
-     if (this.router.url === '/reset-password') { //für den reset link
-      this.router.navigate(['/reset-password']);
-    }
-    if (this.router.url === '/') {
-      this.router.navigate(['/login-page']); // ansonsten immer auf login page
-    } 
-    // this.router.navigate(['/login-page']);
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+    
+
+  // }
+
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event: Event) {
+    this.userAuth.logout();
+    this.userService.updateOnlineStatus(this.userId, false); // geht
   }
 
-  confirmPopup(){
+  // @HostListener('window:load', ['$event'])
+  // loadHandler(event: Event) {
+  //   if (this.timeoutId) {
+  //     clearTimeout(this.timeoutId);
+  //   }
+
+
+  ngOnInit(): void {
+    // console.log('current user', this.userAuth.currentUser());
+    if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
+      return;
+    }
+    this.userAuth.checkAuth().then(isLoggedIn => {
+      if (isLoggedIn) {
+        // this.userAuth.currentUser();
+        this.userService.getCurrentUser();
+        // setTimeout(() => {
+        this.router.navigate(['/main-page']);
+        // }, 500);
+
+      } else {
+        this.router.navigate(['/login-page/login']);
+      }
+    });
+  }
+
+  confirmPopup() {
     this._snackBar.openFromComponent(EmailSnackbarComponent, {
       duration: 2000,
       horizontalPosition: 'right',

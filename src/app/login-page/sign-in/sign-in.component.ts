@@ -28,14 +28,12 @@ export class SignInComponent {
   emailExists: boolean = false;
 
   constructor(
-    private router: Router, private userService: UserService, 
-    private route: ActivatedRoute, private userAuth: UserAuthService) {
+    private router: Router, private userService: UserService, private userAuth: UserAuthService) {
 
   }
 
   ngonInit() {
     this.userService.getUsers();
-    // console.log(this.userService.allUsers);
   }
 
 
@@ -46,21 +44,18 @@ export class SignInComponent {
   checkEmail() {
     const userExists = this.userService.allUsers.some(user => user.email === this.user.email);
     if (userExists) {
-      // console.log('User already exists');
       this.emailExists = true;
     }
     return userExists;
   }
 
   async goToAvatar() {
-    // console.log(this.userService.allUsers);
     if (this.checkEmail()) {return;}
     
     await this.userAuth.registerUser(this.user.email, this.user.password).then(async () => {
-      
       await this.userService.addUser(this.user);
-    await this.userAuth.saveUser(this.user.name)}).then(() => {
-      this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
+      await this.userAuth.saveUser(this.user.name)}).then(() => {
+        this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
     });
       //ladebalken maybe
 

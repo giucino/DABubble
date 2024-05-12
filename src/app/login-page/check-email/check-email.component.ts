@@ -6,6 +6,7 @@ import { MatSnackBar,MatSnackBarModule} from '@angular/material/snack-bar';
 import { EmailSnackbarComponent } from '../../popups/email-snackbar/email-snackbar.component';
 import { send } from 'process';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
+import { updateProfile } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-check-email',
@@ -34,13 +35,6 @@ export class CheckEmailComponent {
       this.error = true;
     });
   }
-
-
-  // returnToResetPassword(){
-  //   setTimeout(() => {
-  //     this.router.navigate(['/login-page/reset-password']);
-  //   }, 2000);
-  // }
 
   triggerAnimation() {
     const element = document.querySelector('.cdk-overlay-container');

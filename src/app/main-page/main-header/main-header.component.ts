@@ -14,10 +14,12 @@ import { UserService } from '../../firebase.service/user.service';
   styleUrl: './main-header.component.scss',
 })
 export class MainHeaderComponent {
-  // Anonym = '';
   anonymImg = 'assets/img/person.png'
   constructor(private customDialogService: CustomDialogService, public userService: UserService) {
+  }
 
+  ngOnInit() {
+    
   }
 
   openLogOutDialog(button: HTMLElement) {

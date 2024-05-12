@@ -50,7 +50,6 @@ export class ChannelFirebaseService {
   
 
   unsubChannels: any;
-  unsubscribeAllChannels!: () => void;
   unsubCurrentChannel: any = function () {};
   unsubCurrentThread: any = function () {};
   // private unsubscribeCurrentChannel?: () => void;
@@ -60,26 +59,6 @@ export class ChannelFirebaseService {
     console.log('currentChannel im Constructor Service' , this.currentChannel)
   }
 
-  //test
-  // listenToChannel(channelId: string) {
-  //   this.unsubscribeCurrentChannel =
-  //   onSnapshot(this.getChannelRef(channelId), (ele) => {
-  //     if (!ele.exists()) {
-  //       this.currentChannel = this.setChannel(ele.data(), ele.id);
-  //     }
-      
-  //   });
-  // }
-
-  // stopListeningToChannel() {
-  //   if (this.unsubscribeCurrentChannel) {
-  //     this.unsubscribeCurrentChannel();
-  //   }
-  // }
-
-  // getChannelsForCurrentUser(user_id: string) {
-  //   this.unsubChannels = this.subChannels(user_id);
-  // }
 
   // ohne user_id
   async getChannelsForCurrentUser(){
@@ -123,9 +102,6 @@ export class ChannelFirebaseService {
 
   ngOnDestroy(): void {
     if(this.unsubChannels === typeof function () {}) this.unsubChannels();
-    if (this.unsubscribeAllChannels) {
-      this.unsubscribeAllChannels();
-    }
     // this.unsubCurrentChannel();
   }
 
@@ -221,4 +197,21 @@ export class ChannelFirebaseService {
   //     });
   //   });
   // }
+
+
+async getAllChannels(): Promise<Channel[]> {
+  const allChannelsQuery = query(this.getChannelsRef());
+  return getDocs(allChannelsQuery).then((querySnapshot) => {
+    this.channels = [];
+    querySnapshot.forEach((doc) => {
+      const channel = this.setChannel(doc.data(), doc.id);
+      this.channels.push(channel);
+    });
+    return this.channels;
+  }).catch(error => {
+    console.error("Fehler beim Abrufen der Kanäle: ", error);
+    return []; 
+  });
+}
+
 }

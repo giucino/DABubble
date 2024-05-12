@@ -5,6 +5,7 @@ import { Router} from '@angular/router';
 import { LoginSnackbarComponent } from '../../popups/login-snackbar/login-snackbar.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '../../firebase.service/user.service';
+import { UserAuthService } from '../../firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -17,7 +18,7 @@ export class ResetPasswordComponent {
   userId: string | any;
   resetPassword: string = '';
   resetPasswordAgain: string = '';
-  constructor(private router: Router, private _snackBar: MatSnackBar, private userService: UserService) { }
+  constructor(private router: Router, private _snackBar: MatSnackBar, private userAuth: UserAuthService) { }
 
   goToCheckEmail(){
     this.router.navigate(['/login-page/check-email']);
@@ -51,7 +52,8 @@ export class ResetPasswordComponent {
   updateUserPassword(){
     // get user id from link? email?
     this.userId = '';
-    this.userService.updatePassword(this.userId, this.resetPasswordAgain);
+
+    this.userAuth.changePassword(this.resetPassword);
   }
 
   changePassword(){
