@@ -1,9 +1,7 @@
-import { Injectable, OnDestroy, Query, inject } from '@angular/core';
-import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, where, query, orderBy } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, onSnapshot, addDoc, doc, updateDoc, where, query, orderBy } from '@angular/fire/firestore';
 import { Message } from '../interfaces/message.interface';
-import { UserAuthService } from './user.auth.service';
-// import { getFirestore } from "firebase/firestore";
+
 
 
 @Injectable({
@@ -14,7 +12,8 @@ export class MessageService {
 
     firestore: Firestore = inject(Firestore);
     messages: Message[] = [];
-        message: Message = {
+    messagesThread: Message[] = [];
+    message: Message = {
         user_id: '',
         channel_id: '',
         thread_id: '',
@@ -29,8 +28,10 @@ export class MessageService {
         total_replies: 0,
     }
 
+
     unsubMessages: any;
-    private unsubscribeAllMessages!: () => void;
+    unsubMessagesThread: any;
+    // private unsubscribeAllMessages!: () => void;
 
     constructor() {
 
@@ -40,12 +41,16 @@ export class MessageService {
         this.unsubMessages = this.subMessages(channel_id);
     }
 
+    getMessagesFromThread(thread_id: any) {
+        this.unsubMessagesThread = this.subMessagesThread(thread_id);
+    }
+
     getMessagesRef() {
-        return collection(this.firestore, 'messages')
+        return collection(this.firestore, 'messages');
     }
 
     getMessageRef(message_id: string) {
-        return doc(collection(this.firestore, 'messages', message_id))
+        return doc(collection(this.firestore, 'messages', message_id));
     }
 
     setMessage(data: any, id?: string): Message {
@@ -90,6 +95,16 @@ export class MessageService {
         })
     }
 
+    subMessagesThread(thread_id: string) {
+        const q = query(this.getMessagesRef(), where('thread_id', '==', thread_id), orderBy("created_at"));
+        return onSnapshot(q, (messages) => {
+            this.messagesThread = [];
+            messages.forEach((message) => {
+                this.messagesThread.push(this.setMessage(message.data(), message.id))
+            });
+        })
+    }
+
     /* UPDATE */
     async updateMessage(message: Message) {
         if (message.id) {
@@ -98,15 +113,15 @@ export class MessageService {
         }
     }
 
-    getAllMessages() {
-        const allMessagesQuery = query(this.getMessagesRef());
-        this.unsubscribeAllMessages = onSnapshot(allMessagesQuery, (querySnapshot) => {
-            this.messages = [];
-            querySnapshot.forEach((doc) => {
-                const message = this.setMessage(doc.data(), doc.id);
-                this.messages.push(message);
-            });
-        });
-    }
+    // getAllMessages() {
+    //     const allMessagesQuery = query(this.getMessagesRef());
+    //     this.unsubscribeAllMessages = onSnapshot(allMessagesQuery, (querySnapshot) => {
+    //         this.messages = [];
+    //         querySnapshot.forEach((doc) => {
+    //             const message = this.setMessage(doc.data(), doc.id);
+    //             this.messages.push(message);
+    //         });
+    //     });
+    // }
 
 }

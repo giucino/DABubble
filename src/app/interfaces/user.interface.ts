@@ -7,4 +7,5 @@ export interface User {
     is_typing: boolean,
     profile_img: string,
     last_channel?: string,
+    last_thread?: string,
 }

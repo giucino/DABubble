@@ -12,6 +12,7 @@ import { MessageService } from '../../../firebase.service/message.service';
 import { UserService } from '../../../firebase.service/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { Message } from '../../../interfaces/message.interface';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -28,7 +29,8 @@ export class MainMenuChannelsComponent implements OnInit {
     public channelService: ChannelFirebaseService,
     public messageService: MessageService,
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    public threadService : ThreadService,
   ) {}
 
   ngOnInit(): void {}
@@ -53,5 +55,10 @@ export class MainMenuChannelsComponent implements OnInit {
   openAddChannelDialog(): void {
     const component = AddChannelCardComponent;
     this.customDialogService.openDialog(component);
+  }
+
+  closeThread() {
+    this.userService.saveLastThread(this.userService.currentUser.id, '');
+    this.threadService.closeThread();
   }
 }

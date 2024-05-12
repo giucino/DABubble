@@ -59,7 +59,9 @@ export class LoginComponent {
   loginWithGoogle() {
     this.userAuth.loginWithGoogle().then((result) => {
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
+
       const user = this.setGoogleUser();
+
       this.userService.getUsers();
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.userService.getCurrentUser(this.loginEmail);
@@ -99,6 +101,7 @@ export class LoginComponent {
           profile_img: this.profile_img,
           id: this.id,
           last_channel: this.last_channel,
+          last_thread: this.last_thread,
           logged_in: this.logged_in,
           is_typing: this.is_typing,
           password: this.password

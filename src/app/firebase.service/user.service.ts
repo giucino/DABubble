@@ -1,6 +1,6 @@
 import { HostListener, Inject, Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, DocumentReference } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
 import { Auth, authState } from '@angular/fire/auth';
@@ -16,6 +16,7 @@ export class UserService implements OnDestroy {
     allUsers: any[] = [];
     user = new User();
     currentUser: any;
+    currentUserThread$  = new Subject<string>();
 
     unsubUsers;
 
@@ -43,6 +44,13 @@ export class UserService implements OnDestroy {
         });
     }
 
+    subCurrentUserForThread(user_id : string) {
+        return onSnapshot(this.getSingleUserRef(user_id), (user) => {
+            let threadId = this.setUsers(user.data(), user.id).last_thread || ''
+            this.currentUserThread$.next(threadId);
+        });
+    }
+
     setUsers(data: any, id: string): User {
         return {
             id: id,
@@ -53,6 +61,7 @@ export class UserService implements OnDestroy {
             is_typing: data.is_typing || false,
             profile_img: data.profile_img,
             last_channel: data.last_channel || '',
+            last_thread: data.last_thread || '',
             toJSON() {
                 return {
                     id: this.id,
@@ -63,6 +72,7 @@ export class UserService implements OnDestroy {
                     is_typing: this.is_typing,
                     profile_img: this.profile_img,
                     last_channel: this.last_channel,
+                    last_thread: this.last_thread
                 };
             }
         }
@@ -88,6 +98,7 @@ export class UserService implements OnDestroy {
 
     ngOnDestroy(): void {
         this.unsubUsers();
+        this.currentUserThread$.unsubscribe();
     }
 
     getUserRef() {
@@ -133,6 +144,11 @@ export class UserService implements OnDestroy {
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
+    saveLastThread(userId: string, threadId: string) {
+        let singleUserRef = doc(this.getUserRef(), userId);
+        updateDoc(singleUserRef, { last_thread: threadId });
+    }
+
     getCleanJson(user: User): {} {
         return {
             name: user.name,
@@ -141,7 +157,8 @@ export class UserService implements OnDestroy {
             logged_in: user.logged_in,
             is_typing: user.is_typing,
             profile_img: user.profile_img,
-            last_channel: user.last_channel
+            last_channel: user.last_channel,
+            last_thread: user.last_thread
         }
     }
 

@@ -24,6 +24,7 @@ import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 export class ChannelFirebaseService {
   firestore: Firestore = inject(Firestore);
   channels: Channel[] = [];
+
   currentChannel: Channel = {
     id: '',
     name: '',
@@ -35,8 +36,22 @@ export class ChannelFirebaseService {
     channel_type: ChannelTypeEnum.new,
   };
 
+  currentThread: Channel = {
+    id: '',
+    name: '',
+    description: '',
+    created_at: 0,
+    creator: '', // 'user_id'
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.thread,
+  };
+
+  
+
   unsubChannels: any;
   unsubCurrentChannel: any = function () {};
+  unsubCurrentThread: any = function () {};
   // private unsubscribeCurrentChannel?: () => void;
 
   constructor() {
@@ -79,10 +94,15 @@ export class ChannelFirebaseService {
     });
   }
 
+  getCurrentThread(thread_id : string) {
+    return onSnapshot(this.getChannelRef(thread_id), (channel) => {
+      this.currentThread = this.setChannel(channel.data(), channel.id);
+    });
+  }
+
   ngOnDestroy(): void {
     if(this.unsubChannels === typeof function () {}) this.unsubChannels();
     // this.unsubCurrentChannel();
-    // console.log('unsubscribed');
   }
 
   getChannelsRef() {
@@ -107,23 +127,14 @@ export class ChannelFirebaseService {
   }
 
   /* CREATE */
-  // async addChannel(channel : Channel) {
-  //   let ref = this.getChannelsRef();
-  //   await addDoc(ref, channel)
-  //       .catch((err) => {console.log(err)})
-  //       .then(()=>{ console.log()})
-  // }
-
   async addChannel(channel: Channel): Promise<string> {
     let ref = this.getChannelsRef();
     const docRef = await addDoc(ref, channel);
-    // console.log('Channel added with ID:', docRef.id);
     return docRef.id;
   }
 
   /* READ */
   subChannels(user_id: string) {
-    // const q = query(this.getChannelsRef());
     const q = query(
       this.getChannelsRef(),
       where('members', 'array-contains', user_id)
@@ -187,6 +198,7 @@ export class ChannelFirebaseService {
   //   });
   // }
 
+
 async getAllChannels(): Promise<Channel[]> {
   const allChannelsQuery = query(this.getChannelsRef());
   return getDocs(allChannelsQuery).then((querySnapshot) => {
@@ -201,4 +213,5 @@ async getAllChannels(): Promise<Channel[]> {
     return []; 
   });
 }
+
 }
