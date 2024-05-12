@@ -10,7 +10,7 @@ import { CheckEmailComponent } from './login-page/check-email/check-email.compon
 import { ImprintComponent } from './shared/imprint/imprint.component';
 import { PrivacyPolicyComponent } from './shared/privacy-policy/privacy-policy.component';
 import { ChannelComponent } from './main-page/channel/channel.component';
-import { ThreadComponent } from './main-page/thread/thread.component';
+
 
 export const routes: Routes = [
 
@@ -29,6 +29,7 @@ export const routes: Routes = [
 
 
     {path: 'main-page', component: MainPageComponent, children: [
+        { path: '', component: ChannelComponent},
         {
             path: ':channelId', component: ChannelComponent, children: [
                 // noch ein path für den thread vom channel?

@@ -12,6 +12,7 @@ import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ThreadService } from '../../services/thread.service';
 
 
 @Component({
@@ -22,18 +23,17 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './channel.component.scss',
 })
 export class ChannelComponent {
-  @Input() channelType: 'main' | 'direct' | 'thread' | 'new' = 'main';
-  @Output() closeThreadEvent = new EventEmitter<boolean>();
+  // @Input() isThread: boolean = false;
+  // @Output() closeThreadEvent = new EventEmitter<boolean>();
 
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
-
 
 // alle user die im channel sind
   channelMembers = this.channelService.currentChannel.members;
   users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
 
-  messages: Message[] = this.messageService.messages;
+  // messages: Message[] = [];
   message: Message = {
     user_id: '',
     channel_id: this.channelService.currentChannel.id,
@@ -49,7 +49,6 @@ export class ChannelComponent {
 
   // lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
   channelId : string = '';
-
   currentDate: string = '1970/01/01';
 
   constructor(
@@ -59,6 +58,7 @@ export class ChannelComponent {
     public channelService : ChannelFirebaseService,
     public activatedRoute: ActivatedRoute,
     private router: Router,
+    public threadService : ThreadService,
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
@@ -68,21 +68,28 @@ export class ChannelComponent {
   }
 
   ngOnInit() {
-    setTimeout(() => { // ohne werden die users nicht richtig geladen
+
+
+//     setTimeout(() => { // ohne werden die users nicht richtig geladen
+
       this.activatedRoute.params.subscribe(params => {
         if (params['channelId']) {
           this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
           this.messageService.getMessagesFromChannel(params['channelId']);
-  
           this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
         }
-      });
-    }, 700);
+      }); 
+
+  
+//           this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+//         }
+//       });
+//     }, 700);
 
   }
 
   ngOnDestroy() {
-      this.channelService.unsubCurrentChannel();
+    this.channelService.unsubCurrentChannel();
   }
   
 
@@ -101,9 +108,10 @@ export class ChannelComponent {
     this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
 
-  closeThread(value: boolean) {
-    this.closeThreadEvent.emit(value);
-  }
+  // closeThread() {
+  //   this.userService.saveLastThread(this.userService.currentUser.id, '');
+  //   this.threadService.closeThread();
+  // }
 
   saveMessage() {
     this.message.user_id = this.currentUser.id;

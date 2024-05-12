@@ -60,7 +60,9 @@ export class LoginComponent {
   loginWithGoogle() {
     this.userAuth.loginWithGoogle().then((result) => {
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
+
       const user = this.setGoogleUser();
+
       this.userService.getUsers();
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.userService.getCurrentUser(this.loginEmail);
@@ -83,14 +85,17 @@ export class LoginComponent {
   }
 
   setGoogleUser() {
-    let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
-    let last_ch = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).last_channel;
+    let user = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail);
+    // let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
+    // let last_ch = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).last_channel;
+    // let last_th = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).last_thread;
     return {
       name: this.userAuth.googleName,
       email: this.userAuth.googleEmail,
       profile_img: this.userAuth.googleProfileImg,
-      id: googleUserId,
-      last_channel: last_ch,
+      id: user.id,
+      last_channel: user.last_channel,
+      last_thread: user.last_thread,
       logged_in: true,
       is_typing: false,
       password: '',
@@ -101,6 +106,7 @@ export class LoginComponent {
           profile_img: this.profile_img,
           id: this.id,
           last_channel: this.last_channel,
+          last_thread: this.last_thread,
           logged_in: this.logged_in,
           is_typing: this.is_typing,
           password: this.password
