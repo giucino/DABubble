@@ -5,8 +5,7 @@
     <div class="channel">
       <router-outlet></router-outlet>
     </div>
-    @if(threadService.threadOpen) {
-     <!-- <app-channel class="thread" [isThread]="true" (closeThreadEvent)="isThreadClosed($event)"></app-channel> -->
+    @if(this.userService.currentUser.last_thread && this.userService.currentUser.last_thread != '') {
      <app-thread class="thread"></app-thread>
     }
   </div>

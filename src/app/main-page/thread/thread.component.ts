@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageService } from '../../firebase.service/message.service';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
@@ -34,6 +34,7 @@ export class ThreadComponent {
     is_deleted: false,
     last_reply: 0,
   };
+  
 
   constructor(
     public messageService: MessageService,
@@ -42,13 +43,14 @@ export class ThreadComponent {
     public threadService: ThreadService,
   ) {
     let thread_id = this.userService.currentUser.last_thread;
+    
     if (thread_id && thread_id != '') {
       this.channelService.unsubCurrentThread = this.channelService.getCurrentThread(thread_id);
       this.messageService.getMessagesFromThread(thread_id);
     }
-    console.log('Messages', this.messageService.messages);
-    console.log('MessagesThread', this.messageService.messagesThread);
   }
+
+
 
   ngOnDestroy() {
     this.channelService.unsubCurrentThread();
@@ -147,6 +149,7 @@ export class ThreadComponent {
   }
 
   closeThread() {
+    this.userService.currentUser.last_thread = '';
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }

@@ -123,6 +123,7 @@ export class MessageComponent {
   }
 
  async openThread(thread_id : string | undefined) {
+    if(this.threadService.threadOpen) this.closeThread();
     if (thread_id == undefined || thread_id == '') {
       let newThread : Channel = {
         id: '',
@@ -145,7 +146,14 @@ export class MessageComponent {
       this.userService.saveLastThread(this.userService.currentUser.id,thread_id);
       this.threadService.openThread();
     }
-    console.log('Messages', this.messageService.messages);
-    console.log('MessagesThread', this.messageService.messagesThread);
   }
+
+
+  closeThread() {
+    this.userService.currentUser.last_thread = '';
+    this.userService.saveLastThread(this.userService.currentUser.id, '');
+    this.threadService.closeThread();
+  }
+  
 }
+
