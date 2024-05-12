@@ -1,8 +1,10 @@
-import { Inject, Injectable, OnDestroy, inject } from '@angular/core';
+import { HostListener, Inject, Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { Auth, authState } from '@angular/fire/auth';
+import { UserAuthService } from './user.auth.service';
 
 
 @Injectable({
@@ -20,7 +22,6 @@ export class UserService implements OnDestroy {
     constructor() {
         this.unsubUsers = this.getUsers();
         this.getCurrentUser();
-
     }
 
     getUser(user_id: string) {
@@ -37,9 +38,6 @@ export class UserService implements OnDestroy {
             list.forEach((element) => {
                 let id = element.id;
                 let data = element.data();
-                // if (this.currentUser && this.currentUser.id !== id) {
-                //     this.updateOnlineStatus(id, false);
-                // }
                 this.allUsers.push(this.setUsers(data, id));
             });
         });
@@ -76,7 +74,7 @@ export class UserService implements OnDestroy {
         updateDoc(singleUserRef, { id: userId });
     }
 
-    getCurrentUser(email?: string) {
+    async getCurrentUser(email?: string) {
         if (typeof window !== 'undefined' && window.localStorage) {
             const storedUser = localStorage.getItem('currentUser');
             if (storedUser) {
@@ -119,13 +117,6 @@ export class UserService implements OnDestroy {
         updateDoc(singleUserRef, { profile_img: avatar });
     }
 
-    updatePassword(userId: string, password: string) {
-        // let singleUserRef = doc(this.getUserRef(), userId);
-        // updateDoc(singleUserRef, {password: password});
-
-        // kein pw in database
-    }
-
     async updateLastChannel(userId: string, channelId: string) {
         let singleUserRef = doc(this.getUserRef(), userId);
         await updateDoc(singleUserRef, { last_channel: channelId });
@@ -137,12 +128,10 @@ export class UserService implements OnDestroy {
     async updateOnlineStatus(userId: string, status: boolean) {
         let singleUserRef = doc(this.getUserRef(), userId);
         await updateDoc(singleUserRef, { logged_in: status });
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.logged_in = status;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
-
-    // saveLastChannel(userId: string, channelId: string) {
-    //     let singleUserRef = doc(this.getUserRef(), userId);
-    //     updateDoc(singleUserRef, { last_channel: channelId });
-    // }
 
     getCleanJson(user: User): {} {
         return {

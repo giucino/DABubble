@@ -3,6 +3,7 @@ import { Auth, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup, upda
 import { Firestore } from '@angular/fire/firestore';
 import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, fetchSignInMethodsForEmail, signInAnonymously, signOut, onAuthStateChanged } from "firebase/auth";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,9 @@ export class UserAuthService {
   googleId: any = '';
 
 
-  constructor(public auth: Auth) { }
+  constructor(public auth: Auth) { 
+  }
+
 
   loginUser(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
@@ -30,7 +33,6 @@ export class UserAuthService {
   }
 
   logout() {
-    // this.changeStatus(false);
     return signOut(this.auth);
   }
 
@@ -42,8 +44,6 @@ export class UserAuthService {
       this.googleName = user.displayName;
       this.googleEmail = user.email;
       this.googleProfileImg = user.photoURL;
-      // this.googleId = user.uid;
-      // console.log('Google User: ', user);
     })
       .catch((error) => {
         console.error(error);
@@ -67,8 +67,6 @@ export class UserAuthService {
   async resetPassword(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(this.auth, email);
-      // set user password to something else?
-      // console.log('Password Reset Email Sent!');
     } catch (error) {
       console.error('Error sending password reset email', error);
     }
@@ -78,28 +76,16 @@ export class UserAuthService {
     const user_auth: any = this.auth.currentUser;
     if (user_auth) {
     updatePassword(user_auth, newPassword).then(() => {
-      console.log('Password updated successfully!');
+      // console.log('Password updated successfully!');
   }).catch((error) => {
       console.error('Error updating password:', error);
   });
 }
   }
 
-  // async getName() {
-  //     const user_auth: any = this.auth.currentUser;
-  //     if (user_auth) {
-  //         try {
-  //             this.displayName = user_auth.displayName;
-  //         } catch (error) {
-  //             console.error('Fehler bei aktualisieren des displayName', error);
-  //         }
-  //     }
-  // }
-
   async registerUser(email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
-
 
   async checkEmailExistence(email: string) {
     return fetchSignInMethodsForEmail(this.auth, email);

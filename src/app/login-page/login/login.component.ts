@@ -7,9 +7,6 @@ import { Auth, GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect 
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
-import { last } from 'rxjs';
-import { log } from 'console';
-import { User } from '../../models/user';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 
 @Component({

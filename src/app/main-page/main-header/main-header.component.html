@@ -11,12 +11,12 @@
         <span class="name fs-32">{{userService.currentUser?.name}}</span>
         <div class="avatar">
             <img [src]="userService.currentUser.profile_img" class="profile-img">
-            @if (userService.currentUser.logged_in){
+            <!-- @if (userService.currentUser.logged_in){ -->
             <div class="online-status-wborder online"></div>
-            }
-            @if (!userService.currentUser.logged_in){
+            <!-- } -->
+            <!-- @if (!userService.currentUser.logged_in){
             <div class="online-status-wborder offline"></div>
-            }
+            } -->
         </div>
         <div class="menu-btn">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">

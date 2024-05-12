@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,28 +15,69 @@ import { UserService } from './firebase.service/user.service';
 })
 export class AppComponent {
   title = 'DABubble';
-  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService, public userService: UserService) { }
+  timeoutId: any;
+  userId: any;
+  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService,
+    public userService: UserService) {
+      if (userService.currentUser) {
+        this.userId = userService.currentUser.id;
+      }
+    //   router.events.subscribe(event => {
+    //     if ( event instanceof NavigationStart) {
+    //       let userId = this.userService.currentUser.id;
+    //       setTimeout(() => {
+    //         userAuth.logout();
+    //         userService.updateOnlineStatus(userId, false);
+    //       }, 2000);
+    //       // this.userService.getCurrentUser();
+    //     }
+    // });
+  }
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+  //     // this.userAuth.logout();
+  //     this.userService.updateOnlineStatus(this.userService.currentUser.id, false); // geht
+  // }
+
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+    
+
+  // }
+
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event: Event) {
+    this.userAuth.logout();
+    this.userService.updateOnlineStatus(this.userId, false); // geht
+  }
+
+  // @HostListener('window:load', ['$event'])
+  // loadHandler(event: Event) {
+  //   if (this.timeoutId) {
+  //     clearTimeout(this.timeoutId);
+  //   }
+
 
   ngOnInit(): void {
-    if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password') ){
+    // console.log('current user', this.userAuth.currentUser());
+    if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
       return;
     }
     this.userAuth.checkAuth().then(isLoggedIn => {
       if (isLoggedIn) {
-        // console.log('current user', this.userService.currentUser);
-        // console.log('last channel', this.userService.currentUser.last_channel);
-        // if (this.userService.currentUser.last_channel){
-        //   this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
-        // } else {
+        // this.userAuth.currentUser();
+        this.userService.getCurrentUser();
+        // setTimeout(() => {
         this.router.navigate(['/main-page']);
-        // }
+        // }, 500);
+
       } else {
         this.router.navigate(['/login-page/login']);
       }
     });
   }
 
-  confirmPopup(){
+  confirmPopup() {
     this._snackBar.openFromComponent(EmailSnackbarComponent, {
       duration: 2000,
       horizontalPosition: 'right',
