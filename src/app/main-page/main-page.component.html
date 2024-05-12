@@ -1,23 +1,13 @@
 <div class="main-page">
-  <!-- Header -->
-  <!-- <div class="header-placeholder">
-    header-placeholder
-  </div> -->
-  <app-main-header> </app-main-header>
-  <!-- Content -->
+  <app-main-header></app-main-header>
   <div class="content">
-    <!-- main-menu -->
-    <!-- <div class="main-menu-placeholder"></div> -->
     <app-main-menu class="main-menu"></app-main-menu>
-
-    <!-- channel -->
-    <!-- <app-channel class="channel"></app-channel> -->
     <div class="channel">
       <router-outlet></router-outlet>
     </div>
-    <!-- thread -->
-  @if(!threadClosed) {
-   <app-channel class="thread" [channelType]="'thread'" (closeThreadEvent)="isThreadClosed($event)"></app-channel>
-  }
+    @if(threadService.threadOpen) {
+     <!-- <app-channel class="thread" [isThread]="true" (closeThreadEvent)="isThreadClosed($event)"></app-channel> -->
+     <app-thread class="thread"></app-thread>
+    }
   </div>
 </div>

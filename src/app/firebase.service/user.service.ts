@@ -138,6 +138,11 @@ export class UserService implements OnDestroy {
         updateDoc(singleUserRef, { last_channel: channelId });
     }
 
+    saveLastThread(userId: string, threadId: string) {
+        let singleUserRef = doc(this.getUserRef(), userId);
+        updateDoc(singleUserRef, { last_thread: threadId });
+    }
+
     getCleanJson(user: User): {} {
         return {
             name: user.name,

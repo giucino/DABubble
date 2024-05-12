@@ -6,6 +6,9 @@ import { MessageService } from '../../../firebase.service/message.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { Channel } from '../../../interfaces/channel.interface';
+import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-message',
@@ -35,64 +38,19 @@ export class MessageComponent {
     last_reply: 0,
   };
 
-  messages: Message[] = this.messageService.messages;
-
-  editableMessage: Message = JSON.parse(JSON.stringify(this.message));
-
-  // TODO: replace with userService.currentUser
   currentUser: User = this.userService.currentUser;
-  // {
-  //   id: 'user_01',
-  //   name: 'Max Mustermann',
-  //   email: 'max@mustermann.de',
-  //   password: 'password',
-  //   logged_in: true,
-  //   is_typing: false,
-  //   profile_img: '/assets/img/avatar-1.jpg',
-  //   // last_channel: string,
-  // };
   currentChannel = this.channelService.currentChannel;
-  // TODO: replace with userService.users
   channelMembers = this.currentChannel.members;
   users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id));
-
-  // users: User[] = 
-  // [
-  //   {
-  //     id: 'user_01',
-  //     name: 'User 01',
-  //     email: 'user@01.de',
-  //     password: 'password1',
-  //     logged_in: true,
-  //     is_typing: false,
-  //     profile_img: '/assets/img/avatar-1.jpg',
-  //   },
-  //   {
-  //     id: 'user_02',
-  //     name: 'User 02',
-  //     email: 'user@02.de',
-  //     password: 'password2',
-  //     logged_in: false,
-  //     is_typing: false,
-  //     profile_img: '/assets/img/avatar-2.jpg',
-  //   },
-  //   {
-  //     id: 'user_03',
-  //     name: 'User 03',
-  //     email: 'user@03.de',
-  //     password: 'password3',
-  //     logged_in: true,
-  //     is_typing: false,
-  //     profile_img: '/assets/img/avatar-3.jpg',
-  //   },
-  // ];
-
   messageCreator: User | undefined = undefined;
+  messages: Message[] = this.messageService.messages;
+  editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
   constructor(
     public messageService: MessageService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService
+    public channelService: ChannelFirebaseService,
+    public threadService: ThreadService,
   ) {
     // this.messageService.getMessagesFromChannel(this.currentChannel.id);
     // messageService.messages = this.
@@ -162,5 +120,31 @@ export class MessageComponent {
     if (m < 10) m = '0' + m;
     let result = d + '.' + m + '.' + y;
     return result;
+  }
+
+ async openThread(thread_id : string | undefined) {
+    if (thread_id == undefined || thread_id == '') {
+      let newThread : Channel = {
+        id: '',
+        name: this.channelService.currentChannel.name,
+        description: '',
+        created_at: new Date().getTime(),
+        creator: this.userService.currentUser.id, // 'user_id'
+        members: [this.userService.currentUser.id],
+        active_members: [],
+        channel_type: ChannelTypeEnum.thread,
+      }
+      let newThreadId = await this.channelService.addChannel(newThread);
+      this.userService.currentUser.last_thread = newThreadId;
+      this.userService.saveLastThread(this.userService.currentUser.id,newThreadId);
+      this.message.thread_id = newThreadId;
+      this.messageService.updateMessage(this.message);
+      this.threadService.openThread();
+    } else {
+      this.userService.currentUser.last_thread = thread_id;
+      this.threadService.openThread();
+    }
+    console.log('Messages', this.messageService.messages);
+    console.log('MessagesThread', this.messageService.messagesThread);
   }
 }
