@@ -5,6 +5,7 @@ import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserAuthService } from './firebase.service/user.auth.service';
 import { UserService } from './firebase.service/user.service';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +20,9 @@ export class AppComponent {
   userId: any;
   constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService,
     public userService: UserService) {
-      if (userService.currentUser) {
-        this.userId = userService.currentUser.id;
-      }
+    if (userService.currentUser) {
+      this.userId = userService.currentUser.id;
+    }
     //   router.events.subscribe(event => {
     //     if ( event instanceof NavigationStart) {
     //       let userId = this.userService.currentUser.id;
@@ -41,7 +42,7 @@ export class AppComponent {
 
   // @HostListener('window:beforeunload', ['$event'])
   // beforeUnloadHandler(event: Event) {
-    
+
 
   // }
 
@@ -66,23 +67,37 @@ export class AppComponent {
     this.userAuth.checkAuth().then(isLoggedIn => {
       if (isLoggedIn) {
         // this.userAuth.currentUser();
+        // this.userAuth.logout();
+        // this.userService.currentUser = localStorage.getItem('currentUser')
+        this.userService.getUsers();
         this.userService.getCurrentUser();
+        setTimeout(() => {
+          localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
+        }, 500);
+        
         // setTimeout(() => {
-        this.router.navigate(['/main-page']);
+        if (this.userService.currentUser) {
+          this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
+        }
         // }, 500);
 
-      } else {
+      } if (!isLoggedIn && this.router.url.includes('/main-page')) {
+        this.userAuth.logout();
+        this.router.navigate(['/login-page/login']);
+      }else {
         this.router.navigate(['/login-page/login']);
       }
     });
+  
+    
   }
 
-  confirmPopup() {
-    this._snackBar.openFromComponent(EmailSnackbarComponent, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-      direction: 'rtl'
-    });
-  }
+confirmPopup() {
+  this._snackBar.openFromComponent(EmailSnackbarComponent, {
+    duration: 2000,
+    horizontalPosition: 'right',
+    verticalPosition: 'bottom',
+    direction: 'rtl'
+  });
+}
 }

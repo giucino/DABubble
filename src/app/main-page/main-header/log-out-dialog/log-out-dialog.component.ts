@@ -37,14 +37,15 @@ export class LogOutDialogComponent {
   }
 
   logOut(): void {
-    localStorage.removeItem('currentUser');
+    // localStorage.removeItem('currentUser');
     // sobald logged in user funktioniert
 
     this.userAuth.logout().then(() => {
       this.router.navigate(['/login-page']);
+      localStorage.removeItem('currentUser');
       this.dialogRef.close();
       this.userService.updateOnlineStatus(this.userService.currentUser.id, false);
-      // location.reload();
+      // location.reload();d
     });
   }
 }

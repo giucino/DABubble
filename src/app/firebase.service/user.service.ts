@@ -3,8 +3,6 @@ import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { Auth, authState } from '@angular/fire/auth';
-import { UserAuthService } from './user.auth.service';
 
 
 @Injectable({
@@ -76,13 +74,18 @@ export class UserService implements OnDestroy {
 
     async getCurrentUser(email?: string) {
         if (typeof window !== 'undefined' && window.localStorage) {
+            
             const storedUser = localStorage.getItem('currentUser');
-            if (storedUser) {
+            if (email) {
+                this.currentUser = this.allUsers.find(user => user.email === email);
+                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            } else
+            if (storedUser != '' && storedUser != null) {
                 this.currentUser = JSON.parse(storedUser);
             }
-            else {
-                this.currentUser = this.allUsers.find(user => user.email === email);
-            }
+            // else {
+            //     this.currentUser = this.allUsers.find(user => user.email === email);
+            // }
         }
     }
 

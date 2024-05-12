@@ -8,6 +8,7 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -40,12 +41,12 @@ export class LoginComponent {
       this.userService.getUsers();
 
       this.userService.getCurrentUser(this.loginEmail); // currentUser is set
-      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
       this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
+      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
+      // this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
       this.channelService.getChannelsForCurrentUser()
       setTimeout(() => {
         this.router.navigate(['/main-page']);
-        // console.log('current user', this.userService.currentUser);
       }, 1000);
     } catch (error) {
       console.error(error);
@@ -67,13 +68,13 @@ export class LoginComponent {
       if (this.userService.allUsers.some(user => user.email === this.userAuth.googleEmail)) {
         this.channelService.getChannelsForCurrentUser();
         setTimeout(() => {
-          this.router.navigate(['/main-page']);
+          this.router.navigate(['/main-page/']);
         }, 1000);
       } else {
         this.userService.addGoogleUser(user).then(() => {
           this.channelService.getChannelsForCurrentUser();
           setTimeout(() => {
-            this.router.navigate(['/main-page']);
+            this.router.navigate(['/main-page/']);
           }, 1000);
         });
       }}).catch((error) => {
@@ -83,12 +84,13 @@ export class LoginComponent {
 
   setGoogleUser() {
     let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
+    let last_ch = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).last_channel;
     return {
       name: this.userAuth.googleName,
       email: this.userAuth.googleEmail,
       profile_img: this.userAuth.googleProfileImg,
       id: googleUserId,
-      last_channel: '',
+      last_channel: last_ch,
       logged_in: true,
       is_typing: false,
       password: '',

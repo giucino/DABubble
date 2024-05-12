@@ -16,7 +16,7 @@ export class UserAuthService {
   googleId: any = '';
 
 
-  constructor(public auth: Auth) { 
+  constructor(public auth: Auth) {
   }
 
 
@@ -33,6 +33,9 @@ export class UserAuthService {
   }
 
   logout() {
+    // if (typeof localStorage !== 'undefined' && localStorage.getItem('currentUser') !== null) {
+    //   localStorage.removeItem('currentUser');
+    // }
     return signOut(this.auth);
   }
 
@@ -72,15 +75,15 @@ export class UserAuthService {
     }
   }
 
-  changePassword(newPassword: string){
+  changePassword(newPassword: string) {
     const user_auth: any = this.auth.currentUser;
     if (user_auth) {
-    updatePassword(user_auth, newPassword).then(() => {
-      // console.log('Password updated successfully!');
-  }).catch((error) => {
-      console.error('Error updating password:', error);
-  });
-}
+      updatePassword(user_auth, newPassword).then(() => {
+        // console.log('Password updated successfully!');
+      }).catch((error) => {
+        console.error('Error updating password:', error);
+      });
+    }
   }
 
   async registerUser(email: string, password: string) {
