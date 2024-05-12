@@ -18,21 +18,13 @@ import { ThreadService } from '../services/thread.service';
 })
 
 export class MainPageComponent {
-  
-  // threadClosed: boolean = true;
 
   constructor(public userService: UserService, public channelService: ChannelFirebaseService, public threadService : ThreadService) {
-    // this.channelService.getChannelsForCurrentUser(this.userService.currentUser.id);
     if (this.userService.currentUser) this.channelService.getChannelsForCurrentUser();
     if (this.userService.currentUser.last_thread && this.userService.currentUser.last_thread != '') {
       this.threadService.threadOpen = true;
     }
 
   }
-
-
-  // isThreadClosed(value: boolean) {
-  //   this.threadClosed = value;
-  // }
 }
 

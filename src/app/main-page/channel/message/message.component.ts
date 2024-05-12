@@ -142,6 +142,7 @@ export class MessageComponent {
       this.threadService.openThread();
     } else {
       this.userService.currentUser.last_thread = thread_id;
+      this.userService.saveLastThread(this.userService.currentUser.id,thread_id);
       this.threadService.openThread();
     }
     console.log('Messages', this.messageService.messages);

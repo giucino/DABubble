@@ -53,6 +53,7 @@ export class UserService implements OnDestroy {
             is_typing: data.is_typing || false,
             profile_img: data.profile_img,
             last_channel: data.last_channel || '',
+            last_thread: data.last_thread || '',
             toJSON() {
                 return {
                     id: this.id,
@@ -63,6 +64,7 @@ export class UserService implements OnDestroy {
                     is_typing: this.is_typing,
                     profile_img: this.profile_img,
                     last_channel: this.last_channel,
+                    last_thread: this.last_thread
                 };
             }
         }
@@ -151,7 +153,8 @@ export class UserService implements OnDestroy {
             logged_in: user.logged_in,
             is_typing: user.is_typing,
             profile_img: user.profile_img,
-            last_channel: user.last_channel
+            last_channel: user.last_channel,
+            last_thread: user.last_thread
         }
     }
 

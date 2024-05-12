@@ -7,6 +7,7 @@ export class User {
     is_typing: boolean;
     profile_img: string;
     last_channel?: string;
+    last_thread?: string;
 
     constructor(obj?: any){
         this.id = obj ? obj.id : '';
@@ -17,6 +18,7 @@ export class User {
         this.is_typing = obj ? obj.is_typing : '';
         this.profile_img = obj ? obj.profile_img : '';
         this.last_channel = obj ? obj.last_channel : '';
+        this.last_thread = obj ? obj.last_thread : '';
     }
 
     public toJSON() {
@@ -28,7 +30,8 @@ export class User {
             logged_in: this.logged_in,
             is_typing: this.is_typing,
             profile_img: this.profile_img,
-            last_channel: this.last_channel
+            last_channel: this.last_channel,
+            last_thread: this.last_thread
         }
     }
 }
