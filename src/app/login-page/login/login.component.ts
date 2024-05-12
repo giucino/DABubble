@@ -91,6 +91,7 @@ export class LoginComponent {
       profile_img: this.userAuth.googleProfileImg,
       id: googleUserId,
       last_channel: '',
+      last_thread: '',
       logged_in: true,
       is_typing: false,
       password: '',

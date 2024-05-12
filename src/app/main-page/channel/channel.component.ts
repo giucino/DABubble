@@ -76,7 +76,7 @@ export class ChannelComponent {
         if (params['channelId']) {
           this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
           this.messageService.getMessagesFromChannel(params['channelId']);
-          this.userService.saveLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+          this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
         }
       }); 
 
