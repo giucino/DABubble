@@ -1,6 +1,11 @@
 <div class="log-out-dialog">
     <div class="dropdown">
-        <button #profileBtn class="btn-text-v2 fs-24" (click)="openCurrentUser(profileBtn)">Profil</button>
-        <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
+        @if (userService.currentUser.email == 'guest') {
+            <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
+        }
+        @if (userService.currentUser.email != 'guest'){
+            <button #profileBtn class="btn-text-v2 fs-24" (click)="openCurrentUser(profileBtn)">Profil</button>
+            <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
+        }
     </div>
 </div>

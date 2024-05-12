@@ -23,7 +23,7 @@ export class LogOutDialogComponent {
     private profileService: ProfileService,
     private userAuth: UserAuthService,
     private router: Router,
-    private userService: UserService
+    public userService: UserService
   ) {}
 
   openCurrentUser(button: HTMLElement): void {
