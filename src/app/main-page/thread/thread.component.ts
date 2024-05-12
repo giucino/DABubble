@@ -34,6 +34,8 @@ export class ThreadComponent {
     is_deleted: false,
     last_reply: 0,
   };
+
+  currenThread;
   
 
   constructor(
@@ -42,19 +44,21 @@ export class ThreadComponent {
     public channelService: ChannelFirebaseService,
     public threadService: ThreadService,
   ) {
-    let thread_id = this.userService.currentUser.last_thread;
+    this.currenThread = this.userService.subCurrentUserForThread(this.userService.currentUser.id);
+    this.userService.currentUserThread$.subscribe( thread_id => {
+      if (thread_id && thread_id != '') {
+        this.channelService.unsubCurrentThread = this.channelService.getCurrentThread(thread_id);
+        this.messageService.getMessagesFromThread(thread_id);
+      }
+    })
     
-    if (thread_id && thread_id != '') {
-      this.channelService.unsubCurrentThread = this.channelService.getCurrentThread(thread_id);
-      this.messageService.getMessagesFromThread(thread_id);
-    }
   }
-
-
 
   ngOnDestroy() {
     this.channelService.unsubCurrentThread();
     this.messageService.unsubMessagesThread();
+    this.currenThread();
+    this.userService.currentUserThread$.unsubscribe();
   }
 
   saveMessage() {

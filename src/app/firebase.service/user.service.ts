@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, DocumentReference } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { User } from '../models/user';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@angular/fire/storage';
 
@@ -14,13 +14,13 @@ export class UserService implements OnDestroy {
     allUsers: any[] = [];
     user = new User();
     currentUser: any;
+    currentUserThread$  = new Subject<string>();
 
     unsubUsers;
 
     constructor() {
         this.unsubUsers = this.getUsers();
         this.getCurrentUser();
-
     }
 
     getUser(user_id : string) {
@@ -40,6 +40,13 @@ export class UserService implements OnDestroy {
                 // let userData = { id, data };
                 this.allUsers.push(this.setUsers(data, id));
             });
+        });
+    }
+
+    subCurrentUserForThread(user_id : string) {
+        return onSnapshot(this.getSingleUserRef(user_id), (user) => {
+            let threadId = this.setUsers(user.data(), user.id).last_thread || ''
+            this.currentUserThread$.next(threadId);
         });
     }
 
