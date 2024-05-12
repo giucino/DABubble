@@ -45,8 +45,7 @@ export class LoginComponent {
       this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
       this.channelService.getChannelsForCurrentUser()
       setTimeout(() => {
-        // this.router.navigate(['/main-page']);
-        this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+        this.router.navigate(['/main-page']);
       }, 1000);
     } catch (error) {
       console.error(error);
@@ -92,16 +91,15 @@ export class LoginComponent {
       if (this.userService.allUsers.some(user => user.email === this.userAuth.googleEmail)) {
         this.channelService.getChannelsForCurrentUser();
         setTimeout(() => {
-          // this.router.navigate(['/main-page']);
-          this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+          this.router.navigate(['/main-page']);
         }, 2000);
         
       } else {
         this.userService.addGoogleUser(user).then(() => {
           this.channelService.getChannelsForCurrentUser();
           setTimeout(() => {
-            // this.router.navigate(['/main-page']);
-            this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+            this.router.navigate(['/main-page']);
+            
           }, 1000);
           
         });
@@ -119,8 +117,7 @@ export class LoginComponent {
     await this.channelService.getChannelsForCurrentUser();
     
     setTimeout(() => {
-      // this.router.navigate(['/main-page']);
-      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+      this.router.navigate(['/main-page']);
       // this.channelService.setCurrentChannel(this.channelService.channels[0].id);
       // this.router.navigate(['/main-page/', this.channelService.channels[0].id]);
     }, 1000);
