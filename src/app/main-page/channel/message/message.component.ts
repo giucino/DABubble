@@ -41,7 +41,6 @@ export class MessageComponent {
   currentUser: User = this.userService.currentUser;
   currentChannel = this.channelService.currentChannel;
   channelMembers = this.currentChannel.members;
-  users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id));
   messageCreator: User | undefined = undefined;
   messages: Message[] = this.messageService.messages;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
@@ -52,8 +51,7 @@ export class MessageComponent {
     public channelService: ChannelFirebaseService,
     public threadService: ThreadService,
   ) {
-    // this.messageService.getMessagesFromChannel(this.currentChannel.id);
-    // messageService.messages = this.
+
   }
 
   ngOnInit() {
@@ -66,7 +64,7 @@ export class MessageComponent {
   }
 
   getUser(user_id: string) {
-    return this.users.find((user) => user.id == user_id);
+    return this.userService.allUsers.find((user) => user.id == user_id);
   }
 
   getTime(timeNumber: number) {

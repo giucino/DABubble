@@ -23,9 +23,7 @@ import { ThreadService } from '../../services/thread.service';
   styleUrl: './channel.component.scss',
 })
 export class ChannelComponent {
-  // @Input() isThread: boolean = false;
-  // @Output() closeThreadEvent = new EventEmitter<boolean>();
-
+  
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
 
@@ -33,7 +31,7 @@ export class ChannelComponent {
   channelMembers = this.channelService.currentChannel.members;
   users: User[] = this.userService.allUsers.filter(user => this.channelMembers.includes(user.id)); 
 
-  // messages: Message[] = [];
+
   message: Message = {
     user_id: '',
     channel_id: this.channelService.currentChannel.id,
@@ -47,9 +45,7 @@ export class ChannelComponent {
     last_reply: 0,
   };
 
-  // lastChannelId = this.currentUser.last_channel || ''; // starter channel für jeden?
   channelId : string = '';
-  currentDate: string = '1970/01/01';
 
   constructor(
     public customDialogService: CustomDialogService,
@@ -62,9 +58,9 @@ export class ChannelComponent {
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-    setTimeout(() => { // ohne gehts nicht
+    // setTimeout(() => { // ohne gehts nicht
       this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
-    }, 500);
+    // }, 500);
   }
 
   ngOnInit() {
@@ -108,10 +104,6 @@ export class ChannelComponent {
     this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
 
-  // closeThread() {
-  //   this.userService.saveLastThread(this.userService.currentUser.id, '');
-  //   this.threadService.closeThread();
-  // }
 
   saveMessage() {
     this.message.user_id = this.currentUser.id;
@@ -123,11 +115,10 @@ export class ChannelComponent {
     this.messageInput = '';
   }
 
-  isNewDate(date: number) {
-    let currentDate = this.currentDate;
-    let messageDate = this.convertToDate(date);
-    this.currentDate = messageDate;
-    return currentDate != messageDate;
+  isNewDate(oldDate: number, newDate: number) {
+    let oldDateAsString = this.convertToDate(oldDate);
+    let newDateAsString = this.convertToDate(newDate);
+    return oldDateAsString != newDateAsString;
   }
 
 
