@@ -60,13 +60,32 @@ export class ThreadComponent {
     this.currenThread();
   }
 
-  saveMessage() {
+  async saveMessage() {
+    if(this.messageInput != '') {
+      await this.createMessage();
+      await this.messageService.addMessage(this.message);
+      this.updateThreadMessage();
+      this.clearInput();
+    }
+  }
+
+  async createMessage() {
     this.message.user_id = this.currentUser.id;
     this.message.message.text = this.messageInput;
     this.message.created_at = new Date().getTime();
     this.message.modified_at = this.message.created_at;
     this.message.thread_id = this.channelService.currentThread.id;
-    this.messageService.addMessage(this.message);
+  }
+
+  updateThreadMessage() {
+    let threadMessages = this.messageService.messagesThread;
+    let threadMessage = this.messageService.messagesThread[0];
+    threadMessage.total_replies = threadMessages.length - 1;
+    threadMessage.last_reply = this.message.created_at;
+    this.messageService.updateMessage(threadMessage);
+  }
+
+  clearInput() {
     this.messageInput = '';
   }
 
