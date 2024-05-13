@@ -296,7 +296,7 @@
               </svg>                
             </button>
           </div>
-          <button class="btn-send-message w40" (click)="saveMessage()">
+          <button class="btn-send-message w40" [disabled]="messageInput == ''" (click)="saveMessage()">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_813_12250" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
               <rect width="30" height="30" fill="#D9D9D9"/>

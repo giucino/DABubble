@@ -61,10 +61,12 @@ export class ThreadComponent {
   }
 
   async saveMessage() {
-    await this.createMessage();
-    await this.messageService.addMessage(this.message);
-    this.updateThreadMessage();
-    this.clearInput();
+    if(this.messageInput != '') {
+      await this.createMessage();
+      await this.messageService.addMessage(this.message);
+      this.updateThreadMessage();
+      this.clearInput();
+    }
   }
 
   async createMessage() {
@@ -80,7 +82,6 @@ export class ThreadComponent {
     let threadMessage = this.messageService.messagesThread[0];
     threadMessage.total_replies = threadMessages.length - 1;
     threadMessage.last_reply = this.message.created_at;
-    console.log('ThreadMessage: ' , threadMessage);
     this.messageService.updateMessage(threadMessage);
   }
 

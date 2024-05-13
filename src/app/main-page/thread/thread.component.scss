@@ -191,6 +191,11 @@
           fill: var(--color-purple-2);
         }
       }
+      &:disabled {
+        svg path {
+          fill: var(--color-gray);
+        }
+      } 
     }
   }
   
