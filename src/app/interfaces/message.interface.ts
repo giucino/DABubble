@@ -14,6 +14,6 @@ export interface Message {
     total_replies?: number,
     last_reply?: number,
 
-    googleName?: string,
-    googleProfileImg?: string,
+    // googleName?: string,
+    // googleProfileImg?: string,
 }

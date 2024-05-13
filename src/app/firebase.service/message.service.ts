@@ -72,7 +72,6 @@ export class MessageService {
         }
     }
 
-
     /* CREATE */
     async addMessage(message: Message) {
         // message.googleName = this.userAuth.googleName;

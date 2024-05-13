@@ -56,7 +56,7 @@ export class ChannelFirebaseService {
 
   constructor() {
     // this.unsubCurrentChannel = this.getCurrentChannel();
-    console.log('currentChannel im Constructor Service' , this.currentChannel)
+    // console.log('currentChannel im Constructor Service' , this.currentChannel)
   }
 
 
@@ -88,7 +88,7 @@ export class ChannelFirebaseService {
     if (channel) this.currentChannel = channel;
   }
 
-  getCurrentChannel(channel_id : string) {
+  async getCurrentChannel(channel_id : string) {
     return onSnapshot(this.getChannelRef(channel_id), (channel) => {
       this.currentChannel = this.setChannel(channel.data(), channel.id);
     });

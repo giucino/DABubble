@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserAuthService } from './firebase.service/user.auth.service';
 import { UserService } from './firebase.service/user.service';
 import { user } from '@angular/fire/auth';
+import { ChannelFirebaseService } from './firebase.service/channelFirebase.service';
 
 @Component({
   selector: 'app-root',
@@ -19,45 +20,17 @@ export class AppComponent {
   timeoutId: any;
   userId: any;
   constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService,
-    public userService: UserService) {
+    public userService: UserService, public channelService: ChannelFirebaseService) {
     if (userService.currentUser) {
       this.userId = userService.currentUser.id;
     }
-    //   router.events.subscribe(event => {
-    //     if ( event instanceof NavigationStart) {
-    //       let userId = this.userService.currentUser.id;
-    //       setTimeout(() => {
-    //         userAuth.logout();
-    //         userService.updateOnlineStatus(userId, false);
-    //       }, 2000);
-    //       // this.userService.getCurrentUser();
-    //     }
-    // });
   }
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event: Event) {
-  //     // this.userAuth.logout();
-  //     this.userService.updateOnlineStatus(this.userService.currentUser.id, false); // geht
-  // }
-
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event: Event) {
-
-
-  // }
 
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: Event) {
     this.userAuth.logout();
     this.userService.updateOnlineStatus(this.userId, false); // geht
   }
-
-  // @HostListener('window:load', ['$event'])
-  // loadHandler(event: Event) {
-  //   if (this.timeoutId) {
-  //     clearTimeout(this.timeoutId);
-  //   }
-
 
   ngOnInit(): void {
     // console.log('current user', this.userAuth.currentUser());
@@ -74,30 +47,35 @@ export class AppComponent {
         setTimeout(() => {
           localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
         }, 500);
-        
+
         // setTimeout(() => {
-        if (this.userService.currentUser) {
-          this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
+        if (this.userService.currentUser) { // last channel id ?? currentcghannel == active members
+          if (this.channelService.currentChannel.active_members.includes(this.userService.currentUser.id)) { // falls user in den channel  darf ändern
+            this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
+            
+          } else {
+            this.router.navigate(['/main-page']);
+          }
         }
         // }, 500);
 
       } if (!isLoggedIn && this.router.url.includes('/main-page')) {
         this.userAuth.logout();
         this.router.navigate(['/login-page/login']);
-      }else {
+      } else {
         this.router.navigate(['/login-page/login']);
       }
     });
-  
-    
+
+
   }
 
-confirmPopup() {
-  this._snackBar.openFromComponent(EmailSnackbarComponent, {
-    duration: 2000,
-    horizontalPosition: 'right',
-    verticalPosition: 'bottom',
-    direction: 'rtl'
-  });
-}
+  confirmPopup() {
+    this._snackBar.openFromComponent(EmailSnackbarComponent, {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      direction: 'rtl'
+    });
+  }
 }

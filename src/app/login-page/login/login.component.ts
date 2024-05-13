@@ -62,18 +62,21 @@ export class LoginComponent {
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail).id;
 
       const user = this.setGoogleUser();
-
       this.userService.getUsers();
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      // wird nicht richtig im localstorage gespeichert
       this.userService.getCurrentUser(this.loginEmail);
+      this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
+      // localStorage.setItem('currentUser', JSON.stringify(user));
       this.userService.addDatabaseIdToUser(googleUserId);
       if (this.userService.allUsers.some(user => user.email === this.userAuth.googleEmail)) {
         this.channelService.getChannelsForCurrentUser();
+        localStorage.setItem('currentUser', JSON.stringify(user)); 
         setTimeout(() => {
           this.router.navigate(['/main-page/']);
         }, 1000);
       } else {
         this.userService.addGoogleUser(user).then(() => {
+          localStorage.setItem('currentUser', JSON.stringify(user));
           this.channelService.getChannelsForCurrentUser();
           setTimeout(() => {
             this.router.navigate(['/main-page/']);
