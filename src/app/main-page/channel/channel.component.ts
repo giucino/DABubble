@@ -119,13 +119,15 @@ export class ChannelComponent {
 
 
   saveMessage() {
-    this.message.user_id = this.currentUser.id;
-    this.message.message.text = this.messageInput;
-    this.message.created_at = new Date().getTime();
-    this.message.modified_at = this.message.created_at;
-    this.message.channel_id = this.channelService.currentChannel.id;
-    this.messageService.addMessage(this.message);
-    this.messageInput = '';
+    if (this.messageInput != '') {
+      this.message.user_id = this.currentUser.id;
+      this.message.message.text = this.messageInput;
+      this.message.created_at = new Date().getTime();
+      this.message.modified_at = this.message.created_at;
+      this.message.channel_id = this.channelService.currentChannel.id;
+      this.messageService.addMessage(this.message);
+      this.messageInput = '';
+    }
   }
 
   isNewDate(oldDate: number, newDate: number) {

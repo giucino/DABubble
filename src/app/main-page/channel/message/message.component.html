@@ -10,7 +10,7 @@
             <div class="message">
                 {{ message.message.text }}
             </div>
-            @if ( message.total_replies && message.total_replies > 0) {
+            @if (currentChannel.channel_type != 'thread' && message.total_replies && message.total_replies > 0) {
                 <div class="replies">
                     <span class="count fs-18">{{ message.total_replies }} {{ message.total_replies > 1 ? 'Antworten' : 'Antwort' }}</span>
                     @if ( message.last_reply ) {

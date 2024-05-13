@@ -42,7 +42,7 @@ export class MessageComponent {
   currentChannel = this.channelService.currentChannel;
   channelMembers = this.currentChannel.members;
   messageCreator: User | undefined = undefined;
-  messages: Message[] = this.messageService.messages;
+  // messages: Message[] = this.messageService.messages;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
   constructor(
@@ -56,6 +56,10 @@ export class MessageComponent {
 
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
+    this.editableMessage = JSON.parse(JSON.stringify(this.message));
+  }
+
+  ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
   }
 
