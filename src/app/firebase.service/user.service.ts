@@ -116,14 +116,14 @@ export class UserService implements OnDestroy {
         await addDoc(this.getUserRef(), user.toJSON());
     }
 
-    async addGoogleUser(user: User) {
-        if (this.getSingleUserRef(user.id)) {
+    // async addGoogleUser(user: User) {
+    //     if (this.getSingleUserRef(user.id)) {
 
-            // user existiert schon
-        } else {
-            await this.addUser(user);
-        }
-    }
+    //         // user existiert schon
+    //     } else {
+    //         await this.addUser(user);
+    //     }
+    // }
 
 
     addAvatarToUser(userId: string, avatar: string) {
