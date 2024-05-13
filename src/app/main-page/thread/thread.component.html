@@ -30,17 +30,17 @@
     <div class="channel-messages-container">
       <div class="channel-messages-content">
         <!-- messages -->
-        @for(message of messageService.messagesThread; track message.id) {
-  
-          <!-- @if (channelService.currentThread.channel_type != 'thread' && isNewDate(message.created_at)) {
-            <div  class="time-separator">
-              <div class="h-line"></div>
-              <div class="message-time fs-18">{{ getDateFormat(message.created_at) }}</div>
-              <div class="h-line"></div>
-            </div>
-          }   -->
+        @for(message of messageService.messagesThread; track message.id; let i = $index) {
   
           <app-message [message]="message" [channelType]="channelService.currentThread.channel_type"></app-message>
+          
+          <!-- thread -  answers count -->
+          @if(i == 0 && message.total_replies && message.total_replies > 0) {
+            <div class="total-answers-separator">
+              <div class="total-answers">{{ message.total_replies }} Antworten</div>
+              <div class="h-line"></div>
+            </div>
+          }
         }
     
       </div> 

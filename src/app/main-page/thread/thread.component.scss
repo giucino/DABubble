@@ -18,100 +18,6 @@
     align-items: center;
   }
   
-  /*-- channel header - main --*/ 
-//   .channel-name-container {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 10px;
-//     border-radius: 100px;
-//     padding: 6px 10px;
-//     font-weight: 700;
-//     width: fit-content;
-//     &:hover {
-//       background-color: var(--color-bg);
-//       color: var(--color-purple-3);
-//       svg path {
-//         stroke: var(--color-purple-3);
-//         stroke-width: 0.5px;
-//         fill: var(--color-purple-3);
-//       }
-//     }
-//     &:active {
-//       background-color: transparent;
-//       color: var(--color-black);
-//       svg path {
-//         stroke: var(--color-black);
-//         stroke-width: 0px;
-//         fill: var(--color-black);
-//       }
-//     }
-//   }
-  
-//   .hashtag-icon {
-//     width: 32px;
-//     height: 32px;
-//   }
-  
-//   .channel-members-container {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 10px;
-//   }
-  
-//   .channel-members-info {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 10px;
-//     border-radius: 30px;
-//     padding: 3px 10px;
-//     &:hover {
-//       background-color: var(--color-bg);
-//       .channel-members-count {
-//         font-weight: 700;
-//       }
-//     }
-//   }
-  
-//   .channel-members-preview {
-//     display: inline-flex;
-//     flex-direction: row-reverse;
-//     > :not(:last-child) {
-//       margin-left: -12px;
-//     }
-//   }
-  
-//   .channel-members-count {
-//     font-weight: 600;
-//     &:hover {
-//       font-weight: 700;
-//     }
-//   }
-  
-  /*-- channel header - direct --*/
-//   .channel-member {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 15px;
-//     font-weight: 700;
-//     border-radius: 30px;
-//     padding: 4px 8px;
-//     &:hover {
-//       background-color: var(--color-bg);
-//     }
-//   }
-  
-//   .profile-img-container {
-//     position: relative;
-//     max-width: 50px;
-//     max-height: 50px;
-//     .profile-img {
-//       width: 50px;
-//     }
-//   }
   
   /*-- channel header - thread --*/
   .channel-headline-container {
@@ -220,25 +126,18 @@
     }
   }
   
-//   .time-separator {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     padding: 0 45px;
-//     .h-line {
-//       height: 1px;
-//       flex-grow: 1;
-//       background-color: var(--color-light-purple);
-//     }
-//     .message-time {
-//       max-width: max-content;
-//       width: 100%;
-//       padding: 5px 15px;
-//       border-radius: 30px;
-//       border: 1px solid var(--color-light-purple);
-//       background-color: var(--color-white);
-//     }
-//   }
+  .total-answers-separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 45px;
+    color: var(--color-light-purple);
+    .h-line {
+      height: 1px;
+      flex-grow: 1;
+      background-color: var(--color-light-purple);
+    }
+  }
   
   // 
   
