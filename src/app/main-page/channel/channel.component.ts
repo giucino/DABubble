@@ -13,6 +13,8 @@ import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
+import { finalize } from 'rxjs';
+
 
 
 @Component({
@@ -47,6 +49,8 @@ export class ChannelComponent {
 
   channelId : string = '';
 
+  isLoading = false;
+
   constructor(
     public customDialogService: CustomDialogService,
     public messageService: MessageService,
@@ -62,13 +66,33 @@ export class ChannelComponent {
   }
 
   ngOnInit() {
-      this.activatedRoute.params.subscribe(params => {
-        if (params['channelId']) {
-          this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
-          this.messageService.getMessagesFromChannel(params['channelId']);
-          this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
-        }
-      }); 
+    this.isLoading = true;
+    this.activatedRoute.params.subscribe(params => {
+      if (params['channelId']) {
+        const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
+        const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
+        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+  
+        Promise.all([loadChannel, loadMessages, updateUser]).then(() => {
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
+        }).catch(() => {
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 1000);
+        });
+      }
+    }); 
+    
+    // this.isLoading = true;
+    //   this.activatedRoute.params.subscribe(params => {
+    //     if (params['channelId']) {
+    //       this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId'])
+    //       this.messageService.getMessagesFromChannel(params['channelId']);
+    //       this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+    //     }
+    //   }); 
   }
 
   ngOnDestroy() {
