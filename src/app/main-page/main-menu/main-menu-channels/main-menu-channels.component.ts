@@ -35,19 +35,20 @@ export class MainMenuChannelsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openChannel(channel_id: string): void {
-      this.router.navigate(['/main-page']).then(() => {
-        this.channelService.setCurrentChannel(channel_id);
-        this.messageService.getMessagesFromChannel(channel_id);
+  // keine funktion mehr
+  // openChannel(channel_id: string): void {
+  //     this.router.navigate(['/main-page']).then(() => {
+  //       this.channelService.setCurrentChannel(channel_id);
+  //       this.messageService.getMessagesFromChannel(channel_id);
 
-          this.router.navigate(['/main-page/', channel_id]);
-      });
-      console.log('messagees', this.messageService.messages);
+  //         this.router.navigate(['/main-page/', channel_id]);
+  //     });
+  //     console.log('messagees', this.messageService.messages);
 
-      //lade bildfschirm für sekunde oder 2 eventuell 
-      //check if currentuser is wirklich im channel, if not dann bleibt auf main-page, wegen url kopie
+  //     //lade bildfschirm für sekunde oder 2 eventuell 
+  //     //check if currentuser is wirklich im channel, if not dann bleibt auf main-page, wegen url kopie
+  // }
 
-  }
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }

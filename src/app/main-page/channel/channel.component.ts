@@ -62,13 +62,18 @@ export class ChannelComponent {
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
   }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.openChannel();
+  }
+
+  openChannel(){
+    
     this.activatedRoute.params.subscribe(params => {
       if (params['channelId']) {
+        this.isLoading = true;
         const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
         const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
         const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
