@@ -49,20 +49,18 @@ export class AppComponent {
         }, 500);
 
         // setTimeout(() => {
-        if (this.userService.currentUser) { // last channel id ?? currentcghannel == active members
+        if (this.userService.currentUser) {
           if (this.channelService.currentChannel.active_members.includes(this.userService.currentUser.id)) { // falls user in den channel  darf ändern
             this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
             
-          } else {
+          } else { // for all channels includes user id show channel[0] irgendwie so
             this.router.navigate(['/main-page']);
           }
         }
         // }, 500);
 
-      } if (!isLoggedIn && this.router.url.includes('/main-page')) {
+      } if (!isLoggedIn) {
         this.userAuth.logout();
-        this.router.navigate(['/login-page/login']);
-      } else {
         this.router.navigate(['/login-page/login']);
       }
     });

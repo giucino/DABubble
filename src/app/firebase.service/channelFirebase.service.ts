@@ -55,8 +55,6 @@ export class ChannelFirebaseService {
   // private unsubscribeCurrentChannel?: () => void;
 
   constructor() {
-    // this.unsubCurrentChannel = this.getCurrentChannel();
-    // console.log('currentChannel im Constructor Service' , this.currentChannel)
   }
 
 
@@ -102,7 +100,7 @@ export class ChannelFirebaseService {
 
   ngOnDestroy(): void {
     if(this.unsubChannels === typeof function () {}) this.unsubChannels();
-    // this.unsubCurrentChannel();
+    this.unsubCurrentChannel();
   }
 
   getChannelsRef() {

@@ -58,49 +58,21 @@ export class ChannelComponent {
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-    // setTimeout(() => { // ohne gehts nicht
       this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
-    // }, 500);
   }
 
   ngOnInit() {
-
-    this.loadChannel();
-//     setTimeout(() => { // ohne werden die users nicht richtig geladen
-
-      // this.activatedRoute.params.subscribe(params => {
-      //   if (params['channelId']) {
-      //     this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
-      //     this.messageService.getMessagesFromChannel(params['channelId']);
-      //     this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
-      //   }
-      // }); 
-
-  
-//           this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
-//         }
-//       });
-//     }, 700);
-
+      this.activatedRoute.params.subscribe(params => {
+        if (params['channelId']) {
+          this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
+          this.messageService.getMessagesFromChannel(params['channelId']);
+          this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
+        }
+      }); 
   }
 
   ngOnDestroy() {
-    this.channelService.unsubCurrentChannel();
   }
-
-  loadChannel() {
-    this.activatedRoute.params.subscribe(params => {
-      if (params['channelId']) {
-        this.channelService.unsubCurrentChannel = this.channelService.getCurrentChannel(params['channelId']);
-        setTimeout(() => {
-          this.messageService.getMessagesFromChannel(params['channelId']);
-        }, 500);
-        // this.messageService.getMessagesFromChannel(params['channelId']);
-        this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
-      }
-    }); 
-  }
-  
 
   openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;

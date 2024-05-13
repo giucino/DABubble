@@ -74,9 +74,6 @@ export class MessageService {
 
     /* CREATE */
     async addMessage(message: Message) {
-        // message.googleName = this.userAuth.googleName;
-        // message.googleProfileImg = this.userAuth.googleProfileImg;
-
         let ref = this.getMessagesRef();
         await addDoc(ref, message)
             .catch((err) => { console.log(err) })
