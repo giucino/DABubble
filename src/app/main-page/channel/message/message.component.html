@@ -12,7 +12,7 @@
             </div>
             @if (currentChannel.channel_type != 'thread' && message.total_replies && message.total_replies > 0) {
                 <div class="replies">
-                    <span class="count fs-18">{{ message.total_replies }} {{ message.total_replies > 1 ? 'Antworten' : 'Antwort' }}</span>
+                    <button class="count fs-18" (click)="openThread(message.thread_id)">{{ message.total_replies }} {{ message.total_replies > 1 ? 'Antworten' : 'Antwort' }}</button>
                     @if ( message.last_reply ) {
                         <span class="last-reply fs-14">Letzte Antwort {{ getTimeDifferenceForLastReply(this.message.last_reply)}}</span>
                     }
