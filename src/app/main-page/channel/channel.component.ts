@@ -74,6 +74,7 @@ export class ChannelComponent {
     this.activatedRoute.params.subscribe(params => {
       if (params['channelId']) {
         this.isLoading = true;
+        this.setFocus();
         const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
         const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
         const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
@@ -108,7 +109,6 @@ export class ChannelComponent {
     const component = DialogEditChannelComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
-
 
   saveMessage() {
     if (this.messageInput != '') {
@@ -220,4 +220,10 @@ export class ChannelComponent {
         return 'Starte eine neue Nachricht';
     }
   }
+
+  setFocus() {
+    document.getElementById('channelInput')?.focus();
+    this.messageInput = '';
+  }
+
 }

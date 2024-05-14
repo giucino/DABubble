@@ -49,6 +49,7 @@ export class ThreadComponent {
       if (thread_id && thread_id != '') {
         this.channelService.unsubCurrentThread = this.channelService.getCurrentThread(thread_id);
         this.messageService.getMessagesFromThread(thread_id);
+        this.setFocus();
       }
     })
     
@@ -173,6 +174,11 @@ export class ThreadComponent {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+  }
+
+  setFocus() {
+    document.getElementById('threadInput')?.focus();
+    this.messageInput = '';
   }
 
 }
