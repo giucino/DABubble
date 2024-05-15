@@ -19,13 +19,16 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
 })
 
 export class SignInComponent {
-  checkbox = {checked: false};
+  checkbox = { checked: false };
   checked = false;
   disabled = false;
   hoverState = false;
   firestore: Firestore = inject(Firestore);
   user = new User();
   emailExists: boolean = false;
+  iconName = '/assets/img/person_filled.png';
+  iconMail = '/assets/img/mail.png';
+
 
   constructor(
     private router: Router, private userService: UserService, private userAuth: UserAuthService) {
@@ -50,21 +53,27 @@ export class SignInComponent {
   }
 
   async goToAvatar() {
-    if (this.checkEmail()) {return;}
-    
+    if (this.checkEmail()) { return; }
+
     await this.userAuth.registerUser(this.user.email, this.user.password).then(async () => {
       await this.userService.addUser(this.user);
-      await this.userAuth.saveUser(this.user.name)}).then(() => {
-        this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
+      await this.userAuth.saveUser(this.user.name)
+    }).then(() => {
+      this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
     });
-      //ladebalken maybe
-
-    
-
+    //ladebalken maybe
 
   }
 
+  changeIconName(focus: boolean) {
+    this.iconName = focus ? '/assets/img/person_filled_b.png' : '/assets/img/person_filled.png';
 
+  }
+
+  changeIconMail(focus: boolean) {
+      this.iconMail = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+
+  }
 
 }
 

@@ -21,6 +21,7 @@ export class LoginComponent {
   loginEmail: string = '';
   loginPassword: string = '';
   isLoading = false;
+  iconSrc = '/assets/img/mail.png'
 
   constructor(private userAuth: UserAuthService, private userService: UserService, 
     private router: Router, private channelService: ChannelFirebaseService) { }
@@ -204,6 +205,8 @@ export class LoginComponent {
     // }, 1000);
   }
 
-
+  changeIcon(focus: boolean) {
+    this.iconSrc = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+  }
 
 }

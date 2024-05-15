@@ -114,21 +114,21 @@ input[type="password"] {
     }
 }
 
-input[type="email"] {
-    // background-image: url("/assets/img/mail.png");
-    &:focus{
-        .iconOverlay{
-            src: url("/assets/img/mail_b.png");
-        }
-    //     background-image: url("/assets/img/mail_b.png");
-    }
+// input[type="email"] {
+//     // background-image: url("/assets/img/mail.png");
+//     &:focus{
+//         .iconOverlay{
+//             // background-image: url("/assets/img/mail_b.png");
+//         }
+//     //     background-image: url("/assets/img/mail_b.png");
+//     }
     
-}
+// }
 
 .iconOverlay{
     position: absolute;
     left: 30px;
-    top: 18px;
+    top: 19px;
 }
 
 .errorMsg{
