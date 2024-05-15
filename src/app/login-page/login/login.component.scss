@@ -115,11 +115,20 @@ input[type="password"] {
 }
 
 input[type="email"] {
-    background-image: url("/assets/img/mail.png");
+    // background-image: url("/assets/img/mail.png");
     &:focus{
-        background-image: url("/assets/img/mail_b.png");
+        .iconOverlay{
+            src: url("/assets/img/mail_b.png");
+        }
+    //     background-image: url("/assets/img/mail_b.png");
     }
     
+}
+
+.iconOverlay{
+    position: absolute;
+    left: 30px;
+    top: 18px;
 }
 
 .errorMsg{
