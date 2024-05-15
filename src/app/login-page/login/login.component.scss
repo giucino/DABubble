@@ -202,14 +202,12 @@ input[type="password"] {
         }
     }
     form{
-        width: 100%;
+        width: 90%;
         >div{
             width: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
             input{
-                width: 90%;
+                // width: 90%;
+                width: 100%;
             }
         }
 
@@ -247,6 +245,10 @@ input[type="password"] {
             }
         }
     }
+    .iconOverlay{
+        left: 22px;
+        top: 13px;
+    }
     .spacer{
         margin: 20px 0;
     }
@@ -261,6 +263,9 @@ input[type="password"] {
                 padding: 13px 24px 13px 55px;
             }
         }
+    }
+    .iconOverlay{
+
     }
     .google-btn{
         padding: 11px 24px;
@@ -305,6 +310,9 @@ input[type="password"] {
                 }
             }
         }
+    }
+    .iconOverlay{
+        left: 16px;
     }
     .errorMsg{
         font-size: 10px;
