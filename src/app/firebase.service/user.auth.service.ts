@@ -20,7 +20,17 @@ export class UserAuthService {
   }
 
 
-  loginUser(email: string, password: string) {
+  async loginUser(email: string, password: string) {
+  //   try {
+  //     const signInResult = await signInWithEmailAndPassword(this.auth, email, password);
+  //     return signInResult.user !== null;
+  // } catch (error: any) {
+  //     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+  //         return false;
+  //     } else {
+  //         throw error;
+  //     }
+  // }
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
@@ -119,4 +129,9 @@ export class UserAuthService {
       });
     });
   }
+
+
 }
+
+
+

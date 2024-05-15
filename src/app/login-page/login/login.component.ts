@@ -37,12 +37,14 @@ export class LoginComponent {
     this.userAuth.loginUser(email, password)
     .then(() => {
       return Promise.all([
+        this.error = false,
         this.userService.getUsers(),
         this.userService.getCurrentUser(this.loginEmail),
         this.channelService.getChannelsForCurrentUser()
       ]);
     })
     .then(() => {
+      this.error = false;
       this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
       localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
       this.isLoading = false;
@@ -51,6 +53,7 @@ export class LoginComponent {
     .catch((error) => {
       console.error(error);
       this.error = true;
+      this.isLoading = false;
       // loading balken false
     });
 
