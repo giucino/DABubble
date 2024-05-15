@@ -101,23 +101,6 @@ input[type="password"] {
     }
 }
 
-input[type="email"] {
-    // background-image: url("/assets/img/mail.png");
-    &:focus{
-        // background-image: url("/assets/img/mail_b.png");
-    }
-}
-
-input[type="name"] {
-    // background-image: url("/assets/img/person_filled.png");
-    // background-size: unset !important;
-    &:focus{
-        // background-image: url("/assets/img/person_filled_b.png");
-        // background-size: unset !important;
-        // background-position: left 34px center !important;
-    }
-
-}
 
 .iconOverlay{
     position: absolute;
