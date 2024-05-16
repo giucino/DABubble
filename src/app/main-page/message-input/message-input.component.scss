@@ -1,0 +1,110 @@
+input, textarea, #channelInput {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    line-height: 24.55px;
+    &::placeholder {
+        font-family: "Nunito", "Helvetica Neue", sans-serif;
+        color: var(--color-gray);
+    }
+    &:focus::placeholder {
+        color: transparent;
+    }
+}
+
+
+.message-input-container {
+    border: 1px solid var(--color-light-purple);
+    border-radius: 20px;
+    padding: 20px;
+    &:hover {
+        border-color: var(--color-purple-2);
+    }
+    &:focus-within {
+        border-color: var(--color-purple-1);
+    } 
+    textarea {
+        width: 100%;
+        min-height: 50px;
+        max-height: 200px;
+        resize: vertical;
+        padding-right: 10px;
+    } 
+}
+
+// placeholder text
+[contentEditable=true]:empty:not(:focus):before {
+  content: attr(placeholder-text);
+  color: var(--color-gray);
+}
+
+.documents-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.message-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.pdf-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  .pdf-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    background-color: #E5252A;
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+}
+
+.message-input-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .left-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+  .separator-v {
+    width: 1px;
+    height: 40px;
+    background-color: var(--color-light-purple);
+  }
+  .btn-send-message {
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      svg path {
+        fill: var(--color-purple-2);
+      }
+    }
+    &:disabled {
+      svg path {
+        fill: var(--color-gray);
+      }
+    } 
+  }
+}

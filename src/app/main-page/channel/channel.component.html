@@ -221,12 +221,24 @@
 
   <!-- channel footer -->
   <div class="channel-footer">
-    <div class="message-input-container">
+    <!-- <div class="message-input-container">
       <textarea id="channelInput" type="text" placeholder="{{ getTextareaPlaceholderText() }}" [(ngModel)]="messageInput"></textarea>
+      <div #channelInput name="channelInput" id="channelInput" contenteditable="true" [(ngModel)]="messageInput" ngDefaultControl (input)="this.messageInput = channelInput.innerText" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
+      </div>
+
+      <div class="documents-preview">
+        <div class="message-img">
+          <img src="/assets/img/avatar-1.jpg" alt="">
+        </div>
+        <div class="message-img">
+          <img src="/assets/img/avatar-1.jpg" alt="">
+        </div>
+      </div>
       <div class="message-input-buttons">
         <div class="left-side">
-          <!-- add document -->
-          <button class="btn-icon w40">
+
+          <input type="file" #addDocumentInput style="display: none;" accept="image/*,.jpg">
+          <button class="btn-icon w40" (click)="addDocumentInput.click()">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_813_12245)">
                 <mask id="mask0_813_12245" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="24"
@@ -247,7 +259,7 @@
             </svg>
           </button>
           <div class="separator-v"></div>
-          <!-- add emoticon -->
+
           <button class="btn-icon w40">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_813_12139" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
@@ -261,7 +273,7 @@
               </g>
             </svg>
           </button>
-          <!-- add tag -->
+
           <button class="btn-icon w40">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_813_12157" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
@@ -290,7 +302,8 @@
           </svg>
         </button>
       </div>
-    </div>
+    </div> -->
+    <app-message-input></app-message-input>
   </div>
 
 </div>

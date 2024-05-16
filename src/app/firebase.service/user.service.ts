@@ -147,9 +147,9 @@ export class UserService implements OnDestroy {
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
-    saveLastThread(userId: string, threadId: string) {
+    async saveLastThread(userId: string, threadId: string) {
         let singleUserRef = doc(this.getUserRef(), userId);
-        updateDoc(singleUserRef, { last_thread: threadId });
+        await updateDoc(singleUserRef, { last_thread: threadId });
     }
 
     getCleanJson(user: User): {} {

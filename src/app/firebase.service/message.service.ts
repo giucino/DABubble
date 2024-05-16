@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot, addDoc, doc, updateDoc, where, query, orderBy } from '@angular/fire/firestore';
 import { Message } from '../interfaces/message.interface';
-
+import { getStorage, ref } from "firebase/storage";
 
 
 @Injectable({
@@ -119,5 +119,14 @@ export class MessageService {
     //         });
     //     });
     // }
+
+    /* STORAGE */ 
+
+    storage = getStorage(); // reference to storage service
+    storageRef = ref(this.storage); // reference to storage
+    // imagesRef = ref(this.storage, 'images');
+    // pdfsRef = ref(this.storage, 'pdfs');
+    messageAttachments = ref(this.storage, 'messageAttachements');
+
 
 }

@@ -13,14 +13,14 @@ import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
-import { finalize } from 'rxjs';
+import { MessageInputComponent } from '../message-input/message-input.component';
 
 
 
 @Component({
   selector: 'app-channel',
   standalone: true,
-  imports: [CommonModule, MessageComponent, FormsModule],
+  imports: [CommonModule, MessageComponent, MessageInputComponent, FormsModule],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss',
 })
@@ -110,17 +110,17 @@ export class ChannelComponent {
     this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
 
-  saveMessage() {
-    if (this.messageInput != '') {
-      this.message.user_id = this.currentUser.id;
-      this.message.message.text = this.messageInput;
-      this.message.created_at = new Date().getTime();
-      this.message.modified_at = this.message.created_at;
-      this.message.channel_id = this.channelService.currentChannel.id;
-      this.messageService.addMessage(this.message);
-      this.messageInput = '';
-    }
-  }
+  // saveMessage() {
+  //   if (this.messageInput != '') {
+  //     this.message.user_id = this.currentUser.id;
+  //     this.message.message.text = this.messageInput;
+  //     this.message.created_at = new Date().getTime();
+  //     this.message.modified_at = this.message.created_at;
+  //     this.message.channel_id = this.channelService.currentChannel.id;
+  //     this.messageService.addMessage(this.message);
+  //     this.messageInput = '';
+  //   }
+  // }
 
   isNewDate(oldDate: number, newDate: number) {
     let oldDateAsString = this.convertToDate(oldDate);
@@ -198,32 +198,36 @@ export class ChannelComponent {
     }
   }
 
-  getTextareaPlaceholderText() {
-    switch(this.channelService.currentChannel.channel_type) {
-      case 'main' :
-        return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
-        break;
-      case 'direct' :
-        if (this.channelService.currentChannel.members.length == 2) {
-          return 'Nachricht an ' + this.getDirectChannelUser()?.name;
-        } else {
-          return 'Nachricht an ' + 'dich';
-        }
-        break;
-      case 'thread' : 
-        return 'Antworten...';
-        break;
-      case 'new' : 
-        return 'Starte eine neue Nachricht';
-        break;
-      default :
-        return 'Starte eine neue Nachricht';
-    }
-  }
+  // getTextareaPlaceholderText() {
+  //   switch(this.channelService.currentChannel.channel_type) {
+  //     case 'main' :
+  //       return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
+  //       break;
+  //     case 'direct' :
+  //       if (this.channelService.currentChannel.members.length == 2) {
+  //         return 'Nachricht an ' + this.getDirectChannelUser()?.name;
+  //       } else {
+  //         return 'Nachricht an ' + 'dich';
+  //       }
+  //       break;
+  //     case 'thread' : 
+  //       return 'Antworten...';
+  //       break;
+  //     case 'new' : 
+  //       return 'Starte eine neue Nachricht';
+  //       break;
+  //     default :
+  //       return 'Starte eine neue Nachricht';
+  //   }
+  // }
 
   setFocus() {
     document.getElementById('channelInput')?.focus();
     this.messageInput = '';
   }
+
+  // updateInput(newContent : string) {
+  //   this.messageInput = newContent;
+  // }
 
 }
