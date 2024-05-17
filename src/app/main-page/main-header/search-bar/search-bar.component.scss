@@ -76,9 +76,6 @@
     background-color: var(--color-bg);
     cursor: pointer;
 
-    // .img-channel-hash {
-    // }
-
     .channel-name {
       color: var(--color-purple-3);
       font-weight: 700;
@@ -138,15 +135,15 @@
   }
 }
 
-@media (max-width: 1000px) {
-  .searchBar-container {
-    height: unset;
-    padding: 8px 24px;
-    border-radius: 42px;
-    border: 1px solid var(--color-light-purple);
+// @media (max-width: 1000px) {
+//   .search-bar-container {
+//     height: unset;
+//     padding: 8px 24px;
+//     border-radius: 42px;
+//     border: 1px solid var(--color-light-purple);
 
-    input {
-      font-size: 17px;
-    }
-  }
-}
+//     input {
+//       font-size: 17px;
+//     }
+//   }
+// }

@@ -4,11 +4,9 @@
 .main-menu {
   @include dFlex($fd: column, $jc: flex-start, $ai: flex-start, $gap: 25px);
   background-color: var(--color-white);
-  max-width: 366px;
-  min-width: 366px;
   height: 100%;
   border-radius: 20px;
-  padding: 32px 30px;
+  padding: 0 30px 32px 30px;
   color: var(--color-black);
   overflow-y: auto;
   box-shadow: none;
@@ -20,57 +18,14 @@
   width: 100%;
 }
 
-.menu-open {
-  transform: translateX(0);
+.menu-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--color-white);
+  padding-top: 32px;
 }
 
-.menu-closed {
-  transform: translateX(-150%);
-}
-
-.menu-overlay {
-  @include dFlex($ai: center, $gap: 0px);
-  position: fixed;
-  top: 65%; 
-  left: -150px; 
-  z-index: 1000;
-  transform: rotate(270deg);
-  border-radius: 0px 0px 30px 30px;
-  padding: 8px 20px 8px 20px;
-  box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.2);
-
-  mat-card-title {
-    @include dFlex($ai: center, $jc: space-between, $gap: 10px);
-    font-size: 20px;
-    width: 100%;
-    text-align: center;
-
-    svg {
-      rotate: 90deg;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    box-shadow: 4px 4px 7px 1px rgba(0, 0, 0, 0.3);
-
-    mat-card-title {
-      color: var(--color-purple-3);
-    }
-
-    .svg-color path {
-      fill: var(--color-purple-3);
-    }
-  }
-}
-
-
-@media (max-width: 768px) { 
-  .menu-overlay {
-      display: none;
-  }
-
-  .main-menu {
-    display: none;
-  }
+@media (max-width: 768px) {
+ 
 }
