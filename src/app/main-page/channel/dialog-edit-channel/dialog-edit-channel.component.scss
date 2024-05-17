@@ -20,6 +20,7 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
+    cursor: default;
   }
   .hashtag-icon {
     width: 30px;
@@ -49,6 +50,7 @@
       align-items: center;
       .headline {
         font-weight: 700;
+        cursor: default;
       }
     }
     .channel-name {
@@ -134,6 +136,10 @@ textarea {
   }
 }
 
+.headline {
+  cursor: default;
+}
+
 .h-separator {
   height: 1px;
   width: 100%;
@@ -142,6 +148,7 @@ textarea {
 
 .channel-creator {
   color: var(--color-purple-3);
+  cursor: default;
 }
 
 .dialog-edit-channel {

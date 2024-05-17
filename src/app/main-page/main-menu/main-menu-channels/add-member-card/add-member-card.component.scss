@@ -17,6 +17,10 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
+
+    .dialog-headline {
+      cursor: default;
+    }
   }
 
   mat-radio-group {
@@ -95,6 +99,7 @@
       line-height: 24.55px;
       outline: none;
       background-color: transparent;
+      cursor: default;
       &::placeholder {
         font-family: "Nunito", "Helvetica Neue", sans-serif;
         color: var(--color-gray);
