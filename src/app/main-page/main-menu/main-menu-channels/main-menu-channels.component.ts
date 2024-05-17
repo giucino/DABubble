@@ -13,6 +13,8 @@ import { UserService } from '../../../firebase.service/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { Message } from '../../../interfaces/message.interface';
 import { ThreadService } from '../../../services/thread.service';
+import { MainMenuComponent } from '../main-menu.component';
+import { MainHeaderComponent } from '../../main-header/main-header.component';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -31,6 +33,7 @@ export class MainMenuChannelsComponent implements OnInit {
     public userService: UserService,
     public router: Router,
     public threadService : ThreadService,
+    public mainmenu: MainMenuComponent,
   ) {}
 
   ngOnInit(): void {}
@@ -49,6 +52,10 @@ export class MainMenuChannelsComponent implements OnInit {
   //     //check if currentuser is wirklich im channel, if not dann bleibt auf main-page, wegen url kopie
   // }
 
+  mobileChange(){
+    this.mainmenu.toggleMenu();
+    
+  }
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }

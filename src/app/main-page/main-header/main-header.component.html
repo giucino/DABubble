@@ -1,8 +1,14 @@
 <div class="header-content">
 
     <div class="logo-container">
+        <!-- @if (!mainmenu.isMenuOpen){ -->
         <img class="logo" src="../../../assets/img/logo.png" alt="Logo">
-        <p class="logo-text">DABubble</p>
+        <p class="logo-text">{{logoName}}</p>
+        <!-- } -->
+        <!-- @if (mainmenu.isMenuOpen){
+        <img class="logo" alt="Channel Logo">
+        <p class="logo-text">{{userService.currentUser.last_channel}}</p>
+        } -->
     </div>
 
     <app-search-bar class="search-bar"></app-search-bar>

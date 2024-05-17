@@ -53,3 +53,18 @@
     min-width: 485px;
     height: 100%;
 }
+
+@media ( max-width: 768px) {
+    .main-page{
+        padding: 0;
+    }
+    .content{
+        gap: unset;
+        // position: relative;
+        margin-top: 120px;
+        max-height: calc(100% - 120px);
+    }
+    // .channel{
+        // height: calc(100dvh - 140px);
+    // }
+}
