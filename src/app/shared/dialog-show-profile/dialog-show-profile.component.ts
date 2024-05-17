@@ -6,6 +6,11 @@ import { DialogEditProfileComponent } from '../../shared/dialog-edit-profile/dia
 import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
 import { User } from '../../interfaces/user.interface';
+import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { Channel } from '../../interfaces/channel.interface';
+import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ThreadService } from '../../services/thread.service';
 
 @Component({
   selector: 'app-dialog-show-profile',
@@ -17,18 +22,31 @@ import { User } from '../../interfaces/user.interface';
 export class DialogShowProfileComponent implements OnInit {
   user: User | null = null;
 
+  newDirectChannel : Channel = {
+    id: '',
+    name: 'Direct Channel',
+    description: '',
+    created_at: new Date().getTime(),
+    creator: '',
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.direct,
+  }
+
   constructor(
     public dialogRef: MatDialogRef<DialogShowProfileComponent>,
     private profileService: ProfileService,
     private customDialogService: CustomDialogService,
-    public userService: UserService
+    public userService: UserService,
+    public channelService: ChannelFirebaseService,
+    private router : Router,
+    public threadService : ThreadService,
   ) {}
 
   ngOnInit(): void {
     const userId = this.profileService.getViewingUserId();
     if (userId) {
       this.user = this.userService.getUser(userId);
-      console.log(userId);
     }
   }
 
@@ -40,5 +58,33 @@ export class DialogShowProfileComponent implements OnInit {
     const component = DialogEditProfileComponent;
     this.customDialogService.openDialogAbsolute(button, component, 'right');
     this.dialogRef.close();
+  }
+
+
+
+
+  async openDirectChannel(user_id: string): Promise<void> {
+    let channel_id = this.channelService.getDirectChannelId(this.userService.currentUser.id, user_id);
+    if (channel_id != '') {
+      this.router.navigateByUrl('/main-page/' + channel_id);
+    } else {
+      channel_id = await this.createNewDirectChannel(user_id);
+      this.router.navigateByUrl('/main-page/' + channel_id);
+    }
+    this.closeThread();
+    this.dialogRef.close();
+
+  }
+
+  async createNewDirectChannel(user_id : string) {
+    this.newDirectChannel.creator = this.userService.currentUser.id;
+    this.newDirectChannel.created_at = new Date().getTime();
+    this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
+    return await this.channelService.addChannel(this.newDirectChannel);
+  }
+
+  closeThread() {
+    this.userService.saveLastThread(this.userService.currentUser.id, '');
+    this.threadService.closeThread();
   }
 }

@@ -10,9 +10,10 @@ import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelComponent } from '../../channel/channel.component';
 import { MessageService } from '../../../firebase.service/message.service';
 import { UserService } from '../../../firebase.service/user.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { Message } from '../../../interfaces/message.interface';
 import { ThreadService } from '../../../services/thread.service';
+import { StateManagementService } from '../../../services/state-management.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -23,6 +24,7 @@ import { ThreadService } from '../../../services/thread.service';
 })
 export class MainMenuChannelsComponent implements OnInit {
   isExpanded: boolean = true;
+  activeChannelId: string = '';
 
   constructor(
     private customDialogService: CustomDialogService,
@@ -31,9 +33,19 @@ export class MainMenuChannelsComponent implements OnInit {
     public userService: UserService,
     public router: Router,
     public threadService : ThreadService,
+    private stateService: StateManagementService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.stateService.getSelectedChannelId().subscribe(id => {
+      this.activeChannelId = id ? id : '';
+    });
+}
+
+selectChannel(channelId: string) {
+  this.stateService.setSelectedChannelId(channelId);
+}
+
 
   // keine funktion mehr
   // openChannel(channel_id: string): void {
@@ -61,5 +73,6 @@ export class MainMenuChannelsComponent implements OnInit {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+    console.log(this.channelService.currentChannel);
   }
 }

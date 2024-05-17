@@ -33,31 +33,32 @@
     </div>
 
     @if (isExpanded) {
-        <!-- THIS IS YOU  -->
-        <div class="channel-header-direct">
-            <div class="channel-member" [class.selected]="userService.currentUser.id === selectedUserId" (click)="openDirectChannel(userService.currentUser.id)">
-                <div class="profile-img-container">
-                    <img [src]="userService.currentUser?.profile_img" alt="" class="profile-img">
-                    <!-- @if (!userService.currentUser.logged_in){
+    <!-- THIS IS YOU  -->
+    <div class="channel-header-direct">
+        <div class="channel-member" [class.selected]="userService.currentUser.id === selectedUserId"
+            (click)="openDirectChannel(userService.currentUser.id)">
+            <div class="profile-img-container">
+                <img [src]="userService.currentUser?.profile_img" alt="" class="profile-img">
+                <!-- @if (!userService.currentUser.logged_in){
                         <div class="online-status-wborder offline"></div>
                         } -->
-                        <!-- @if (userService.currentUser.logged_in){ -->
-                        <div class="online-status-wborder online"></div>
-                        <!-- } -->
+                <!-- @if (userService.currentUser.logged_in){ -->
+                <div class="online-status-wborder online"></div>
+                <!-- } -->
 
-                </div>
-                <div class="channel-member-name fs-18">
-                    {{ userService.currentUser?.name }} (Du)
-                </div>
+            </div>
+            <div class="channel-member-name fs-18">
+                {{ userService.currentUser?.name }} (Du)
             </div>
         </div>
+    </div>
 
-        <!-- OTHERS USERS  -->
+    <!-- OTHERS USERS  -->
     @for(user of userService.allUsers; track user.id) {
-        @if(user.id != userService.currentUser?.id ) {
-            <div class="channel-header-direct">
-                <div class="channel-member" [class.selected]="user.id === selectedUserId" (click)="openDirectChannel(user.id)">
-                    <div class="profile-img-container">
+    @if(user.id != userService.currentUser?.id ) {
+    <div class="channel-header-direct">
+        <div class="channel-member" [class.selected]="user.id === selectedUserId" (click)="openDirectChannel(user.id)">
+            <!-- <div class="profile-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img">
                         @if (!user.logged_in){
                             <div class="online-status-wborder offline"></div>
@@ -66,13 +67,18 @@
                             <div class="online-status-wborder online"></div>
                             }
 
-                    </div>
-                    <div class="channel-member-name fs-18">
-                        {{ user.name }}
-                    </div>
-                </div>
+                    </div> -->
+            <div class="profile-img-container">
+                <img [src]="user.profile_img" alt="" class="profile-img">
+                <div class="online-status-wborder" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
             </div>
-        }
+
+            <div class="channel-member-name fs-18">
+                {{ user.name }}
+            </div>
+        </div>
+    </div>
+    }
     }
     }
 </section>
