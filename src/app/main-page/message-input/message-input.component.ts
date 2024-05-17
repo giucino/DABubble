@@ -32,6 +32,7 @@ export class MessageInputComponent {
   };
 
   currentFiles : any[] = [];
+  currentFile : any | null = null;
 
   constructor(
     public userService : UserService,
@@ -83,16 +84,36 @@ export class MessageInputComponent {
     }
   }
 
-  addDocument(event : any) {
-    this.currentFiles = event.target.files;
-    [...this.currentFiles].forEach((file) => {
-      file.URL = this.createURL(file);
-    })
-    console.log(this.currentFiles);
+  addDocument(event : Event) {
+    // this.currentFiles = event.target.files;
+    // [...this.currentFiles].forEach((file) => {
+    //   file.URL = this.createURL(file);
+    // })
+    // console.log(this.currentFiles);
+    const input = event.target as HTMLInputElement;
+    if(input.files && input.files.length) {
+      const file = input.files[0];
+      this.currentFile = file;
+      this.currentFile.URL = this.createURL(file);
+      if(file.size > 500 * 1024) { //500KB
+        this.currentFile = null;
+        alert('Die Datei ist zu groß. Max. 500KB.');
+      }
+
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+      if(!allowedTypes.includes(file.type)) {
+        this.currentFile = null;
+        alert('Ungültiger Dateityp. Bitte wählen Sie eine Bild- oder PDF-Datei.');
+      }
+    }
   }
 
   createURL(file : File) {
     return URL.createObjectURL(file);
+  }
+
+  removeFile() {
+    this.currentFile = null;
   }
 
 }
