@@ -15,6 +15,7 @@ import { Message } from '../../../interfaces/message.interface';
 import { ThreadService } from '../../../services/thread.service';
 import { MainMenuComponent } from '../main-menu.component';
 import { MainHeaderComponent } from '../../main-header/main-header.component';
+import { SharedService } from '../../../firebase.service/shared.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -35,7 +36,7 @@ export class MainMenuChannelsComponent implements OnInit {
     public router: Router,
     public threadService : ThreadService,
     public mainmenu: MainMenuComponent,
-    private renderer: Renderer2, private el: ElementRef
+    public sharedService: SharedService
   ) {}
 
   ngOnInit(): void {}
@@ -43,7 +44,7 @@ export class MainMenuChannelsComponent implements OnInit {
 
   mobileChange() {
     this.mainmenu.toggleMenu();
-    this.channelService.showMobileDiv();
+    this.sharedService.showMobileDiv();
   }
 
   toggleExpansion(): void {

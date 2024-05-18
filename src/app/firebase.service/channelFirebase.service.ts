@@ -55,13 +55,6 @@ export class ChannelFirebaseService {
   unsubCurrentThread: any = function () { };
   // private unsubscribeCurrentChannel?: () => void;
 
-
-  private showMobileDivSubject = new Subject<void>();
-  private backToChannelsSubject = new Subject<void>();
-
-  backToChannels$ = this.backToChannelsSubject.asObservable();
-  showMobileDiv$ = this.showMobileDivSubject.asObservable();
-
   constructor() {
   }
 
@@ -221,14 +214,4 @@ export class ChannelFirebaseService {
   }
 
 
-  ////////////////////
-
-
-  showMobileDiv() {
-    this.showMobileDivSubject.next();
-
-  }
-  backToChannels() {
-    this.backToChannelsSubject.next();
-  }
 }

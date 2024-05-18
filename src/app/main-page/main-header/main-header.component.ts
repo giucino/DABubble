@@ -7,6 +7,7 @@ import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { SharedService } from '../../firebase.service/shared.service';
 @Component({
   selector: 'app-main-header',
   standalone: true,
@@ -20,15 +21,16 @@ export class MainHeaderComponent {
   
   constructor( private customDialogService: CustomDialogService,
     public userService: UserService, public channelService: ChannelFirebaseService,
-    private renderer: Renderer2, private el: ElementRef) {
+    private renderer: Renderer2, private el: ElementRef,
+    public sharedService: SharedService) {
   }
 
   ngAfterViewInit() {
-    this.channelService.showMobileDiv$.subscribe(() => {
+    this.sharedService.showMobileDiv$.subscribe(() => {
       const mobileDiv = this.el.nativeElement.querySelector('.mobile');
       this.renderer.addClass(mobileDiv, 'show');
     });
-    this.channelService.backToChannels$.subscribe(() => {
+    this.sharedService.backToChannels$.subscribe(() => {
       const mobileDiv = this.el.nativeElement.querySelector('.mobile');
       this.renderer.removeClass(mobileDiv, 'show');
     });
@@ -38,7 +40,7 @@ export class MainHeaderComponent {
   }
 
   backToChannels() {
-    this.channelService.backToChannels();
+    this.sharedService.backToChannels();
   }
 
 
