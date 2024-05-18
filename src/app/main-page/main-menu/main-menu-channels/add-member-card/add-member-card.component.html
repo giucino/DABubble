@@ -23,22 +23,13 @@
     </mat-radio-group>
 
     @if (selectedOption === 'specific') {
-    <div class="channel-header-direct">
+    <div class="input-container">
         @if (selectedUsers.length > 0) {
         @for(user of selectedUsers; track user.id) {
-        <div class="channel-member" #profileBtn (click)="openUserProfile(user.id, profileBtn)">
-            <div class="profile-img-container">
-                <img [src]="user.profile_img" alt="" class="profile-img">
-                @if (!user.logged_in){
-                <div class="online-status-wborder offline"></div>
-                }
-                @if (user.logged_in){
-                <div class="online-status-wborder online"></div>
-                }
-            </div>
-            <div class="channel-member-name fs-18">
-                {{ user.name }}
-            </div>
+        <div class="selected-user">
+            <img [src]="user.profile_img" alt="" class="profile-img" />
+            <div class="user-name fs-18 ">{{user.name}}</div>
+            <!-- remove selected user -->
             <button class="btn-icon" (click)="onRemoveSelectedUser(user)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
@@ -55,26 +46,17 @@
         </div>
         }
         }
-    </div>
-
-    <div class="input-container">
         <div class="relative">
             <input type="text" class="name-input" placeholder="Name eingeben" [(ngModel)]="searchInput"
-                (ngModelChange)="onFilterUsers()" (focus)="onFilterUsers()">
-            @if (filteredUsers.length > 0) {
+                (ngModelChange)="onFilterUsers()">
+            @if (searchInput && filteredUsers.length > 0) {
             <div class="users-list-container">
                 <div class="users-list">
                     @for(user of filteredUsers; track user.id) {
                     <div class="user" (click)="onSelectUser(user)">
                         <div class="user-img-container">
                             <img [src]="user.profile_img" alt="" class="profile-img" />
-                            @if (!user.logged_in){
-                            <div class="online-status-wborder offline"></div>
-                            }
-                            @if (user.logged_in){
                             <div class="online-status-wborder online"></div>
-                            }
-                            <!-- <div class="online-status-wborder" [ngClass]="user.logged_in ? 'online' : 'offline'"></div> -->
                         </div>
                         <div class="user-name fs-18 ">{{user.name}}</div>
                     </div>
@@ -85,7 +67,6 @@
         </div>
     </div>
     }
-
     <button class="btn-primary" [disabled]="selectedOption === 'specific' && selectedUsers.length === 0"
         (click)="onUpdateMembers()">Erstellen</button>
 </div>

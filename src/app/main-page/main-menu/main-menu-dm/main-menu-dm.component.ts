@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { ThreadService } from '../../../services/thread.service';
-import { StateManagementService } from '../../../services/state-management.service';
 
 @Component({
   selector: 'app-main-menu-dm',
@@ -19,7 +18,7 @@ import { StateManagementService } from '../../../services/state-management.servi
 export class MainMenuDmComponent implements OnInit, OnDestroy {
   isExpanded: boolean = true;
   users: User[] = [];
-  selectedUserId: string = '';
+  selectedUserId: string | null = null;
 
   newDirectChannel : Channel = {
     id: '',
@@ -37,14 +36,10 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
     public channelService: ChannelFirebaseService,
     private router : Router,
     public threadService : ThreadService,
-    private stateService: StateManagementService
   ) {}
 
   ngOnInit(): void {
     this.users = this.userService.allUsers;
-    this.stateService.getSelectedUserId().subscribe(id => {
-      this.selectedUserId = id ? id : '';
-    });
   }
 
   ngOnDestroy(): void {}
@@ -62,8 +57,7 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/main-page/' + channel_id);
     }
     this.closeThread();
-    this.stateService.setSelectedUserId(user_id);
-    // this.selectedUserId = user_id;
+    this.selectedUserId = user_id;
 
   }
 

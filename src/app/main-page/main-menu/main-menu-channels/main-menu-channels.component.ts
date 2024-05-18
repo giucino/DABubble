@@ -10,13 +10,12 @@ import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelComponent } from '../../channel/channel.component';
 import { MessageService } from '../../../firebase.service/message.service';
 import { UserService } from '../../../firebase.service/user.service';
-import { ActivatedRoute, Router, RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Message } from '../../../interfaces/message.interface';
 import { ThreadService } from '../../../services/thread.service';
 import { MainMenuComponent } from '../main-menu.component';
 import { MainHeaderComponent } from '../../main-header/main-header.component';
 import { SharedService } from '../../../firebase.service/shared.service';
-import { StateManagementService } from '../../../services/state-management.service';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -28,7 +27,6 @@ import { StateManagementService } from '../../../services/state-management.servi
 export class MainMenuChannelsComponent implements OnInit {
 
   isExpanded: boolean = true;
-  activeChannelId: string = '';
 
   constructor(
     private customDialogService: CustomDialogService,
@@ -38,20 +36,10 @@ export class MainMenuChannelsComponent implements OnInit {
     public router: Router,
     public threadService : ThreadService,
     public mainmenu: MainMenuComponent,
-    public sharedService: SharedService,
-    private stateService: StateManagementService
+    public sharedService: SharedService
   ) {}
 
-  ngOnInit(): void {
-    this.stateService.getSelectedChannelId().subscribe(id => {
-      this.activeChannelId = id ? id : '';
-    });
-}
-
-selectChannel(channelId: string) {
-  this.stateService.setSelectedChannelId(channelId);
-}
-
+  ngOnInit(): void {}
 
 
   mobileChange() {
@@ -71,7 +59,6 @@ selectChannel(channelId: string) {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
-    console.log(this.channelService.currentChannel);
   }
   
 }

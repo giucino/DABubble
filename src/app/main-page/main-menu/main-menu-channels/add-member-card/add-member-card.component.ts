@@ -10,9 +10,6 @@ import { UserService } from '../../../../firebase.service/user.service';
 import { User } from '../../../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../../../firebase.service/channelFirebase.service';
 import { UserManagementService } from '../../../../services/user-management.service';
-import { CustomDialogService } from '../../../../services/custom-dialog.service';
-import { ProfileService } from '../../../../services/profile.service';
-import { DialogShowProfileComponent } from '../../../../shared/dialog-show-profile/dialog-show-profile.component';
 
 @Component({
   selector: 'app-add-member-card',
@@ -34,9 +31,7 @@ export class AddMemberCardComponent {
     public dialogRef: MatDialogRef<AddMemberCardComponent>,
     public userService: UserService,
     public channelService: ChannelFirebaseService,
-    public userManagementService: UserManagementService,
-    public customDialogService: CustomDialogService,
-    private profileService: ProfileService
+    public userManagementService: UserManagementService
   ) {}
 
   onFilterUsers(): void {
@@ -46,12 +41,10 @@ export class AddMemberCardComponent {
   onSelectUser(user: User): void {
     this.selectedUsers = this.userManagementService.selectUser(this.selectedUsers, user);
     this.searchInput = '';
-    this.onFilterUsers(); 
   }
 
   onRemoveSelectedUser(user: User): void {
     this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);
-    this.onFilterUsers(); 
   }
 
   onUpdateMembers(): void {
@@ -72,12 +65,60 @@ export class AddMemberCardComponent {
     }
   }
 
-  openUserProfile(userId: string, button: HTMLElement): void {
-    this.profileService.setOwnProfileStatus(false);
-    this.profileService.setViewingUserId(userId);
+  // filterUsers(): void {
+  //   const searchTerm = this.searchInput ? this.searchInput.trim().toLowerCase() : '';
+  //   this.filteredUsers = this.userService.allUsers.filter((user) => {
+  //     const isPartOfNameMatched = user.name
+  //       .split(' ')
+  //       .some((part: string) => part.toLowerCase().startsWith(searchTerm));
+  
+  //     const isNotSelected = !this.selectedUsers.some(selected => selected.id === user.id);
+  //     const isNotCreator = this.channelService.currentChannel.creator !== user.id;
+  
+  //     return isPartOfNameMatched && isNotSelected && isNotCreator;
+  //   });
+  // }
+  
+  // selectUser(user: User): void {
+  //   if (!this.selectedUsers.find((u) => u.id === user.id)) {
+  //     this.selectedUsers.push(user);
+  //     this.searchInput = '';
+  //   }
+  // }
 
-    const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
-    // this.dialogRef.close();
-  }
+  // removeSelectedUser(user: User): void {
+  //   this.selectedUsers = this.selectedUsers.filter((u) => u.id !== user.id);
+  // }
+
+  // handleMemberUpdate(): void {
+  //   const channelId = this.getCurrentChannelId();
+  //   if (!channelId) {
+  //     console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
+  //     return;
+  //   }
+  //   const memberIds = this.getMemberIds();
+  //   this.updateMembers(channelId, memberIds);
+  // }
+
+  // getCurrentChannelId(): string | undefined {
+  //   return this.channelService.currentChannel.id;
+  // }
+
+  // getMemberIds(): string[] {
+  //   if (this.selectedOption === 'all') {
+  //     return this.userService.allUsers.map(user => user.id).filter((id): id is string => id !== undefined);
+  //   } else {
+  //     return this.selectedUsers.map(user => user.id).filter((id): id is string => id !== undefined);
+  //   }
+  // }
+
+  // updateMembers(channelId: string, memberIds: string[]): void {
+  //   this.channelService.updateChannelMembers(channelId, memberIds)
+  //     .then(() => {
+  //       this.dialogRef.close();
+  //     })
+  //     .catch(error => {
+  //       console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
+  //     });
+  // }
 }
