@@ -105,10 +105,10 @@
   }
 }
 .menu-channel-content-mobile{
-  display: none;
+  display: none !important;
 
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .menu-channel-content{
     display: none !important;
   }

@@ -80,17 +80,20 @@
   .header-content{
     padding: 20px;
     position: fixed;
-    width: 100%;
+    width: 100dvw;
   }
   .mobile{
     display: inline-flex !important;
     z-index: 1000;
+    min-width: 300px;
   }
   .show{
     left: 0px !important;
     padding-left: 20px;
     // transition: 0.5s;
   }
-
+  .name{
+    display: none !important;
+  }
 
 }
