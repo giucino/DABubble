@@ -7,7 +7,7 @@ import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { SharedService } from '../../firebase.service/shared.service';
+import { SharedService } from '../../services/shared.service';
 @Component({
   selector: 'app-main-header',
   standalone: true,

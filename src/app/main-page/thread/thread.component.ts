@@ -9,7 +9,7 @@ import { Message } from '../../interfaces/message.interface';
 import { ThreadService } from '../../services/thread.service';
 import { HostListener } from '@angular/core';
 import { doc } from '@angular/fire/firestore';
-import { SharedService } from '../../firebase.service/shared.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-thread',

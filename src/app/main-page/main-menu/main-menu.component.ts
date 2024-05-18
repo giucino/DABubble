@@ -5,7 +5,7 @@ import { MainMenuHeaderComponent } from './main-menu-header/main-menu-header.com
 import { MainMenuChannelsComponent } from './main-menu-channels/main-menu-channels.component';
 import { MainMenuDmComponent } from './main-menu-dm/main-menu-dm.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { SharedService } from '../../firebase.service/shared.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-main-menu',

@@ -15,7 +15,7 @@ import { Message } from '../../../interfaces/message.interface';
 import { ThreadService } from '../../../services/thread.service';
 import { MainMenuComponent } from '../main-menu.component';
 import { MainHeaderComponent } from '../../main-header/main-header.component';
-import { SharedService } from '../../../firebase.service/shared.service';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-main-menu-channels',
