@@ -228,6 +228,11 @@ textarea {
   }
 }
 
+@media (max-width: 1024px) {
+  .channel-container {
+    max-width: 640px;
+  }
+}
 
 
 @media (max-width: 768px) {

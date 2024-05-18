@@ -60,4 +60,5 @@ export class MainMenuChannelsComponent implements OnInit {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }
+  
 }

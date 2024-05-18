@@ -22,11 +22,14 @@
 
 .menu-open {
   transform: translateX(0);
+  transition: 0.5s;
 }
 
 .menu-closed {
   transform: translateX(-150%);
+  transition: 0.5s;
 }
+
 
 .menu-overlay {
   @include dFlex($ai: center, $gap: 0px);

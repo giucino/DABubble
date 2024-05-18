@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class SharedService {
 
   backToChannels$ = this.backToChannelsSubject.asObservable();
   showMobileDiv$ = this.showMobileDivSubject.asObservable();
+  isMenuOpen$ = new BehaviorSubject<boolean>(true);
   constructor() { }
 
   showMobileDiv() {
@@ -23,6 +24,8 @@ export class SharedService {
   backToChannels() {
     this.backToChannelsSubject.next();
   }
+
+
 
 
 
