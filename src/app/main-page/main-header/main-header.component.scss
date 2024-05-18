@@ -28,6 +28,7 @@
     width: 100%;
   }
 
+
   .user-head {
     @include dFlex($gap: 20px, $jc: flex-end);
     margin-left: 20px;
@@ -56,6 +57,19 @@
     }
   }
 }
+.mobile{
+  display: none;
+  position: absolute;
+  left: -100%;
+  width: 40%;
+  transition: 0.5s;
+  background-color: var(--color-bg);
+}
+.backBtn{
+  cursor: pointer;
+  
+}
+
 
 @media (max-width: 1000px) {
   .search-bar {
@@ -66,9 +80,17 @@
   .header-content{
     padding: 20px;
     position: fixed;
-    // display: flex;
-    // justify-content: space-between;
     width: 100%;
   }
+  .mobile{
+    display: inline-flex !important;
+    z-index: 1000;
+  }
+  .show{
+    left: 0px !important;
+    padding-left: 20px;
+    // transition: 0.5s;
+  }
+
 
 }

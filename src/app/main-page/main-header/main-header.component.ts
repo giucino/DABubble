@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { SearchBarComponent } from './search-bar/search-bar.component';
@@ -7,9 +7,6 @@ import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-
 @Component({
   selector: 'app-main-header',
   standalone: true,
@@ -19,29 +16,31 @@ import { Subscription } from 'rxjs';
 })
 export class MainHeaderComponent {
   anonymImg = 'assets/img/person.png';
-  logoName: any = 'Dabbuble';
+  serverName: any = 'Dabbuble';
   
   constructor( private customDialogService: CustomDialogService,
-    public userService: UserService, public channelService: ChannelFirebaseService) {
+    public userService: UserService, public channelService: ChannelFirebaseService,
+    private renderer: Renderer2, private el: ElementRef) {
   }
 
-
+  ngAfterViewInit() {
+    this.channelService.showMobileDiv$.subscribe(() => {
+      const mobileDiv = this.el.nativeElement.querySelector('.mobile');
+      this.renderer.addClass(mobileDiv, 'show');
+    });
+    this.channelService.backToChannels$.subscribe(() => {
+      const mobileDiv = this.el.nativeElement.querySelector('.mobile');
+      this.renderer.removeClass(mobileDiv, 'show');
+    });
+  }
 
   ngOnInit() {
-    // this.changeName(this.channelService.currentChannel.id);
-    // this.routeSub = this.activatedRoute.paramMap.subscribe(params => {
-    //   const channelId = params.get('channelId');
-    //   if (channelId) {
-    //     this.changeName(channelId);
-    //   }
-    // });
   }
 
-  changeName(channelId : string) {
-    let channel = this.channelService.channels.find(channel => channel.id === channelId);
-    let name = channel ? channel.name : 'DABubble';
-    this.logoName = name;
+  backToChannels() {
+    this.channelService.backToChannels();
   }
+
 
   openLogOutDialog(button: HTMLElement) {
     const component = LogOutDialogComponent;

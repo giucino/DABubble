@@ -25,7 +25,11 @@ export class MainMenuComponent implements OnInit {
 
   constructor(public channelService: ChannelFirebaseService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.channelService.backToChannels$.subscribe(() => {
+      this.isMenuOpen = true;
+    });
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

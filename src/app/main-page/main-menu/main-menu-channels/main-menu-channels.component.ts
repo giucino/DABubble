@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -24,6 +24,7 @@ import { MainHeaderComponent } from '../../main-header/main-header.component';
   styleUrl: './main-menu-channels.component.scss',
 })
 export class MainMenuChannelsComponent implements OnInit {
+
   isExpanded: boolean = true;
 
   constructor(
@@ -34,28 +35,17 @@ export class MainMenuChannelsComponent implements OnInit {
     public router: Router,
     public threadService : ThreadService,
     public mainmenu: MainMenuComponent,
+    private renderer: Renderer2, private el: ElementRef
   ) {}
 
   ngOnInit(): void {}
 
-  // keine funktion mehr
-  // openChannel(channel_id: string): void {
-  //     this.router.navigate(['/main-page']).then(() => {
-  //       this.channelService.setCurrentChannel(channel_id);
-  //       this.messageService.getMessagesFromChannel(channel_id);
 
-  //         this.router.navigate(['/main-page/', channel_id]);
-  //     });
-  //     console.log('messagees', this.messageService.messages);
-
-  //     //lade bildfschirm für sekunde oder 2 eventuell 
-  //     //check if currentuser is wirklich im channel, if not dann bleibt auf main-page, wegen url kopie
-  // }
-
-  mobileChange(){
+  mobileChange() {
     this.mainmenu.toggleMenu();
-    
+    this.channelService.showMobileDiv();
   }
+
   toggleExpansion(): void {
     this.isExpanded = !this.isExpanded;
   }

@@ -17,6 +17,7 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,29 +48,36 @@ export class ChannelFirebaseService {
     channel_type: ChannelTypeEnum.thread,
   };
 
-  
+
 
   unsubChannels: any;
-  unsubCurrentChannel: any = function () {};
-  unsubCurrentThread: any = function () {};
+  unsubCurrentChannel: any = function () { };
+  unsubCurrentThread: any = function () { };
   // private unsubscribeCurrentChannel?: () => void;
+
+
+  private showMobileDivSubject = new Subject<void>();
+  private backToChannelsSubject = new Subject<void>();
+
+  backToChannels$ = this.backToChannelsSubject.asObservable();
+  showMobileDiv$ = this.showMobileDivSubject.asObservable();
 
   constructor() {
   }
 
 
   // ohne user_id
-  async getChannelsForCurrentUser(){
+  async getChannelsForCurrentUser() {
     const storedUser = localStorage.getItem('currentUser');
-            if (storedUser) {
-                // If the user is logged in, set this.currentUser to the stored user
-                let currentUser = await JSON.parse(storedUser);
-                this.unsubChannels =  this.subChannels(currentUser.id);
-            } 
+    if (storedUser) {
+      // If the user is logged in, set this.currentUser to the stored user
+      let currentUser = await JSON.parse(storedUser);
+      this.unsubChannels = this.subChannels(currentUser.id);
+    }
   }
 
 
-  getDirectChannelId(currentUser_id: string, dm_target_id: string) : string {
+  getDirectChannelId(currentUser_id: string, dm_target_id: string): string {
     let directChannels = this.channels.filter((channel) => channel.channel_type == 'direct');
     let channel = undefined;
     if (currentUser_id == dm_target_id) {
@@ -86,20 +94,20 @@ export class ChannelFirebaseService {
     if (channel) this.currentChannel = channel;
   }
 
-  async getCurrentChannel(channel_id : string) {
+  async getCurrentChannel(channel_id: string) {
     return onSnapshot(this.getChannelRef(channel_id), (channel) => {
       this.currentChannel = this.setChannel(channel.data(), channel.id);
     });
   }
 
-  getCurrentThread(thread_id : string) {
+  getCurrentThread(thread_id: string) {
     return onSnapshot(this.getChannelRef(thread_id), (channel) => {
       this.currentThread = this.setChannel(channel.data(), channel.id);
     });
   }
 
   ngOnDestroy(): void {
-    if(this.unsubChannels === typeof function () {}) this.unsubChannels();
+    if (this.unsubChannels === typeof function () { }) this.unsubChannels();
     this.unsubCurrentChannel();
   }
 
@@ -197,19 +205,30 @@ export class ChannelFirebaseService {
   // }
 
 
-async getAllChannels(): Promise<Channel[]> {
-  const allChannelsQuery = query(this.getChannelsRef());
-  return getDocs(allChannelsQuery).then((querySnapshot) => {
-    this.channels = [];
-    querySnapshot.forEach((doc) => {
-      const channel = this.setChannel(doc.data(), doc.id);
-      this.channels.push(channel);
+  async getAllChannels(): Promise<Channel[]> {
+    const allChannelsQuery = query(this.getChannelsRef());
+    return getDocs(allChannelsQuery).then((querySnapshot) => {
+      this.channels = [];
+      querySnapshot.forEach((doc) => {
+        const channel = this.setChannel(doc.data(), doc.id);
+        this.channels.push(channel);
+      });
+      return this.channels;
+    }).catch(error => {
+      console.error("Fehler beim Abrufen der Kanäle: ", error);
+      return [];
     });
-    return this.channels;
-  }).catch(error => {
-    console.error("Fehler beim Abrufen der Kanäle: ", error);
-    return []; 
-  });
-}
+  }
 
+
+  ////////////////////
+
+
+  showMobileDiv() {
+    this.showMobileDivSubject.next();
+
+  }
+  backToChannels() {
+    this.backToChannelsSubject.next();
+  }
 }
