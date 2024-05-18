@@ -59,7 +59,18 @@ export class MainMenuComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
     if (event.target.innerWidth < 1024) {
-      this.isMenuOpen = false;
+      if (this.isMenuOpen) {
+      this.toggleMenu();
+      }
+    } else {
+      const menuElement = document.getElementById('menu-none');
+      if (menuElement) {
+        menuElement.style.display = 'block';
+      }
+      setTimeout(() => {
+        this.isMenuOpen = true;
+      }, 100);
+      
     }
   }
 }
