@@ -25,9 +25,8 @@
 
     <div class="name-container">
         <div class="name">
-            <!-- <div class="first-name fs-32" *ngIf="isOwnProfile(); else otherUserProfile">{{ userService.currentUser.name }} -->
             <div class="first-name fs-32">{{ isOwnProfile() ? userService.currentUser.name : user?.name }}
-            </div>                                      
+            </div>
             <!-- div zum bearbeiten nur anzeigen, wenn isOwnProfile = true ist -->
             @if (isOwnProfile()) {
             <div class="edit fs-18" #profileBtn (click)="editCurrentUser(profileBtn)">Bearbeiten
@@ -35,13 +34,13 @@
             }
         </div>
 
-        <!-- <ng-template #otherUserProfile>
-            <div class="name fs-32">{{ user?.name }}</div>
-        </ng-template> -->
-
         <div class="status-container">
-            <div class="online-stat-wborder online"></div>
-            <div class="status fs-20">Aktiv</div>
+            <div class="online-status-wborder"
+                [ngClass]="(userService.currentUser.id === user?.id || user?.logged_in) ? 'online' : 'offline'"
+                [class.position-static]="true"></div>
+            <div class="status fs-20"
+                [ngClass]="(userService.currentUser.id === user?.id || user?.logged_in) ? 'status-active' : 'status-offline'">
+                {{ (userService.currentUser.id === user?.id || user?.logged_in) ? 'Aktiv' : 'Offline' }}</div>
         </div>
     </div>
 
@@ -65,7 +64,7 @@
 
     <!-- Button zum Senden einer Nachricht nur anzeigen, wenn isOwnProfile = false ist -->
     @if (!isOwnProfile()) {
-    <div class="message-btn-container">
+    <div (click)="openDirectChannel(user!.id)" class="message-btn-container">
         <button class="btn-primary fs-18">
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_813_12194" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"

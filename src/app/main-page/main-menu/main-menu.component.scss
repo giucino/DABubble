@@ -4,11 +4,9 @@
 .main-menu {
   @include dFlex($fd: column, $jc: flex-start, $ai: flex-start, $gap: 25px);
   background-color: var(--color-white);
-  max-width: 366px;
-  min-width: 366px;
   height: 100%;
   border-radius: 20px;
-  padding: 32px 30px;
+  padding: 0 30px 32px 30px;
   color: var(--color-black);
   overflow-y: auto;
   box-shadow: none;
@@ -71,29 +69,38 @@
   .main-menu {
     min-width: 322px;
   }
-}
 
-@media (max-width: 768px) {
-  .menu-overlay {
-    display: none;
-  }
-
-  .edit-circle {
-    // gibts noch nicht
-    display: block;
+  .menu-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--color-white);
+    padding-top: 32px;
   }
 
 
-  .main-menu {
-    max-width: none;
-    border-radius: 0;
-    width: 100%;
-    position: absolute;
-    top: 140px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 100;
-    //   display: none;
+  @media (max-width: 768px) {
+    .menu-overlay {
+      display: none;
+    }
+
+    .edit-circle {
+      // gibts noch nicht
+      display: block;
+    }
+
+
+    .main-menu {
+      max-width: none;
+      border-radius: 0;
+      width: 100%;
+      position: absolute;
+      top: 140px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      //   display: none;
+    }
   }
 }
