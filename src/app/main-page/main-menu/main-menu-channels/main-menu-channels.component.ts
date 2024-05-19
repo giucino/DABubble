@@ -70,7 +70,7 @@ selectChannel(channelId: string) {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
-    console.log(this.channelService.currentChannel);
+    // console.log(this.channelService.currentChannel);
   }
   
 }

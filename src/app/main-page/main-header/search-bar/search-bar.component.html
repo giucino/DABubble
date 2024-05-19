@@ -1,5 +1,5 @@
 <div class="search-bar-container">
-    <input type="text" matInput placeholder="DABubble durchsuchen" maxlength="20" autocomplete="off"
+    <input type="text" matInput placeholder="DABubble durchsuchen" maxlength="40" autocomplete="off"
     [formControl]="searchControl">
 
     <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,6 +13,7 @@
                 fill="#686868" />
         </g>
     </svg>
+
     
     @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0)) {
     <div class="search-container">
@@ -20,7 +21,7 @@
         <ul class="filtered">
             <span class="categoryName">Users:</span>
             @for(user of filteredUsers; track user.id) {
-            <li>
+            <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn">
                 <div class="user">
                     <div class="user-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img" />

@@ -19,7 +19,7 @@
     <div class="members-list-container">
         <div class="members-list">
             <div *ngFor="let member of currentChannel.members; let index = index" class="member" #profileBtn
-                (click)="openUserProfile(member, profileBtn)">
+                (click)="openUserProfile()" appOpenProfile [userId]="member" [button]="profileBtn">
                 <div class="member-img-container">
                     <img [src]="userService.getUser(member).profile_img" [alt]="userService.getUser(member).name"
                         class="profile-img">
