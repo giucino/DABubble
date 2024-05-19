@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,10 @@ export class SharedService {
 
   backToChannels() {
     this.backToChannelsSubject.next();         
+  }
+
+  subscribeToBackToChannels(toggleMenu: () => void): Subscription {
+    return this.backToChannels$.subscribe(toggleMenu);
   }
 
 }

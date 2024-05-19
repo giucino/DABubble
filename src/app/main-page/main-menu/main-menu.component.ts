@@ -35,46 +35,4 @@ export class MainMenuComponent{
     //   this.isMenuOpen = isOpen;
     // });
   }
-
-  // toggleMenu(): void {
-    //opens smoothly and gives channel + thread the remaining space
-    // this.sharedService.isMenuOpen$.next(this.isMenuOpen);
-    // const menuElement = document.getElementById('menu-none');
-    // if (this.isMenuOpen) {
-    //   this.isMenuOpen = false;
-    //   setTimeout(() => {
-    //     if (menuElement) {
-    //       menuElement.style.display = 'none';
-    //     }
-    //   }, 500);
-    // } else {
-    //   if (menuElement) {
-    //     menuElement.style.display = 'block';
-    //   }
-    //   setTimeout(() => {
-    //     this.isMenuOpen = true;
-    //   }, 100);
-      
-    // }
-
-  // }
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: { target: { innerWidth: number; }; }) {
-  //   if (event.target.innerWidth < 1024) {
-  //     this.isMenuOpen = true;
-    //   if (this.isMenuOpen) {
-    //   this.toggleMenu();
-    //   }
-    // } else {
-    //   const menuElement = document.getElementById('menu-none');
-    //   if (menuElement) {
-    //     menuElement.style.display = 'block';
-    //   }
-    //   setTimeout(() => {
-    //     this.isMenuOpen = true;
-    //   }, 100);
-      
-  //   }
-  // }
 }

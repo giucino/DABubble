@@ -30,11 +30,11 @@ export class MainHeaderComponent {
 
   ngAfterViewInit() {
     this.sharedService.showMobileDiv$.subscribe(() => {
-      const mobileDiv = this.el.nativeElement.querySelector('.mobile');
+      const mobileDiv = this.el.nativeElement.querySelector('.mobileDiv');
       this.renderer.addClass(mobileDiv, 'show');
     });
     this.sharedService.backToChannels$.subscribe(() => {
-      const mobileDiv = this.el.nativeElement.querySelector('.mobile');
+      const mobileDiv = this.el.nativeElement.querySelector('.mobileDiv');
       this.renderer.removeClass(mobileDiv, 'show');
     });
   }

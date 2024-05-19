@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ThreadComponent } from './thread/thread.component';
 import { ThreadService } from '../services/thread.service';
 import { SharedService } from '../services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -21,7 +22,7 @@ import { SharedService } from '../services/shared.service';
 
 export class MainPageComponent {
   isMenuOpen: boolean = true;
-
+  
   constructor(public userService: UserService, 
     public channelService: ChannelFirebaseService, 
     public threadService : ThreadService,
@@ -32,23 +33,13 @@ export class MainPageComponent {
     }
   }
 
-  // toggleMenu(): void {
-  //   this.isMenuOpen = !this.isMenuOpen;
-  // }
 
   ngOnInit(): void {
-    // this.sharedService.backToChannels$.subscribe(() => {
-    //   // this.isMenuOpen = true;
-    //   // if (!this.isMenuOpen) {
-    //     // this.toggleMenu();
-    //     if (this.isMenuOpen) {
-    //       this.toggleMenu();
-    //     }
-        
-    //   //   }
-    // });
+    this.sharedService.backToChannels$.subscribe(() => {
+      this.toggleMenu();
+    });
   }
-
+  
   
 
   toggleMenu(): void {

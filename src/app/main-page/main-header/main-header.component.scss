@@ -58,11 +58,12 @@
   }
 }
 .mobile{
-  display: none;
+  display: none !important;
   position: absolute;
   left: -100%;
   width: 40%;
   transition: 0.5s;
+  z-index: 200;
   background-color: var(--color-bg);
 }
 .backBtn{
