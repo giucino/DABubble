@@ -59,17 +59,18 @@ export class MainMenuComponent{
   // @HostListener('window:resize', ['$event'])
   // onResize(event: { target: { innerWidth: number; }; }) {
   //   if (event.target.innerWidth < 1024) {
-  //     if (this.isMenuOpen) {
-  //     this.toggleMenu();
-  //     }
-  //   } else {
-  //     const menuElement = document.getElementById('menu-none');
-  //     if (menuElement) {
-  //       menuElement.style.display = 'block';
-  //     }
-  //     setTimeout(() => {
-  //       this.isMenuOpen = true;
-  //     }, 100);
+  //     this.isMenuOpen = true;
+    //   if (this.isMenuOpen) {
+    //   this.toggleMenu();
+    //   }
+    // } else {
+    //   const menuElement = document.getElementById('menu-none');
+    //   if (menuElement) {
+    //     menuElement.style.display = 'block';
+    //   }
+    //   setTimeout(() => {
+    //     this.isMenuOpen = true;
+    //   }, 100);
       
   //   }
   // }

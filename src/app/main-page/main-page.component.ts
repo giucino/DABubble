@@ -82,6 +82,7 @@ export class MainPageComponent {
       }
       setTimeout(() => {
         this.isMenuOpen = true;
+        this.threadService.threadOpen = false;
       }, 100);
       
     }

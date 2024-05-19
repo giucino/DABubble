@@ -410,6 +410,24 @@ app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
  
 
 @media (max-width: 768px) {
+  .custom-dialog {
+    .mat-mdc-dialog-container .mdc-dialog__container .mat-mdc-dialog-surface {
+      background-color: unset;
+      box-shadow: unset;
+      width: fit-content;
+      overflow: visible;
+    }
+  
+    &-anchorTopLeft {
+      position: absolute !important;
+      margin: 0 !important;
+    }
+    &-anchorTopRight {
+      position: absolute !important;
+      transform: unset;
+      margin: 0 !important;
+    }
+  }
   app-login{
     height: 690px;
   }
