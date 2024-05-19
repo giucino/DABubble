@@ -18,6 +18,14 @@
   width: 100%;
 }
 
+.menu-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--color-white);
+  padding-top: 32px;
+}
+
 // .menu-open {
 //   transform: translateX(0);
 //   transition: 0.5s;
@@ -70,13 +78,13 @@
     min-width: 322px;
   }
 
-  .menu-header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: var(--color-white);
-    padding-top: 32px;
-  }
+  // .menu-header {
+  //   position: sticky;
+  //   top: 0;
+  //   z-index: 1;
+  //   background-color: var(--color-white);
+  //   padding-top: 32px;
+  // }
 
 
   @media (max-width: 768px) {

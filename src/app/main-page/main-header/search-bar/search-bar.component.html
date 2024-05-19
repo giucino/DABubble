@@ -15,6 +15,19 @@
     </svg>
 
     
+    <!-- <div class="search-container">
+        <app-search-results
+          [filteredUsers]="filteredUsers"
+          [filteredChannels]="filteredChannels"
+          [filteredMessages]="filteredMessages"
+          [searchControl]="searchControl"
+          [userService]="userService"
+        ></app-search-results>
+      </div>
+      
+       -->
+
+
     @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0)) {
     <div class="search-container">
         @if (filteredUsers.length > 0) {
@@ -27,7 +40,8 @@
                         <img [src]="user.profile_img" alt="" class="profile-img" />
                         <div class="online-status-wborder online"></div>
                     </div>
-                    <div class="user-name fs-18">{{user.name}}</div>
+                    <div class="user-name fs-18">{{ userService.getUser(user.id).name }}{{ userService.getUser(user.id).name ===
+                        userService.currentUser?.name ? ' (Du)' : '' }}</div>
                 </div>
             </li>
             }
@@ -38,7 +52,7 @@
         <ul class="filtered">
             <span class="categoryName">Channels:</span>
             @for(channel of filteredChannels; track channel.id) {
-            <li>
+            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
                 <div class="channelList">
                     <div class="img-channel-hash">#</div>
                     <span class="channel-name">{{channel.name}}</span>
@@ -59,7 +73,7 @@
                         <div class="messageHeader">
                             <span class="user-name"></span>
                             <span class="message-time">{{
-                                getChannelCreationTime() }}</span>
+                                displayChannelTime() }}</span>
                         </div>
                         <span>{{message.message.text}}</span>
                         <span class="message-channel-name">{{message.channel_id}}</span>
