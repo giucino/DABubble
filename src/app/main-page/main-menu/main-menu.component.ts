@@ -36,21 +36,21 @@ export class MainMenuComponent{
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
     this.sharedService.isMenuOpen$.next(this.isMenuOpen);
-    // const menuElement = document.getElementById('menu-none');
+    const menuElement = document.getElementById('menu-none');
     if (this.isMenuOpen) {
       this.isMenuOpen = false;
-      // setTimeout(() => {
-      //   if (menuElement) {
-      //     menuElement.style.display = 'none';
-      //   }
-      // }, 500);
+      setTimeout(() => {
+        if (menuElement) {
+          menuElement.style.display = 'none';
+        }
+      }, 500);
     } else {
-      // if (menuElement) {
-        // menuElement.style.display = 'block';
-      // }
-      // setTimeout(() => {
+      if (menuElement) {
+        menuElement.style.display = 'block';
+      }
+      setTimeout(() => {
         this.isMenuOpen = true;
-      // }, 100);
+      }, 100);
       
     }
 
@@ -63,13 +63,13 @@ export class MainMenuComponent{
       this.toggleMenu();
       }
     } else {
-      // const menuElement = document.getElementById('menu-none');
-      // if (menuElement) {
-      //   menuElement.style.display = 'block';
-      // }
-      // setTimeout(() => {
+      const menuElement = document.getElementById('menu-none');
+      if (menuElement) {
+        menuElement.style.display = 'block';
+      }
+      setTimeout(() => {
         this.isMenuOpen = true;
-      // }, 100);
+      }, 100);
       
     }
   }
