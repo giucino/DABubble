@@ -14,11 +14,17 @@ import { debounceTime, Subscription } from 'rxjs';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { SearchService } from '../../../services/search.service';
 import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
+import { Router, RouterModule} from '@angular/router';
+import { ThreadService } from '../../../services/thread.service';
+import { UtilityService } from '../../../services/utility.service';
+import { StateManagementService } from '../../../services/state-management.service';
+// import { SearchResultsComponent } from '../../../shared/search-results/search-results.component';
+
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule, MatInputModule, FormsModule, ReactiveFormsModule, OpenProfileDirective],
+  imports: [CommonModule, MatInputModule, FormsModule, ReactiveFormsModule, OpenProfileDirective, RouterModule],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss',
 })
@@ -30,11 +36,26 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   searchTerm: string = '';
 
+  newDirectChannel : Channel = {
+    id: '',
+    name: 'Direct Channel',
+    description: '',
+    created_at: new Date().getTime(),
+    creator: '',
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.direct,
+  }
+
   constructor(
     public userService: UserService,
     public channelService: ChannelFirebaseService,
-    private messageService: MessageService,
+    public messageService: MessageService,
     public searchService: SearchService,
+    public router: Router,
+    public threadService : ThreadService,
+    public utilityService: UtilityService,
+    private stateService: StateManagementService
   ) {}
 
   ngOnInit(): void {
@@ -63,70 +84,44 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       this.filteredUsers = [];
       this.filteredMessages = [];
     } else if (searchTerm.length > 0) {
-      this.applyFilters(searchTerm);
+      const results = this.searchService.applyFilters(searchTerm);
+      this.filteredUsers = results.users;
+      this.filteredChannels = results.channels;
+      this.filteredMessages = results.messages;
     } else {
-      this.clearFilters();
+      const results = this.searchService.clearFilters();
+      this.filteredUsers = results.users;
+      this.filteredChannels = results.channels;
+      this.filteredMessages = results.messages;
     }
   }
 
-  applyFilters(searchTerm: string): void {
-    this.filteredUsers = this.searchService.filterUsers(
-      searchTerm,
-      this.userService.allUsers
-    );
-    this.filteredChannels = this.searchService.filterChannels(
-      searchTerm,
-      this.channelService.channels
-    );
-    this.filteredMessages = this.searchService.filterMessages(
-      searchTerm,
-      this.messageService.messages
-    );
+  displayChannelTime(): string{
+    return this.utilityService.getChannelCreationTime();
   }
 
-  clearFilters(): void {
-    this.filteredUsers = [];
-    this.filteredChannels = [];
-    this.filteredMessages = [];
-  }
-
-  convertToDate(dateAsNumber: number) {
-    let date = new Date(dateAsNumber);
-    let d: number | string = date.getDate();
-    let m: number | string = date.getMonth() + 1;
-    let y: number | string = date.getFullYear();
-    if (d < 10) d = '0' + d;
-    if (m < 10) m = '0' + m;
-    let result = y + '/' + m + '/' + d;
-    return result;
-  }
-
-  getChannelCreationTime() {
-    const months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
-    let date = new Date(this.channelService.currentChannel.created_at);
-    let d: number | string = date.getDate();
-    let m: number | string = date.getMonth();
-    let y = date.getFullYear();
-    if (
-      this.convertToDate(new Date().getTime()) ==
-      this.convertToDate(this.channelService.currentChannel.created_at)
-    ) {
-      return 'heute';
+  async openDirectChannel(user_id: string): Promise<void> {
+    let channel_id = this.channelService.getDirectChannelId(this.userService.currentUser.id, user_id);
+    if (channel_id != '') {
+      this.router.navigateByUrl('/main-page/' + channel_id);
     } else {
-      return 'am' + ' ' + d + '. ' + months[m] + ' ' + y;
+      channel_id = await this.createNewDirectChannel(user_id);
+      this.router.navigateByUrl('/main-page/' + channel_id);
     }
+    this.closeThread();
+    this.stateService.setSelectedUserId(user_id);
+
+  }
+
+  async createNewDirectChannel(user_id : string) {
+    this.newDirectChannel.creator = this.userService.currentUser.id;
+    this.newDirectChannel.created_at = new Date().getTime();
+    this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
+    return await this.channelService.addChannel(this.newDirectChannel);
+  }
+
+  closeThread() {
+    this.userService.saveLastThread(this.userService.currentUser.id, '');
+    this.threadService.closeThread();
   }
 }

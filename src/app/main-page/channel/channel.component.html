@@ -158,7 +158,7 @@
         <ul class="filtered">
             <span class="categoryName">Channels:</span>
             @for(channel of filteredChannels; track channel.id) {
-            <li>
+            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
                 <div class="channelList">
                     <div class="img-channel-hash">#</div>
                     <span class="channel-name">{{channel.name}}</span>
