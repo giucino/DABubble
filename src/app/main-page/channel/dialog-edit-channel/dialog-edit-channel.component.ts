@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DialogAddMemberMobileComponent } from '../dialog-add-member-mobile/dialog-add-member-mobile.component';
+import { CustomDialogService } from '../../../services/custom-dialog.service';
 
 @Component({
   selector: 'app-dialog-edit-channel',
@@ -30,7 +32,8 @@ export class DialogEditChannelComponent implements OnInit {
     private _ngZone: NgZone,
     public userService: UserService,
     public channelService: ChannelFirebaseService,
-    private router: Router
+    private router: Router,
+    public customDialogService: CustomDialogService,
   ) {}
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -39,6 +42,12 @@ export class DialogEditChannelComponent implements OnInit {
     this.tempChannelName = this.channelService.currentChannel.name;
     this.tempChannelDescription =
       this.channelService.currentChannel.description;
+  }
+
+  openAddUserDialog(button: HTMLElement) { // anderen
+    const component = DialogAddMemberMobileComponent;
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    // this.dialogRef.close();
   }
 
   // private unsubscribe$ = new Subject<void>();

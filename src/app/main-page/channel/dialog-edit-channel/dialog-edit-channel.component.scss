@@ -234,8 +234,19 @@ textarea {
     border-radius: 0px;
     overflow: scroll;
   }
+  .members-list{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
 
   .mobile {
     display: flex;
+  }
+  .btn-add-member {
+    display: flex;
+    flex-direction: row;
+    padding-left: 55px;
+    gap: 20px;
   }
 }
