@@ -14,13 +14,22 @@ import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.s
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
 import { finalize } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, Subscription } from 'rxjs';
+import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
+import { Channel } from '../../interfaces/channel.interface';
+import { SearchService } from '../../services/search.service';
+import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
+
+
 
 
 
 @Component({
   selector: 'app-channel',
   standalone: true,
-  imports: [CommonModule, MessageComponent, FormsModule],
+  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, OpenProfileDirective],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss',
 })
@@ -48,8 +57,12 @@ export class ChannelComponent {
   };
 
   channelId : string = '';
-
   isLoading = false;
+  searchControl = new FormControl();
+  private subscriptions = new Subscription();
+  filteredUsers: User[] = [];
+  filteredChannels: Channel[] = [];
+
 
   constructor(
     public customDialogService: CustomDialogService,
@@ -59,6 +72,7 @@ export class ChannelComponent {
     public activatedRoute: ActivatedRoute,
     private router: Router,
     public threadService : ThreadService,
+    public searchService: SearchService,
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
@@ -67,10 +81,53 @@ export class ChannelComponent {
 
   ngOnInit() {
     this.openChannel();
+    this.subscriptions.add(
+      this.searchControl.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe((value) => {
+          this.filter(value);
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  filter(searchTerm: string): void {
+    if (searchTerm.startsWith('@')) {
+      this.filteredUsers = this.userService.allUsers;
+      this.filteredChannels = [];
+    } else if (searchTerm.startsWith('#')) {
+      this.filteredChannels = this.channelService.channels.filter(
+        (channel) => channel.channel_type === ChannelTypeEnum.main
+      );
+      this.filteredUsers = [];
+    } else if (searchTerm.length > 0) {
+      this.applyFilters(searchTerm);
+    } else {
+      this.clearFilters();
+    }
+  }
+
+  applyFilters(searchTerm: string): void {
+    this.filteredUsers = this.searchService.filterUsers(
+      searchTerm,
+      this.userService.allUsers
+    );
+    this.filteredChannels = this.searchService.filterChannels(
+      searchTerm,
+      this.channelService.channels
+    );
+  }
+
+  clearFilters(): void {
+    this.filteredUsers = [];
+    this.filteredChannels = [];
   }
 
   openChannel(){
-    
+
     this.activatedRoute.params.subscribe(params => {
       if (params['channelId']) {
         this.isLoading = true;
@@ -90,9 +147,6 @@ export class ChannelComponent {
         });
       }
     }); 
-  }
-
-  ngOnDestroy() {
   }
 
   openAddUserDialog(button: HTMLElement) {

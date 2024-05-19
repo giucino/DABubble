@@ -26,7 +26,8 @@
     <div class="channel-header-direct">
         @if (selectedUsers.length > 0) {
         @for(user of selectedUsers; track user.id) {
-        <div class="channel-member" #profileBtn (click)="openUserProfile(user.id, profileBtn)">
+        <div class="channel-member" #profileBtn appOpenProfile
+        [userId]="user.id" [button]="profileBtn">
             <div class="profile-img-container">
                 <img [src]="user.profile_img" alt="" class="profile-img">
                 @if (!user.logged_in){

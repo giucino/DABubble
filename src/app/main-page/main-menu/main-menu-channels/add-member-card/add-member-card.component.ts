@@ -10,14 +10,12 @@ import { UserService } from '../../../../firebase.service/user.service';
 import { User } from '../../../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../../../firebase.service/channelFirebase.service';
 import { UserManagementService } from '../../../../services/user-management.service';
-import { CustomDialogService } from '../../../../services/custom-dialog.service';
-import { ProfileService } from '../../../../services/profile.service';
-import { DialogShowProfileComponent } from '../../../../shared/dialog-show-profile/dialog-show-profile.component';
+import { OpenProfileDirective } from '../../../../shared/directives/open-profile.directive';
 
 @Component({
   selector: 'app-add-member-card',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatRadioModule, FormsModule],
+  imports: [CommonModule, MatDialogModule, MatRadioModule, FormsModule, OpenProfileDirective],
   providers: [
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } },
   ],
@@ -35,8 +33,6 @@ export class AddMemberCardComponent {
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public userManagementService: UserManagementService,
-    public customDialogService: CustomDialogService,
-    private profileService: ProfileService
   ) {}
 
   onFilterUsers(): void {
@@ -70,14 +66,5 @@ export class AddMemberCardComponent {
     } else {
       console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
     }
-  }
-
-  openUserProfile(userId: string, button: HTMLElement): void {
-    this.profileService.setOwnProfileStatus(false);
-    this.profileService.setViewingUserId(userId);
-
-    const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
-    // this.dialogRef.close();
   }
 }
