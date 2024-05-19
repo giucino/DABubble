@@ -68,11 +68,14 @@ export class MainPageComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
-    if (event.target.innerWidth < 1024 && event.target.innerWidth > 768) {
+    if (event.target.innerWidth < 1500 && event.target.innerWidth > 768) {
       if (this.isMenuOpen) {
       this.toggleMenu();
       }
-    } else {
+    } if (event.target.innerWidth < 768) {
+      //nothing
+    }
+    else {
       const menuElement = document.getElementById('menu-none');
       if (menuElement) {
         menuElement.style.display = 'block';
