@@ -425,6 +425,7 @@ app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
     &-anchorTopRight {
       position: absolute !important;
       transform: unset;
+      width: 100% !important;
       margin: 0 !important;
     }
   }

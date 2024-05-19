@@ -343,6 +343,9 @@ input, textarea {
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
+.mobile{
+  display: none;
+}
 
 /* Safari */
 @-webkit-keyframes spin {
@@ -358,5 +361,11 @@ input, textarea {
 @media (max-width: 768px) {
   .channel-container{
     border-radius: 0;
+  }
+  .btn-icon-v4, .channel-members-info{
+    display: none;
+  }
+  .mobile{
+    display: flex;
   }
 }
