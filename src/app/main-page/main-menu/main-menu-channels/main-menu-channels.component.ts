@@ -12,6 +12,7 @@ import { ThreadService } from '../../../services/thread.service';
 import { MainMenuComponent } from '../main-menu.component';
 import { SharedService } from '../../../services/shared.service';
 import { StateManagementService } from '../../../services/state-management.service';
+import { MainPageComponent } from '../../main-page.component';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -35,6 +36,7 @@ export class MainMenuChannelsComponent implements OnInit {
     public mainmenu: MainMenuComponent,
     public sharedService: SharedService,
     private stateService: StateManagementService,
+    public mainpage: MainPageComponent
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +52,10 @@ selectChannel(channelId: string) {
 
 
   mobileChange() {
-    this.mainmenu.toggleMenu();
+    this.mainpage.toggleMenu();
+    // this.mainmenu.toggleMenu();
     this.sharedService.showMobileDiv();
+    this.closeThread();
   }
 
   toggleExpansion(): void {

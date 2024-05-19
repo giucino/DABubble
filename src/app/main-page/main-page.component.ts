@@ -38,7 +38,8 @@ export class MainPageComponent {
 
   ngOnInit(): void {
     this.sharedService.backToChannels$.subscribe(() => {
-      this.isMenuOpen = true;
+      // this.isMenuOpen = true;
+      this.toggleMenu();
     });
   }
 

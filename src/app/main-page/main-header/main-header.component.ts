@@ -8,6 +8,7 @@ import { UserService } from '../../firebase.service/user.service';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { SharedService } from '../../services/shared.service';
+import { MainPageComponent } from '../main-page.component';
 @Component({
   selector: 'app-main-header',
   standalone: true,
@@ -18,11 +19,13 @@ import { SharedService } from '../../services/shared.service';
 export class MainHeaderComponent {
   anonymImg = 'assets/img/person.png';
   serverName: any = 'Dabbuble';
-  
-  constructor( private customDialogService: CustomDialogService,
+  isMenuOpen: boolean = true;
+
+  constructor(private customDialogService: CustomDialogService,
     public userService: UserService, public channelService: ChannelFirebaseService,
     private renderer: Renderer2, private el: ElementRef,
-    public sharedService: SharedService) {
+    public sharedService: SharedService,
+    public mainPage: MainPageComponent) {
   }
 
   ngAfterViewInit() {
@@ -37,6 +40,10 @@ export class MainHeaderComponent {
   }
 
   ngOnInit() {
+    // this.sharedService.backToChannels$.subscribe(() => {
+    //   // this.mainPage.toggleMenu();
+    //   this.isMenuOpen = true;
+    // });
   }
 
   backToChannels() {

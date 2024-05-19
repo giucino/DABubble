@@ -22,11 +22,7 @@ export class SharedService {
   }
 
   backToChannels() {
-    this.backToChannelsSubject.next();
+    this.backToChannelsSubject.next();         
   }
-
-
-
-
 
 }
