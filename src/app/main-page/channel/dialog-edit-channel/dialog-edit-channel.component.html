@@ -93,6 +93,28 @@
       <div class="headline">Erstellt von</div>
       <div class="channel-creator fs-24">{{ getCreatorName(channelService.currentChannel.creator) }}</div>
     </div>
+
+    <div class="mobile">
+      <div class="headline">Mitglieder</div>
+      <div class="members-list">
+        @for(user of userService.allUsers; track user.id) {
+          @if(user.id != userService.currentUser?.id ) {
+          <div class="channel-header-direct">
+              <div class="channel-member" [class.selected]="user.id === selectedUserId">
+                  <div class="profile-img-container">
+                      <img [src]="user.profile_img" alt="" class="profile-img">
+                      <div class="online-status-wborder" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
+                  </div>
+      
+                  <div class="channel-member-name fs-18">
+                      {{ user.name }}
+                  </div>
+              </div>
+          </div>
+          }
+          }
+      </div>
+    </div>
   </div>
   <!-- leaving channel btn -->
   <button class="btn-primary" (click)="leaveChannel()">Channel verlassen</button>

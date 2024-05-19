@@ -19,3 +19,15 @@
     }
   }
 }
+
+
+
+@media (max-width: 768px) {
+  .dialog-add-member {
+    width: calc(100dvw - 20px);
+    position: relative;
+    left: 10px;
+    top: 220px;
+    border-radius: 30px;
+  }
+}

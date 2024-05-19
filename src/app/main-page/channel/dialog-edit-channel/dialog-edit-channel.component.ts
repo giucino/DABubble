@@ -23,6 +23,7 @@ export class DialogEditChannelComponent implements OnInit {
   editChannelDescription: boolean = false;
   tempChannelName!: string;
   tempChannelDescription!: string;
+  selectedUserId: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditChannelComponent>,
