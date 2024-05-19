@@ -31,6 +31,9 @@ export class MainMenuComponent{
     // this.sharedService.backToChannels$.subscribe(() => {
     //   this.isMenuOpen = true;
     // });
+    // this.sharedService.isMenuOpen$.subscribe((isOpen) => {
+    //   this.isMenuOpen = isOpen;
+    // });
   }
 
   // toggleMenu(): void {

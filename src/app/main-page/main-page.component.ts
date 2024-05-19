@@ -37,10 +37,16 @@ export class MainPageComponent {
   // }
 
   ngOnInit(): void {
-    this.sharedService.backToChannels$.subscribe(() => {
-      // this.isMenuOpen = true;
-      this.toggleMenu();
-    });
+    // this.sharedService.backToChannels$.subscribe(() => {
+    //   // this.isMenuOpen = true;
+    //   // if (!this.isMenuOpen) {
+    //     // this.toggleMenu();
+    //     if (this.isMenuOpen) {
+    //       this.toggleMenu();
+    //     }
+        
+    //   //   }
+    // });
   }
 
   toggleMenu(): void {
@@ -68,14 +74,21 @@ export class MainPageComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
-    if (event.target.innerWidth < 1500 && event.target.innerWidth > 768) {
-      if (this.isMenuOpen) {
-      this.toggleMenu();
-      }
+    if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && this.isMenuOpen) {
+      this.isMenuOpen = false;
+      
+    const menuElement = document.getElementById('menu-none');
+      setTimeout(() => {
+        if (menuElement) {
+          menuElement.style.display = 'none';
+        }
+      }, 500);
     } if (event.target.innerWidth < 768) {
       //nothing
     }
     else {
+      
+
       const menuElement = document.getElementById('menu-none');
       if (menuElement) {
         menuElement.style.display = 'block';
@@ -84,7 +97,7 @@ export class MainPageComponent {
         this.isMenuOpen = true;
         this.threadService.threadOpen = false;
       }, 100);
-      
     }
+    
   }
 }
