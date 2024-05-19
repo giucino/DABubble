@@ -42,8 +42,6 @@ export class DialogAddMemberComponent implements OnInit {
       this.selectedUsers = this.userService.getUsersByIds(this.channelService.currentChannel.members);
       this.newlyAddedUsers = [];
     }
-    this.onFilterUsers();    
-    console.log('filteredUsers:', this.filteredUsers);
   }
 
   onFilterUsers(): void {

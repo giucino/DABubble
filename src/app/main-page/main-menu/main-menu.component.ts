@@ -2,10 +2,10 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MainMenuHeaderComponent } from './main-menu-header/main-menu-header.component';
-import { MainMenuChannelsComponent } from './main-menu-channels/main-menu-channels.component';
 import { MainMenuDmComponent } from './main-menu-dm/main-menu-dm.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { SharedService } from '../../services/shared.service';
+import { MainMenuChannelsComponent } from './main-menu-channels/main-menu-channels.component';
 
 @Component({
   selector: 'app-main-menu',
@@ -14,13 +14,13 @@ import { SharedService } from '../../services/shared.service';
     CommonModule,
     MatCardModule,
     MainMenuHeaderComponent,
-    MainMenuChannelsComponent,
     MainMenuDmComponent,
+    MainMenuChannelsComponent
   ],
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.scss',
 })
-export class MainMenuComponent implements OnInit {
+export class MainMenuComponent{
   isMenuOpen: boolean = true;
 
   constructor(public channelService: ChannelFirebaseService, public sharedService: SharedService) {
@@ -36,21 +36,21 @@ export class MainMenuComponent implements OnInit {
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
     this.sharedService.isMenuOpen$.next(this.isMenuOpen);
-    const menuElement = document.getElementById('menu-none');
+    // const menuElement = document.getElementById('menu-none');
     if (this.isMenuOpen) {
       this.isMenuOpen = false;
-      setTimeout(() => {
-        if (menuElement) {
-          menuElement.style.display = 'none';
-        }
-      }, 500);
+      // setTimeout(() => {
+      //   if (menuElement) {
+      //     menuElement.style.display = 'none';
+      //   }
+      // }, 500);
     } else {
-      if (menuElement) {
-        menuElement.style.display = 'block';
-      }
-      setTimeout(() => {
+      // if (menuElement) {
+        // menuElement.style.display = 'block';
+      // }
+      // setTimeout(() => {
         this.isMenuOpen = true;
-      }, 100);
+      // }, 100);
       
     }
 
@@ -63,13 +63,13 @@ export class MainMenuComponent implements OnInit {
       this.toggleMenu();
       }
     } else {
-      const menuElement = document.getElementById('menu-none');
-      if (menuElement) {
-        menuElement.style.display = 'block';
-      }
-      setTimeout(() => {
+      // const menuElement = document.getElementById('menu-none');
+      // if (menuElement) {
+      //   menuElement.style.display = 'block';
+      // }
+      // setTimeout(() => {
         this.isMenuOpen = true;
-      }, 100);
+      // }, 100);
       
     }
   }

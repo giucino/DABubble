@@ -332,6 +332,14 @@ button {
   background-color: var(--color-gray) !important;
 }
 
+.status-active {
+  color: var(--color-online);
+}
+
+.status-offline {
+  color: var(--color-gray)
+}
+
 /* scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
