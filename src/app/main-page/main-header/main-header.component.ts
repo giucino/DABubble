@@ -40,10 +40,6 @@ export class MainHeaderComponent {
   }
 
   ngOnInit() {
-    // this.sharedService.backToChannels$.subscribe(() => {
-    //   // this.mainPage.toggleMenu();
-    //   this.isMenuOpen = true;
-    // });
   }
 
   backToChannels() {

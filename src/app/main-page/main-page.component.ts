@@ -49,6 +49,8 @@ export class MainPageComponent {
     // });
   }
 
+  
+
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
     this.sharedService.isMenuOpen$.next(this.isMenuOpen);
@@ -74,29 +76,27 @@ export class MainPageComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
-    if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && this.isMenuOpen) {
-      this.isMenuOpen = false;
-      
-    const menuElement = document.getElementById('menu-none');
-      setTimeout(() => {
-        if (menuElement) {
-          menuElement.style.display = 'none';
-        }
-      }, 500);
-    } if (event.target.innerWidth < 768) {
+    if (event.target.innerWidth < 1200 && event.target.innerWidth > 768 && this.isMenuOpen) {
+      this.toggleMenu();
+      this.sharedService.showMobileDiv();
+    } if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && !this.isMenuOpen) {
+      //nothing
+    } 
+    if (event.target.innerWidth < 768) {
       //nothing
     }
     else {
-      
-
-      const menuElement = document.getElementById('menu-none');
-      if (menuElement) {
-        menuElement.style.display = 'block';
+      if (event.target.innerWidth > 1200 && !this.isMenuOpen) {
+        this.toggleMenu();
       }
-      setTimeout(() => {
-        this.isMenuOpen = true;
-        this.threadService.threadOpen = false;
-      }, 100);
+      // const menuElement = document.getElementById('menu-none');
+      // if (menuElement) {
+      //   menuElement.style.display = 'block';
+      // }
+      // setTimeout(() => {
+      //   this.isMenuOpen = true;
+      //   this.threadService.threadOpen = false;
+      // }, 100);
     }
     
   }

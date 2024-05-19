@@ -18,7 +18,6 @@ export class SharedService {
 
   showMobileDiv() {
     this.showMobileDivSubject.next();
-
   }
 
   backToChannels() {
