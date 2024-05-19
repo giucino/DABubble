@@ -1,8 +1,17 @@
 <div class="header-content">
 
-    <div class="logo-container">
+    <div class="logo-container main">
         <img class="logo" src="../../../assets/img/logo.png" alt="Logo">
         <p class="logo-text">DABubble</p>
+    </div>
+    
+    <div class="logo-container mobile mobileDiv">
+        <div class="backBtn">
+            <img (click)="backToChannels()" src="assets/img/keyboard_arrow_down.png" alt="">
+        </div>
+        <img class="logo" src="assets/img/workspace.png" alt="Server logo">
+        <p class="logo-text">Devspace</p>
+        <!-- name auf server name ändern -->
     </div>
 
     <app-search-bar class="search-bar"></app-search-bar>
@@ -11,12 +20,7 @@
         <span class="name fs-32">{{userService.currentUser?.name}}</span>
         <div class="avatar">
             <img [src]="userService.currentUser.profile_img" class="profile-img">
-            <!-- @if (userService.currentUser.logged_in){ -->
             <div class="online-status-wborder online"></div>
-            <!-- } -->
-            <!-- @if (!userService.currentUser.logged_in){
-            <div class="online-status-wborder offline"></div>
-            } -->
         </div>
         <div class="menu-btn">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">

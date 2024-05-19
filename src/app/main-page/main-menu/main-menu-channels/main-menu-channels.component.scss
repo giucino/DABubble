@@ -39,7 +39,7 @@
     }
   }
 
-  .menu-channel-content {
+  .menu-channel-content, .menu-channel-content-mobile {
     @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
     font-size: 18px;
     font-weight: 400;
@@ -103,4 +103,17 @@
       }
     }
   }
+}
+.menu-channel-content-mobile{
+  display: none !important;
+
+}
+@media (max-width: 1024px) {
+  .menu-channel-content{
+    display: none !important;
+  }
+  .menu-channel-content-mobile{
+    display: block !important;
+  }
+
 }

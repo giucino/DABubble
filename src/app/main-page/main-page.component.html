@@ -1,7 +1,7 @@
 <div class="main-page">
   <app-main-header></app-main-header>
   <div class="content">
-    <app-main-menu class="main-menu" [class.main-menu-hidden]="!isMenuOpen"></app-main-menu>
+    <app-main-menu id="menu-none" class="main-menu" [class.main-menu-hidden]="!isMenuOpen"></app-main-menu>
     <div class="channel" [class.channel-expanded]="!isMenuOpen">
       <router-outlet></router-outlet>
     </div>

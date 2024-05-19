@@ -17,6 +17,7 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
+import { Subject } from 'rxjs';
 import { runTransaction } from 'firebase/firestore';
 
 @Injectable({
@@ -48,9 +49,11 @@ export class ChannelFirebaseService {
     channel_type: ChannelTypeEnum.thread,
   };
 
+
+
   unsubChannels: any;
-  unsubCurrentChannel: any = function () {};
-  unsubCurrentThread: any = function () {};
+  unsubCurrentChannel: any = function () { };
+  unsubCurrentThread: any = function () { };
   // private unsubscribeCurrentChannel?: () => void;
 
   constructor() {}
@@ -64,6 +67,7 @@ export class ChannelFirebaseService {
       this.unsubChannels = this.subChannels(currentUser.id);
     }
   }
+
 
   getDirectChannelId(currentUser_id: string, dm_target_id: string): string {
     let directChannels = this.channels.filter(
