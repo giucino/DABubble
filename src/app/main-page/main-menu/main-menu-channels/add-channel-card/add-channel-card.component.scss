@@ -72,3 +72,28 @@
     }
   }
 }
+
+
+@media (max-width: 768px) {
+  .mat-card-custom{
+    justify-content: unset;
+    width: 100dvw;
+    height: 100dvh;
+    min-width: 100dvw;
+    border-radius: 0;
+    gap: 0;
+    left: -80px; // ein justify content center vom cdk global overlay wrapper wird hiermit ausgeglichen
+    .mat-card-title-custom{
+      margin-bottom: 40px;
+    }
+    .mat-dialog-content-custom{
+      justify-content: unset;
+      align-items: unset;
+      padding: 20px 0;
+      flex-grow: unset;
+    }
+  }
+
+
+
+}
