@@ -238,9 +238,38 @@ input, textarea {
   }
 }
 
+
+/* attachement */
+.attachement-container {
+  position: relative;
+  max-height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  .overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.2);
+  }
+  .buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  &:hover {
+    .overlay {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+} 
+
 /* attachement pdf */
 .attachement-pdf {
-  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,13 +288,22 @@ input, textarea {
     align-items: center;
     justify-content: center;
   }
+  .file-name {
+    color: var(--color-black);
+  }
 }
 
 
 /* attachement img */ 
 .attachement-img {
+  position: relative;
   img {
     max-height: 300px;
     border-radius: 8px;
+  }
+  .download-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }

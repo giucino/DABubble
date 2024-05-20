@@ -17,7 +17,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-import { getMetadata } from '@angular/fire/storage';
+import { getBlob, getMetadata } from '@angular/fire/storage';
 import { error } from 'console';
 
 @Injectable({
@@ -183,6 +183,40 @@ export class MessageService {
       type : metadata.contentType,
       url : url,
      }
+  }
+
+  async downloadFile(path: string) {
+    const storage = getStorage();
+    const storageRef = ref(storage, path);
+    const metadata = await getMetadata(storageRef);
+    const url = await getDownloadURL(storageRef);
+    try {
+        // Bilddaten als Blob holen
+        const response = await fetch(url, { mode: 'cors' });
+        if (!response.ok) throw new Error('Netzwerkantwort war nicht ok.');
+
+        const blob = await response.blob();
+
+        // Blob-URL erstellen
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        // Temporären Link erstellen
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = metadata.name;
+
+        // Link zum DOM hinzufügen
+        document.body.appendChild(a);
+        a.click();
+
+        // Bereinigen
+        window.URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(a);
+
+    } catch (error) {
+        console.error('Fehler beim Herunterladen des Bildes:', error);
+    }
   }
 
   // async getStorageFileURL(path: string) {
