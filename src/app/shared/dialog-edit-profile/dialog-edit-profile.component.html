@@ -1,4 +1,6 @@
-<section class="show-profile-dialog">
+<form (ngSubmit)="onSubmit()" class="form">
+
+<section class="show-profile-dialog" [formGroup]="editForm">
 
     <div class="profile-head">
         <div class="profile-headline fs-24">Dein Profil bearbeiten</div>
@@ -38,7 +40,7 @@
                 <div class="email-label fs-20">Vollständiger Name</div>
             </div>
             <div class="input-field fs-18">
-                <input type="text" [(ngModel)]="editableName" placeholder={{userService.currentUser?.name}}>
+                <input type="text" formControlName="name" placeholder={{userService.currentUser?.name}}>
             </div>
         </div>
 
@@ -57,15 +59,19 @@
                 </svg>
                 <div class="email-label fs-20">E-Mail-Adresse</div>
             </div>
-            <div class="input-field fs-18">
+            <!-- <div class="input-field fs-18">
                 @if (userService.currentUser?.email == userAuth.googleEmail) {
-                    <input type="text" placeholder="Kann hier nicht bearbeitet werden" disabled>
+                    <input type="email" formControlName="email" placeholder="Kann hier nicht bearbeitet werden" disabled>
                 }
                 @if (userService.currentUser?.email != userAuth.googleEmail){
-                    <input type="text" [(ngModel)]="editableEmail" placeholder={{userService.currentUser?.email}}>
+                    <input type="email" formControlName="email" [(ngModel)]="editableEmail" placeholder={{userService.currentUser?.email}}>
                 }
-                
+            </div> -->
+
+            <div class="input-field fs-18">
+                <input type="email" formControlName="email" [placeholder]="emailPlaceholder()">
             </div>
+            
         </div>
     </div>
 
@@ -73,8 +79,9 @@
         <button class="btn-secondary fs-18" [mat-dialog-close]>
             Abbrechen
         </button>
-        <button class="btn-primary fs-18" (click)="saveEditedUser()">
+        <button type="submit" class="btn-primary fs-18" [disabled]="!editForm.valid">
             Speichern
         </button>
     </div>
 </section>
+</form>
