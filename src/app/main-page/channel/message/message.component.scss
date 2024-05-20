@@ -243,6 +243,7 @@ input, textarea {
 .attachement-container {
   position: relative;
   max-height: 300px;
+  max-width: fit-content;
   border-radius: 8px;
   overflow: hidden;
   .overlay {

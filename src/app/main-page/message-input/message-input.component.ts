@@ -43,7 +43,7 @@ export class MessageInputComponent {
 
   }
 
-  async saveMessage() {
+  async saveMessage(channelInput : HTMLDivElement, fileInput : HTMLInputElement) {
     if (this.messageInput != '' || this.currentFile != null) {
       // create new message and receive message id
       this.message.user_id = this.currentUser.id;
@@ -62,7 +62,8 @@ export class MessageInputComponent {
         this.messageService.updateMessage(this.message);
       }
       // empty input
-      this.messageInput = '';
+      channelInput.innerText = '';
+      this.removeFile(fileInput);
     }
   }
 
