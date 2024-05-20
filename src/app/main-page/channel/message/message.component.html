@@ -8,7 +8,22 @@
                 <span class="time fs-14">{{ getTime(this.message.created_at) }} Uhr</span>
             </div>
             <div class="message">
-                {{ message.message.text }}
+                <div class="text">{{ message.message.text }}</div>
+                @if(this.message.message.attachements) {
+                    @for(attachement of message.message.attachements; track attachement) {
+                            @if(attachementData(attachement)?.type == 'application/pdf' && attachementData(attachement).url) { <!-- pdf type -->
+                                <a class="attachement-pdf" href="{{attachementData(attachement)?.url}}" target="_blank">
+                                    <div class="pdf-icon"><b>pdf</b></div>
+                                    <div class="file-name">{{attachementData(attachement).name}}</div>
+                                </a>
+                            }
+                            @else { <!-- image type -->
+                                <div class="attachement-img">
+                                    <img src="{{attachementData(attachement)?.url}}" alt="">
+                                </div>
+                            }
+                    }
+                }
             </div>
             @if (currentChannel.channel_type != 'thread' && message.total_replies && message.total_replies > 0) {
                 <div class="replies">

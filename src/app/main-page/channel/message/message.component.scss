@@ -237,3 +237,35 @@ input, textarea {
     }
   }
 }
+
+/* attachement pdf */
+.attachement-pdf {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--color-bg);
+  background-color: var(--color-bg);
+  border-radius: 8px;
+  padding: 8px;
+  .pdf-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: var(--color-error);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+/* attachement img */ 
+.attachement-img {
+  img {
+    max-height: 300px;
+    border-radius: 8px;
+  }
+}

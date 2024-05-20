@@ -31,7 +31,7 @@ export class MessageInputComponent {
     last_reply: 0,
   };
 
-  currentFiles : any[] = [];
+  // currentFiles : any[] = [];
   currentFile : any | null = null;
 
   constructor(
@@ -42,14 +42,25 @@ export class MessageInputComponent {
 
   }
 
-  saveMessage() {
-    if (this.messageInput != '') {
+  async saveMessage() {
+    if (this.messageInput != '' || this.currentFile != null) {
+      // create new message and receive message id
       this.message.user_id = this.currentUser.id;
       this.message.message.text = this.messageInput;
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
       this.message.channel_id = this.channelService.currentChannel.id;
-      this.messageService.addMessage(this.message);
+      this.message.id = await this.messageService.addMessage(this.message);
+      // overwrite message information
+      // upload currentFile
+      if(this.currentFile != null) {
+        const path = 'users/' + this.currentUser.id + '/messages/' + this.message.id + '/' + this.currentFile.name;
+        this.messageService.uploadFile(this.currentFile,path);
+        this.message.message.attachements = [];
+        this.message.message.attachements.push(path);
+        this.messageService.updateMessage(this.message);
+      }
+      // empty input
       this.messageInput = '';
     }
   }
@@ -85,11 +96,6 @@ export class MessageInputComponent {
   }
 
   addDocument(event : Event) {
-    // this.currentFiles = event.target.files;
-    // [...this.currentFiles].forEach((file) => {
-    //   file.URL = this.createURL(file);
-    // })
-    // console.log(this.currentFiles);
     const input = event.target as HTMLInputElement;
     if(input.files && input.files.length) {
       const file = input.files[0];

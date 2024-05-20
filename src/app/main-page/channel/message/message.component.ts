@@ -45,6 +45,8 @@ export class MessageComponent {
   // messages: Message[] = this.messageService.messages;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
+  attachementsData : any[] = [];
+
   constructor(
     public messageService: MessageService,
     public userService: UserService,
@@ -57,10 +59,29 @@ export class MessageComponent {
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
+    // get attachements data
+    this.getAttachementsData();
   }
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
+  }
+
+  async getAttachementsData() {
+    const messageAttachementsPaths = this.message.message.attachements;
+    if (messageAttachementsPaths) {
+      this.attachementsData = [];
+      messageAttachementsPaths.forEach(async (path) => {
+        const attachement = await this.messageService.getFileData(path);
+        this.attachementsData.push(attachement);
+        console.log(this.attachementsData);
+      })
+    }
+  }
+
+  attachementData(path : string) {
+    let attachementData = this.attachementsData.find((data) => data.path == path);
+    return attachementData;
   }
 
   isCurrentUser(): boolean {
@@ -149,7 +170,6 @@ export class MessageComponent {
       this.threadService.openThread();
     }
   }
-
 
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
