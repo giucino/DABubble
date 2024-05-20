@@ -33,6 +33,7 @@ export class MessageInputComponent {
 
   // currentFiles : any[] = [];
   currentFile : any | null = null;
+  errorMessage : string = '';
 
   constructor(
     public userService : UserService,
@@ -103,13 +104,15 @@ export class MessageInputComponent {
       this.currentFile.URL = this.createURL(file);
       if(file.size > 500 * 1024) { //500KB
         this.currentFile = null;
-        alert('Die Datei ist zu groß. Max. 500KB.');
+        this.errorMessage = 'Die Datei ist zu groß. Max. 500KB.';
+        setTimeout(() => this.errorMessage = '', 5000);
       }
 
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'application/pdf'];
       if(!allowedTypes.includes(file.type)) {
         this.currentFile = null;
-        alert('Ungültiger Dateityp. Bitte wählen Sie eine Bild- oder PDF-Datei.');
+        this.errorMessage = 'Ungültiger Dateityp. Bitte wählen Sie eine Bild- oder PDF-Datei.';
+        setTimeout(() => this.errorMessage = '', 5000);
       }
     }
   }
@@ -118,8 +121,9 @@ export class MessageInputComponent {
     return URL.createObjectURL(file);
   }
 
-  removeFile() {
+  removeFile(input : HTMLInputElement) {
     this.currentFile = null;
+    input.value = '';
   }
 
 }
