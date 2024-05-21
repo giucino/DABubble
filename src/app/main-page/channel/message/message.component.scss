@@ -63,7 +63,8 @@
   .name {
     font-weight: 700;
   }
-  .time {
+  .time,
+  .edited {
     color: var(--color-gray);
   }
 }
@@ -236,4 +237,83 @@ input, textarea {
       font-weight: 700;
     }
   }
+}
+
+
+/* attachement */
+.attachement-container {
+  position: relative;
+  display: flex;
+  max-height: 300px;
+  max-width: fit-content;
+  border-radius: 8px;
+  overflow: hidden;
+  .overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.2);
+  }
+  .buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  &:hover {
+    .overlay {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+} 
+
+.attachement-deleted {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray);
+}
+
+/* attachement pdf */
+.attachement-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--color-bg);
+  background-color: var(--color-bg);
+  border-radius: 8px;
+  padding: 8px;
+  .pdf-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: var(--color-error);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .file-name {
+    color: var(--color-black);
+  }
+}
+
+
+/* attachement img */ 
+.attachement-img {
+    max-height: 300px;
+    max-width: 100%;
+    min-width: 120px;
+    border-radius: 8px;
+    min-height: 100px;
 }

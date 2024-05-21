@@ -30,12 +30,10 @@ export class DialogEditProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getCurrentUser().then(() => {
-      console.log(this.userService.currentUser);
-      const user: User = this.userService.currentUser;
+    this.userAuth.currentUser().then((user) => {
       if (user) {
         this.editForm.patchValue({
-          name: user.name,
+          name: user.displayName,
           email: user.email,
         });
         if (this.isEmailDisabled()) {
@@ -43,7 +41,7 @@ export class DialogEditProfileComponent implements OnInit {
         } else {
           this.editForm.get('email')?.enable();
         }
-        console.log(this.editForm.get('email')?.value);
+        // console.log(this.editForm.get('email')?.value);
       }
     });
   }
@@ -56,26 +54,37 @@ export class DialogEditProfileComponent implements OnInit {
 
   isEmailDisabled(): boolean {
     return this.userService.currentUser?.email == this.userAuth.googleEmail;
-  } 
+  }
 
   async onSubmit(): Promise<void> {
     if (this.editForm.valid) {
-      const name = this.editForm.get('name')?.value || '';
+      const displayName = this.editForm.get('name')?.value || '';
       const email = this.editForm.get('email')?.value || '';
-      const updatedUser: User = {
-        ...this.userService.currentUser, 
-        name: name, 
-        email: email 
-      };
+  
       try {
-        await this.userService.updateUser(updatedUser as any);
-        this.dialogRef.close();
-        console.log('Benutzer erfolgreich aktualisiert.');
-      } catch (error) {
-        console.error('Update fehlgeschlagen:', error);
+        await this.userAuth.updateUserProfile({
+          displayName: displayName,
+          email: email,
+        });
+        
+        const tempSubscription = this.userService
+        .getRealtimeUser(this.userService.currentUser.id)
+        .subscribe({
+          next: (user) => {
+            this.userService.currentUser = user;
+            tempSubscription.unsubscribe();
+            // console.log('subscribed', this.userService.currentUser);
+            // console.log('Unsubscribed after single use');
+            this.dialogRef.close();
+          },
+            error: (error) => {
+              console.error('Failed to get user data:', error);
+              tempSubscription.unsubscribe();
+            },
+          });
+        } catch (error) {
+          console.error('Fehler beim Aktualisieren des Benutzers:', error);
+        }
       }
-    } else {
-      console.log('Formular ist nicht gültig');
     }
-  }
 }
