@@ -63,7 +63,8 @@
   .name {
     font-weight: 700;
   }
-  .time {
+  .time,
+  .edited {
     color: var(--color-gray);
   }
 }
@@ -270,6 +271,18 @@ input, textarea {
   }
 } 
 
+.attachement-deleted {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray);
+}
+
 /* attachement pdf */
 .attachement-pdf {
   display: flex;
@@ -300,6 +313,7 @@ input, textarea {
 .attachement-img {
     max-height: 300px;
     max-width: 100%;
+    min-width: 120px;
     border-radius: 8px;
     min-height: 100px;
 }

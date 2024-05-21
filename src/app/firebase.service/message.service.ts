@@ -17,7 +17,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-import { getBlob, getMetadata } from '@angular/fire/storage';
+import { deleteObject, getBlob, getMetadata } from '@angular/fire/storage';
 import { error } from 'console';
 
 @Injectable({
@@ -102,7 +102,7 @@ export class MessageService {
       messages.forEach((message) => {
         this.messages.push(this.setMessage(message.data(), message.id));
       });
-      console.log('Snapshot Messages: ',this.messages)
+      console.log('Snapshot Messages: ', this.messages);
     });
   }
 
@@ -143,7 +143,6 @@ export class MessageService {
 
   /* STORAGE */
 
-
   uploadFile(file: File, path: string): Promise<void> {
     return new Promise((resolve, reject) => {
       // const path = file.type == 'application/pdf' ? 'pdfs/' + file.name : 'images/' + file.name;
@@ -152,8 +151,7 @@ export class MessageService {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-        },
+        (snapshot) => {},
         (error) => {
           reject(error);
         },
@@ -164,17 +162,17 @@ export class MessageService {
     });
   }
 
-  async getFileData(path : string) {
+  async getFileData(path: string) {
     const storage = getStorage();
     const storageRef = ref(storage, path);
     const url = await getDownloadURL(storageRef);
     const metadata = await getMetadata(storageRef);
     return {
-      path : path,
-      name : metadata.name,
-      type : metadata.contentType,
-      url : url,
-     }
+      path: path,
+      name: metadata.name,
+      type: metadata.contentType,
+      url: url,
+    };
   }
 
   async downloadFile(path: string) {
@@ -183,32 +181,43 @@ export class MessageService {
     const metadata = await getMetadata(storageRef);
     const url = await getDownloadURL(storageRef);
     try {
-        // Bilddaten als Blob holen
-        const response = await fetch(url, { mode: 'cors' });
-        if (!response.ok) throw new Error('Netzwerkantwort war nicht ok.');
+      // Bilddaten als Blob holen
+      const response = await fetch(url, { mode: 'cors' });
+      if (!response.ok) throw new Error('Netzwerkantwort war nicht ok.');
 
-        const blob = await response.blob();
+      const blob = await response.blob();
 
-        // Blob-URL erstellen
-        const blobUrl = window.URL.createObjectURL(blob);
+      // Blob-URL erstellen
+      const blobUrl = window.URL.createObjectURL(blob);
 
-        // Temporären Link erstellen
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = blobUrl;
-        a.download = metadata.name;
+      // Temporären Link erstellen
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = blobUrl;
+      a.download = metadata.name;
 
-        // Link zum DOM hinzufügen
-        document.body.appendChild(a);
-        a.click();
+      // Link zum DOM hinzufügen
+      document.body.appendChild(a);
+      a.click();
 
-        // Bereinigen
-        window.URL.revokeObjectURL(blobUrl);
-        document.body.removeChild(a);
-
+      // Bereinigen
+      window.URL.revokeObjectURL(blobUrl);
+      document.body.removeChild(a);
     } catch (error) {
-        console.error('Fehler beim Herunterladen des Bildes:', error);
+      console.error('Fehler beim Herunterladen des Bildes:', error);
     }
   }
 
+  deleteFile(path: string) {
+    const storage = getStorage();
+    const storageRef = ref(storage, path);
+    // Delete the file
+    deleteObject(storageRef)
+      .then(() => {
+        // File deleted successfully
+      })
+      .catch((error) => {
+        // Uh-oh, an error occurred!
+      });
+  }
 }

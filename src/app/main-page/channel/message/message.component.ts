@@ -73,9 +73,10 @@ export class MessageComponent {
     if (messageAttachementsPaths) {
       this.attachementsData = [];
       messageAttachementsPaths.forEach(async (path) => {
-        const attachement = await this.messageService.getFileData(path);
-        this.attachementsData.push(attachement);
-        // console.log(this.attachementsData);
+        if (path != 'deleted') {
+          const attachement = await this.messageService.getFileData(path);
+          this.attachementsData.push(attachement);
+        }
       })
     }
   }
@@ -109,7 +110,7 @@ export class MessageComponent {
   }
 
   updateMessage() {
-    // console.log(this.message);
+    this.editableMessage.modified_at = new Date().getTime();
     this.messageService.updateMessage(this.editableMessage);
     this.editMessage = false;
     this.showMoreOptions = false;
@@ -175,6 +176,19 @@ export class MessageComponent {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+  }
+
+
+  deleteFile(path : string) {
+    // remove file from storage
+    this.messageService.deleteFile(path);
+    // remove attachement path
+    if (this.message.message.attachements) {
+      const index = this.message.message.attachements.indexOf(path);
+      if (index > -1) this.message.message.attachements[index] = 'deleted';
+      this.message.modified_at = new Date().getTime();
+      this.messageService.updateMessage(this.message);
+    }
   }
   
 }
