@@ -102,6 +102,7 @@ export class MessageService {
       messages.forEach((message) => {
         this.messages.push(this.setMessage(message.data(), message.id));
       });
+      console.log('Snapshot Messages: ',this.messages)
     });
   }
 
@@ -148,7 +149,7 @@ export class MessageService {
 //   // pdfsRef = ref(this.storage, 'pdfs');
 //   messageAttachmentsRef = ref(this.storage, 'messageAttachements');
 
-  uploadFile(file: File, path: string): Promise<string> {
+  uploadFile(file: File, path: string): Promise<void> {
     return new Promise((resolve, reject) => {
       // const path = file.type == 'application/pdf' ? 'pdfs/' + file.name : 'images/' + file.name;
       const storage = getStorage();
@@ -167,6 +168,7 @@ export class MessageService {
           //   resolve(downloadURL);
           // });
           // return path;
+          resolve();
         }
       );
     });

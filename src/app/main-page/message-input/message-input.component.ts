@@ -56,14 +56,14 @@ export class MessageInputComponent {
       // upload currentFile
       if(this.currentFile != null) {
         const path = 'users/' + this.currentUser.id + '/messages/' + this.message.id + '/' + this.currentFile.name;
-        this.messageService.uploadFile(this.currentFile,path);
+        await this.messageService.uploadFile(this.currentFile,path);
         this.message.message.attachements = [];
         this.message.message.attachements.push(path);
         this.messageService.updateMessage(this.message);
+        this.removeFile(fileInput);
       }
       // empty input
       channelInput.innerText = '';
-      this.removeFile(fileInput);
     }
   }
 

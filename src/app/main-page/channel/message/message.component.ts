@@ -65,6 +65,7 @@ export class MessageComponent {
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
+    if (this.attachementsData.length == 0) this.getAttachementsData();
   }
 
   async getAttachementsData() {
@@ -74,7 +75,7 @@ export class MessageComponent {
       messageAttachementsPaths.forEach(async (path) => {
         const attachement = await this.messageService.getFileData(path);
         this.attachementsData.push(attachement);
-        console.log(this.attachementsData);
+        // console.log(this.attachementsData);
       })
     }
   }
