@@ -66,24 +66,25 @@ export class DialogEditProfileComponent implements OnInit {
           displayName: displayName,
           email: email,
         });
-  
+        
         const tempSubscription = this.userService
-          .getRealtimeUser(this.userService.currentUser.id)
-          .subscribe({
-            next: (user) => {
-              this.userService.currentUser = user;
-              // console.log('subscribed', this.userService.currentUser);
-              tempSubscription.unsubscribe();
-              // console.log('Unsubscribed after single use');
-            },
+        .getRealtimeUser(this.userService.currentUser.id)
+        .subscribe({
+          next: (user) => {
+            this.userService.currentUser = user;
+            tempSubscription.unsubscribe();
+            // console.log('subscribed', this.userService.currentUser);
+            // console.log('Unsubscribed after single use');
+            this.dialogRef.close();
+          },
             error: (error) => {
               console.error('Failed to get user data:', error);
               tempSubscription.unsubscribe();
             },
           });
-      } catch (error) {
-        console.error('Fehler beim Aktualisieren des Benutzers:', error);
+        } catch (error) {
+          console.error('Fehler beim Aktualisieren des Benutzers:', error);
+        }
       }
     }
-  }
 }
