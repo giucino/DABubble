@@ -1,11 +1,27 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup, updatePassword } from '@angular/fire/auth';
+import {
+  Auth,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  signInWithPopup,
+  updatePassword,
+} from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
-import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, fetchSignInMethodsForEmail, signInAnonymously, signOut, onAuthStateChanged } from "firebase/auth";
-
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+  signInAnonymously,
+  signOut,
+  onAuthStateChanged,
+  verifyBeforeUpdateEmail,
+} from 'firebase/auth';
+import { UserService } from './user.service';
+import { User } from '../models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserAuthService {
   firestore: Firestore = inject(Firestore);
@@ -13,24 +29,21 @@ export class UserAuthService {
   googleName: any = '';
   googleEmail: any = '';
   googleProfileImg: any = '';
-  googleId: any = '';
+  // googleId: any = '';
 
-
-  constructor(public auth: Auth) {
-  }
-
+  constructor(public auth: Auth, public userService: UserService) {}
 
   async loginUser(email: string, password: string) {
-  //   try {
-  //     const signInResult = await signInWithEmailAndPassword(this.auth, email, password);
-  //     return signInResult.user !== null;
-  // } catch (error: any) {
-  //     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-  //         return false;
-  //     } else {
-  //         throw error;
-  //     }
-  // }
+    //   try {
+    //     const signInResult = await signInWithEmailAndPassword(this.auth, email, password);
+    //     return signInResult.user !== null;
+    // } catch (error: any) {
+    //     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+    //         return false;
+    //     } else {
+    //         throw error;
+    //     }
+    // }
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
@@ -38,7 +51,61 @@ export class UserAuthService {
     return signInAnonymously(this.auth);
   }
 
-  currentUser() {
+  async updateUserProfile(data: {
+    displayName?: string;
+    email?: string;
+  }): Promise<void> {
+    const user = this.auth.currentUser;
+
+    if (data.displayName) {
+      await updateProfile(user!, { displayName: data.displayName });
+      // console.log('User profile updated successfully!', user?.displayName);
+    }
+
+    if (data.email && user?.email !== data.email) {
+      try {
+        await verifyBeforeUpdateEmail(user!, data.email);
+        // console.log('Verification email sent for new email address.');
+      } catch (error: unknown) {
+        console.error('Error sending verification email:', error);
+      }
+    }
+
+    if (data.displayName || (data.email && user?.email !== data.email)) {
+      try {
+        const firestoreUser: User = {
+          id: this.userService.currentUser.id || '',
+          name: user?.displayName || '',
+          email: data.email || '',
+          password: '',
+          logged_in: this.userService.currentUser.logged_in || false,
+          is_typing: this.userService.currentUser.is_typing || false,
+          profile_img: this.userService.currentUser.profile_img || '',
+          last_channel: this.userService.currentUser.last_channel || '',
+          last_thread: this.userService.currentUser.last_thread || '',
+          toJSON() {
+            return {
+              id: this.id,
+              name: this.name,
+              email: this.email,
+              password: this.password,
+              logged_in: this.logged_in,
+              is_typing: this.is_typing,
+              profile_img: this.profile_img,
+              last_channel: this.last_channel,
+              last_thread: this.last_thread,
+            };
+          },
+        };
+        this.userService.updateUser(firestoreUser);
+        // console.log('Firestore user updated successfully', firestoreUser);
+      } catch (error: unknown) {
+        console.error('Error updating Firestore user:', error);
+      }
+    }
+  }
+
+  async currentUser() {
     return this.auth.currentUser;
   }
 
@@ -52,12 +119,13 @@ export class UserAuthService {
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
 
-    return signInWithPopup(this.auth, provider).then((result) => {
-      var user = result.user;
-      this.googleName = user.displayName;
-      this.googleEmail = user.email;
-      this.googleProfileImg = user.photoURL;
-    })
+    return signInWithPopup(this.auth, provider)
+      .then((result) => {
+        var user = result.user;
+        this.googleName = user.displayName;
+        this.googleEmail = user.email;
+        this.googleProfileImg = user.photoURL;
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -88,11 +156,13 @@ export class UserAuthService {
   changePassword(newPassword: string) {
     const user_auth: any = this.auth.currentUser;
     if (user_auth) {
-      updatePassword(user_auth, newPassword).then(() => {
-        // console.log('Password updated successfully!');
-      }).catch((error) => {
-        console.error('Error updating password:', error);
-      });
+      updatePassword(user_auth, newPassword)
+        .then(() => {
+          // console.log('Password updated successfully!');
+        })
+        .catch((error) => {
+          console.error('Error updating password:', error);
+        });
     }
   }
 
@@ -129,9 +199,4 @@ export class UserAuthService {
       });
     });
   }
-
-
 }
-
-
-

@@ -1,6 +1,6 @@
-<form (ngSubmit)="onSubmit()" class="form">
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form">
 
-<section class="show-profile-dialog" [formGroup]="editForm">
+<section class="show-profile-dialog" >
 
     <div class="profile-head">
         <div class="profile-headline fs-24">Dein Profil bearbeiten</div>
