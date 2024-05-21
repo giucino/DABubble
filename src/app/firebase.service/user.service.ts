@@ -103,21 +103,41 @@ export class UserService implements OnDestroy {
     updateDoc(singleUserRef, { id: userId });
   }
 
-  async getCurrentUser(email?: string) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const storedUser = localStorage.getItem('currentUser');
-      if (email) {
-        this.currentUser = this.allUsers.find((user) => user.email === email);
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-      } else if (storedUser != '' && storedUser != null) {
-        this.currentUser = JSON.parse(storedUser);
+//   async getCurrentUser(email?: string) {
+//     if (typeof window !== 'undefined' && window.localStorage) {
+//       const storedUser = localStorage.getItem('currentUser');
+//       if (email) {
+//         this.currentUser = this.allUsers.find((user) => user.email === email);
+//         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+//       } else if (storedUser != '' && storedUser != null) {
+//         this.currentUser = JSON.parse(storedUser);
+//       }
+//       // else {
+//       //     this.currentUser = this.allUsers.find(user => user.email === email);
+//       // }
+//     }
+//   }
+
+async getCurrentUser(email?: string): Promise<User | null> {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const storedUser = localStorage.getItem('currentUser');
+        if (email) {
+          this.currentUser = this.allUsers.find((user) => user.email === email);
+          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        } else if (storedUser) {
+          this.currentUser = JSON.parse(storedUser);
+        }
+        
+        return this.currentUser || null;
       }
-      // else {
-      //     this.currentUser = this.allUsers.find(user => user.email === email);
-      // }
+      return null;
+    } catch (error) {
+      console.error("Error retrieving user from localStorage", error);
+      return null;
     }
   }
-
+  
   ngOnDestroy(): void {
     this.unsubUsers();
     this.currentUserThread$.unsubscribe();
@@ -134,19 +154,6 @@ export class UserService implements OnDestroy {
   async addUser(user: User) {
     await addDoc(this.getUserRef(), user.toJSON());
   }
-
-  async updateUser(user: User): Promise<void> {
-    if (user.id) {
-      const docRef = doc(this.getUserRef(), user.id);
-      try {
-        await updateDoc(docRef, this.getCleanJson(user));
-      } catch (error) {
-        console.error("Fehler beim Aktualisieren des Benutzers:", error);
-        throw new Error("Update fehlgeschlagen. Bitte versuchen Sie es erneut.");
-      }
-    }
-  }
-  
 
   // async addGoogleUser(user: User) {
   //     if (this.getSingleUserRef(user.id)) {
@@ -228,5 +235,31 @@ export class UserService implements OnDestroy {
     } catch (error) {
       console.error('Error removing document: ', error);
     }
+  }
+
+  async updateUser(user: User): Promise<void> {
+    if (user.id) {
+      const docRef = doc(this.getUserRef(), user.id);
+      try {
+        await updateDoc(docRef, this.getCleanJson(user));
+        // console.log("Benutzerdaten erfolgreich aktualisiert");
+      } catch (error) {
+        console.error("Fehler beim Aktualisieren des Benutzers:", error);
+        throw new Error("Update fehlgeschlagen. Bitte versuchen Sie es erneut.");
+      }
+    }
+  }
+
+  getRealtimeUser(userId: string): Observable<User> {
+    return new Observable((observer) => {
+      const userRef = doc(this.firestore, 'users', userId);
+      return onSnapshot(userRef, (doc) => {
+        if (doc.exists()) {
+          observer.next(doc.data() as User);
+        } else {
+          observer.error(new Error("User not found"));
+        }
+      }, observer.error);
+    });
   }
 }
