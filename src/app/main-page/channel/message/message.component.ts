@@ -45,6 +45,8 @@ export class MessageComponent {
   // messages: Message[] = this.messageService.messages;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
+  attachementsData : any[] = [];
+
   constructor(
     public messageService: MessageService,
     public userService: UserService,
@@ -57,10 +59,31 @@ export class MessageComponent {
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
+    // get attachements data
+    this.getAttachementsData();
   }
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
+    if (this.attachementsData.length == 0) this.getAttachementsData();
+  }
+
+  async getAttachementsData() {
+    const messageAttachementsPaths = this.message.message.attachements;
+    if (messageAttachementsPaths) {
+      this.attachementsData = [];
+      messageAttachementsPaths.forEach(async (path) => {
+        if (path != 'deleted') {
+          const attachement = await this.messageService.getFileData(path);
+          this.attachementsData.push(attachement);
+        }
+      })
+    }
+  }
+
+  attachementData(path : string) {
+    let attachementData = this.attachementsData.find((data) => data.path == path);
+    return attachementData;
   }
 
   isCurrentUser(): boolean {
@@ -87,7 +110,7 @@ export class MessageComponent {
   }
 
   updateMessage() {
-    // console.log(this.message);
+    this.editableMessage.modified_at = new Date().getTime();
     this.messageService.updateMessage(this.editableMessage);
     this.editMessage = false;
     this.showMoreOptions = false;
@@ -150,10 +173,22 @@ export class MessageComponent {
     }
   }
 
-
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+  }
+
+
+  deleteFile(path : string) {
+    // remove file from storage
+    this.messageService.deleteFile(path);
+    // remove attachement path
+    if (this.message.message.attachements) {
+      const index = this.message.message.attachements.indexOf(path);
+      if (index > -1) this.message.message.attachements[index] = 'deleted';
+      this.message.modified_at = new Date().getTime();
+      this.messageService.updateMessage(this.message);
+    }
   }
   
 }

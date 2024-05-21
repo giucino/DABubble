@@ -13,6 +13,7 @@ import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
+import { MessageInputComponent } from '../message-input/message-input.component';
 import { finalize } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,17 +23,21 @@ import { Channel } from '../../interfaces/channel.interface';
 import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
 
+
 @Component({
   selector: 'app-channel',
   standalone: true,
+
   imports: [
     CommonModule,
     MessageComponent,
     FormsModule,
+    MessageInputComponent,
     ReactiveFormsModule,
     OpenProfileDirective,
     RouterModule,
   ],
+
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss',
 })
@@ -165,17 +170,17 @@ export class ChannelComponent {
     this.customDialogService.openDialogAbsolute(button, component, 'left');
   }
 
-  saveMessage() {
-    if (this.messageInput != '') {
-      this.message.user_id = this.currentUser.id;
-      this.message.message.text = this.messageInput;
-      this.message.created_at = new Date().getTime();
-      this.message.modified_at = this.message.created_at;
-      this.message.channel_id = this.channelService.currentChannel.id;
-      this.messageService.addMessage(this.message);
-      this.messageInput = '';
-    }
-  }
+  // saveMessage() {
+  //   if (this.messageInput != '') {
+  //     this.message.user_id = this.currentUser.id;
+  //     this.message.message.text = this.messageInput;
+  //     this.message.created_at = new Date().getTime();
+  //     this.message.modified_at = this.message.created_at;
+  //     this.message.channel_id = this.channelService.currentChannel.id;
+  //     this.messageService.addMessage(this.message);
+  //     this.messageInput = '';
+  //   }
+  // }
 
   isNewDate(oldDate: number, newDate: number) {
     let oldDateAsString = this.convertToDate(oldDate);
@@ -270,6 +275,7 @@ export class ChannelComponent {
     }
   }
 
+
   getTextareaPlaceholderText() {
     switch (this.channelService.currentChannel.channel_type) {
       case 'main':
@@ -293,13 +299,21 @@ export class ChannelComponent {
     }
   }
 
+
   setFocus() {
     document.getElementById('channelInput')?.focus();
     this.messageInput = '';
   }
 
+
+  updateInput(newContent : string) {
+    this.messageInput = newContent;
+  }
+
+
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }
+
 }

@@ -190,6 +190,12 @@ async getCurrentUser(email?: string): Promise<User | null> {
     updateDoc(singleUserRef, { last_thread: threadId });
   }
 
+//  from feature/messages-img-pdf can be deleted probably 
+//     async saveLastThread(userId: string, threadId: string) {
+//         let singleUserRef = doc(this.getUserRef(), userId);
+//         await updateDoc(singleUserRef, { last_thread: threadId });
+//     }
+
   getCleanJson(user: User): {} {
     return {
       name: user.name,
@@ -202,6 +208,7 @@ async getCurrentUser(email?: string): Promise<User | null> {
       last_thread: user.last_thread,
     };
   }
+
 
   uploadImage(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
