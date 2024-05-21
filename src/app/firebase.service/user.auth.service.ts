@@ -56,55 +56,58 @@ export class UserAuthService {
     email?: string;
   }): Promise<void> {
     const user = this.auth.currentUser;
-
+  
+    const firestoreUser: User = {
+      id: this.userService.currentUser.id || '',
+      name: data.displayName || user?.displayName || '',
+      email: user?.email || '',  // Initial setzen auf aktuelle E-Mail
+      password: '',
+      logged_in: this.userService.currentUser.logged_in || false,
+      is_typing: this.userService.currentUser.is_typing || false,
+      profile_img: this.userService.currentUser.profile_img || '',
+      last_channel: this.userService.currentUser.last_channel || '',
+      last_thread: this.userService.currentUser.last_thread || '',
+      toJSON() {
+        return {
+          id: this.id,
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          logged_in: this.logged_in,
+          is_typing: this.is_typing,
+          profile_img: this.profile_img,
+          last_channel: this.last_channel,
+          last_thread: this.last_thread,
+        };
+      },
+    };
+  
     if (data.displayName) {
       await updateProfile(user!, { displayName: data.displayName });
       // console.log('User profile updated successfully!', user?.displayName);
     }
-
+  
     if (data.email && user?.email !== data.email) {
       try {
         await verifyBeforeUpdateEmail(user!, data.email);
-        // console.log('Verification email sent for new email address.');
-      } catch (error: unknown) {
+        console.log('Verification email sent for new email address.');
+        
+        // firestoreUser.email = data.email;
+      } catch (error) {
         console.error('Error sending verification email:', error);
+        return; 
       }
     }
-
-    if (data.displayName || (data.email && user?.email !== data.email)) {
-      try {
-        const firestoreUser: User = {
-          id: this.userService.currentUser.id || '',
-          name: user?.displayName || '',
-          email: data.email || '',
-          password: '',
-          logged_in: this.userService.currentUser.logged_in || false,
-          is_typing: this.userService.currentUser.is_typing || false,
-          profile_img: this.userService.currentUser.profile_img || '',
-          last_channel: this.userService.currentUser.last_channel || '',
-          last_thread: this.userService.currentUser.last_thread || '',
-          toJSON() {
-            return {
-              id: this.id,
-              name: this.name,
-              email: this.email,
-              password: this.password,
-              logged_in: this.logged_in,
-              is_typing: this.is_typing,
-              profile_img: this.profile_img,
-              last_channel: this.last_channel,
-              last_thread: this.last_thread,
-            };
-          },
-        };
-        this.userService.updateUser(firestoreUser);
-        // console.log('Firestore user updated successfully', firestoreUser);
-      } catch (error: unknown) {
-        console.error('Error updating Firestore user:', error);
-      }
+  
+    try {
+      await this.userService.updateUser(firestoreUser);
+      localStorage.setItem('currentUser', JSON.stringify(firestoreUser));
+      console.log('Firestore user updated successfully', firestoreUser);
+    } catch (error) {
+      console.error('Error updating Firestore user:', error);
     }
   }
-
+  
   async currentUser() {
     return this.auth.currentUser;
   }
