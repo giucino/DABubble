@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { UserService } from '../../firebase.service/user.service';
@@ -15,12 +15,14 @@ import { MessageService } from '../../firebase.service/message.service';
 })
 export class MessageInputComponent {
 
+  @Input() usedIn : 'channel' | 'thread' = 'channel';
+
   messageInput  : string = '';
   currentUser: User = this.userService.currentUser;
 
   message: Message = {
     user_id: '',
-    channel_id: this.channelService.currentChannel.id,
+    channel_id: '',
     message: {
       text: '',
       attachements: [],
@@ -50,9 +52,11 @@ export class MessageInputComponent {
       this.message.message.text = this.messageInput;
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
-      this.message.channel_id = this.channelService.currentChannel.id;
+      if(this.usedIn == 'channel') this.message.channel_id = this.channelService.currentChannel.id;
+      if(this.usedIn == 'thread') this.message.thread_id = this.channelService.currentThread.id;
       this.message.id = await this.messageService.addMessage(this.message);
-      // overwrite message information
+      // thread message update
+      if(this.usedIn == 'thread') this.updateThreadMessage();
       // upload currentFile
       if(this.currentFile != null) {
         const path = 'users/' + this.currentUser.id + '/messages/' + this.message.id + '/' + this.currentFile.name;
@@ -65,6 +69,14 @@ export class MessageInputComponent {
       // empty input
       channelInput.innerText = '';
     }
+  }
+
+  updateThreadMessage() {
+    let threadMessages = this.messageService.messagesThread;
+    let threadMessage = this.messageService.messagesThread[0];
+    threadMessage.total_replies = threadMessages.length - 1;
+    threadMessage.last_reply = this.message.created_at;
+    this.messageService.updateMessage(threadMessage);
   }
 
 

@@ -143,11 +143,6 @@ export class MessageService {
 
   /* STORAGE */
 
-//   storage = getStorage(); // reference to storage service
-//   storageRef = ref(this.storage); // reference to storage
-//   // imagesRef = ref(this.storage, 'images');
-//   // pdfsRef = ref(this.storage, 'pdfs');
-//   messageAttachmentsRef = ref(this.storage, 'messageAttachements');
 
   uploadFile(file: File, path: string): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -158,16 +153,11 @@ export class MessageService {
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          // use this section to display the upload progress
         },
         (error) => {
           reject(error);
         },
         () => {
-          // const url = getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          //   resolve(downloadURL);
-          // });
-          // return path;
           resolve();
         }
       );
@@ -221,10 +211,4 @@ export class MessageService {
     }
   }
 
-  // async getStorageFileURL(path: string) {
-  //   const storage = getStorage();
-  //   const storageRef = ref(storage, path);
-  //   const URL = await getDownloadURL(storageRef);
-  //   return URL;
-  // }
 }
