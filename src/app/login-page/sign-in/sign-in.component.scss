@@ -101,22 +101,11 @@ input[type="password"] {
     }
 }
 
-input[type="email"] {
-    background-image: url("/assets/img/mail.png");
-    &:focus{
-        background-image: url("/assets/img/mail_b.png");
-    }
-}
 
-input[type="name"] {
-    background-image: url("/assets/img/person_filled.png");
-    background-size: unset !important;
-    &:focus{
-        background-image: url("/assets/img/person_filled_b.png");
-        background-size: unset !important;
-        background-position: left 34px center !important;
-    }
-
+.iconOverlay{
+    position: absolute;
+    left: 30px;
+    top: 19px;
 }
 
 .check-div {
@@ -240,14 +229,11 @@ input[type="name"] {
 
     }
     form{
-        width: 100%;
+        width: 90%;
         >div{
             width: 100%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
             input{
-                width: 90%;
+                width: 100%;
             }
         }
 
@@ -294,6 +280,10 @@ input[type="name"] {
                 }
             }
         }
+    }
+    .iconOverlay{
+        left: 22px;
+        top: 13px;
     }
     input[type="name"]{
         &:focus{
@@ -362,6 +352,9 @@ input[type="name"] {
                 }
             }
         }
+    }
+    .iconOverlay{
+        left: 16px
     }
     .errorMsg{
         font-size: 10px;

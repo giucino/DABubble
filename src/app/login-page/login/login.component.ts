@@ -21,6 +21,7 @@ export class LoginComponent {
   loginEmail: string = '';
   loginPassword: string = '';
   isLoading = false;
+  iconSrc = '/assets/img/mail.png'
 
   constructor(private userAuth: UserAuthService, private userService: UserService, 
     private router: Router, private channelService: ChannelFirebaseService) { }
@@ -37,12 +38,14 @@ export class LoginComponent {
     this.userAuth.loginUser(email, password)
     .then(() => {
       return Promise.all([
+        this.error = false,
         this.userService.getUsers(),
         this.userService.getCurrentUser(this.loginEmail),
         this.channelService.getChannelsForCurrentUser()
       ]);
     })
     .then(() => {
+      this.error = false;
       this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
       localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
       this.isLoading = false;
@@ -51,6 +54,7 @@ export class LoginComponent {
     .catch((error) => {
       console.error(error);
       this.error = true;
+      this.isLoading = false;
       // loading balken false
     });
 
@@ -201,6 +205,8 @@ export class LoginComponent {
     // }, 1000);
   }
 
-
+  changeIcon(focus: boolean) {
+    this.iconSrc = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+  }
 
 }

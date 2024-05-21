@@ -7,10 +7,6 @@ import { User } from '../../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
 import { UserManagementService } from '../../../services/user-management.service';
 import { Channel } from '../../../interfaces/channel.interface';
-import { CustomDialogService } from '../../../services/custom-dialog.service';
-import { ProfileService } from '../../../services/profile.service';
-import { DialogShowProfileComponent } from '../../../shared/dialog-show-profile/dialog-show-profile.component';
-
 
 @Component({
   selector: 'app-dialog-add-member',
@@ -33,8 +29,6 @@ export class DialogAddMemberComponent implements OnInit {
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public userManagementService: UserManagementService,
-    public customDialogService: CustomDialogService,
-    private profileService: ProfileService
   ) {}
 
   ngOnInit(): void {
@@ -42,8 +36,6 @@ export class DialogAddMemberComponent implements OnInit {
       this.selectedUsers = this.userService.getUsersByIds(this.channelService.currentChannel.members);
       this.newlyAddedUsers = [];
     }
-    this.onFilterUsers();    
-    console.log('filteredUsers:', this.filteredUsers);
   }
 
   onFilterUsers(): void {
@@ -83,14 +75,5 @@ export class DialogAddMemberComponent implements OnInit {
     } else {
       console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
     }
-  }
-
-  openUserProfile(userId: string, button: HTMLElement): void {
-    this.profileService.setOwnProfileStatus(false);
-    this.profileService.setViewingUserId(userId);
-
-    const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
-    // this.dialogRef.close();
   }
 }

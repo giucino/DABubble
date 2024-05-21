@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { ThreadService } from '../../../services/thread.service';
+import { StateManagementService } from '../../../services/state-management.service';
+import { MainPageComponent } from '../../main-page.component';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-main-menu-dm',
@@ -18,7 +21,7 @@ import { ThreadService } from '../../../services/thread.service';
 export class MainMenuDmComponent implements OnInit, OnDestroy {
   isExpanded: boolean = true;
   users: User[] = [];
-  selectedUserId: string | null = null;
+  selectedUserId: string = '';
 
   newDirectChannel : Channel = {
     id: '',
@@ -36,10 +39,16 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
     public channelService: ChannelFirebaseService,
     private router : Router,
     public threadService : ThreadService,
+    private stateService: StateManagementService,
+    public mainpage: MainPageComponent,
+    public sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
     this.users = this.userService.allUsers;
+    this.stateService.getSelectedUserId().subscribe(id => {
+      this.selectedUserId = id ? id : '';
+    });
   }
 
   ngOnDestroy(): void {}
@@ -57,7 +66,23 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/main-page/' + channel_id);
     }
     this.closeThread();
-    this.selectedUserId = user_id;
+    this.stateService.setSelectedUserId(user_id);
+    // this.selectedUserId = user_id;
+
+  }
+  async openDirectChannelMobile(user_id: string): Promise<void> {
+    this.mainpage.toggleMenu();
+    this.sharedService.showMobileDiv();
+    let channel_id = this.channelService.getDirectChannelId(this.userService.currentUser.id, user_id);
+    if (channel_id != '') {
+      this.router.navigateByUrl('/main-page/' + channel_id);
+    } else {
+      channel_id = await this.createNewDirectChannel(user_id);
+      this.router.navigateByUrl('/main-page/' + channel_id);
+    }
+    this.closeThread();
+    this.stateService.setSelectedUserId(user_id);
+    // this.selectedUserId = user_id;
 
   }
 

@@ -1,39 +1,29 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogShowProfileComponent } from '../../../shared/dialog-show-profile/dialog-show-profile.component';
-import { CustomDialogService } from '../../../services/custom-dialog.service';
-import { ProfileService } from '../../../services/profile.service';
-import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { UserAuthService } from '../../../firebase.service/user.auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../firebase.service/user.service';
+import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
 
 @Component({
   selector: 'app-log-out-dialog',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OpenProfileDirective],
   templateUrl: './log-out-dialog.component.html',
   styleUrl: './log-out-dialog.component.scss',
 })
 export class LogOutDialogComponent {
-  @Output() showProfileClicked = new EventEmitter<void>();
+
   constructor(
     public dialogRef: MatDialogRef<LogOutDialogComponent>,
-    private customDialogService: CustomDialogService,
-    private profileService: ProfileService,
     private userAuth: UserAuthService,
     private router: Router,
     public userService: UserService
   ) {}
 
-  openCurrentUser(button: HTMLElement): void {
-    this.profileService.setOwnProfileStatus(true);
-    this.profileService.setViewingUserId(this.userService.currentUser.id);
-
-    const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+  openCurrentUser(): void {
     this.dialogRef.close();
-    this.showProfileClicked.emit();
   }
 
   logOut(): void {

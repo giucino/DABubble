@@ -7,14 +7,12 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 import { Channel } from '../../../interfaces/channel.interface';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
-import { ProfileService } from '../../../services/profile.service';
-import { DialogShowProfileComponent } from '../../../shared/dialog-show-profile/dialog-show-profile.component';
-
+import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
 
 @Component({
   selector: 'app-dialog-show-members',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, FormsModule],
+  imports: [CommonModule, MatDialogModule, FormsModule, OpenProfileDirective],
   templateUrl: './dialog-show-members.component.html',
   styleUrl: './dialog-show-members.component.scss',
 })
@@ -25,8 +23,7 @@ export class DialogShowMembersComponent {
     public dialogRef: MatDialogRef<DialogShowMembersComponent>,
     public customDialogService: CustomDialogService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
-    private profileService: ProfileService
+    public channelService: ChannelFirebaseService
   ) {}
 
   openAddUserDialog(button: HTMLElement) {
@@ -35,13 +32,7 @@ export class DialogShowMembersComponent {
     this.dialogRef.close();
   }
 
-  openUserProfile(userId: string, button: HTMLElement): void {
-    this.profileService.setOwnProfileStatus(false);
-    this.profileService.setViewingUserId(userId);
-
-    const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+  openUserProfile(): void {
     this.dialogRef.close();
   }
-  
 }

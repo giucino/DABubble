@@ -1,201 +1,249 @@
 .channel-container {
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-white);
-    border-radius: 30px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white);
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/*-- channel header --*/
+
+.channel-header-thread {
+  padding: 32px 40px;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/*-- channel header - thread --*/
+.channel-headline-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  .channel-headline {
+    font-weight: 700;
   }
-  
-  /*-- channel header --*/
-  
-  .channel-header-thread {
-    padding: 32px 40px;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  
-  /*-- channel header - thread --*/
-  .channel-headline-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    .channel-headline {
-      font-weight: 700;
-    }
-    .hashtag-icon {
-      width: 16px;
-      height: 16px;
-      path {
-          fill: var(--color-purple-2);
-      }
-    }
-    .channel-name {
-      color: var(--color-purple-2);
+
+  .hashtag-icon {
+    width: 16px;
+    height: 16px;
+
+    path {
+      fill: var(--color-purple-2);
     }
   }
-  
-  /*-- channel header - new --*/
-  
-  // input-container
+
+  .channel-name {
+    color: var(--color-purple-2);
+  }
+}
+
+/*-- channel header - new --*/
+
+// input-container
 //   .channel-header-new {
 //       .input-container {
 //           width: 100%;
 //       }
 //   }
-  .input-container {
-      border: 1px solid var(--color-light-purple);
-      padding: 15px 20px;
-      border-radius: 30px;
-      &:hover {
-          border-color: var(--color-purple-2);
-      }
-      &:focus-within {
-          border-color: var(--color-purple-3);
-      }
+.input-container {
+  border: 1px solid var(--color-light-purple);
+  padding: 15px 20px;
+  border-radius: 30px;
+
+  &:hover {
+    border-color: var(--color-purple-2);
   }
-  
-  input, textarea {
-      width: 100%;
-      border: none;
-      outline: none;
-      font-size: 18px;
-      line-height: 24.55px;
-      &::placeholder {
-          font-family: "Nunito", "Helvetica Neue", sans-serif;
-          color: var(--color-gray);
-      }
-      &:focus::placeholder {
-          color: transparent;
-      }
+
+  &:focus-within {
+    border-color: var(--color-purple-3);
   }
-  
-  /*-- channel messages --*/ 
-  .channel-messages-container {
-      flex-grow: 1;
-      height: 100%;
-      display: flex;
-      flex-direction: column-reverse;
-      overflow-y: auto;
-      .channel-messages-content {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
+}
+
+input,
+textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  line-height: 24.55px;
+
+  &::placeholder {
+    font-family: "Nunito", "Helvetica Neue", sans-serif;
+    color: var(--color-gray);
   }
-  
-  .channel-info-container {
-    margin-top: auto;
-    padding: 20px 45px 0;
+
+  &:focus::placeholder {
+    color: transparent;
+  }
+}
+
+/*-- channel messages --*/
+.channel-messages-container {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: auto;
+
+  .channel-messages-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.channel-info-container {
+  margin-top: auto;
+  padding: 20px 45px 0;
+
+  .channel-name-container {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 7px;
+    align-items: flex-end;
+  }
+
+  .channel-info {
+    color: var(--color-gray);
+
     .channel-name-container {
-      background-color: transparent;
-      padding: 0;
-      margin-bottom: 7px;
-      align-items: flex-end;
-    }
-    .channel-info {
-      color: var(--color-gray);
-      .channel-name-container {
-        display: inline-flex;
+      display: inline-flex;
+      margin-bottom: 0;
+      gap: 0px;
+      font-weight: 400;
+      color: var(--color-purple-3);
+
+      path {
+        fill: var(--color-purple-3);
+        stroke-width: 0px !important;
+      }
+
+      ;
+
+      .hashtag-icon {
+        align-items: baseline;
+        width: 20px;
+        height: 20px;
         margin-bottom: 0;
-        gap: 0px;
-        font-weight: 400;
-        color: var(--color-purple-3);
-        path {
-          fill: var(--color-purple-3);
-          stroke-width: 0px !important;
-        };
-        .hashtag-icon {
-          align-items: baseline;
-          width: 20px;
-          height: 20px;
-          margin-bottom: 0;
-          position: relative;
-          top: 4px;
-          margin: 0 3px;
-        };
-        .channel-name {
-          height: 20px;
-        }
+        position: relative;
+        top: 4px;
+        margin: 0 3px;
+      }
+
+      ;
+
+      .channel-name {
+        height: 20px;
       }
     }
   }
-  
-  .total-answers-separator {
+}
+
+.total-answers-separator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 45px;
+  color: var(--color-light-purple);
+
+  .h-line {
+    height: 1px;
+    flex-grow: 1;
+    background-color: var(--color-light-purple);
+  }
+}
+
+// 
+
+/*-- channel-footer --*/
+.channel-footer {
+  padding: 40px 45px;
+}
+
+.message-input-container {
+  border: 1px solid var(--color-light-purple);
+  border-radius: 20px;
+  padding: 20px;
+
+  &:hover {
+    border-color: var(--color-purple-2);
+  }
+
+  &:focus-within {
+    border-color: var(--color-purple-1);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 50px;
+    max-height: 200px;
+    resize: vertical;
+    padding-right: 10px;
+  }
+}
+
+.message-input-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .left-side {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 45px;
-    color: var(--color-light-purple);
-    .h-line {
-      height: 1px;
-      flex-grow: 1;
-      background-color: var(--color-light-purple);
-    }
+    gap: 5px;
   }
-  
-  // 
-  
-  /*-- channel-footer --*/ 
-  .channel-footer {
-      padding: 40px 45px;
+
+  .separator-v {
+    width: 1px;
+    height: 40px;
+    background-color: var(--color-light-purple);
   }
-  
-  .message-input-container {
-      border: 1px solid var(--color-light-purple);
-      border-radius: 20px;
-      padding: 20px;
-      &:hover {
-          border-color: var(--color-purple-2);
-      }
-      &:focus-within {
-          border-color: var(--color-purple-1);
-      } 
-      textarea {
-          width: 100%;
-          min-height: 50px;
-          max-height: 200px;
-          resize: vertical;
-          padding-right: 10px;
-      } 
-  }
-  
-  .message-input-buttons {
+
+  .btn-send-message {
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    .left-side {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-    }
-    .separator-v {
-      width: 1px;
-      height: 40px;
-      background-color: var(--color-light-purple);
-    }
-    .btn-send-message {
-      aspect-ratio: 1 / 1;
-      flex-shrink: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &:hover {
-        svg path {
-          fill: var(--color-purple-2);
-        }
+
+    &:hover {
+      svg path {
+        fill: var(--color-purple-2);
       }
-      &:disabled {
-        svg path {
-          fill: var(--color-gray);
-        }
-      } 
+    }
+
+    &:disabled {
+      svg path {
+        fill: var(--color-gray);
+      }
     }
   }
-  
+}
+
+
+@media (max-width: 1024px) {
+  .channel-container {
+    max-width: 640px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .channel-container {
+    border-radius: 0;
+    // position: absolute;
+    max-height: 100%;
+    // top: 140px;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+  }
+}

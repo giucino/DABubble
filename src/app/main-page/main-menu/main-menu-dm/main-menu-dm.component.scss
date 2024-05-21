@@ -71,4 +71,23 @@
       }
     }
   }
+  .mobile{
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .not-mobile{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @media (max-width: 768px){
+    .not-mobile{
+      display: none;
+    }
+    .mobile{
+      display: flex;
+    }
+  }
 }

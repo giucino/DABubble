@@ -19,7 +19,7 @@
     <div class="members-list-container">
         <div class="members-list">
             <div *ngFor="let member of currentChannel.members; let index = index" class="member" #profileBtn
-                (click)="openUserProfile(member, profileBtn)">
+                (click)="openUserProfile()" appOpenProfile [userId]="member" [button]="profileBtn">
                 <div class="member-img-container">
                     <img [src]="userService.getUser(member).profile_img" [alt]="userService.getUser(member).name"
                         class="profile-img">
@@ -30,10 +30,12 @@
                     <div class="online-status-wborder online"></div>
                     }
                 </div>
-                <div class="member-name fs-18">{{ userService.getUser(member).name }}</div>
+                <div class="member-name fs-18">
+                    {{ userService.getUser(member).name }}{{ userService.getUser(member).name ===
+                    userService.currentUser?.name ? ' (Du)' : '' }}
+                </div>
             </div>
         </div>
-
     </div>
     <button class="btn-add-member fs-18" #addMemberBtn (click)="openAddUserDialog(addMemberBtn)">
         <div class="btn-icon-v3">

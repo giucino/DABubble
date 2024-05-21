@@ -37,6 +37,7 @@
     border-radius: 30px;
     padding: 4px 20px;
     width: fit-content;
+    cursor: pointer;
     &:hover {
         background-color: var(--color-bg);
     }
@@ -84,5 +85,17 @@
                 fill: var(--color-black);
               }
         }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .dialog-show-members {
+        position: relative;
+        top: 220px;
+        // top: 50%;
+        // transform: translateY(-50%);
+        left: 10px;
+        width: calc(100dvw - 20px);
     }
 }

@@ -5,11 +5,13 @@
 
     <form #signin="ngForm">
         <div>
-            <input [(ngModel)]="user.name" type="name" #signName="ngModel" class="fs-18" ngModel required name="signName" id="signName" placeholder="Name und Nachname">
+            <img class="iconOverlay iconName" [src]="iconName" alt="">
+            <input [(ngModel)]="user.name" (focus)="changeIconName(true)" (blur)="changeIconName(false)" type="name" #signName="ngModel" class="fs-18" ngModel required name="signName" id="signName" placeholder="Name und Nachname">
             <p class="errorMsg" *ngIf="!signName.valid && signName.touched">Bitte schreiben Sie einen Namen</p>
         </div>
         <div>
-            <input [(ngModel)]="user.email" type="email" #signEmail="ngModel" class="fs-18" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="signEmail" id="signEmail" placeholder="beispielname@email.com">
+            <img class="iconOverlay" [src]="iconMail" alt="">
+            <input [(ngModel)]="user.email" (focus)="changeIconMail(true)" (blur)="changeIconMail(false)" type="email" #signEmail="ngModel" class="fs-18" ngModel pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" required name="signEmail" id="signEmail" placeholder="beispielname@email.com">
             <p class="errorMsg" *ngIf="!signEmail.valid && signEmail.touched">*Diese E-Mail-Adresse ist leider ungültig.</p>
             <p class="errorMsg" *ngIf="emailExists">*Diese E-Mail-Adresse existiert bereits.</p>
         </div>

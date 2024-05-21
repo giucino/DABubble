@@ -1,5 +1,5 @@
 <div class="search-bar-container">
-    <input type="text" matInput placeholder="DABubble durchsuchen" maxlength="20" autocomplete="off"
+    <input type="text" matInput placeholder="DABubble durchsuchen" maxlength="40" autocomplete="off"
     [formControl]="searchControl">
 
     <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,20 +13,35 @@
                 fill="#686868" />
         </g>
     </svg>
+
     
+    <!-- <div class="search-container">
+        <app-search-results
+          [filteredUsers]="filteredUsers"
+          [filteredChannels]="filteredChannels"
+          [filteredMessages]="filteredMessages"
+          [searchControl]="searchControl"
+          [userService]="userService"
+        ></app-search-results>
+      </div>
+      
+       -->
+
+
     @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0)) {
     <div class="search-container">
         @if (filteredUsers.length > 0) {
         <ul class="filtered">
             <span class="categoryName">Users:</span>
             @for(user of filteredUsers; track user.id) {
-            <li>
+            <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn">
                 <div class="user">
                     <div class="user-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img" />
                         <div class="online-status-wborder online"></div>
                     </div>
-                    <div class="user-name fs-18">{{user.name}}</div>
+                    <div class="user-name fs-18">{{ userService.getUser(user.id).name }}{{ userService.getUser(user.id).name ===
+                        userService.currentUser?.name ? ' (Du)' : '' }}</div>
                 </div>
             </li>
             }
@@ -37,7 +52,7 @@
         <ul class="filtered">
             <span class="categoryName">Channels:</span>
             @for(channel of filteredChannels; track channel.id) {
-            <li>
+            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
                 <div class="channelList">
                     <div class="img-channel-hash">#</div>
                     <span class="channel-name">{{channel.name}}</span>
@@ -57,7 +72,8 @@
                     <div class="messageContainer">
                         <div class="messageHeader">
                             <span class="user-name"></span>
-                            <span class="message-time">{{message.created_at}}</span>
+                            <span class="message-time">{{
+                                displayChannelTime() }}</span>
                         </div>
                         <span>{{message.message.text}}</span>
                         <span class="message-channel-name">{{message.channel_id}}</span>

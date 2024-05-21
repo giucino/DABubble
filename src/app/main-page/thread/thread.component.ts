@@ -8,6 +8,10 @@ import { User } from '../../interfaces/user.interface';
 import { Message } from '../../interfaces/message.interface';
 import { ThreadService } from '../../services/thread.service';
 import { MessageInputComponent } from '../message-input/message-input.component';
+import { HostListener } from '@angular/core';
+import { doc } from '@angular/fire/firestore';
+import { SharedService } from '../../services/shared.service';
+
 
 @Component({
   selector: 'app-thread',
@@ -37,23 +41,24 @@ export class ThreadComponent {
   };
 
   currenThread;
-  
+
 
   constructor(
     public messageService: MessageService,
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public threadService: ThreadService,
+    public sharedService: SharedService,
   ) {
     this.currenThread = this.userService.subCurrentUserForThread(this.userService.currentUser.id);
-    this.userService.currentUserThread$.subscribe( thread_id => {
+    this.userService.currentUserThread$.subscribe(thread_id => {
       if (thread_id && thread_id != '') {
         this.channelService.unsubCurrentThread = this.channelService.getCurrentThread(thread_id);
         this.messageService.getMessagesFromThread(thread_id);
         this.setFocus();
       }
     })
-    
+
   }
 
   ngOnDestroy() {
@@ -61,7 +66,6 @@ export class ThreadComponent {
     this.messageService.unsubMessagesThread();
     this.currenThread();
   }
-
 
   isNewDate(date: number) {
     let currentDate = this.currentDate;
@@ -116,24 +120,24 @@ export class ThreadComponent {
   }
 
   getTextareaPlaceholderText() {
-    switch(this.channelService.currentChannel.channel_type) {
-      case 'main' :
+    switch (this.channelService.currentChannel.channel_type) {
+      case 'main':
         return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
         break;
-      case 'direct' :
+      case 'direct':
         if (this.channelService.currentChannel.members.length == 2) {
           return 'Nachricht an ' + this.getDirectChannelUser()?.name;
         } else {
           return 'Nachricht an ' + 'dich';
         }
         break;
-      case 'thread' : 
+      case 'thread':
         return 'Antworten...';
         break;
-      case 'new' : 
+      case 'new':
         return 'Starte eine neue Nachricht';
         break;
-      default :
+      default:
         return 'Starte eine neue Nachricht';
     }
   }
@@ -154,4 +158,21 @@ export class ThreadComponent {
     this.messageInput = '';
   }
 
+  // @HostListener('window:mousemove', ['$event'])
+  // onMouseMove(event: MouseEvent) {
+  //   this.sharedService.isMenuOpen$.subscribe(isMenuOpen => {
+  //       let th = document.getElementById('thread');
+  //       if (th) {
+  //           if (window.innerWidth < 1024 && isMenuOpen) {
+  //               th.style.position = 'absolute';
+  //               th.style.left = '40px';
+  //               th.style.maxWidth = 'calc(100% - 40px)';
+  //           } 
+  //           else {
+  //               // th.style.position = 'relative';
+  //               // th.style.left = '0';
+  //           }
+  //       }
+  //   });
+  // }
 }

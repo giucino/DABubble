@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import { UserService } from '../firebase.service/user.service';
+import { CustomDialogService } from './custom-dialog.service';
+import { DialogShowProfileComponent } from '../shared/dialog-show-profile/dialog-show-profile.component';
+
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +11,16 @@ export class ProfileService {
   public isOwnProfile: boolean = false;
   private viewingUserId: string | null = null;
 
-  constructor() {}
+  constructor(private userService: UserService, private customDialogService: CustomDialogService) {}
+
+  openProfile(userId: string, button: HTMLElement): void {
+    const isOwnProfile = userId === this.userService.currentUser.id;
+    this.setOwnProfileStatus(isOwnProfile);
+    this.setViewingUserId(userId);
+
+    const component = DialogShowProfileComponent;
+    this.customDialogService.openDialogAbsolute(button, component, 'right');
+  }
 
   setOwnProfileStatus(status: boolean): void {
     this.isOwnProfile = status;

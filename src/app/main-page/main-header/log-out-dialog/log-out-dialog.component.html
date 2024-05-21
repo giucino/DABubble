@@ -1,11 +1,26 @@
 <div class="log-out-dialog">
     <div class="dropdown">
         @if (userService.currentUser.email == 'guest') {
-            <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
+        <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
         }
         @if (userService.currentUser.email != 'guest'){
-            <button #profileBtn class="btn-text-v2 fs-24" (click)="openCurrentUser(profileBtn)">Profil</button>
-            <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
+            <button class="btn-text-v2 fs-24" #profileBtn (click)="openCurrentUser()" appOpenProfile
+            [userId]="userService.currentUser.id" [button]="profileBtn">Profil</button>
+        <button class="btn-text-v2 fs-24" (click)="logOut()">Logout</button>
+        }
+    </div>
+</div>
+<div class="log-out-dialog-mobile">
+    <div class="dropdown">
+        <div class="spacer"></div>
+        @if (userService.currentUser.email == 'guest') {
+        <button class="btn-text-v2 fs-24" (click)="logOut()"><img src="assets/img/logout.png" alt=""> Logout</button>
+        }
+        @if (userService.currentUser.email != 'guest'){
+        <button #profileBtn class="btn-text-v2 fs-24" (click)="openCurrentUser()"  appOpenProfile [userId]="userService.currentUser.id" [button]="profileBtn"><img src="assets/img/account_circle.png" alt=""> Profil</button>
+        <button class="btn-text-v2 fs-24" (click)="logOut()"><img src="assets/img/logout.png" alt=""> Logout</button>
+
+        
         }
     </div>
 </div>
