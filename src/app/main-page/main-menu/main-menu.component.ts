@@ -36,6 +36,7 @@ public router: Router) { }
   ngOnInit(): void {
   }
 
+  // Erstellt über Servername Devspace einen channel mit type 'new'
   openNewChannel(){
     const newChannel: Channel = {
         id: '',
