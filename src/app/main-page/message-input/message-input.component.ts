@@ -5,6 +5,8 @@ import { UserService } from '../../firebase.service/user.service';
 import { User } from '../../interfaces/user.interface';
 import { Message } from '../../interfaces/message.interface';
 import { MessageService } from '../../firebase.service/message.service';
+import { CustomDialogService } from '../../services/custom-dialog.service';
+import { DialogEmojiPickerComponent } from '../channel/dialog-emoji-picker/dialog-emoji-picker.component';
 
 @Component({
   selector: 'app-message-input',
@@ -41,6 +43,7 @@ export class MessageInputComponent {
     public userService : UserService,
     public channelService : ChannelFirebaseService,
     public messageService : MessageService,
+    public customDialogService : CustomDialogService,
   ) {
 
   }
@@ -137,6 +140,13 @@ export class MessageInputComponent {
   removeFile(input : HTMLInputElement) {
     this.currentFile = null;
     input.value = '';
+  }
+
+
+  /* Dialog Emoji Picker */ 
+  openDialogEmojiPicker() {
+    const component = DialogEmojiPickerComponent;
+    this.customDialogService.openDialog(component);
   }
 
 }
