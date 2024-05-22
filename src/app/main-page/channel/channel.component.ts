@@ -129,27 +129,17 @@ export class ChannelComponent {
       if (params['channelId']) {
         this.isLoading = true;
         this.setFocus();
-        const loadChannel = this.channelService.getCurrentChannel(
-          params['channelId']
-        );
-        const loadMessages = this.messageService.getMessagesFromChannel(
-          params['channelId']
-        );
-        const updateUser = this.userService.updateLastChannel(
-          this.userService.currentUser.id,
-          params['channelId']
+        const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
+        const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
+        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']
         ); // save last channel
         // alle 3 promises müssen geladen werden + halbe.sekunde bis der loadingspinner weggeht
         Promise.all([loadChannel, loadMessages, updateUser])
           .then(() => {
-            // setTimeout(() => {
             this.isLoading = false;
-            // }, 500);
           })
           .catch(() => {
-            // setTimeout(() => {
             this.isLoading = false;
-            // }, 500);
           });
       }
     });

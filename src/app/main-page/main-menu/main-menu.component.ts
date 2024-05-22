@@ -35,4 +35,8 @@ export class MainMenuComponent{
     //   this.isMenuOpen = isOpen;
     // });
   }
+
+  openNewMessage(){
+    // channel type 'new' öffnen
+  }
 }
