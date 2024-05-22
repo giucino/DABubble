@@ -81,15 +81,18 @@ export class ChannelComponent {
     public threadService: ThreadService,
     public searchService: SearchService
   ) {
-    this.channelId =
-      this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-    this.router.navigateByUrl(
-      '/main-page/' + this.userService.currentUser.last_channel
-    ); // open last channel
+    if (userService.currentUser.last_channel && userService.currentUser.last_channel != '') {
+      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    } else {
+      this.router.navigateByUrl('/main-page/')
+    }
+    
   }
 
   ngOnInit() {
+    if(this.userService.currentUser.last_channel){
     this.openChannel();
     this.subscriptions.add(
       this.searchControl.valueChanges
@@ -98,6 +101,7 @@ export class ChannelComponent {
           this.filter(value);
         })
     );
+  }
   }
 
   ngOnDestroy(): void {

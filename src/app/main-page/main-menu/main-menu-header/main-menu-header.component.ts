@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
 import { Router, RouterModule} from '@angular/router';
+import { MainMenuComponent } from '../main-menu.component';
 
 
 @Component({
@@ -15,8 +16,10 @@ import { Router, RouterModule} from '@angular/router';
 export class MainMenuHeaderComponent {
 
   constructor( public router: Router,
+    public mainMenu: MainMenuComponent,
   ) {}
 
   openNewChannel() {
+    this.mainMenu.openNewChannel();
   }
 }
