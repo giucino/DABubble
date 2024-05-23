@@ -9,6 +9,8 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { ThreadService } from '../../../services/thread.service';
+import { DialogEmojiPickerComponent } from '../dialog-emoji-picker/dialog-emoji-picker.component';
+import { CustomDialogService } from '../../../services/custom-dialog.service';
 
 @Component({
   selector: 'app-message',
@@ -52,6 +54,7 @@ export class MessageComponent {
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public threadService: ThreadService,
+    public customDialogService : CustomDialogService,
   ) {
 
   }
@@ -190,6 +193,21 @@ export class MessageComponent {
       this.messageService.updateMessage(this.message);
     }
   }
-  
+
+  /* Edit Message */
+
+  /* Dialog Emoji Picker */ 
+  openDialogEmojiPicker(input : HTMLDivElement) {
+    const component = DialogEmojiPickerComponent;
+    const dialogRef = this.customDialogService.openDialog(component);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.editableMessage.message.text += result;
+        input.innerText = this.editableMessage.message.text;
+      }
+    })
+  }
+
+
 }
 

@@ -149,10 +149,10 @@ export class MessageInputComponent {
     const component = DialogEmojiPickerComponent;
     const dialogRef = this.customDialogService.openDialog(component);
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
-      this.messageInput = this.messageInput + result;
-      input.innerText = this.messageInput;
+      if(result) {
+        this.messageInput = this.messageInput + result;
+        input.innerText = this.messageInput;
+      }
     })
   }
 

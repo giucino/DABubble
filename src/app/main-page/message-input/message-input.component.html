@@ -1,5 +1,5 @@
 <div class="message-input-container">
-    <div #channelInput name="channelInput" class="message-input" contenteditable="true" [(ngModel)]="messageInput" ngDefaultControl (input)="this.messageInput = channelInput.innerText" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
+    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
     </div>
     <!-- img & pdf preview -->
     <div class="documents-preview">
