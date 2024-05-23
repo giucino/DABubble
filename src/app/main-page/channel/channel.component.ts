@@ -237,6 +237,7 @@ export class ChannelComponent {
       (member) => member != this.currentUser.id
     );
     if (contact) return this.userService.getUser(contact);
+    
     else return this.currentUser;
   }
 

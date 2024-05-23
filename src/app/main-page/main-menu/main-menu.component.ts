@@ -51,7 +51,7 @@ public mainPage: MainPageComponent) { }
         channel_type: ChannelTypeEnum.new,
     };
     this.sharedService.backToChannels();
-    this.sharedService.showMobileDiv();
+    this.sharedService.showMobileDiv(); 
     this.channelService.addChannel(newChannel).then(channelId => {
       newChannel.id = channelId;
       this.userService.updateLastChannel(this.userService.currentUser.id, channelId); 

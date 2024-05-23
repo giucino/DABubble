@@ -84,9 +84,9 @@
   <!-- channel header - direct message -->
   @if (channelService.currentChannel.channel_type == 'direct') {
   <div class="channel-header-direct">
-    <div class="channel-member">
+    <div #profileBtn appOpenProfile [userId]="getDirectChannelUser().id" [button]="profileBtn"  class="channel-member">
       <div class="profile-img-container">
-        <img src="{{ getDirectChannelUser()?.profile_img }}" alt="" class="profile-img" />
+        <img  src="{{ getDirectChannelUser()?.profile_img }}" alt="" class="profile-img" />
         <div class="online-status-wborder online"></div>
       </div>
       <div class="channel-member-name fs-24">{{ getDirectChannelUser()?.name }}</div>

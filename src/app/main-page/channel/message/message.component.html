@@ -4,7 +4,7 @@
     @if(!editMessage) {
         <div class="message-content">
             <div class="message-creator">
-                <span class="name fs-18">{{ this.messageCreator?.name }}</span>
+                <span #profileBtn appOpenProfile [userId]="this.messageCreator?.id || ''" [button]="profileBtn" class="name fs-18">{{ this.messageCreator?.name }}</span>
                 <span class="time fs-14">{{ getTime(this.message.created_at) }} Uhr</span>
                 @if(message.created_at != message.modified_at){<span class="edited fs-14">(Bearbeitet)</span>}
             </div>

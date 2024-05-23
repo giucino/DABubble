@@ -9,11 +9,12 @@ import { ChannelFirebaseService } from '../../../firebase.service/channelFirebas
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { ThreadService } from '../../../services/thread.service';
+import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OpenProfileDirective],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
