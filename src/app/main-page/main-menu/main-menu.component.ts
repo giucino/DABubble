@@ -10,6 +10,7 @@ import { UserService } from '../../firebase.service/user.service';
 import { Router } from '@angular/router';
 import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
+import { MainPageComponent } from '../main-page.component';
 
 @Component({
   selector: 'app-main-menu',
@@ -29,7 +30,8 @@ export class MainMenuComponent{
   constructor(public channelService: ChannelFirebaseService, 
     public sharedService: SharedService,
   public userService: UserService,
-public router: Router) { }
+public router: Router,
+public mainPage: MainPageComponent) { }
     
   
 
@@ -48,6 +50,8 @@ public router: Router) { }
         active_members: [this.userService.currentUser.id],
         channel_type: ChannelTypeEnum.new,
     };
+    this.sharedService.backToChannels();
+    this.sharedService.showMobileDiv();
     this.channelService.addChannel(newChannel).then(channelId => {
       newChannel.id = channelId;
       this.userService.updateLastChannel(this.userService.currentUser.id, channelId); 
