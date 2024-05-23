@@ -15,7 +15,9 @@ export class DialogEmojiPickerComponent {
 
   }
 
-  addEmoji(event : Event) {
-    this.dialogRef.close(console.log(event));
+  addEmoji(event : any) {
+    const emoji = event.emoji.native;
+    console.log(emoji);
+    this.dialogRef.close(emoji);
   }
 }

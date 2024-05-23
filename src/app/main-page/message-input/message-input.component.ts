@@ -70,6 +70,7 @@ export class MessageInputComponent {
         this.removeFile(fileInput);
       }
       // empty input
+      this.messageInput = '';
       channelInput.innerText = '';
     }
   }
@@ -144,9 +145,15 @@ export class MessageInputComponent {
 
 
   /* Dialog Emoji Picker */ 
-  openDialogEmojiPicker() {
+  openDialogEmojiPicker(input : HTMLDivElement) {
     const component = DialogEmojiPickerComponent;
-    this.customDialogService.openDialog(component);
+    const dialogRef = this.customDialogService.openDialog(component);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+      this.messageInput = this.messageInput + result;
+      input.innerText = this.messageInput;
+    })
   }
 
 }

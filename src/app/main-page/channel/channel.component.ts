@@ -84,9 +84,15 @@ export class ChannelComponent {
     this.channelId =
       this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-    this.router.navigateByUrl(
-      '/main-page/' + this.userService.currentUser.last_channel
-    ); // open last channel
+    if(this.userService.currentUser.last_channel && this.userService.currentUser.last_channel != '') {
+      this.router.navigateByUrl(
+        '/main-page/' + this.userService.currentUser.last_channel
+      ); // open last channel
+    } else {
+      this.router.navigateByUrl(
+        '/main-page/' );
+    }
+  
   }
 
   ngOnInit() {
