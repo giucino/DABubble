@@ -51,7 +51,7 @@ export class MessageComponent {
 
   attachementsData: any[] = [];
 
-  unsubReactions: any;
+  unsubReactions: Function = () => {};
   reactions: Reaction[] = [];
 
   constructor(
@@ -261,18 +261,12 @@ export class MessageComponent {
     // if current user has a reaction and it isn't the same emoji delete the user from old reaction
     if (currentUserReaction) {
       if (currentUserReaction.unicode != emoji) {
-        // let index = currentUserReaction.users.indexOf(this.currentUser.id);
-        // currentUserReaction.users.splice(index, 1);
-        // // TODO: if no users,delete reaction and delete connection to message
-        // this.reactionService.updateReaction(currentUserReaction);
         this.removeCurrentUserFromReaction(currentUserReaction);
       }
     }
 
     if (reactionWithEmoji) {
       if(!currentUserReaction || currentUserReaction != reactionWithEmoji) {
-        // reactionWithEmoji.users.push(this.currentUser.id);
-        // this.reactionService.updateReaction(reactionWithEmoji);
         this.addCurrentUserToReaction(reactionWithEmoji);
       }
     } else {
@@ -308,7 +302,17 @@ export class MessageComponent {
       this.addReaction(reaction.unicode);
     }
   }
-  // TODO: toggle reaction, is addReaction
+
+  getReactionUserNames(reaction : Reaction) {
+    let result = '';
+    reaction.users.forEach( (userId, index)  => {
+      let user = this.userService.allUsers.find((user) => user.id == userId);
+      if (reaction.users.length == 1 || index == reaction.users.length - 1) {result += `${user.name}`}
+      else { result += `${user.name}, `; }
+    }
+    );
+    return result;
+  }
 
   // TODO: show reactions in DOM
 

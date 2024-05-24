@@ -59,49 +59,29 @@
             }
             <!-- reactions -->
             @if (message.message.reactions && message.message.reactions.length > 0) {
-                <div class="reaction-container">
+                <div class="reactions-outer-container">
+                <div class="reactions-inner-container">
                     @for(reaction of reactions; track reaction.id) {
                         @if(reaction.users.length > 0) {
-                            <div class="reaction" (click)="toggleReaction(reaction)">
-                                <div class="emojicon">{{reaction.unicode}}</div>
-                                <div class="reaction-counter fs-16">{{reaction.users.length}}</div>
+                            <div class="reaction-container">
+                                <div class="reaction" (click)="toggleReaction(reaction)">
+                                    <div class="emojicon">{{reaction.unicode}}</div>
+                                    <div class="reaction-counter fs-16">{{reaction.users.length}}</div>
+                                </div>
                                 <div class="reaction-hover-info-container">
                                     <div class="emojicon"> {{reaction.unicode}} </div>
                                     <div class="reaction-hover-info">
-                                        <div class="reaction-user fs-18">Sofia Müller</div>
-                                        <div class="reaction-text fs-16">hat reagiert</div>
+                                        <div class="reaction-user fs-18">
+                                            {{getReactionUserNames(reaction)}}
+                                        </div>
+                                        <div class="reaction-text fs-16">{{ reaction.users.length > 1 ? 'haben reagiert'  : 'hat reagiert'}}</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                         }
-                    
                     }
-                
-                    <!-- rocket -->
-                    
-                    <!-- check -->
-                    <!-- <div class="reaction">
-                        <div class="emojicon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#4BD37B"/>
-                                <path d="M17.6 4.80005L9.19998 13.44L6.39998 10.56L3.59998 13.44L9.19998 19.2L20.4 7.68005L17.6 4.80005Z" fill="white"/>
-                            </svg>  
-                        </div>
-                        <div class="reaction-counter fs-16">2</div>
-                        <div class="reaction-hover-info-container">
-                            <div class="emojicon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#4BD37B"/>
-                                    <path d="M17.6 4.80005L9.19998 13.44L6.39998 10.56L3.59998 13.44L9.19998 19.2L20.4 7.68005L17.6 4.80005Z" fill="white"/>
-                                </svg>  
-                            </div>
-                            <div class="reaction-hover-info">
-                                <div class="reaction-user fs-18">Sofia Müller und Du</div>
-                                <div class="reaction-text fs-16">haben reagiert</div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- add reaction -->
+                    </div>
+                 <!-- add reaction -->
                     <button class="btn-icon-v5" (click)="openReactionPicker()">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_813_12127" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
