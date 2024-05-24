@@ -12,7 +12,8 @@ import { ThreadService } from '../../../services/thread.service';
 import { DialogEmojiPickerComponent } from '../dialog-emoji-picker/dialog-emoji-picker.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
-
+import { ReactionService } from '../../../firebase.service/reaction.service';
+import { Reaction } from '../../../interfaces/reaction.interface';
 
 @Component({
   selector: 'app-message',
@@ -25,8 +26,7 @@ export class MessageComponent {
   showMoreOptions: boolean = false;
   editMessage: boolean = false;
   @Input() channelType: 'main' | 'direct' | 'thread' | 'new' = 'main';
-  @Input() message: Message = 
-  {
+  @Input() message: Message = {
     user_id: '',
     channel_id: '',
     thread_id: '',
@@ -49,28 +49,36 @@ export class MessageComponent {
   // messages: Message[] = this.messageService.messages;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
-  attachementsData : any[] = [];
+  attachementsData: any[] = [];
+
+  unsubReactions: any;
+  reactions: Reaction[] = [];
 
   constructor(
     public messageService: MessageService,
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public threadService: ThreadService,
-    public customDialogService : CustomDialogService,
-  ) {
-
-  }
+    public customDialogService: CustomDialogService,
+    public reactionService: ReactionService
+  ) {}
 
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     // get attachements data
     this.getAttachementsData();
+    this.getReactions();
   }
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
+    this.getReactions();
+  }
+
+  ngOnDestroy() {
+    this.unsubReactions();
   }
 
   async getAttachementsData() {
@@ -82,12 +90,14 @@ export class MessageComponent {
           const attachement = await this.messageService.getFileData(path);
           this.attachementsData.push(attachement);
         }
-      })
+      });
     }
   }
 
-  attachementData(path : string) {
-    let attachementData = this.attachementsData.find((data) => data.path == path);
+  attachementData(path: string) {
+    let attachementData = this.attachementsData.find(
+      (data) => data.path == path
+    );
     return attachementData;
   }
 
@@ -152,10 +162,10 @@ export class MessageComponent {
     return result;
   }
 
- async openThread(thread_id : string | undefined) {
-    if(this.threadService.threadOpen) this.closeThread();
+  async openThread(thread_id: string | undefined) {
+    if (this.threadService.threadOpen) this.closeThread();
     if (thread_id == undefined || thread_id == '') {
-      let newThread : Channel = {
+      let newThread: Channel = {
         id: '',
         name: this.channelService.currentChannel.name,
         description: '',
@@ -164,16 +174,22 @@ export class MessageComponent {
         members: [this.userService.currentUser.id],
         active_members: [],
         channel_type: ChannelTypeEnum.thread,
-      }
+      };
       let newThreadId = await this.channelService.addChannel(newThread);
       this.userService.currentUser.last_thread = newThreadId;
-      this.userService.saveLastThread(this.userService.currentUser.id,newThreadId);
+      this.userService.saveLastThread(
+        this.userService.currentUser.id,
+        newThreadId
+      );
       this.message.thread_id = newThreadId;
       this.messageService.updateMessage(this.message);
       this.threadService.openThread();
     } else {
       this.userService.currentUser.last_thread = thread_id;
-      this.userService.saveLastThread(this.userService.currentUser.id,thread_id);
+      this.userService.saveLastThread(
+        this.userService.currentUser.id,
+        thread_id
+      );
       this.threadService.openThread();
     }
   }
@@ -183,8 +199,7 @@ export class MessageComponent {
     this.threadService.closeThread();
   }
 
-
-  deleteFile(path : string) {
+  deleteFile(path: string) {
     // remove file from storage
     this.messageService.deleteFile(path);
     // remove attachement path
@@ -198,18 +213,75 @@ export class MessageComponent {
 
   /* Edit Message */
 
-  /* Dialog Emoji Picker */ 
-  openDialogEmojiPicker(input : HTMLDivElement) {
+  /* Dialog Emoji Picker */
+  openDialogEmojiPicker(input: HTMLDivElement) {
     const component = DialogEmojiPickerComponent;
     const dialogRef = this.customDialogService.openDialog(component);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.editableMessage.message.text += result;
         input.innerText = this.editableMessage.message.text;
       }
-    })
+    });
   }
 
+  //#region REACTIONS
 
+  getReactions() {
+    let result = this.reactionService.subReactionsForMessage(this.message.id!);
+    this.unsubReactions = result.snapshot;
+    this.reactions = result.reactions;
+    console.log(this.message.id, this.reactions);
+  }
+
+  openReactionPicker() {
+    const component = DialogEmojiPickerComponent;
+    const dialogRef = this.customDialogService.openDialog(component);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.addReaction(result);
+      }
+    });
+  }
+
+  async addReaction(emoji: string) {
+    // does currentUser has a reaction on this message?
+    let currentUserReaction = this.reactions.find((reaction) =>
+      reaction.users.includes(this.currentUser.id)
+    );
+
+    // does a reaction with the emoji exists
+    let reactionWithEmoji = this.reactions.find(
+      (reaction) => reaction.unicode == emoji
+    );
+
+    // if current user has a reaction and it isn't the same emoji delete the user from old reaction
+    if (currentUserReaction) {
+      if (currentUserReaction.unicode != emoji) {
+        let index = currentUserReaction.users.indexOf(this.currentUser.id);
+        currentUserReaction.users.splice(index, 1);
+        this.reactionService.updateReaction(currentUserReaction);
+      }
+    }
+
+    if (reactionWithEmoji) {
+      if(!currentUserReaction || currentUserReaction != reactionWithEmoji) {
+        reactionWithEmoji.users.push(this.currentUser.id);
+        this.reactionService.updateReaction(reactionWithEmoji);
+      }
+    } else {
+      // if not create new reaction with user
+      let newReaction: Reaction = {
+        id: '',
+        message_id: this.message.id!,
+        users: [this.currentUser.id],
+        unicode: emoji,
+      };
+      const reactionId = await this.reactionService.addReaction(newReaction);
+      this.message.message.reactions?.push(reactionId);
+      this.messageService.updateMessage(this.message);
+    }
+  }
+
+  //#endregion
 }
-
