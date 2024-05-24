@@ -462,3 +462,9 @@ app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
     top: 70px;
   }
 }
+
+@media (max-height: 660px){
+  app-login{
+    height: max-content;
+  }
+}
