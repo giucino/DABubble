@@ -45,11 +45,13 @@ export class ReactionService {
         const q = query(this.getReactionsRef(), where('message_id', '==', message_id));
         let reactionsArray : Reaction[] = [];
         const snapshot =  onSnapshot(q, (reactions) => {
+            reactionsArray.length = 0;
             reactions.forEach((reaction) => {
-                reactionsArray.push(this.setReaction(reaction.data(), reaction.id))
+                reactionsArray.push(this.setReaction(reaction.data(), reaction.id));
             })
+            console.log('reactionsArray: ', reactionsArray);
         });
-        return {snapshot, reactions : reactionsArray};
+        return {snapshot, reactionsArray};
     }
 
     // UPDATE

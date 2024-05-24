@@ -228,10 +228,13 @@ export class MessageComponent {
   //#region REACTIONS
 
   getReactions() {
-    let result = this.reactionService.subReactionsForMessage(this.message.id!);
-    this.unsubReactions = result.snapshot;
-    this.reactions = result.reactions;
-    console.log(this.message.id, this.reactions);
+    if(this.message.message.reactions && this.message.message.reactions.length > 0) {
+      let result = this.reactionService.subReactionsForMessage(this.message.id!);
+      this.unsubReactions = result.snapshot;
+      this.reactions = result.reactionsArray;
+      console.log(this.message.id, this.reactions);
+    }
+   
   }
 
   openReactionPicker() {
@@ -258,16 +261,19 @@ export class MessageComponent {
     // if current user has a reaction and it isn't the same emoji delete the user from old reaction
     if (currentUserReaction) {
       if (currentUserReaction.unicode != emoji) {
-        let index = currentUserReaction.users.indexOf(this.currentUser.id);
-        currentUserReaction.users.splice(index, 1);
-        this.reactionService.updateReaction(currentUserReaction);
+        // let index = currentUserReaction.users.indexOf(this.currentUser.id);
+        // currentUserReaction.users.splice(index, 1);
+        // // TODO: if no users,delete reaction and delete connection to message
+        // this.reactionService.updateReaction(currentUserReaction);
+        this.removeCurrentUserFromReaction(currentUserReaction);
       }
     }
 
     if (reactionWithEmoji) {
       if(!currentUserReaction || currentUserReaction != reactionWithEmoji) {
-        reactionWithEmoji.users.push(this.currentUser.id);
-        this.reactionService.updateReaction(reactionWithEmoji);
+        // reactionWithEmoji.users.push(this.currentUser.id);
+        // this.reactionService.updateReaction(reactionWithEmoji);
+        this.addCurrentUserToReaction(reactionWithEmoji);
       }
     } else {
       // if not create new reaction with user
@@ -282,6 +288,29 @@ export class MessageComponent {
       this.messageService.updateMessage(this.message);
     }
   }
+
+  addCurrentUserToReaction(reaction : Reaction) {
+    reaction.users.push(this.currentUser.id);
+    this.reactionService.updateReaction(reaction);
+  }
+
+  removeCurrentUserFromReaction(reaction : Reaction) {
+    let index = reaction.users.indexOf(this.currentUser.id);
+    reaction.users.splice(index, 1);
+    // TODO: if no users,delete reaction and delete connection to message
+    this.reactionService.updateReaction(reaction);
+  }
+
+  toggleReaction(reaction : Reaction) {
+    if(reaction.users.includes(this.currentUser.id)) {
+      this.removeCurrentUserFromReaction(reaction);
+    } else {
+      this.addReaction(reaction.unicode);
+    }
+  }
+  // TODO: toggle reaction, is addReaction
+
+  // TODO: show reactions in DOM
 
   //#endregion
 }
