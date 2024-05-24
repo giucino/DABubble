@@ -14,17 +14,22 @@ import { debounceTime, Subscription } from 'rxjs';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { SearchService } from '../../../services/search.service';
 import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
-import { Router, RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { UtilityService } from '../../../services/utility.service';
-import { StateManagementService } from '../../../services/state-management.service';
 // import { SearchResultsComponent } from '../../../shared/search-results/search-results.component';
-
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule, MatInputModule, FormsModule, ReactiveFormsModule, OpenProfileDirective, RouterModule],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    OpenProfileDirective,
+    RouterModule,
+  ],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss',
 })
@@ -34,9 +39,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   filteredMessages: Message[] = [];
   searchControl = new FormControl();
   private subscriptions = new Subscription();
-  searchTerm: string = '';
 
-  newDirectChannel : Channel = {
+  newDirectChannel: Channel = {
     id: '',
     name: 'Direct Channel',
     description: '',
@@ -45,7 +49,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     members: [],
     active_members: [],
     channel_type: ChannelTypeEnum.direct,
-  }
+  };
 
   constructor(
     public userService: UserService,
@@ -53,9 +57,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public messageService: MessageService,
     public searchService: SearchService,
     public router: Router,
-    public threadService : ThreadService,
+    public threadService: ThreadService,
     public utilityService: UtilityService,
-    private stateService: StateManagementService
   ) {}
 
   ngOnInit(): void {
@@ -72,14 +75,22 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  clearSearch(): void {
+    this.searchControl.setValue('');
+  }
+
   filter(searchTerm: string): void {
     if (searchTerm.startsWith('@')) {
-      this.filteredUsers = this.userService.allUsers;
+      this.filteredUsers = this.searchService.filterUsersByPrefix(
+        searchTerm,
+        this.userService.allUsers
+      );
       this.filteredChannels = [];
       this.filteredMessages = [];
     } else if (searchTerm.startsWith('#')) {
-      this.filteredChannels = this.channelService.channels.filter(
-        (channel) => channel.channel_type === ChannelTypeEnum.main
+      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
+        searchTerm,
+        ChannelTypeEnum.main
       );
       this.filteredUsers = [];
       this.filteredMessages = [];
@@ -96,28 +107,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayChannelTime(): string{
+  displayChannelTime(): string {
     return this.utilityService.getChannelCreationTime();
-  }
-
-  async openDirectChannel(user_id: string): Promise<void> {
-    let channel_id = this.channelService.getDirectChannelId(this.userService.currentUser.id, user_id);
-    if (channel_id != '') {
-      this.router.navigateByUrl('/main-page/' + channel_id);
-    } else {
-      channel_id = await this.createNewDirectChannel(user_id);
-      this.router.navigateByUrl('/main-page/' + channel_id);
-    }
-    this.closeThread();
-    this.stateService.setSelectedUserId(user_id);
-
-  }
-
-  async createNewDirectChannel(user_id : string) {
-    this.newDirectChannel.creator = this.userService.currentUser.id;
-    this.newDirectChannel.created_at = new Date().getTime();
-    this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
-    return await this.channelService.addChannel(this.newDirectChannel);
   }
 
   closeThread() {

@@ -34,7 +34,7 @@
         <ul class="filtered">
             <span class="categoryName">Users:</span>
             @for(user of filteredUsers; track user.id) {
-            <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn">
+            <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn" (click)="clearSearch()">
                 <div class="user">
                     <div class="user-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img" />
@@ -52,7 +52,7 @@
         <ul class="filtered">
             <span class="categoryName">Channels:</span>
             @for(channel of filteredChannels; track channel.id) {
-            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
+            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread(); clearSearch()">
                 <div class="channelList">
                     <div class="img-channel-hash">#</div>
                     <span class="channel-name">{{channel.name}}</span>
