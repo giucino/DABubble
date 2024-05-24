@@ -234,7 +234,10 @@ export class MessageComponent {
       this.reactions = result.reactionsArray;
       console.log(this.message.id, this.reactions);
     }
-   
+  }
+
+  getReactionData(reactionId : string) {
+    return this.reactions.find((reaction) => reaction.id == reactionId);
   }
 
   openReactionPicker() {
