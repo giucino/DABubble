@@ -102,7 +102,6 @@ export class MessageService {
       messages.forEach((message) => {
         this.messages.push(this.setMessage(message.data(), message.id));
       });
-      console.log('Snapshot Messages: ', this.messages);
     });
   }
 

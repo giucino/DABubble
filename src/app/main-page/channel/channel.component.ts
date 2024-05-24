@@ -88,7 +88,6 @@ export class ChannelComponent {
     } else {
       this.router.navigateByUrl('/main-page/')
     }
-    
   }
 
   ngOnInit() {

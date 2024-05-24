@@ -11,8 +11,8 @@ export class CustomDialogService {
   constructor(public dialog: MatDialog) {
   }
 
-  public openDialog(dialogComponent : ComponentType<any>) {
-    this.dialog.open(dialogComponent, {
+  public openDialog(dialogComponent : ComponentType<any>) : MatDialogRef<any> {
+    return this.dialog.open(dialogComponent, {
       panelClass: 'custom-dialog',
     });
   }
