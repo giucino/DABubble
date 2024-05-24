@@ -38,7 +38,7 @@
                 <div class="user">
                     <div class="user-img-container">
                         <img [src]="user.profile_img" alt="" class="profile-img" />
-                        <div class="online-status-wborder online"></div>
+                        <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
                     </div>
                     <div class="user-name fs-18">{{ userService.getUser(user.id).name }}{{ userService.getUser(user.id).name ===
                         userService.currentUser?.name ? ' (Du)' : '' }}</div>
