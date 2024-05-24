@@ -11,6 +11,7 @@ import { StateManagementService } from '../../../services/state-management.servi
 import { MainPageComponent } from '../../main-page.component';
 import { SharedService } from '../../../services/shared.service';
 
+
 @Component({
   selector: 'app-main-menu-dm',
   standalone: true,

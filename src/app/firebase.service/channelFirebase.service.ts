@@ -310,4 +310,12 @@ export class ChannelFirebaseService {
         return [];
       });
   }
+
+  async createNewChannel(channel: Omit<Channel, 'channel_type'>): Promise<string> {
+    const newChannel: Channel = {
+      ...channel,
+      channel_type: ChannelTypeEnum.new,
+    };
+    return this.addChannel(newChannel);
+  }
 }

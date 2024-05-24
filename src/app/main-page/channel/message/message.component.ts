@@ -11,11 +11,13 @@ import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { ThreadService } from '../../../services/thread.service';
 import { DialogEmojiPickerComponent } from '../dialog-emoji-picker/dialog-emoji-picker.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
+import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
+
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OpenProfileDirective],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })

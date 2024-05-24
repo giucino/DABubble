@@ -81,21 +81,17 @@ export class ChannelComponent {
     public threadService: ThreadService,
     public searchService: SearchService
   ) {
-    this.channelId =
-      this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-    if(this.userService.currentUser.last_channel && this.userService.currentUser.last_channel != '') {
-      this.router.navigateByUrl(
-        '/main-page/' + this.userService.currentUser.last_channel
-      ); // open last channel
+    if (userService.currentUser.last_channel && userService.currentUser.last_channel != '') {
+      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
     } else {
-      this.router.navigateByUrl(
-        '/main-page/' );
+      this.router.navigateByUrl('/main-page/')
     }
-  
   }
 
   ngOnInit() {
+    if(this.userService.currentUser.last_channel){
     this.openChannel();
     this.subscriptions.add(
       this.searchControl.valueChanges
@@ -104,6 +100,7 @@ export class ChannelComponent {
           this.filter(value);
         })
     );
+  }
   }
 
   ngOnDestroy(): void {
@@ -135,27 +132,17 @@ export class ChannelComponent {
       if (params['channelId']) {
         this.isLoading = true;
         this.setFocus();
-        const loadChannel = this.channelService.getCurrentChannel(
-          params['channelId']
-        );
-        const loadMessages = this.messageService.getMessagesFromChannel(
-          params['channelId']
-        );
-        const updateUser = this.userService.updateLastChannel(
-          this.userService.currentUser.id,
-          params['channelId']
+        const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
+        const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
+        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']
         ); // save last channel
         // alle 3 promises müssen geladen werden + halbe.sekunde bis der loadingspinner weggeht
         Promise.all([loadChannel, loadMessages, updateUser])
           .then(() => {
-            // setTimeout(() => {
             this.isLoading = false;
-            // }, 500);
           })
           .catch(() => {
-            // setTimeout(() => {
             this.isLoading = false;
-            // }, 500);
           });
       }
     });
@@ -249,6 +236,7 @@ export class ChannelComponent {
       (member) => member != this.currentUser.id
     );
     if (contact) return this.userService.getUser(contact);
+    
     else return this.currentUser;
   }
 
