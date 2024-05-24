@@ -59,8 +59,8 @@
             
             <div class="menu-channel-content" [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
                 <!-- <div class="channel" [class.active]="channel.id === activeChannelId" (click)="selectChannel(channel.id)"> -->
-                <div class="channel" [class.active]="channel.id === channelService.currentChannel.id">
-                    <!-- (click)="selectChannel(channel.id)" -->
+                <div class="channel" [class.active]="channel.id === channelService.currentChannel.id"
+                    (click)="selectChannel(channel.id)">
                     <svg class="svg-color" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_813_12093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                             height="24">
