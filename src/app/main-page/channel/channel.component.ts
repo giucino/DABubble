@@ -22,7 +22,7 @@ import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { Channel } from '../../interfaces/channel.interface';
 import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
-
+import { StateManagementService } from '../../services/state-management.service';
 
 @Component({
   selector: 'app-channel',
@@ -71,6 +71,18 @@ export class ChannelComponent {
   filteredUsers: User[] = [];
   filteredChannels: Channel[] = [];
 
+  selectedUserId: string = '';
+  newDirectChannel: Channel = {
+    id: '',
+    name: 'Direct Channel',
+    description: '',
+    created_at: new Date().getTime(),
+    creator: '',
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.direct,
+  };
+
   constructor(
     public customDialogService: CustomDialogService,
     public messageService: MessageService,
@@ -79,20 +91,28 @@ export class ChannelComponent {
     public activatedRoute: ActivatedRoute,
     private router: Router,
     public threadService: ThreadService,
+    private stateService: StateManagementService,
     public searchService: SearchService
   ) {
-    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.channelId =
+      this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
     this.userService.getCurrentUser();
-    if (userService.currentUser.last_channel && userService.currentUser.last_channel != '') {
-      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    if (
+      userService.currentUser.last_channel &&
+      userService.currentUser.last_channel != ''
+    ) {
+      this.router.navigateByUrl(
+        '/main-page/' + this.userService.currentUser.last_channel
+      ); // open last channel
     } else {
-      this.router.navigateByUrl('/main-page/')
+      this.router.navigateByUrl('/main-page/');
     }
   }
 
   ngOnInit() {
-    if(this.userService.currentUser.last_channel){
-    this.openChannel();
+    if (this.userService.currentUser.last_channel) {
+      this.openChannel();
+    }
     this.subscriptions.add(
       this.searchControl.valueChanges
         .pipe(debounceTime(300))
@@ -101,30 +121,58 @@ export class ChannelComponent {
         })
     );
   }
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
+  clearSearch(): void {
+    this.searchControl.setValue('');
+  }
+
   filter(searchTerm: string): void {
     if (searchTerm.startsWith('@')) {
-      this.filteredUsers = this.userService.allUsers;
+      // Suche Benutzer mit dem Präfix '@'
+      this.filteredUsers = this.searchService.filterUsersByPrefix(
+        searchTerm,
+        this.userService.allUsers
+      );
       this.filteredChannels = [];
     } else if (searchTerm.startsWith('#')) {
-      this.filteredChannels = this.channelService.channels.filter(
-        (channel) => channel.channel_type === ChannelTypeEnum.main
+      // Suche Kanäle vom Typ 'main' mit dem Präfix '#'
+      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
+        searchTerm,
+        ChannelTypeEnum.main
       );
       this.filteredUsers = [];
-    } else if (searchTerm.length > 0) {
-      const results = this.searchService.applyFilters(searchTerm);
-      this.filteredUsers = results.users;
-      this.filteredChannels = results.channels;
     } else {
+      // Klare Filter, wenn kein Suchbegriff vorhanden ist
       const results = this.searchService.clearFilters();
       this.filteredUsers = results.users;
       this.filteredChannels = results.channels;
     }
+  }
+
+  async openDirectChannel(user_id: string): Promise<void> {
+    let channel_id = this.channelService.getDirectChannelId(
+      this.userService.currentUser.id,
+      user_id
+    );
+    if (channel_id != '') {
+      this.router.navigateByUrl('/main-page/' + channel_id);
+    } else {
+      channel_id = await this.createNewDirectChannel(user_id);
+      this.router.navigateByUrl('/main-page/' + channel_id);
+    }
+    this.closeThread();
+    this.stateService.setSelectedUserId(user_id);
+  }
+
+  async createNewDirectChannel(user_id: string) {
+    this.newDirectChannel.creator = this.userService.currentUser.id;
+    this.newDirectChannel.created_at = new Date().getTime();
+    this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
+    return await this.channelService.addChannel(this.newDirectChannel);
   }
 
   openChannel() {
@@ -132,9 +180,15 @@ export class ChannelComponent {
       if (params['channelId']) {
         this.isLoading = true;
         this.setFocus();
-        const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
-        const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
-        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']
+        const loadChannel = this.channelService.getCurrentChannel(
+          params['channelId']
+        );
+        const loadMessages = this.messageService.getMessagesFromChannel(
+          params['channelId']
+        );
+        const updateUser = this.userService.updateLastChannel(
+          this.userService.currentUser.id,
+          params['channelId']
         ); // save last channel
         // alle 3 promises müssen geladen werden + halbe.sekunde bis der loadingspinner weggeht
         Promise.all([loadChannel, loadMessages, updateUser])
@@ -236,7 +290,6 @@ export class ChannelComponent {
       (member) => member != this.currentUser.id
     );
     if (contact) return this.userService.getUser(contact);
-    
     else return this.currentUser;
   }
 
@@ -269,7 +322,6 @@ export class ChannelComponent {
     }
   }
 
-
   getTextareaPlaceholderText() {
     switch (this.channelService.currentChannel.channel_type) {
       case 'main':
@@ -293,21 +345,17 @@ export class ChannelComponent {
     }
   }
 
-
   setFocus() {
     document.getElementById('channelInput')?.focus();
     this.messageInput = '';
   }
 
-
-  updateInput(newContent : string) {
+  updateInput(newContent: string) {
     this.messageInput = newContent;
   }
-
 
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }
-
 }
