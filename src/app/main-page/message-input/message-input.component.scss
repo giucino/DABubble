@@ -153,3 +153,9 @@ input, textarea, .message-input {
     } 
   }
 }
+
+@media (max-width:  768px) {
+      .message-input{
+        padding: 0px 20px 60px 20px;
+      }
+}

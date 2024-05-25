@@ -78,6 +78,10 @@
   }
 }
 @media (max-width: 768px) {
+  .user-head{
+    position: relative;
+    z-index: 1001;
+  }
   .header-content{
     padding: 20px;
     position: fixed;
@@ -119,6 +123,15 @@
     }
     .logo-container{
       margin-right: 0;
+      gap: 8px;
+      padding-left: 10px;
+      .backBtn{
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .logo{
         width: 45px;
         height: 45px;

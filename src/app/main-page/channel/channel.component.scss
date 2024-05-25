@@ -401,4 +401,24 @@ input, textarea, #channelInput {
   .mobile{
     display: flex;
   }
+  .arrow-down{
+    display: none;
+  }
+}
+@media (max-width: 500px){
+  .channel-container{
+    width: 100%;
+  }
+  .channel-header{
+    padding: 10px 16px;
+    width: 100%;
+    position: relative;
+    // left: 20px;
+    .channel-name-container{
+      padding: 6px 0px;
+    }
+  }
+  .channel-footer{
+    padding: 30px 10px 20px 10px;
+  }
 }

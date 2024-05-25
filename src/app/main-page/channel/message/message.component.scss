@@ -3,18 +3,23 @@
   padding: 10px 45px;
   display: flex;
   gap: 30px;
+
   &:hover {
     background-color: var(--color-bg);
+
     .message {
       background-color: var(--color-white);
     }
+
     .last-reply {
       color: var(--color-black);
     }
+
     .reaction-bar {
       display: flex;
     }
   }
+
   .profile-img {
     width: 70px;
     height: 70px;
@@ -23,25 +28,32 @@
   &-reverse {
     @extend .message-container;
     flex-direction: row-reverse;
+
     .message-content {
       align-items: flex-end;
     }
+
     .message-creator {
       flex-direction: row-reverse;
     }
+
     .message {
       border-radius: 30px 0px 30px 30px;
       background-color: var(--color-purple-2);
       color: var(--color-white);
     }
+
     &:hover {
       background-color: var(--color-bg);
+
       .message {
         background-color: var(--color-purple-2);
       }
+
       .last-reply {
         color: var(--color-black);
       }
+
       .reaction-bar {
         left: 75px;
         right: unset;
@@ -60,9 +72,11 @@
 .message-creator {
   display: flex;
   gap: 20px;
+
   .name {
     font-weight: 700;
   }
+
   .time,
   .edited {
     color: var(--color-gray);
@@ -75,23 +89,28 @@
   background-color: var(--color-bg);
   width: fit-content;
   max-width: calc(100% - 70px - 30px); // 100% - profile-img - gap
+
   &:hover {
     background-color: var(--color-white);
   }
 }
 
-input, textarea, .message-input {
+input,
+textarea,
+.message-input {
   width: 100%;
   border: none;
   outline: none;
   font-size: 18px;
   line-height: 24.55px;
+
   &::placeholder {
-      font-family: "Nunito", "Helvetica Neue", sans-serif;
-      color: var(--color-gray);
+    font-family: "Nunito", "Helvetica Neue", sans-serif;
+    color: var(--color-gray);
   }
+
   &:focus::placeholder {
-      color: transparent;
+    color: transparent;
   }
 }
 
@@ -103,12 +122,15 @@ input, textarea, .message-input {
   gap: 16px;
   width: 100%;
   max-width: calc(100% - 2 * (70px + 30px)); // 100% - 2 * (profile-img - gap)
+
   &:hover {
     border-color: var(--color-purple-2);
   }
+
   &:focus-within {
     border-color: var(--color-purple-1);
   }
+
   textarea {
     width: 100%;
     min-height: 50px;
@@ -137,25 +159,28 @@ input, textarea, .message-input {
 
 
 .message-edit-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .message-confirm-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    .message-confirm-buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
+    gap: 10px;
+  }
 }
 
 .replies {
   .count {
     margin-right: 20px;
     color: var(--color-purple-3);
+
     &:hover {
       font-weight: 700;
     }
   }
+
   .last-reply {
     color: var(--color-gray);
   }
@@ -170,8 +195,10 @@ input, textarea, .message-input {
   border-radius: 25px 25px 0 25px;
   border: 1px solid var(--color-light-purple);
   background-color: var(--color-white);
+
   .more-options-button-container {
     position: relative;
+
     .more-options-menu {
       position: absolute;
       top: 50%;
@@ -179,7 +206,7 @@ input, textarea, .message-input {
       background-color: var(--color-white);
       border-radius: 0px 30px 30px 30px;
       padding: 10px 20px;
-      box-shadow: 0 6px 14px 0 rgba(0,0,0,0.2);
+      box-shadow: 0 6px 14px 0 rgba(0, 0, 0, 0.2);
     }
   }
 }
@@ -200,12 +227,15 @@ input, textarea, .message-input {
   border: 1px solid var(--color-light-purple);
   border-radius: 20px;
   background-color: var(--color-white);
+
   &:hover {
     border-color: var(--color-purple-3);
+
     .reaction-hover-info-container {
       display: flex;
     }
   }
+
   &:active {
     border-color: var(--color-purple-1);
   }
@@ -233,6 +263,7 @@ input, textarea, .message-input {
     background-color: var(--color-purple-1);
     color: var(--color-white);
     text-align: center;
+
     .reaction-user {
       font-weight: 700;
     }
@@ -248,6 +279,7 @@ input, textarea, .message-input {
   max-width: fit-content;
   border-radius: 8px;
   overflow: hidden;
+
   .overlay {
     display: none;
     position: absolute;
@@ -255,8 +287,9 @@ input, textarea, .message-input {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
+
   .buttons {
     display: flex;
     gap: 8px;
@@ -269,7 +302,7 @@ input, textarea, .message-input {
       align-items: center;
     }
   }
-} 
+}
 
 .attachement-deleted {
   padding: 8px;
@@ -293,6 +326,7 @@ input, textarea, .message-input {
   background-color: var(--color-bg);
   border-radius: 8px;
   padding: 8px;
+
   .pdf-icon {
     width: 40px;
     height: 40px;
@@ -303,17 +337,81 @@ input, textarea, .message-input {
     align-items: center;
     justify-content: center;
   }
+
   .file-name {
     color: var(--color-black);
   }
 }
 
 
-/* attachement img */ 
+/* attachement img */
 .attachement-img {
-    max-height: 300px;
-    max-width: 100%;
-    min-width: 120px;
-    border-radius: 8px;
-    min-height: 100px;
+  max-height: 300px;
+  max-width: 100%;
+  min-width: 120px;
+  border-radius: 8px;
+  min-height: 100px;
+}
+
+@media (max-width: 768px) {
+
+  .message-container,
+  .message-container-reverse {
+    padding: 10px 10px;
+    gap: 20px;
+
+    .profile-img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .message-content {
+
+      // width: 100%;
+      .message {
+        width: 90%;
+        max-width: unset;
+      }
+    }
+  }
+
+
+      
+
+
+}
+
+@media (max-width: 550px) {
+  .message-container,
+  .message-container-reverse {
+
+
+    .message-content {
+      .message {
+        width: 80%;
+      }
+    }
+  }
+}
+@media (max-width: 400px){
+  .message-creator{
+    gap: 10px;
+  }
+  .replies{
+    display: flex;
+    gap: 10px;
+    .count{
+      margin-right: 0;
+    }
+  }
+  .message-container,
+  .message-container-reverse {
+
+
+    .message-content {
+      .message {
+        width: 90%;
+      }
+    }
+  }
 }
