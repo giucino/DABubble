@@ -26,17 +26,6 @@
   padding-top: 32px;
 }
 
-// .menu-open {
-//   transform: translateX(0);
-//   transition: 0.5s;
-// }
-
-// .menu-closed {
-//   transform: translateX(-150%);
-//   transition: 0.5s;
-// }
-
-
 .menu-overlay {
   @include dFlex($ai: center, $gap: 0px);
   position: fixed;
@@ -100,22 +89,10 @@
 
   }
 
-  // .menu-header {
-  //   position: sticky;
-  //   top: 0;
-  //   z-index: 1;
-  //   background-color: var(--color-white);
-  //   padding-top: 32px;
-  // }
-
 
   @media (max-width: 768px) {
-    // .menu-overlay {
-    //   display: none;
-    // }
 
     .edit-circle {
-      // gibts noch nicht
       display: block;
     }
 
@@ -124,13 +101,10 @@
       max-width: none;
       border-radius: 0;
       width: 100%;
-      // position: absolute;
-      // top: 140px;
       left: 0;
       right: 0;
       bottom: 0;
       z-index: 100;
-      //   display: none;
     }
   }
 }

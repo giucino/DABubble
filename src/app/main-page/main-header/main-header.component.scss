@@ -96,5 +96,34 @@
   .name{
     display: none !important;
   }
+  .menu-btn{
+    display: none;
+  }
+  .online-status-wborder{
+    display: none;
+  }
+}
 
+@media(max-width: 420px){
+  .header-content{
+    padding: 15px 16px;
+    .user-head{
+      .avatar{
+        width: 50px;
+        height: 50px;
+        .profile-img{
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+    .logo-container{
+      margin-right: 0;
+      .logo{
+        width: 45px;
+        height: 45px;
+      }
+    }
+  }
+  
 }

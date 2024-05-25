@@ -79,6 +79,7 @@ export class MainPageComponent {
     else {
       if (event.target.innerWidth > 1200 && !this.isMenuOpen) {
         this.toggleMenu();
+        this.sharedService.showMobileDiv();
       }
       // const menuElement = document.getElementById('menu-none');
       // if (menuElement) {

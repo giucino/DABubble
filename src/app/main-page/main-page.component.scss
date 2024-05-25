@@ -20,7 +20,39 @@
   flex-grow: 1;
   overflow: hidden;
 }
+.menu-overlay {
+  position: fixed;
+  top: 50%;
+  left: -150px;
+  transform: translateY(-50%) rotate(-90deg);
+  width: 350px;
+  z-index: 1000;
+  border-radius: 0px 0px 30px 30px;
+  padding: 8px 20px 8px 20px;
+  box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.2);
 
+  mat-card-title {
+    @include dFlex($ai: center, $gap: 10px);
+    font-size: 20px;
+
+    svg {
+      rotate: 90deg;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 4px 4px 7px 1px rgba(0, 0, 0, 0.3);
+
+    mat-card-title {
+      color: var(--color-purple-3);
+    }
+
+    .svg-color path {
+      fill: var(--color-purple-3);
+    }
+  }
+}
 .main-menu {
   height: 100%;
   width: 366px;
@@ -62,66 +94,61 @@
 @media (max-width: 768px) {
   .main-page {
     padding: 0;
+    gap: 0;
   }
 
   .content {
     gap: unset;
-    // position: relative;
     margin-top: 120px;
     max-height: calc(100% - 120px);
   }
-}
 
-.main-menu-hidden {
-  transform: translateX(-110%);
-  width: 0;
-  overflow: hidden;
-}
 
-.channel-expanded {
-  margin-left: -20px;
-  width: 100%;
-}
-
-.menu-overlay {
-  position: fixed;
-  top: 50%;
-  left: -150px;
-  transform: translateY(-50%) rotate(-90deg);
-  width: 350px;
-  z-index: 1000;
-  border-radius: 0px 0px 30px 30px;
-  padding: 8px 20px 8px 20px;
-  box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.2);
-
-  mat-card-title {
-    @include dFlex($ai: center, $gap: 10px);
-    font-size: 20px;
-
-    svg {
-      rotate: 90deg;
-    }
+  .main-menu-hidden {
+    transform: translateX(-110%);
+    width: 0;
+    overflow: hidden;
   }
 
-  &:hover {
-    cursor: pointer;
-    box-shadow: 4px 4px 7px 1px rgba(0, 0, 0, 0.3);
+  .channel-expanded {
+    margin-left: -20px;
+    width: 100%;
+  }
+
+  .menu-overlay {
+    position: fixed;
+    top: 50%;
+    left: -150px;
+    transform: translateY(-50%) rotate(-90deg);
+    width: 350px;
+    z-index: 1000;
+    border-radius: 0px 0px 30px 30px;
+    padding: 8px 20px 8px 20px;
+    box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.2);
 
     mat-card-title {
-      color: var(--color-purple-3);
+      @include dFlex($ai: center, $gap: 10px);
+      font-size: 20px;
+
+      svg {
+        rotate: 90deg;
+      }
     }
 
-    .svg-color path {
-      fill: var(--color-purple-3);
+    &:hover {
+      cursor: pointer;
+      box-shadow: 4px 4px 7px 1px rgba(0, 0, 0, 0.3);
+
+      mat-card-title {
+        color: var(--color-purple-3);
+      }
+
+      .svg-color path {
+        fill: var(--color-purple-3);
+      }
     }
   }
-}
-
-@media (max-width: 768px) {
-  // .main-page {
-  //   padding: 0;
-  // }
-  .content{
+  .content {
     position: relative;
   }
 
@@ -135,6 +162,7 @@
   .menu-overlay {
     display: none;
   }
+
   .thread {
     position: absolute;
     top: 0;
@@ -142,5 +170,10 @@
     right: 0;
     bottom: 0;
   }
-  
+
+}
+@media (max-width: 420px){
+  .content{
+    margin-top: 100px;
+  }
 }
