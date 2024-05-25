@@ -42,3 +42,11 @@ header {
   }
 }
 
+
+@media (max-width: 400px) {
+  header{
+    .menu-header-left{
+      padding-right: 0;
+    }
+  }
+}

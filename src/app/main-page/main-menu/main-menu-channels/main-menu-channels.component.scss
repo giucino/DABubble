@@ -29,6 +29,7 @@
         font-weight: 700;
         line-height: normal;
       }
+
       &:hover {
         cursor: pointer;
       }
@@ -39,7 +40,8 @@
     }
   }
 
-  .menu-channel-content, .menu-channel-content-mobile {
+  .menu-channel-content,
+  .menu-channel-content-mobile {
     @include dFlex($fd: column, $ai: flex-start, $gap: 13px);
     font-size: 18px;
     font-weight: 400;
@@ -66,6 +68,7 @@
         }
       }
     }
+
     .channel-name {
       color: var(--color-black);
       font-weight: 700;
@@ -104,16 +107,31 @@
     }
   }
 }
-.menu-channel-content-mobile{
+
+.menu-channel-content-mobile {
   display: none !important;
 
 }
+
+
+
 @media (max-width: 1024px) {
-  .menu-channel-content{
+  .menu-channel-content {
     display: none !important;
   }
-  .menu-channel-content-mobile{
+
+  .menu-channel-content-mobile {
     display: flex !important;
   }
 
+
+}
+
+@media (max-width: 400px) {
+  .menu-channel-container {
+
+    .menu-channel-content-mobile {
+      padding-left: 10px;
+    }
+  }
 }

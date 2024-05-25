@@ -78,6 +78,11 @@
   cursor: pointer;
 }
 
+.mobile-search-bar {
+  width: 100%;
+  display: none;
+  padding-top: 32px;
+}
 @media (max-width: 1024px) {
   .main-menu {
     min-width: 322px;
@@ -88,14 +93,21 @@
 
 
   }
-
+  .mobile-search-bar {
+    display: block;
+  }
+  .menu-header{
+    padding-top: 0px;
+  }
 
   @media (max-width: 768px) {
 
     .edit-circle {
       display: block;
     }
-
+    .mobile-search-bar{
+      padding-top: 24px;
+    }
 
     .main-menu {
       max-width: none;
@@ -106,5 +118,16 @@
       bottom: 0;
       z-index: 100;
     }
+  }
+}
+
+@media (max-width: 400px) {
+  .mobile-search-bar{
+    padding-top: 0px;
+  }
+  .main-menu {
+    padding: 10px;
+    min-width: unset;
+    min-width: calc(100dvw - 20px);
   }
 }

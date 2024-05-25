@@ -12,6 +12,7 @@ import { ThreadService } from '../../../services/thread.service';
 import { MainPageComponent } from '../../main-page.component';
 import { SharedService } from '../../../services/shared.service';
 import { StateManagementService } from '../../../services/state-management.service';
+import { SearchBarComponent } from '../../main-header/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-main-menu-channels',
