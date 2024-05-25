@@ -195,6 +195,7 @@ input, textarea, .message-input {
   align-items: center;
   gap: 10px;
   max-width: 100%;
+  flex-wrap: wrap;
 }
 
 .reaction-container {

@@ -71,9 +71,11 @@
                                 <div class="reaction-hover-info-container">
                                     <div class="emojicon"> {{reaction.unicode}} </div>
                                     <div class="reaction-hover-info">
-                                        <div class="reaction-user fs-18">
-                                            {{getReactionUserNames(reaction)}}
-                                        </div>
+                                        @for(userId of reaction.users; track userId; let i = $index) {
+                                            <div class="reaction-user fs-18">
+                                                {{getUserName(userId)}}{{(reaction.users.length > 1 && i < reaction.users.length - 1) ? ',' : ''}}
+                                            </div>
+                                        }
                                         <div class="reaction-text fs-16">{{ reaction.users.length > 1 ? 'haben reagiert'  : 'hat reagiert'}}</div>
                                     </div>
                                 </div>

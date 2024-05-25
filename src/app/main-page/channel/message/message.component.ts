@@ -297,8 +297,10 @@ export class MessageComponent {
     // TODO: if no users,delete reaction and delete connection to message
     if(reaction.users.length == 0) {
       let reactionIdIndex = this.message.message.reactions?.indexOf(reaction.id);
-      this.message.message.reactions?.splice(reactionIdIndex!,1);
-      this.messageService.updateMessage(this.message);
+       if (reactionIdIndex) {
+        this.message.message.reactions?.splice(reactionIdIndex,1);
+        this.messageService.updateMessage(this.message);
+       }
     } 
     this.reactionService.updateReaction(reaction);
   }
@@ -311,15 +313,9 @@ export class MessageComponent {
     }
   }
 
-  getReactionUserNames(reaction : Reaction) {
-    let result = '';
-    reaction.users.forEach( (userId, index)  => {
-      let user = this.userService.allUsers.find((user) => user.id == userId);
-      if (reaction.users.length == 1 || index == reaction.users.length - 1) {result += `${user.name}`}
-      else { result += `${user.name}, `; }
-    }
-    );
-    return result;
+  getUserName(userId : string) {
+    let user = this.userService.allUsers.find((user) => user.id == userId);
+    return user.name;
   }
 
   // TODO: show reactions in DOM
