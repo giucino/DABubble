@@ -288,6 +288,11 @@ export class MessageComponent {
 
   addCurrentUserToReaction(reaction : Reaction) {
     reaction.users.push(this.currentUser.id);
+    // if currentReaction not in message reactions add it
+    if(!this.message.message.reactions?.includes(reaction.id)) {
+      this.message.message.reactions?.push(reaction.id);
+      this.messageService.updateMessage(this.message);
+    }
     this.reactionService.updateReaction(reaction);
   }
 
@@ -297,10 +302,10 @@ export class MessageComponent {
     // TODO: if no users,delete reaction and delete connection to message
     if(reaction.users.length == 0) {
       let reactionIdIndex = this.message.message.reactions?.indexOf(reaction.id);
-       if (reactionIdIndex) {
+      if (reactionIdIndex != undefined) {
         this.message.message.reactions?.splice(reactionIdIndex,1);
         this.messageService.updateMessage(this.message);
-       }
+      }
     } 
     this.reactionService.updateReaction(reaction);
   }
