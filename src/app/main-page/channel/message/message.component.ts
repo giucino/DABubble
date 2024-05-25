@@ -295,6 +295,11 @@ export class MessageComponent {
     let index = reaction.users.indexOf(this.currentUser.id);
     reaction.users.splice(index, 1);
     // TODO: if no users,delete reaction and delete connection to message
+    if(reaction.users.length == 0) {
+      let reactionIdIndex = this.message.message.reactions?.indexOf(reaction.id);
+      this.message.message.reactions?.splice(reactionIdIndex!,1);
+      this.messageService.updateMessage(this.message);
+    } 
     this.reactionService.updateReaction(reaction);
   }
 
@@ -318,6 +323,7 @@ export class MessageComponent {
   }
 
   // TODO: show reactions in DOM
+  // TODO: reorder for last reactions
 
   //#endregion
 }
