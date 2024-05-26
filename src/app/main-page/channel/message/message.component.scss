@@ -211,38 +211,26 @@ textarea,
   }
 }
 
-.reaction-container {
+.reactions-outer-container {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.reaction {
-  position: relative;
+.reactions-inner-container {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 5px 10px;
-  border: 1px solid var(--color-light-purple);
-  border-radius: 20px;
-  background-color: var(--color-white);
+  max-width: 100%;
+  flex-wrap: wrap;
+}
 
+.reaction-container {
+  position: relative;
   &:hover {
-    border-color: var(--color-purple-3);
-
     .reaction-hover-info-container {
       display: flex;
     }
-  }
-
-  &:active {
-    border-color: var(--color-purple-1);
-  }
-
-  .emojicon {
-    width: 24px;
-    height: 24px;
   }
 
   .reaction-hover-info-container {
@@ -257,6 +245,7 @@ textarea,
     align-items: center;
     gap: 5px;
     width: max-content;
+    max-width: 200px;
     min-width: 160px;
     padding: 15px 10px;
     border-radius: 30px 30px 30px 0;
@@ -267,6 +256,28 @@ textarea,
     .reaction-user {
       font-weight: 700;
     }
+  }
+}
+
+.reaction {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--color-light-purple);
+  border-radius: 20px;
+  background-color: var(--color-white);
+  &:hover {
+    border-color: var(--color-purple-3);
+  }
+  &:active {
+    border-color: var(--color-purple-1);
+  }
+
+  .emojicon {
+    width: 24px;
+    height: 24px;
   }
 }
 
