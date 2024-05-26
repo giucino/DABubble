@@ -51,7 +51,6 @@ export class ReactionService {
             reactions.forEach((reaction) => {
                 reactionsArray.push(this.setReaction(reaction.data(), reaction.id));
             })
-            console.log('reactionsArray: ', reactionsArray);
         });
         return {snapshot, reactionsArray};
     }

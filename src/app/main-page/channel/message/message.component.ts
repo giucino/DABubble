@@ -232,7 +232,6 @@ export class MessageComponent {
       let result = this.reactionService.subReactionsForMessage(this.message.id!);
       this.unsubReactions = result.snapshot;
       this.reactions = result.reactionsArray;
-      console.log(this.message.id, this.reactions);
     }
   }
 
@@ -252,26 +251,13 @@ export class MessageComponent {
 
   async addReaction(emoji: string) {
     // does currentUser has a reaction on this message?
-    let currentUserReaction = this.reactions.find((reaction) =>
-      reaction.users.includes(this.currentUser.id)
-    );
-
+    let currentUserReaction = this.reactions.find((reaction) => reaction.users.includes(this.currentUser.id));
     // does a reaction with the emoji exists
-    let reactionWithEmoji = this.reactions.find(
-      (reaction) => reaction.unicode == emoji
-    );
-
+    let reactionWithEmoji = this.reactions.find((reaction) => reaction.unicode == emoji);
     // if current user has a reaction and it isn't the same emoji delete the user from old reaction
-    if (currentUserReaction) {
-      if (currentUserReaction.unicode != emoji) {
-        this.removeCurrentUserFromReaction(currentUserReaction);
-      }
-    }
-
+    if (currentUserReaction && currentUserReaction.unicode != emoji) this.removeCurrentUserFromReaction(currentUserReaction);
     if (reactionWithEmoji) {
-      if(!currentUserReaction || currentUserReaction != reactionWithEmoji) {
-        this.addCurrentUserToReaction(reactionWithEmoji);
-      }
+      if(!currentUserReaction || currentUserReaction != reactionWithEmoji) this.addCurrentUserToReaction(reactionWithEmoji);
     } else {
       // if not create new reaction with user
       let newReaction: Reaction = {
@@ -306,7 +292,7 @@ export class MessageComponent {
   removeCurrentUserFromReaction(reaction : Reaction) {
     let index = reaction.users.indexOf(this.currentUser.id);
     reaction.users.splice(index, 1);
-    // TODO: if no users,delete reaction and delete connection to message
+    // if no users,delete reaction and delete connection to message
     if(reaction.users.length == 0) {
       let reactionIdIndex = this.message.message.reactions?.indexOf(reaction.id);
       if (reactionIdIndex != undefined) {
@@ -335,9 +321,6 @@ export class MessageComponent {
     let sortedByLastTimeUsed = filteredReactionsForNoUsers.sort((a,b) => b.lastTimeUsed - a.lastTimeUsed);
     return sortedByLastTimeUsed;
   }
-
-  // TODO: show reactions in DOM
-  // TODO: reorder for last reactions
 
   //#endregion
 }
