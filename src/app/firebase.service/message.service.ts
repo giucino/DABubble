@@ -42,11 +42,16 @@ export class MessageService {
     total_replies: 0,
   };
 
-  unsubMessages: any;
-  unsubMessagesThread: any;
+  unsubMessages = () => {};
+  unsubMessagesThread =  () => {};
   // private unsubscribeAllMessages!: () => void;
 
   constructor() {}
+
+  ngOnDestroy() {
+    this.unsubMessages();
+    this.unsubMessagesThread();
+  }
 
   getMessagesFromChannel(channel_id: any) {
     this.unsubMessages = this.subMessages(channel_id);

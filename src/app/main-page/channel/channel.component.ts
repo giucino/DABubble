@@ -124,6 +124,7 @@ export class ChannelComponent {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.messageService.unsubMessages();
   }
 
   clearSearch(): void {
