@@ -279,6 +279,8 @@ export class MessageComponent {
         message_id: this.message.id!,
         users: [this.currentUser.id],
         unicode: emoji,
+        created_at: new Date().getTime(),
+        lastTimeUsed: new Date().getTime(),
       };
       const reactionId = await this.reactionService.addReaction(newReaction);
       this.message.message.reactions?.push(reactionId);
@@ -287,12 +289,17 @@ export class MessageComponent {
   }
 
   addCurrentUserToReaction(reaction : Reaction) {
+    // set new creation time
+    if(reaction.users.length == 0) reaction.created_at = new Date().getTime();
+    // add current user
     reaction.users.push(this.currentUser.id);
-    // if currentReaction not in message reactions add it
+    // add it to message if not already in
     if(!this.message.message.reactions?.includes(reaction.id)) {
       this.message.message.reactions?.push(reaction.id);
       this.messageService.updateMessage(this.message);
     }
+    // change last time used
+    reaction.lastTimeUsed = new Date().getTime();
     this.reactionService.updateReaction(reaction);
   }
 
@@ -321,6 +328,12 @@ export class MessageComponent {
   getUserName(userId : string) {
     let user = this.userService.allUsers.find((user) => user.id == userId);
     return user.name;
+  }
+
+ sortedReactionsByLastTimeUsed() {
+    let filteredReactionsForNoUsers = [...this.reactions].filter((reaction) => reaction.users.length > 0)
+    let sortedByLastTimeUsed = filteredReactionsForNoUsers.sort((a,b) => b.lastTimeUsed - a.lastTimeUsed);
+    return sortedByLastTimeUsed;
   }
 
   // TODO: show reactions in DOM

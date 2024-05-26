@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, Query, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, DocumentData, addDoc, doc, updateDoc, deleteDoc, getDoc, Query, query, where, orderBy } from '@angular/fire/firestore';
 import { Reaction } from '../interfaces/reaction.interface';
 // import { getFirestore } from "firebase/firestore";
 
@@ -30,6 +30,8 @@ export class ReactionService {
             message_id: data.message_id || '',
             users: data.users || [],
             unicode: data.unicode || '',
+            created_at: data.created_at || 0,
+            lastTimeUsed: data.lastTimeUsed || 0,
         }
     }
 
@@ -42,7 +44,7 @@ export class ReactionService {
 
     // READ
     subReactionsForMessage(message_id : string) {
-        const q = query(this.getReactionsRef(), where('message_id', '==', message_id));
+        const q = query(this.getReactionsRef(), where('message_id', '==', message_id), orderBy('created_at'));
         let reactionsArray : Reaction[] = [];
         const snapshot =  onSnapshot(q, (reactions) => {
             reactionsArray.length = 0;

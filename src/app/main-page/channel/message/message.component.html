@@ -100,13 +100,21 @@
         <div class="reaction-bar">
             @if (channelType != 'thread') {
                 @if(message.message.reactions && message.message.reactions.length > 0) {
-                    @for(reactionId of message.message.reactions; track reactionId; let index = $index) {
+                    <!-- @for(reactionId of message.message.reactions; track reactionId; let index = $index) {
                         @if(index >= message.message.reactions.length - 2) {
                             <button class="btn-icon-v6 w40" (click)="addReaction(getReactionData(reactionId)?.unicode!)">
                                 <div class="emojicone">{{getReactionData(reactionId)?.unicode}}</div>
                             </button>
                         }
+                    } -->
+                    @for(reaction of sortedReactionsByLastTimeUsed(); track reaction; let index = $index) {
+                        @if(index < 2) {
+                            <button class="btn-icon-v6 w40" (click)="addReaction(getReactionData(reaction.id)?.unicode!)">
+                                <div class="emojicone">{{getReactionData(reaction.id)?.unicode}}</div>
+                            </button>
+                        }
                     }
+                    
                 }
             }
             <!-- add reaction -->
