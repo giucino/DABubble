@@ -1,9 +1,9 @@
 <div class="channel-container">
   @if (isLoading) {
-    <div class="loading-overlay">
-      <div class="loading-spinner"></div>
-    </div>
-    }
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+  }
   <!-- channel header - main channel -->
   @if (channelService.currentChannel.channel_type == 'main') {
   <div class="channel-header">
@@ -24,7 +24,7 @@
       </svg>
       <div class="channel-name fs-24">{{ channelService.currentChannel.name }}</div>
       <!-- arrow-down icon -->
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="arrow-down" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_235_460" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
           <rect width="30" height="30" fill="#D9D9D9" />
         </mask>
@@ -84,10 +84,10 @@
   <!-- channel header - direct message -->
   @if (channelService.currentChannel.channel_type == 'direct') {
   <div class="channel-header-direct">
-    <div #profileBtn appOpenProfile [userId]="getDirectChannelUser().id" [button]="profileBtn"  class="channel-member">
+    <div #profileBtn appOpenProfile [userId]="getDirectChannelUser().id" [button]="profileBtn" class="channel-member">
       <div class="profile-img-container">
-        <img  src="{{ getDirectChannelUser()?.profile_img }}" alt="" class="profile-img" />
-        <div class="online-status-wborder online"></div>
+        <img src="{{ getDirectChannelUser()?.profile_img }}" alt="" class="profile-img" />
+        <div class="online-status-wborder online" [ngClass]="getDirectChannelUser()?.logged_in ? 'online' : 'offline'"></div>
       </div>
       <div class="channel-member-name fs-24">{{ getDirectChannelUser()?.name }}</div>
     </div>
@@ -120,6 +120,8 @@
     </button>
   </div> -->
   }
+
+
   <!-- channel header - new message -->
   @if (channelService.currentChannel.channel_type == 'new') {
   <div class="channel-header-new">
@@ -127,53 +129,45 @@
       <div class="channel-headline fs-24">Neue Nachricht</div>
     </div>
     <div class="input-container">
-      <input type="text" placeholder="An: #channel, oder @jemand" maxlength="40"
-      [formControl]="searchControl">
+      <input type="text" placeholder="An: #channel, oder @jemand" maxlength="40" [formControl]="searchControl">
     </div>
   </div>
   }
 
-
-
   @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 )) {
-    <div class="search-container">
-        @if (filteredUsers.length > 0) {
-        <ul class="filtered">
-            <span class="categoryName">Users:</span>
-            @for(user of filteredUsers; track user.id) {
-            <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn">
-                <div class="user">
-                    <div class="user-img-container">
-                        <img [src]="user.profile_img" alt="" class="profile-img" />
-                        <div class="online-status-wborder online"></div>
-                    </div>
-                    <div class="user-name fs-18">{{user.name}}</div>
-                </div>
-            </li>
-            }
-        </ul>
-        }
-
-        @if (filteredChannels.length > 0) {
-        <ul class="filtered">
-            <span class="categoryName">Channels:</span>
-            @for(channel of filteredChannels; track channel.id) {
-            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
-                <div class="channelList">
-                    <div class="img-channel-hash">#</div>
-                    <span class="channel-name">{{channel.name}}</span>
-                </div>
-            </li>
-            }
-        </ul>
-        }
-    </div>
+  <div class="search-container">
+    @if (filteredUsers.length > 0) {
+    <ul class="filtered">
+      <span class="categoryName">Users:</span>
+      @for(user of filteredUsers; track user.id) {
+      <li [class.selected]="user.id === selectedUserId" (click)="openDirectChannel(user.id); clearSearch()">
+        <div class="user">
+          <div class="user-img-container">
+            <img [src]="user.profile_img" alt="" class="profile-img" />
+            <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
+          </div>
+          <div class="user-name fs-18">{{user.name}}</div>
+        </div>
+      </li>
+      }
+    </ul>
     }
 
-
-
-
-
+    @if (filteredChannels.length > 0) {
+    <ul class="filtered">
+      <span class="categoryName">Channels:</span>
+      @for(channel of filteredChannels; track channel.id) {
+      <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread(); clearSearch()">
+        <div class="channelList">
+          <div class="img-channel-hash">#</div>
+          <span class="channel-name">{{channel.name}}</span>
+        </div>
+      </li>
+      }
+    </ul>
+    }
+  </div>
+  }
 
 
   <!-- channel messages -->

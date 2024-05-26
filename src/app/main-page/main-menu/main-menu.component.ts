@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { MainPageComponent } from '../main-page.component';
+import { SearchBarComponent } from '../main-header/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-main-menu',
@@ -20,7 +21,8 @@ import { MainPageComponent } from '../main-page.component';
     MatCardModule,
     MainMenuHeaderComponent,
     MainMenuDmComponent,
-    MainMenuChannelsComponent
+    MainMenuChannelsComponent,
+    SearchBarComponent
   ],
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.scss',

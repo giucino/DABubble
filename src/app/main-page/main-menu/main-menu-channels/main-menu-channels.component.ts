@@ -11,6 +11,8 @@ import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { MainPageComponent } from '../../main-page.component';
 import { SharedService } from '../../../services/shared.service';
+import { StateManagementService } from '../../../services/state-management.service';
+import { SearchBarComponent } from '../../main-header/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -21,6 +23,7 @@ import { SharedService } from '../../../services/shared.service';
 })
 export class MainMenuChannelsComponent implements OnInit {
   isExpanded: boolean = true;
+  activeChannelId: string = '';
 
   constructor(
     private customDialogService: CustomDialogService,
@@ -28,17 +31,28 @@ export class MainMenuChannelsComponent implements OnInit {
     public messageService: MessageService,
     public userService: UserService,
     public router: Router,
-    public threadService : ThreadService,
+    public threadService: ThreadService,
     public mainPage: MainPageComponent,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private stateService: StateManagementService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.stateService.getSelectedChannelId().subscribe(id => {
+    //   this.activeChannelId = id ? id : '';
+    // });
+  }
 
-  mobileChange(){
+  selectChannel(channelId: string) {
+    this.stateService.setSelectedChannelId(channelId);
+    console.log('Channel selected: ' + channelId);
+    this.userService.saveLastThread(this.userService.currentUser.id, '');
+    this.threadService.closeThread();
+  }
+
+  mobileChange() {
     this.mainPage.toggleMenu();
     this.sharedService.showMobileDiv();
-
   }
 
   toggleExpansion(): void {
@@ -51,7 +65,7 @@ export class MainMenuChannelsComponent implements OnInit {
   }
 
   closeThread() {
-    this.userService.saveLastThread(this.userService.currentUser.id, '');
-    this.threadService.closeThread();
+    // this.userService.saveLastThread(this.userService.currentUser.id, '');
+    // this.threadService.closeThread();
   }
 }

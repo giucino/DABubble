@@ -135,15 +135,22 @@
   }
 }
 
-// @media (max-width: 1000px) {
-//   .search-bar-container {
-//     height: unset;
-//     padding: 8px 24px;
-//     border-radius: 42px;
-//     border: 1px solid var(--color-light-purple);
 
-//     input {
-//       font-size: 17px;
-//     }
-//   }
-// }
+
+.searchbar-input-mobile{
+  display: none;
+}
+
+@media (max-width: 1024px){
+  .search-bar-container{
+    padding: 8px 24px;
+    border: 1px solid var(--color-purple-2);
+    border-radius: 42px;
+  }
+  .searchbar-input-mobile{
+    display: block;
+  }
+  .searchbar-input{
+    display: none !important;
+  }
+}
