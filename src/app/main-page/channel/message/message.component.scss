@@ -382,6 +382,14 @@ textarea,
       .message {
         width: 90%;
         max-width: unset;
+        .attachement-container{
+          .attachement-img{
+            min-width: 60px;
+            min-height: 60px;
+            max-width: 200px;
+            max-height: 200px;
+          }
+        }
       }
     }
   }
@@ -411,8 +419,13 @@ textarea,
   .replies{
     display: flex;
     gap: 10px;
+    align-items: center;
+    .last-reply{
+      display: none;
+    }
     .count{
-      margin-right: 0;
+      // margin-right: 0;
+      font-size: 14px;
     }
   }
   .message-container,
@@ -422,7 +435,17 @@ textarea,
     .message-content {
       .message {
         width: 90%;
+        .attachement-container{
+          .attachement-img{
+            min-width: 50px;
+            min-height: 50px;
+            max-width: 150px;
+            max-height: 150px;
+          }
+        }
       }
+
     }
   }
+
 }
