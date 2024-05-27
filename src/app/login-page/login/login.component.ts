@@ -7,11 +7,14 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterModule, ResetPasswordComponent],
+  imports: [CommonModule, FormsModule, RouterLink, RouterModule, ResetPasswordComponent,
+    MatProgressBarModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -58,6 +58,9 @@ export class ThreadComponent {
         this.setFocus();
       }
     })
+    if (userService.currentUser.last_thread == '') {
+    this.closeThread();
+    }
 
   }
 
