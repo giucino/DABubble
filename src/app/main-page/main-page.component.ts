@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { ThreadComponent } from './thread/thread.component';
 import { ThreadService } from '../services/thread.service';
 import { SharedService } from '../services/shared.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -31,6 +30,7 @@ export class MainPageComponent {
     if (this.userService.currentUser.last_thread && this.userService.currentUser.last_thread != '') {
       this.threadService.threadOpen = true;
     }
+    
   }
 
 
@@ -38,57 +38,43 @@ export class MainPageComponent {
     this.sharedService.backToChannels$.subscribe(() => {
       this.toggleMenu();
     });
+    if (window.innerWidth > 768 && window.innerWidth < 1500 && this.threadService.threadOpen){
+          this.isMenuOpen = false;
+          console.log('test1');
+        }
   }
-  
+
+
   
 
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
-    this.sharedService.isMenuOpen$.next(this.isMenuOpen);
-    const menuElement = document.getElementById('menu-none');
-    if (this.isMenuOpen) {
-      this.isMenuOpen = false;
-      setTimeout(() => {
-        if (menuElement) {
-          menuElement.style.display = 'none';
-        }
-      }, 500);
-    } else {
-      if (menuElement) {
-        menuElement.style.display = 'block';
-      }
-      setTimeout(() => {
-        this.isMenuOpen = true;
-      }, 100);
-      
+    this.isMenuOpen = !this.isMenuOpen;
+    if (this.threadService.threadOpen) {
+      this.threadService.closeThread();
     }
-
   }
+
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
     if (event.target.innerWidth < 1200 && event.target.innerWidth > 768 && this.isMenuOpen) {
-      this.toggleMenu();
+      this.isMenuOpen = false;
       this.sharedService.showMobileDiv();
     } if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && !this.isMenuOpen) {
       //nothing
     } 
     if (event.target.innerWidth < 768) {
       //nothing
+    } if (event.target.innerWidth > 1200 && event.target.innerWidth < 1500 && this.threadService.threadOpen) {
+      this.isMenuOpen = false;
     }
     else {
       if (event.target.innerWidth > 1200 && !this.isMenuOpen) {
-        this.toggleMenu();
+        this.isMenuOpen = true;
         this.sharedService.showMobileDiv();
       }
-      // const menuElement = document.getElementById('menu-none');
-      // if (menuElement) {
-      //   menuElement.style.display = 'block';
-      // }
-      // setTimeout(() => {
-      //   this.isMenuOpen = true;
-      //   this.threadService.threadOpen = false;
-      // }, 100);
     }
     
   }

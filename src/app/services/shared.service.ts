@@ -13,7 +13,6 @@ export class SharedService {
 
   backToChannels$ = this.backToChannelsSubject.asObservable();
   showMobileDiv$ = this.showMobileDivSubject.asObservable();
-  isMenuOpen$ = new BehaviorSubject<boolean>(true);
   constructor() { }
 
   showMobileDiv() {
@@ -28,4 +27,9 @@ export class SharedService {
     return this.backToChannels$.subscribe(toggleMenu);
   }
 
+
+  ngonDestroy() {
+    this.backToChannelsSubject.unsubscribe();
+    this.showMobileDivSubject.unsubscribe();
+  }
 }

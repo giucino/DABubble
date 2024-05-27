@@ -9,6 +9,7 @@ import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { SharedService } from '../../services/shared.service';
 import { MainPageComponent } from '../main-page.component';
+import { ThreadService } from '../../services/thread.service';
 @Component({
   selector: 'app-main-header',
   standalone: true,
@@ -25,7 +26,8 @@ export class MainHeaderComponent {
     public userService: UserService, public channelService: ChannelFirebaseService,
     private renderer: Renderer2, private el: ElementRef,
     public sharedService: SharedService,
-    public mainPage: MainPageComponent) {
+    public mainPage: MainPageComponent,
+    public threadService: ThreadService) {
   }
 
   ngAfterViewInit() {
@@ -44,6 +46,7 @@ export class MainHeaderComponent {
 
   backToChannels() {
     this.sharedService.backToChannels();
+    this.threadService.closeThread();
   }
 
 

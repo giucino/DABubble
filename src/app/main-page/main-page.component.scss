@@ -74,20 +74,25 @@
   min-width: 485px;
   height: 100%;
 }
+.main-menu-hidden {
+  transform: translateX(-110%);
+  width: 0;
+  overflow: hidden;
+}
 
 // eigentlich schon so ab ca 1500px
 @media (max-width: 1024px) {
   .thread {
     // border-radius: 0;
-    position: absolute;
-    max-height: calc(100% - 130px);
-    // max-width: 640px;
-    width: 100%;
-    top: 110px;
-    // bottom: 20px;
-    // left: 0;
-    right: 20px;
-    left: 362px;
+    // position: absolute;
+    // max-height: calc(100% - 130px);
+    // // max-width: 640px;
+    // width: 100%;
+    // top: 110px;
+    // // bottom: 20px;
+    // // left: 0;
+    // right: 20px;
+    // left: 362px;
   }
 }
 
@@ -104,11 +109,7 @@
   }
 
 
-  .main-menu-hidden {
-    transform: translateX(-110%);
-    width: 0;
-    overflow: hidden;
-  }
+
 
   .channel-expanded {
     // margin-left: -20px;

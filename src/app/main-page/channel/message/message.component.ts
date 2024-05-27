@@ -14,6 +14,8 @@ import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { OpenProfileDirective } from '../../../shared/directives/open-profile.directive';
 import { ReactionService } from '../../../firebase.service/reaction.service';
 import { Reaction } from '../../../interfaces/reaction.interface';
+import { SharedService } from '../../../services/shared.service';
+import { MainPageComponent } from '../../main-page.component';
 
 @Component({
   selector: 'app-message',
@@ -60,8 +62,11 @@ export class MessageComponent {
     public channelService: ChannelFirebaseService,
     public threadService: ThreadService,
     public customDialogService: CustomDialogService,
-    public reactionService: ReactionService
-  ) {}
+    public reactionService: ReactionService,
+    public sharedService: SharedService,
+    public mainpage : MainPageComponent
+  ) {
+  }
 
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
@@ -69,7 +74,9 @@ export class MessageComponent {
     // get attachements data
     this.getAttachementsData();
     this.getReactions();
+    
   }
+
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
@@ -183,14 +190,24 @@ export class MessageComponent {
       );
       this.message.thread_id = newThreadId;
       this.messageService.updateMessage(this.message);
+      if (window.innerWidth < 1500 ){
+        this.mainpage.isMenuOpen = false;
+        // console.log('test1');
+      } 
       this.threadService.openThread();
+      
     } else {
       this.userService.currentUser.last_thread = thread_id;
       this.userService.saveLastThread(
         this.userService.currentUser.id,
         thread_id
       );
+      if (window.innerWidth < 1500 ){
+        this.mainpage.isMenuOpen = false;
+        // console.log('test2');
+      }
       this.threadService.openThread();
+      
     }
   }
 
