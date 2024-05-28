@@ -11,6 +11,7 @@ import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
+import { documentId } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dialog-show-profile',
@@ -56,7 +57,9 @@ export class DialogShowProfileComponent implements OnInit {
 
   editCurrentUser(button: HTMLElement): void {
     const component = DialogEditProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    let userHeadButton = document.getElementById('userHead');
+    if(userHeadButton) {this.customDialogService.openDialogAbsolute(userHeadButton, component, 'right');}
+    else {this.customDialogService.openDialog(component)};
     this.dialogRef.close();
   }
 

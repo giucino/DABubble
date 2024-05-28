@@ -19,7 +19,13 @@ export class ProfileService {
     this.setViewingUserId(userId);
 
     const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    let userHeadButton = document.getElementById('userHead');
+    if (isOwnProfile && userHeadButton) {
+      this.customDialogService.openDialogAbsolute(userHeadButton, component, 'right');
+    } else {
+      this.customDialogService.openDialog(component);
+    }
+    
   }
 
   setOwnProfileStatus(status: boolean): void {

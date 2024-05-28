@@ -19,12 +19,13 @@ export class CustomDialogService {
 
   public openDialogAbsolute(button: HTMLElement,dialogComponent : ComponentType<any>, position: 'left' | 'right') {
     const rect = button.getBoundingClientRect();
+    let isMobile = window.innerWidth <= 768;
     if (position == 'left') {
       this.dialogRef = this.dialog.open(dialogComponent, {
         panelClass: 'custom-dialog-anchorTopLeft',
         position: {
-          top: rect.bottom + 'px',
-          left: rect.left + 'px',
+          top: isMobile ? 'unset' : rect.bottom + 'px',
+          left: isMobile ? 'unset' : rect.left + 'px',
         },
       });
     }
@@ -32,8 +33,8 @@ export class CustomDialogService {
       this.dialogRef = this.dialog.open(dialogComponent, {
         panelClass: 'custom-dialog-anchorTopRight',
         position: {
-          top: rect.bottom + 'px',
-          left: rect.right + 'px',
+          top: isMobile ? 'unset' : rect.bottom + 'px',
+          left: isMobile ? 'unset' : rect.right + 'px',
         },
       });
     }

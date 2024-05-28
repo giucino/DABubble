@@ -2,9 +2,6 @@
 @import "../../../assets/scss/mixin.scss";
 
 .show-profile-dialog {
-  position: relative;
-  top: -500px;
-  width: 500px;
   display: inline-flex;
   flex-direction: column;
   gap: 45px;
@@ -127,9 +124,9 @@
 @media (max-width: 768px){
   .show-profile-dialog {
     width: calc(100dvw - 20px);
-    position: relative;
-    left: 10px;
-    top: 15dvh;
+    // position: relative;
+    // left: 10px;
+    // top: 15dvh;
     border-radius: 30px;
   }
   .editing-container{
