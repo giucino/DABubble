@@ -81,5 +81,8 @@
   }
   .log-out-dialog-mobile {
     display: flex;
+    .dropdown{
+      width: 100%;
+    }
   }
 }
