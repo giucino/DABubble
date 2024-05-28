@@ -8,6 +8,8 @@ import { ComponentType } from '@angular/cdk/portal';
 export class CustomDialogService {
   dialogRef: MatDialogRef<any> | null = null;
 
+  isMobile()  { return window.innerWidth <= 768;}
+
   constructor(public dialog: MatDialog) {
   }
 
@@ -17,24 +19,25 @@ export class CustomDialogService {
     });
   }
 
-  public openDialogAbsolute(button: HTMLElement,dialogComponent : ComponentType<any>, position: 'left' | 'right') {
+  public openDialogAbsolute(button: HTMLElement,dialogComponent : ComponentType<any>, position: 'left' | 'right', mobilePosition? : 'bottom') {
     const rect = button.getBoundingClientRect();
-    let isMobile = window.innerWidth <= 768;
+    // let isMobile = window.innerWidth <= 768;
+    let mPosition = mobilePosition == 'bottom' ? {bottom: '0px', left: '0px'} : {};
     if (position == 'left') {
       this.dialogRef = this.dialog.open(dialogComponent, {
         panelClass: 'custom-dialog-anchorTopLeft',
-        position: {
-          top: isMobile ? 'unset' : rect.bottom + 'px',
-          left: isMobile ? 'unset' : rect.left + 'px',
+        position: this.isMobile() ? {} : {
+          top: rect.bottom + 'px',
+          left: rect.left + 'px',
         },
       });
     }
     if (position == 'right') {
       this.dialogRef = this.dialog.open(dialogComponent, {
         panelClass: 'custom-dialog-anchorTopRight',
-        position: {
-          top: isMobile ? 'unset' : rect.bottom + 'px',
-          left: isMobile ? 'unset' : rect.right + 'px',
+        position: this.isMobile() ? mPosition : {
+          top: rect.bottom + 'px',
+          left: rect.left + 'px',
         },
       });
     }
@@ -46,13 +49,22 @@ export class CustomDialogService {
   }
 
   // Funktion zum Aktualisieren der Dialogposition
-  updateDialogPosition(button: HTMLElement): void {
+  updateDialogPosition(button: HTMLElement, mobilePosition? : 'bottom'): void {
     if (this.dialogRef) {
       const rect = button.getBoundingClientRect();
-      this.dialogRef.updatePosition({
-        top: rect.bottom + 'px',
-        left: rect.right + 'px',
+      // this.dialogRef.updatePosition({
+      //   top: this.isMobile() ? '50vh' : rect.bottom + 'px',
+      //   left: this.isMobile() ? '50vw' : rect.right + 'px',
+      // });
+      let position = mobilePosition == 'bottom' ? {bottom: '0px', left: '0px'} : {};
+      
+      this.dialogRef.updatePosition(
+        this.isMobile() ? position : {
+        top:  rect.bottom + 'px',
+        left:  rect.right + 'px',
       });
     }
   }
+
+
 }
