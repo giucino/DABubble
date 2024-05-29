@@ -140,7 +140,13 @@
     width: calc(100dvw - 20px);
     position: relative;
     left: 10px;
-    top: 20dvh;
+    top: 20dvh; // warten auf ricardo
     border-radius: 30px;
+  }
+}
+@media (max-width: 500px){
+  .show-profile-dialog {
+    padding: 40px 20px;
+    gap: 45px;
   }
 }

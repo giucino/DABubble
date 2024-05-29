@@ -410,6 +410,11 @@ app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
  
 
 @media (max-width: 768px) {
+  .cdk-global-overlay-wrapper {
+    justify-content: unset !important;
+    //emoji picker brauch center, aber die andere dialogs machts kaputt...
+    
+  }
   .custom-dialog {
     .mat-mdc-dialog-container .mdc-dialog__container .mat-mdc-dialog-surface {
       background-color: unset;
@@ -466,5 +471,11 @@ app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
 @media (max-height: 660px){
   app-login{
     height: max-content;
+  }
+}
+
+@media (max-width: 350px){
+  .emoji-mart{
+    width: 100dvw !important;
   }
 }
