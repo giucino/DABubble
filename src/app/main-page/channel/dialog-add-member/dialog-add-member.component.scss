@@ -3,7 +3,7 @@
 @import "../../main-menu/main-menu-channels/add-member-card/add-member-card.component.scss";
 
 .dialog-add-member {
-  margin-top: 0;
+  // margin-top: 0;
 
   .channel-name-container {
     display: flex;
@@ -20,7 +20,14 @@
   }
 }
 
-
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
 
 @media (max-width: 768px) {
   .dialog-add-member {

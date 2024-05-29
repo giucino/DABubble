@@ -378,6 +378,9 @@ button {
     height: fit-content;
     overflow: visible;
   }
+  &-mobile {
+    @extend .custom-dialog;
+  }
 
   &-anchorTopLeft {
     @extend .custom-dialog;

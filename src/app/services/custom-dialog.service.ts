@@ -23,7 +23,7 @@ export class CustomDialogService {
   public openDialogAbsolute(
     button: HTMLElement,
     dialogComponent: ComponentType<any>,
-    position: 'left' | 'right',
+    position: 'left' | 'right' | 'mid',
     mobilePosition?: 'mid' | 'bottom'
   ) {
     let positionAsJSON = this.getPosition(button, position, mobilePosition);
@@ -42,7 +42,7 @@ export class CustomDialogService {
   // Funktion zum Aktualisieren der Dialogposition
   updateDialogPosition(
     button: HTMLElement,
-    position: 'left' | 'right',
+    position: 'left' | 'right' | 'mid',
     mobilePosition?: 'mid' | 'bottom'
   ): void {
     if (this.dialogRef) {
@@ -53,14 +53,15 @@ export class CustomDialogService {
 
   getPosition(
     button: HTMLElement,
-    position: 'left' | 'right',
+    position: 'left' | 'right' | 'mid',
     mobilePosition?: 'mid' | 'bottom'
   ) {
     if (this.isMobile() && mobilePosition) {
       return this.getMobilePosition(mobilePosition);
     } else {
       const rect = button.getBoundingClientRect();
-      return {
+      if(position == 'mid') return {};
+      else return {
         top: rect.bottom + 'px',
         left: position == 'left' ? rect.left + 'px' : rect.right + 'px',
       };
@@ -76,12 +77,17 @@ export class CustomDialogService {
     }
   }
 
-  getPanelClass(position: 'left' | 'right', mobilePosition?: 'mid' | 'bottom') {
+  getPanelClass(position: 'left' | 'right' | 'mid', mobilePosition?: 'mid' | 'bottom') {
     let pannelClass = '';
-    pannelClass =
-      position == 'left'
-        ? 'custom-dialog-anchorTopLeft'
-        : 'custom-dialog-anchorTopRight';
+    switch (position) {
+      case 'left': pannelClass = 'custom-dialog-anchorTopLeft';
+      break;
+      case 'right' : pannelClass = 'custom-dialog-anchorTopRight';
+      break;
+      case 'mid': pannelClass = 'custom-dialog';
+      break;
+      default : pannelClass = 'custom-dialog';
+    }
     if (mobilePosition) pannelClass += '-mobile';
     return pannelClass;
   }
