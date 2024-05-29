@@ -410,6 +410,9 @@ app-login, app-sign-in, app-reset-password, app-check-email, app-avatar{
  
 
 @media (max-width: 768px) {
+  .cdk-global-overlay-wrapper {
+    justify-content: unset !important;
+  }
   .custom-dialog {
     .mat-mdc-dialog-container .mdc-dialog__container .mat-mdc-dialog-surface {
       background-color: unset;
