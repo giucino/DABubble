@@ -215,7 +215,11 @@ export class ChannelComponent {
 
   openEditChannelDialog(button: HTMLElement) {
     const component = DialogEditChannelComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'left');
+    this.customDialogService.openDialogAbsolute(button, component, 'left', 'mid');
+  }
+
+  isMobile() {
+    return window.innerWidth <= 768;
   }
 
   // saveMessage() {

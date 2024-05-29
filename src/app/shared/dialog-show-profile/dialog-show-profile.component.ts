@@ -58,7 +58,7 @@ export class DialogShowProfileComponent implements OnInit {
   editCurrentUser(button: HTMLElement): void {
     const component = DialogEditProfileComponent;
     let userHeadButton = document.getElementById('userHead');
-    if(userHeadButton) {this.customDialogService.openDialogAbsolute(userHeadButton, component, 'right');}
+    if(userHeadButton) {this.customDialogService.openDialogAbsolute(userHeadButton, component, 'right', 'mid');}
     else {this.customDialogService.openDialog(component)};
     this.dialogRef.close();
   }

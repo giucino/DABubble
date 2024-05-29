@@ -21,7 +21,7 @@ export class ProfileService {
     const component = DialogShowProfileComponent;
     let userHeadButton = document.getElementById('userHead');
     if (isOwnProfile && userHeadButton) {
-      this.customDialogService.openDialogAbsolute(userHeadButton, component, 'right');
+      this.customDialogService.openDialogAbsolute(userHeadButton, component, 'right', 'mid');
     } else {
       this.customDialogService.openDialog(component);
     }

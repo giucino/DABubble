@@ -227,10 +227,10 @@ textarea {
 @media (max-width: 768px) {
   .dialog-edit-channel {
     width: 100vw;
-    height: calc(100dvh - 220px);
-    position: relative;
+    // height: calc(100dvh - 220px);
+    // position: relative;
     // left: 10px;
-    top: 220px;
+    // top: 220px;
     border-radius: 0px;
     overflow: scroll;
   }
