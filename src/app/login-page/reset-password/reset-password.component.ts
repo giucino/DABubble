@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { LoginSnackbarComponent } from '../../popups/login-snackbar/login-snackbar.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '../../firebase.service/user.service';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
+import { getAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +19,16 @@ export class ResetPasswordComponent {
   userId: string | any;
   resetPassword: string = '';
   resetPasswordAgain: string = '';
-  constructor(private router: Router, private _snackBar: MatSnackBar, private userAuth: UserAuthService) { }
+  oobCode: string = '';
+  constructor(private router: Router, private _snackBar: MatSnackBar,
+     private userAuth: UserAuthService, private route: ActivatedRoute) { }
+
+
+ngonInit(): void {
+  // console.log(this.userAuth.displayName);
+  // this.oobCode = this.route.snapshot.queryParams['oobCode'];
+  // this.changePassword('newPassword', oobCode);
+}
 
   goToCheckEmail(){
     this.router.navigate(['/login-page/check-email']);
@@ -49,17 +59,19 @@ export class ResetPasswordComponent {
     }
   }
 
-  updateUserPassword(){
-    // get user id from link? email?
-    this.userId = '';
-
-    this.userAuth.changePassword(this.resetPassword);
+  updateUserPassword(newPassword: string){
+    this.oobCode = this.route.snapshot.queryParams['oobCode'];
+    this.userAuth.changePassword(newPassword, this.oobCode);
   }
 
-  changePassword(){
-    this.updateUserPassword();
-    this.confirmPopup();
-    this.returnToLogin();
-    this.triggerAnimation();
+  changePassword(newPassword: string){
+    Promise.resolve(this.updateUserPassword(newPassword)).then(() => {
+      this.confirmPopup();
+      this.returnToLogin();
+      this.triggerAnimation();
+    }).catch((error) => {
+      console.error(error);
+    });
+
   }
 }

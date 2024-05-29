@@ -2,9 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
+  confirmPasswordReset,
+  getAuth,
   sendPasswordResetEmail,
   signInWithPopup,
-  updatePassword,
+  verifyPasswordResetCode,
 } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import {
@@ -19,6 +21,7 @@ import {
 } from 'firebase/auth';
 import { UserService } from './user.service';
 import { User } from '../models/user';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -29,21 +32,10 @@ export class UserAuthService {
   googleName: any = '';
   googleEmail: any = '';
   googleProfileImg: any = '';
-  // googleId: any = '';
 
-  constructor(public auth: Auth, public userService: UserService) {}
+  constructor(public auth: Auth, public userService: UserService, private route: ActivatedRoute) { }
 
   async loginUser(email: string, password: string) {
-    //   try {
-    //     const signInResult = await signInWithEmailAndPassword(this.auth, email, password);
-    //     return signInResult.user !== null;
-    // } catch (error: any) {
-    //     if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-    //         return false;
-    //     } else {
-    //         throw error;
-    //     }
-    // }
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
@@ -56,7 +48,7 @@ export class UserAuthService {
     email?: string;
   }): Promise<void> {
     const user = this.auth.currentUser;
-  
+
     const firestoreUser: User = {
       id: this.userService.currentUser.id || '',
       name: data.displayName || user?.displayName || '',
@@ -81,24 +73,24 @@ export class UserAuthService {
         };
       },
     };
-  
+
     if (data.displayName) {
       await updateProfile(user!, { displayName: data.displayName });
       // console.log('User profile updated successfully!', user?.displayName);
     }
-  
+
     if (data.email && user?.email !== data.email) {
       try {
         await verifyBeforeUpdateEmail(user!, data.email);
         console.log('Verification email sent for new email address.');
-        
+
         // firestoreUser.email = data.email;
       } catch (error) {
         console.error('Error sending verification email:', error);
-        return; 
+        return;
       }
     }
-  
+
     try {
       await this.userService.updateUser(firestoreUser);
       localStorage.setItem('currentUser', JSON.stringify(firestoreUser));
@@ -107,7 +99,7 @@ export class UserAuthService {
       console.error('Error updating Firestore user:', error);
     }
   }
-  
+
   async currentUser() {
     return this.auth.currentUser;
   }
@@ -148,6 +140,7 @@ export class UserAuthService {
     }
   }
 
+
   async resetPassword(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(this.auth, email);
@@ -156,16 +149,16 @@ export class UserAuthService {
     }
   }
 
-  changePassword(newPassword: string) {
-    const user_auth: any = this.auth.currentUser;
-    if (user_auth) {
-      updatePassword(user_auth, newPassword)
-        .then(() => {
-          // console.log('Password updated successfully!');
-        })
-        .catch((error) => {
-          console.error('Error updating password:', error);
-        });
+
+
+  async changePassword(newPassword: string, oobCode: string) {
+    try {
+      const auth = getAuth();
+      const email = await verifyPasswordResetCode(auth, oobCode);
+      await confirmPasswordReset(auth, oobCode, newPassword);
+      // console.log(`Password has been reset for ${email}`);
+    } catch (error) {
+      console.error('Error updating password', error);
     }
   }
 
