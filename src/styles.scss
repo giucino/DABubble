@@ -382,11 +382,17 @@ button {
   &-anchorTopLeft {
     @extend .custom-dialog;
     position: absolute !important;
+    &-mobile {
+      @extend .custom-dialog-anchorTopLeft;
+    }
   }
   &-anchorTopRight {
     @extend .custom-dialog;
     position: absolute !important;
     transform: translateX(-100%);
+    &-mobile {
+      @extend .custom-dialog-anchorTopRight;
+    }
   }
 }
 
@@ -433,14 +439,14 @@ app-avatar {
     //   pointer-events: none;
     // }
 
-    &-anchorTopLeft {
+    &-anchorTopLeft-mobile {
       position: absolute !important;
-      // transform: unset;
+      transform: unset;
       // margin: 0 !important;
     }
-    &-anchorTopRight {
+    &-anchorTopRight-mobile {
       position: absolute !important;
-      // transform: unset;
+      transform: unset;
       // margin: 0 !important;
     }
   }
