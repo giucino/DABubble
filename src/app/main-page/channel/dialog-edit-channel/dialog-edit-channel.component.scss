@@ -10,7 +10,8 @@
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
-.dialog-header {
+.dialog-header,
+.dialog-header-mobile {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -201,14 +202,17 @@ textarea {
     border-radius: 30px;
     padding: 4px 20px;
     cursor: pointer;
+
     &:hover {
       background-color: var(--color-bg);
     }
+
     &.selected {
       background-color: var(--color-bg);
       color: var(--color-purple-3);
       font-weight: 700;
     }
+
     &:active {
       color: var(--color-purple-3);
     }
@@ -217,6 +221,7 @@ textarea {
       position: relative;
       max-width: 50px;
       max-height: 50px;
+
       .profile-img {
         width: 50px;
       }
@@ -224,29 +229,105 @@ textarea {
   }
 }
 
+.mobile-img {
+  display: none;
+  cursor: pointer;
+}
+
+.dialog-header-mobile {
+  display: none;
+  position: fixed;
+  box-shadow: 0px 2px 10px 0px #00000014;
+  padding: 40px 16px 10px 16px;
+  height: 10dvh;
+  align-items: flex-end;
+  background-color: white;
+  width: 100dvw;
+  z-index: 10;
+}
+
 @media (max-width: 768px) {
   .dialog-edit-channel {
     width: 100vw;
-    height: calc(100dvh - 220px);
+    height: calc(100dvh - 10dvh);
+    // height: 100dvh;
     position: relative;
     // left: 10px;
-    top: 220px;
+    top: 10dvh;
     border-radius: 0px;
     overflow: scroll;
+    padding: 20px 16px;
+    gap: 25px;
+    border-radius: 0;
   }
-  .members-list{
+
+  .dialog-header {
+    display: none;
+  }
+
+  .dialog-header-mobile {
+    display: flex;
+
+  }
+
+  .members-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
 
+  .dialog-content {
+    .channel-edit-container-edit {
+      .channel-edit-container-header {
+        width: 100%;
+        padding: 0 5%;
+      }
+    }
+  }
+
   .mobile {
     display: flex;
   }
+
   .btn-add-member {
     display: flex;
     flex-direction: row;
-    padding-left: 55px;
+    margin-left: 35px;
+    padding: 5px 10px;
     gap: 20px;
+    width: max-content;
+    border-radius: 20px;
+    align-items: center;
+    &:hover,
+    &:active {
+      background-color: var(--color-bg);
+    }
+  }
+
+  .btn-text-v3 {
+    display: none;
+  }
+
+  .mobile-img {
+    display: block;
+  }
+}
+
+@media (max-width: 500px) {
+  .btn-add-member {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0px;
+    gap: 20px;
+  }
+
+  .channel-header-direct {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .btn-add-member {
+    gap: 5px;
   }
 }
