@@ -32,8 +32,9 @@
         <div class="channel-name">{{ currentChannel.name }}</div>
     </div>
 
-    <div class="channel-header-direct">
-        @if (selectedUsers.length > 0) {
+    
+        @if (newlyAddedUsers.length > 0) {
+            <div class="channel-header-direct">
         @for(user of newlyAddedUsers; track user.id) {
         <div class="channel-member">
             <div class="profile-img-container">
@@ -63,8 +64,9 @@
             </button>
         </div>
         }
+            </div>
         }
-    </div>
+  
 
     <div class="input-container">
         <div class="relative">

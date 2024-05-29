@@ -1,4 +1,4 @@
-@import "../../../../styles.scss";
+// @import "../../../../styles.scss";
 @import "../../../../assets/scss/mixin.scss";
 @import "../../main-menu/main-menu-channels/add-member-card/add-member-card.component.scss";
 
@@ -25,9 +25,10 @@
 @media (max-width: 768px) {
   .dialog-add-member {
     width: calc(100dvw - 20px);
-    position: relative;
-    left: 10px;
-    top: 220px;
+    // position: relative;
+    // left: 10px;
+    // top: 220px;
+    gap: 8px;
     border-radius: 30px;
   }
 }

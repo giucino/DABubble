@@ -46,7 +46,7 @@ export class DialogEditChannelComponent implements OnInit {
 
   openAddUserDialog(button: HTMLElement) { // anderen
     const component = DialogAddMemberMobileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    this.customDialogService.openDialogAbsolute(button, component, 'right', 'bottom');
     // this.dialogRef.close();
   }
 

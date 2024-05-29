@@ -26,18 +26,12 @@ export class CustomDialogService {
     position: 'left' | 'right',
     mobilePosition?: 'mid' | 'bottom'
   ) {
-    // const rect = button.getBoundingClientRect();
-    // let isMobile = window.innerWidth <= 768;
     let positionAsJSON = this.getPosition(button, position, mobilePosition);
     let panelClass = this.getPanelClass(position, mobilePosition);
-
-    // let mPosition = mobilePosition == 'bottom' ? {bottom: '0px', left: '0px'} : {};
-
     this.dialogRef = this.dialog.open(dialogComponent, {
       panelClass: panelClass,
       position: positionAsJSON,
     });
-
     if (this.dialogRef) {
       window.addEventListener('resize', () =>
         this.updateDialogPosition(button, position, mobilePosition)
@@ -52,12 +46,6 @@ export class CustomDialogService {
     mobilePosition?: 'mid' | 'bottom'
   ): void {
     if (this.dialogRef) {
-      // const rect = button.getBoundingClientRect();
-      // this.dialogRef.updatePosition({
-      //   top: this.isMobile() ? '50vh' : rect.bottom + 'px',
-      //   left: this.isMobile() ? '50vw' : rect.right + 'px',
-      // });
-      // let position = mobilePosition == 'bottom' ? {bottom: '0px', left: '0px'} : {};
       let positionAsJSON = this.getPosition(button, position, mobilePosition);
       this.dialogRef.updatePosition(positionAsJSON);
     }
