@@ -426,6 +426,11 @@ app-avatar {
 }
 
 @media (max-width: 768px) {
+  .cdk-global-overlay-wrapper {
+    justify-content: unset !important;
+    //emoji picker brauch center, aber die andere dialogs machts kaputt...
+    
+  }
   .custom-dialog {
     // max-width: 100vw !important;
     // max-height: 100vh !important;
@@ -481,3 +486,11 @@ app-avatar {
     height: max-content;
   }
 }
+
+// TODO: check
+@media (max-width: 350px){
+  .emoji-mart{
+    width: 100dvw !important;
+  }
+}
+

@@ -23,6 +23,7 @@ import { Channel } from '../../interfaces/channel.interface';
 import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
 import { StateManagementService } from '../../services/state-management.service';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-channel',
@@ -36,6 +37,7 @@ import { StateManagementService } from '../../services/state-management.service'
     ReactiveFormsModule,
     OpenProfileDirective,
     RouterModule,
+    MatProgressBarModule
   ],
 
   templateUrl: './channel.component.html',

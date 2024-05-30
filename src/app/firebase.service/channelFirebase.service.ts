@@ -19,6 +19,7 @@ import {
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { Subject } from 'rxjs';
 import { runTransaction } from 'firebase/firestore';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +57,7 @@ export class ChannelFirebaseService {
   unsubCurrentThread: any = function () { };
   // private unsubscribeCurrentChannel?: () => void;
 
-  constructor() {}
+  constructor() { }
 
   // ohne user_id
   async getChannelsForCurrentUser() {
@@ -103,7 +104,7 @@ export class ChannelFirebaseService {
   }
 
   ngOnDestroy(): void {
-    if (this.unsubChannels === typeof function () {}) this.unsubChannels();
+    if (this.unsubChannels === typeof function () { }) this.unsubChannels();
     this.unsubCurrentChannel();
   }
 
@@ -163,21 +164,21 @@ export class ChannelFirebaseService {
     }
   }
 
-//   async updateChannel(channel: Channel) {
-//     if (!channel || !channel.id) {
-//         console.error("updateChannel error: Kanal oder Kanal-ID fehlt", channel);
-//         return;  // Frühzeitiger Ausstieg, wenn kein gültiger Kanal übergeben wird
-//     }
+  //   async updateChannel(channel: Channel) {
+  //     if (!channel || !channel.id) {
+  //         console.error("updateChannel error: Kanal oder Kanal-ID fehlt", channel);
+  //         return;  // Frühzeitiger Ausstieg, wenn kein gültiger Kanal übergeben wird
+  //     }
 
-//     let docRef = doc(this.getChannelsRef(), channel.id);
-//     try {
-//         await updateDoc(docRef, JSON.parse(JSON.stringify(channel)));
-//         console.log("Kanal-ID:", channel.id, "erfolgreich aktualisiert.");
-//     } catch (err) {
-//         console.error("Fehler beim Aktualisieren des Kanals:", err);
-//         throw err;  // Weitergabe des Fehlers
-//     }
-// }
+  //     let docRef = doc(this.getChannelsRef(), channel.id);
+  //     try {
+  //         await updateDoc(docRef, JSON.parse(JSON.stringify(channel)));
+  //         console.log("Kanal-ID:", channel.id, "erfolgreich aktualisiert.");
+  //     } catch (err) {
+  //         console.error("Fehler beim Aktualisieren des Kanals:", err);
+  //         throw err;  // Weitergabe des Fehlers
+  //     }
+  // }
 
 
 
@@ -243,10 +244,13 @@ export class ChannelFirebaseService {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const channelData = docSnap.data() as Channel;
+        console.log("Channel Data:", channelData)
         const newMembers = channelData.members.filter(memberId => memberId !== userId);
+        console.log("New Members:", newMembers)
         channelData.members = newMembers;
-  
-        await this.updateChannel(channelData);
+
+        // await this.updateChannel(channelData);
+        await updateDoc(docRef, { members: newMembers })
         console.log("Benutzer erfolgreich entfernt.");
       } else {
         console.error("Kein solcher Channel gefunden.");
@@ -261,16 +265,16 @@ export class ChannelFirebaseService {
   //     console.error("Channel ID ist leer oder ungültig");
   //     return;
   //   }
-    
+
   //   const docRef = this.getChannelRef(channelId);
-    
+
   //   try {
   //     const docSnap = await getDoc(docRef);
   //     if (docSnap.exists()) {
   //       const channelData = docSnap.data() as Channel;
   //       const newMembers = channelData.members.filter(memberId => memberId !== userId);
   //       channelData.members = newMembers;
-  
+
   //       // Aktualisieren des Channels mit der neuen Mitgliederliste
   //       await this.updateChannel(channelData);
   //       console.log("Benutzer erfolgreich entfernt.");
@@ -281,7 +285,7 @@ export class ChannelFirebaseService {
   //     console.error("Fehler beim Entfernen des Benutzers aus dem Channel:", error);
   //   }
   // }
-  
+
 
   // getAllChannels() {
   //   const allChannelsQuery = query(this.getChannelsRef());
@@ -317,5 +321,21 @@ export class ChannelFirebaseService {
       channel_type: ChannelTypeEnum.new,
     };
     return this.addChannel(newChannel);
+  }
+
+  async openNewChannel(currentUserId: string) {
+    try {
+      const channelFound = this.channels.find(channel => channel.members.includes(currentUserId) && channel.channel_type === 'main');
+
+      if (channelFound) {
+        this.setCurrentChannel(channelFound.id);
+        // console.log('Channel found and set as current channel:', channelFound);
+      } else {
+        // console.log('No channel found with the current user as a member and channel_type as main.');
+      }
+    } catch (error) {
+      console.error('Error finding and setting current channel: ', error);
+    }
+
   }
 }

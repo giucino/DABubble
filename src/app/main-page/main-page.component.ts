@@ -50,7 +50,7 @@ export class MainPageComponent {
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
     this.isMenuOpen = !this.isMenuOpen;
-    if (this.threadService.threadOpen) {
+    if (this.threadService.threadOpen && window.innerWidth > 768 && window.innerWidth < 1500) {
       this.threadService.closeThread();
     }
   }

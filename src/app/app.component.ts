@@ -7,6 +7,7 @@ import { UserAuthService } from './firebase.service/user.auth.service';
 import { UserService } from './firebase.service/user.service';
 import { user } from '@angular/fire/auth';
 import { ChannelFirebaseService } from './firebase.service/channelFirebase.service';
+import e from 'express';
 
 @Component({
   selector: 'app-root',
@@ -29,26 +30,20 @@ export class AppComponent {
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: Event) {
     this.userAuth.logout();
+    if (this.userId) {
     this.userService.updateOnlineStatus(this.userId, false); // geht
+    }
   }
 
   ngOnInit(): void {
-    // console.log('current user', this.userAuth.currentUser());
-    if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
-      return;
-    }
+    
     this.userAuth.checkAuth().then(isLoggedIn => {
       if (isLoggedIn) {
-        // this.userAuth.currentUser();
-        // this.userAuth.logout();
-        // this.userService.currentUser = localStorage.getItem('currentUser')
         this.userService.getUsers();
         this.userService.getCurrentUser();
         setTimeout(() => {
           localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
         }, 500);
-
-        // setTimeout(() => {
         if (this.userService.currentUser) {
           if (this.channelService.currentChannel.active_members.includes(this.userService.currentUser.id)) { // falls user in den channel  darf ändern
             this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
@@ -60,8 +55,12 @@ export class AppComponent {
         // }, 500);
 
       } if (!isLoggedIn) {
+        if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
+          return;
+        } else {
         this.userAuth.logout();
         this.router.navigate(['/login-page/login']);
+        }
       }
     });
 

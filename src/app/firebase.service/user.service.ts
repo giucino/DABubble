@@ -1,6 +1,4 @@
 import {
-  HostListener,
-  Inject,
   Injectable,
   OnDestroy,
   inject,
@@ -14,8 +12,6 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  getDoc,
-  DocumentReference,
 } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { User } from '../models/user';
@@ -103,21 +99,6 @@ export class UserService implements OnDestroy {
     updateDoc(singleUserRef, { id: userId });
   }
 
-//   async getCurrentUser(email?: string) {
-//     if (typeof window !== 'undefined' && window.localStorage) {
-//       const storedUser = localStorage.getItem('currentUser');
-//       if (email) {
-//         this.currentUser = this.allUsers.find((user) => user.email === email);
-//         localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-//       } else if (storedUser != '' && storedUser != null) {
-//         this.currentUser = JSON.parse(storedUser);
-//       }
-//       // else {
-//       //     this.currentUser = this.allUsers.find(user => user.email === email);
-//       // }
-//     }
-//   }
-
 async getCurrentUser(email?: string): Promise<User | null> {
     try {
       if (typeof window !== 'undefined' && window.localStorage) {
@@ -155,14 +136,6 @@ async getCurrentUser(email?: string): Promise<User | null> {
     await addDoc(this.getUserRef(), user.toJSON());
   }
 
-  // async addGoogleUser(user: User) {
-  //     if (this.getSingleUserRef(user.id)) {
-
-  //         // user existiert schon
-  //     } else {
-  //         await this.addUser(user);
-  //     }
-  // }
 
   addAvatarToUser(userId: string, avatar: string) {
     let singleUserRef = doc(this.getUserRef(), userId);

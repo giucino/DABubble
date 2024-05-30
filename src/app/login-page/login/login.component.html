@@ -1,9 +1,11 @@
 <div class="login-container">
     @if (isLoading) {
-        <div class="loading-overlay">
+        <!-- <div class="loading-overlay">
           <div class="loading-spinner"></div>
-        </div>
+        </div> -->
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         }
+        
     <h1>Anmeldung</h1>
 
     <p>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>

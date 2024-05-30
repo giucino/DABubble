@@ -165,6 +165,7 @@
     }
   }
 }
+
 .spacer {
   display: none;
 }
@@ -173,6 +174,7 @@
   0% {
     transform: translateY(100%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -195,7 +197,43 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
   .dialog-header {
     margin-top: 20px;
   }
+
+  .input-container {
+    padding: 0 15px;
+
+    .relative {
+      padding-top: 5px;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .users-list-container {
+      max-height: 300px;
+      margin-bottom: 64px;
+      border-radius: 30px 30px 30px 0px;
+
+      .users-list {
+        max-height: 290px;
+        overflow: scroll;
+      }
+    }
+  }
+
+}
+
+@media (max-width: 430px) {
+  .dialog-add-member {
+    padding: 40px 20px;
+  }
+  .input-container {
+    .users-list-container {
+        margin-left: 0;
+        padding: 5px 5px;
+        width: 80dvw;
+    }
+}
 }

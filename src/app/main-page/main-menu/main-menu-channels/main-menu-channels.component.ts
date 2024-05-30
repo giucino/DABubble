@@ -45,7 +45,7 @@ export class MainMenuChannelsComponent implements OnInit {
 
   selectChannel(channelId: string) {
     this.stateService.setSelectedChannelId(channelId);
-    console.log('Channel selected: ' + channelId);
+    // console.log('Channel selected: ' + channelId);
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }

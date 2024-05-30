@@ -1,9 +1,10 @@
 <div class="channel-container">
   @if (isLoading) {
-  <div class="loading-overlay">
-    <div class="loading-spinner"></div>
-  </div>
-  }
+    <!-- <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div> -->
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
   <!-- channel header - main channel -->
   @if (channelService.currentChannel.channel_type == 'main') {
   <div class="channel-header">
@@ -77,7 +78,7 @@
           </g>
         </svg>
       </button> -->
-
+      
     </div>
   </div>
   }

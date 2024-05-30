@@ -172,23 +172,6 @@
     }
 }
 
-@keyframes Test {
-    0%{
-
-    }
-    100%{
-        position: static;
-        top: unset;
-        left: unset;
-        transform: unset;
-        height: 70px;
-        font-size: 32px;
-        color: var(--color-black);
-        gap: 16px;
-    }
-}
-
-
 @keyframes moveLogoToLeft {
     100% {
         width: 100%;
@@ -221,7 +204,6 @@
 @media (max-width: 768px) {
     section{
         display: flex;
-        // justify-content: center;
         justify-content: flex-start;
         align-items: center;
         min-height: 930px;
@@ -241,7 +223,7 @@
         font-size: 40px !important;
     }
     .intro-bg-container {
-        animation: fadeOut 1s forwards 2s;
+        animation-duration: 2s;
         min-height: 920px;
         height: 100%;
     }
@@ -249,20 +231,16 @@
         --changeLeft: 50%;
         --changeTransform: translate(-50%, 0);
         --changeFontSize: 22px !important;
-        animation: moveToTopLeft 1s forwards 2s;
-    }
-    .intro-logo-text-container {
-        animation: moveLogoToLeft 1s forwards 500ms;
+        animation-duration: 2s;
     }
     .intro-logo-text {
-        animation: revealText 1s forwards 500ms;
+        animation-duration: 500ms;
     }
     .create-new-account-container{
         position: unset;
         transform: unset;
         align-items: center;
         justify-content: flex-end;
-        // bottom: 35px;
         width: 100%;
         top: unset;
         right: unset;
@@ -285,12 +263,11 @@
         min-height: 800px;
     }
     .intro-bg-container{
-        // height: calc(100% + 1px);
         top: 0;
     }
     .intro-logo-img-mobile{
-        width: 56px;
-        height: 56px;
+        width: 56px !important;
+        height: 56px !important;
     }   
     .intro-logo-mobile{
         font-size: 32px !important;
@@ -305,7 +282,6 @@
 @media (max-height: 900px){
     section{
         display: flex;
-        // justify-content: center;
         justify-content: flex-start;
         align-items: center;
         min-height: 930px;
@@ -325,7 +301,7 @@
         font-size: 40px !important;
     }
     .intro-bg-container {
-        animation: fadeOut 1s forwards 2s;
+        animation-duration: 2s;
         min-height: 920px;
         height: 100%;
     }
@@ -334,20 +310,16 @@
         --moveToTop: 10px;
         --changeTransform: translate(-50%, 0);
         --changeFontSize: 22px !important;
-        animation: moveToTopLeft 1s forwards 2s;
-    }
-    .intro-logo-text-container {
-        animation: moveLogoToLeft 1s forwards 500ms;
+        animation-duration: 2s;
     }
     .intro-logo-text {
-        animation: revealText 1s forwards 500ms;
+        animation-duration: 500ms;
     }
     .create-new-account-container{
         position: unset;
         transform: unset;
         align-items: center;
         justify-content: flex-end;
-        // bottom: 35px;
         width: 100%;
         top: unset;
         right: unset;
