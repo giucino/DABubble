@@ -32,11 +32,13 @@
 
 @media (max-width: 768px) {
   .dialog-add-member {
+    padding: 20px 16px;
     // width: calc(100dvw - 20px);
     // position: relative;
     // left: 10px;
     // top: 220px;
     // gap: 8px;
-    border-radius: 30px;
+
+    // border-radius: 30px;
   }
 }

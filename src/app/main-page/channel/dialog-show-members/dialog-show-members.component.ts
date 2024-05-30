@@ -26,9 +26,10 @@ export class DialogShowMembersComponent {
     public channelService: ChannelFirebaseService
   ) {}
 
-  openAddUserDialog(button: HTMLElement) {
+  openAddUserDialog() {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute({button, component,position : 'right',mobilePosition : 'mid', maxWidth : '554px'});
+    let button = document.getElementById('addMemberBtn');
+    if(button) this.customDialogService.openDialogAbsolute({button, component,position : 'right', maxWidth : '554px'});
     this.dialogRef.close();
   }
 
