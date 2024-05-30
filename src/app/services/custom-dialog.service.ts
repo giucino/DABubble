@@ -31,6 +31,8 @@ export class CustomDialogService {
     this.dialogRef = this.dialog.open(dialogComponent, {
       panelClass: panelClass,
       position: positionAsJSON,
+      width: '100%',
+      maxWidth: '872px',
     });
     if (this.dialogRef) {
       window.addEventListener('resize', () =>
