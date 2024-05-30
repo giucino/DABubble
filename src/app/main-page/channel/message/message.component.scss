@@ -3,6 +3,7 @@
   padding: 10px 45px;
   display: flex;
   gap: 30px;
+  // cursor: pointer;
 
   &:hover {
     background-color: var(--color-bg);
@@ -35,6 +36,12 @@
 
     .message-creator {
       flex-direction: row-reverse;
+      .name{
+        cursor: pointer;
+        &:hover{
+          color: var(--color-purple-3);
+        }
+      }
     }
 
     .message {
@@ -72,9 +79,12 @@
 .message-creator {
   display: flex;
   gap: 20px;
-
   .name {
     font-weight: 700;
+    cursor: pointer;
+    &:hover{
+      color: var(--color-purple-3);
+    }
   }
 
   .time,

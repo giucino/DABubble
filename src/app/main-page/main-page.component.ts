@@ -21,16 +21,16 @@ import { SharedService } from '../services/shared.service';
 
 export class MainPageComponent {
   isMenuOpen: boolean = true;
-  
-  constructor(public userService: UserService, 
-    public channelService: ChannelFirebaseService, 
-    public threadService : ThreadService,
+
+  constructor(public userService: UserService,
+    public channelService: ChannelFirebaseService,
+    public threadService: ThreadService,
     public sharedService: SharedService) {
     if (this.userService.currentUser) this.channelService.getChannelsForCurrentUser();
     if (this.userService.currentUser && this.userService.currentUser.last_thread && this.userService.currentUser.last_thread != '') {
       this.threadService.threadOpen = true;
     }
-     
+
   }
 
 
@@ -38,14 +38,14 @@ export class MainPageComponent {
     this.sharedService.backToChannels$.subscribe(() => {
       this.toggleMenu();
     });
-    if (window.innerWidth > 768 && window.innerWidth < 1500 && this.threadService.threadOpen){
-          this.isMenuOpen = false;
-          console.log('test1');
-        }
+    if (typeof window !== 'undefined' && window.innerWidth > 768 && window.innerWidth < 1500 && this.threadService.threadOpen) {
+      this.isMenuOpen = false;
+    }
+
   }
 
 
-  
+
 
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
@@ -59,12 +59,13 @@ export class MainPageComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
+    if (typeof window !== 'undefined') {
     if (event.target.innerWidth < 1200 && event.target.innerWidth > 768 && this.isMenuOpen) {
       this.isMenuOpen = false;
       this.sharedService.showMobileDiv();
     } if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && !this.isMenuOpen) {
       //nothing
-    } 
+    }
     if (event.target.innerWidth < 768) {
       //nothing
     } if (event.target.innerWidth > 1200 && event.target.innerWidth < 1500 && this.threadService.threadOpen) {
@@ -76,6 +77,7 @@ export class MainPageComponent {
         this.sharedService.showMobileDiv();
       }
     }
-    
+
   }
+}
 }

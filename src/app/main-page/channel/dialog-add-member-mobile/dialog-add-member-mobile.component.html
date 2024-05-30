@@ -71,7 +71,7 @@
     <div class="input-container">
         <div class="relative">
             <input type="text" class="name-input" placeholder="Name eingeben" [(ngModel)]="searchInput"
-                (ngModelChange)="onFilterUsers()" (focus)="onFilterUsers()">
+                (ngModelChange)="onFilterUsers()" (focus)="onFilterUsers()" (blur)="removeFilterUsers()" >
             @if (filteredUsers.length > 0) {
             <div class="users-list-container">
                 <div class="users-list">

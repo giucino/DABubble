@@ -25,8 +25,8 @@ export class DialogAddMemberMobileComponent {
   selectedUsers: User[] = [];
   newlyAddedUsers: User[] = [];
 
-  currentChannel: Channel = 
-  this.channelService.currentChannel;
+  currentChannel: Channel =
+    this.channelService.currentChannel;
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddMemberComponent>,
@@ -35,7 +35,7 @@ export class DialogAddMemberMobileComponent {
     public userManagementService: UserManagementService,
     public customDialogService: CustomDialogService,
     private profileService: ProfileService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.channelService.currentChannel && this.channelService.currentChannel.members) {
@@ -48,22 +48,26 @@ export class DialogAddMemberMobileComponent {
     this.filteredUsers = this.userManagementService.filterUsers(this.searchInput, this.selectedUsers);
   }
 
+  removeFilterUsers(): void {
+    this.filteredUsers = [];
+  }
+
   onSelectUser(user: User): void {
     this.selectedUsers = this.userManagementService.selectUser(this.selectedUsers, user);
-    
+
     if (!this.newlyAddedUsers.find(u => u.id === user.id)) {
-        this.newlyAddedUsers.push(user);
+      this.newlyAddedUsers.push(user);
     }
     this.filteredUsers = this.filteredUsers.filter(u => u.id !== user.id);
-    
+
     this.searchInput = '';
-    this.onFilterUsers(); 
-}
+    this.onFilterUsers();
+  }
 
   onRemoveSelectedUser(user: User): void {
-    this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);    
+    this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);
     this.newlyAddedUsers = this.newlyAddedUsers.filter(u => u.id !== user.id);
-    this.onFilterUsers(); 
+    this.onFilterUsers();
   }
 
   onUpdateMembers(): void {
@@ -73,7 +77,7 @@ export class DialogAddMemberMobileComponent {
     if (channelId) {
       this.userManagementService.updateMembers(channelId, memberIds)
         .then(() => {
-          this.dialogRef.close(); 
+          this.dialogRef.close();
         })
         .catch(error => {
           console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
@@ -88,7 +92,7 @@ export class DialogAddMemberMobileComponent {
     this.profileService.setViewingUserId(userId);
 
     const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute({button, component, position : 'right', maxWidth: '500px'});
+    this.customDialogService.openDialogAbsolute({ button, component, position: 'right', maxWidth: '500px' });
     // this.dialogRef.close();
   }
 }
