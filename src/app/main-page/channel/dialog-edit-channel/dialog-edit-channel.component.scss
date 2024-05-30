@@ -1,5 +1,6 @@
 .dialog-edit-channel {
-  width: 872px;
+  width: 100%;
+  max-width: 872px;
   // height: 616px;
   display: flex;
   flex-direction: column;
@@ -248,29 +249,57 @@ textarea {
 
 @media (max-width: 768px) {
   .dialog-edit-channel {
-    width: 100vw;
-    height: calc(100dvh - 10dvh);
-    // height: 100dvh;
-    position: relative;
+    // width: 100vw;
+    // height: calc(100dvh - 220px);
+    // position: relative;
     // left: 10px;
-    top: 10dvh;
+    // top: 220px;
+    gap: 0;
+    padding: 0;
     border-radius: 0px;
-    overflow: scroll;
-    padding: 20px 16px;
-    gap: 25px;
-    border-radius: 0;
+    // overflow: scroll;
+    height: 100%;
+    max-height: 100vh;
   }
 
   .dialog-header {
-    display: none;
+    padding: 44px 16px 16px 14px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
   }
 
-  .dialog-header-mobile {
-    display: flex;
-
+  .dialog-content {
+    height: 100%;
+    max-height: 100vh;
+    overflow: auto;
+    padding: 20px 16px;
   }
 
-  .members-list {
+  .members-list{
+
+//     width: 100vw;
+//     height: calc(100dvh - 10dvh);
+//     // height: 100dvh;
+//     position: relative;
+//     // left: 10px;
+//     top: 10dvh;
+//     border-radius: 0px;
+//     overflow: scroll;
+//     padding: 20px 16px;
+//     gap: 25px;
+//     border-radius: 0;
+//   }
+
+//   .dialog-header {
+//     display: none;
+//   }
+
+//   .dialog-header-mobile {
+//     display: flex;
+
+//   }
+
+//   .members-list {
+
     display: flex;
     flex-direction: column;
     gap: 15px;

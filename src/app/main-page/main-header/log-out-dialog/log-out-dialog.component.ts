@@ -15,6 +15,10 @@ import { OpenProfileDirective } from '../../../shared/directives/open-profile.di
 })
 export class LogOutDialogComponent {
 
+  isMobile() {
+    return window.innerWidth <= 768;
+  } 
+
   constructor(
     public dialogRef: MatDialogRef<LogOutDialogComponent>,
     private userAuth: UserAuthService,

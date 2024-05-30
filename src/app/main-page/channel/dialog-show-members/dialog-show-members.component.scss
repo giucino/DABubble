@@ -1,5 +1,6 @@
 .dialog-show-members {
-    width: 415px;
+    width: 100%;
+    max-width: 415px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -100,10 +101,14 @@
 
 @media (max-width: 768px) {
     .dialog-show-members {
-        position: relative;
-        top: 220px;
-        left: 10px;
-        width: calc(100dvw - 20px);
+
+        padding: 20px 16px;
+
+//         position: relative;
+//         top: 220px;
+//         left: 10px;
+//         width: calc(100dvw - 20px);
+
     }
 }
 

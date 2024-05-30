@@ -1,9 +1,10 @@
-@import "../../../../styles.scss";
+// @import "../../../../styles.scss";
 @import "../../../../assets/scss/mixin.scss";
 @import "../../main-menu/main-menu-channels/add-member-card/add-member-card.component.scss";
 
 .dialog-add-member {
-  margin-top: 0;
+  // margin-top: 0;
+  border-radius: 30px 0px 30px 30px;
 
   .channel-name-container {
     display: flex;
@@ -22,54 +23,72 @@
   }
 }
 
-
+// @keyframes slideUp {
+//   0% {
+//     transform: translateY(100%);
+//   }
+//   100% {
+//     transform: translateY(0%);
+//   }
+// }
 
 @media (max-width: 768px) {
   .dialog-add-member {
-    width: calc(100dvw - 20px);
-    position: relative;
-    left: 10px;
-    top: 220px;
-    border-radius: 30px 0 30px 30px;
 
-    .channel-name-container {
-      display: none;
-    }
-  }
+    padding: 20px 16px;
+    // width: calc(100dvw - 20px);
+    // position: relative;
+    // left: 10px;
+    // top: 220px;
+    // gap: 8px;
 
-  .input-container {
-    padding: 0 15px;
+    // border-radius: 30px;
 
-    .relative {
-      padding-top: 5px;
-    }
-  }
+//     width: calc(100dvw - 20px);
+//     position: relative;
+//     left: 10px;
+//     top: 220px;
+//     border-radius: 30px 0 30px 30px;
 
-  .users-list-container {
-    max-height: 300px;
+//     .channel-name-container {
+//       display: none;
+//     }
+//   }
 
-    .users-list {
-      max-height: 290px;
-      overflow: hidden;
-    }
-  }
+//   .input-container {
+//     padding: 0 15px;
 
-}
+//     .relative {
+//       padding-top: 5px;
+//     }
+//   }
 
-@media (max-width: 400px) {
-  .dialog-add-member {
-    padding: 30px 16px;
+//   .users-list-container {
+//     max-height: 300px;
 
-    .dialog-header {
-      margin-top: 0;
-    }
-  }
+//     .users-list {
+//       max-height: 290px;
+//       overflow: hidden;
+//     }
+//   }
 
-  .input-container {
-    .users-list-container {
-      margin-left: 0;
-      padding: 5px 5px;
-      width: 80dvw;
-    }
+// }
+
+// @media (max-width: 400px) {
+//   .dialog-add-member {
+//     padding: 30px 16px;
+
+//     .dialog-header {
+//       margin-top: 0;
+//     }
+//   }
+
+//   .input-container {
+//     .users-list-container {
+//       margin-left: 0;
+//       padding: 5px 5px;
+//       width: 80dvw;
+//     }
+
   }
 }

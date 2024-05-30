@@ -18,26 +18,33 @@
     </div>
     <div class="members-list-container">
         <div class="members-list">
-            <div *ngFor="let member of currentChannel.members; let index = index" class="member" #profileBtn
+            @for(member of currentChannel.members; track member; let index = $index) {
+                @if(userService.getUser(member)) {
+                    <div class="member" #profileBtn
                 (click)="openUserProfile()" appOpenProfile [userId]="member" [button]="profileBtn">
                 <div class="member-img-container">
-                    <img [src]="userService.getUser(member).profile_img" [alt]="userService.getUser(member).name"
+                    @if(userService.getUser(member).profile_img && userService.getUser(member).name) {
+                        <img [src]="userService.getUser(member).profile_img" [alt]="userService.getUser(member).name"
                         class="profile-img">
+                    }
                     @if (!userService.getUser(member).logged_in){
                     <div class="online-status-wborder offline"></div>
                     }
                     @if (userService.getUser(member).logged_in){
                     <div class="online-status-wborder online"></div>
-                    }
+                    }    
                 </div>
                 <div class="member-name fs-18">
                     {{ userService.getUser(member).name }}{{ userService.getUser(member).name ===
                     userService.currentUser?.name ? ' (Du)' : '' }}
                 </div>
-            </div>
+                </div>
+                }
+            }
+            
         </div>
     </div>
-    <button class="btn-add-member fs-18" #addMemberBtn (click)="openAddUserDialog(addMemberBtn)">
+    <button class="btn-add-member fs-18" (click)="openAddUserDialog()">
         <div class="btn-icon-v3">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_813_12118" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"

@@ -207,17 +207,21 @@ export class ChannelComponent {
 
   openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    this.customDialogService.openDialogAbsolute({button, component, position : 'right', maxWidth: '554px'});
   }
 
-  openShowMembersDialog(button: HTMLElement) {
+  openShowMembersDialog(button: HTMLElement, mobileButton: HTMLElement) {
     const component = DialogShowMembersComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    this.customDialogService.openDialogAbsolute({button, component , position : 'right', mobileButton, maxWidth : '415px'});
   }
 
   openEditChannelDialog(button: HTMLElement) {
     const component = DialogEditChannelComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'left');
+    this.customDialogService.openDialogAbsolute({button, component, position : 'left', mobilePosition : 'mid', maxWidth : '872px'});
+  }
+
+  isMobile() {
+    return window.innerWidth <= 768;
   }
 
   // saveMessage() {

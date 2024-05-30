@@ -1,4 +1,4 @@
-<div class="dialog-add-member">
+<div class="dialog-add-member-bSlideIn">
     
     <div class="dialog-header">
         <div class="spacer"></div>
@@ -34,22 +34,21 @@
         <div class="channel-name">{{ currentChannel.name }}</div>
     </div>
 
-    <div class="channel-header-direct">
-        @if (selectedUsers.length > 0) {
-        @for(user of newlyAddedUsers; track user.id) {
-        <div class="channel-member" #profileBtn (click)="openUserProfile(user.id, profileBtn)">
-            <div class="profile-img-container">
-                <img [src]="user.profile_img" alt="" class="profile-img">
-                @if (!user.logged_in){
-                <div class="online-status-wborder offline"></div>
-                }
-                @if (user.logged_in){
-                <div class="online-status-wborder online"></div>
-                }
-            </div>
-            <div class="channel-member-name fs-18">
-                {{ user.name }}
-            </div>
+    
+    @if (newlyAddedUsers.length > 0) {
+        <div class="channel-header-direct">
+            @for(user of newlyAddedUsers; track user.id) {
+            <div class="channel-member" #profileBtn (click)="openUserProfile(user.id, profileBtn)">
+                <div class="profile-img-container">
+                    <img [src]="user.profile_img" alt="" class="profile-img">
+                    @if (!user.logged_in){
+                    <div class="online-status-wborder offline"></div>
+                    }
+                    @if (user.logged_in){
+                    <div class="online-status-wborder online"></div>
+                    }
+                </div>
+            <div class="channel-member-name fs-18">{{ user.name }}</div>
             <button class="btn-icon" (click)="onRemoveSelectedUser(user)">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
@@ -63,10 +62,11 @@
                     </g>
                 </svg>
             </button>
+            </div>
+            }
         </div>
-        }
-        }
-    </div>
+    }
+
 
     <div class="input-container">
         <div class="relative">
