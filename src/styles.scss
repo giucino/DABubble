@@ -426,20 +426,12 @@ app-avatar {
 }
 
 @media (max-width: 768px) {
-  .cdk-global-overlay-wrapper {
-    justify-content: unset !important;
-    //emoji picker brauch center, aber die andere dialogs machts kaputt...
-    
-  }
+
   .custom-dialog {
-    // max-width: 100vw !important;
-    // max-height: 100vh !important;
     &-anchorTopLeft-mobile {
-      // position: absolute !important;
       transform: unset;
     }
     &-anchorTopRight-mobile {
-      // position: absolute !important;
       transform: unset;
     }
   }
