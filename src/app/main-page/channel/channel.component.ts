@@ -205,7 +205,7 @@ export class ChannelComponent {
 
   openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute({button, component, position : 'right', mobilePosition :  'mid', maxWidth: '554px'});
+    this.customDialogService.openDialogAbsolute({button, component, position : 'right', maxWidth: '554px'});
   }
 
   openShowMembersDialog(button: HTMLElement, mobileButton: HTMLElement) {

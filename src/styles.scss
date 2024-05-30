@@ -384,6 +384,7 @@ button {
 
   &-anchorTopLeft {
     @extend .custom-dialog;
+    margin-right: 16px;
     // position: absolute !important;
     &-mobile {
       @extend .custom-dialog-anchorTopLeft;
@@ -391,6 +392,7 @@ button {
   }
   &-anchorTopRight {
     @extend .custom-dialog;
+    margin-left: 16px;
     // position: absolute !important;
     // transform: translateX(-100%);
     &-mobile {
@@ -427,10 +429,12 @@ app-avatar {
     // max-height: 100vh !important;
     &-anchorTopLeft-mobile {
       // position: absolute !important;
+      
       transform: unset;
     }
     &-anchorTopRight-mobile {
       // position: absolute !important;
+  
       transform: unset;
     }
   }
