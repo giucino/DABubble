@@ -1,8 +1,9 @@
-@import "../../../styles.scss";
+// @import "../../../styles.scss";
 @import "../../../assets/scss/mixin.scss";
 
 .show-profile-dialog {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;

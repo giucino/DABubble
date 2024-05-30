@@ -28,7 +28,7 @@ export class DialogShowMembersComponent {
 
   openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right', 'mid');
+    this.customDialogService.openDialogAbsolute({button, component,position : 'right',mobilePosition : 'mid', maxWidth : '554px'});
     this.dialogRef.close();
   }
 

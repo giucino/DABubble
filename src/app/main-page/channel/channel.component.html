@@ -38,7 +38,7 @@
 
     <div class="channel-members-container">
       <!-- btn show-members -->
-      <div class="channel-members-info" #showMembersBtn (click)="openShowMembersDialog(showMembersBtn)">
+      <div class="channel-members-info" #showMembersBtn (click)="openShowMembersDialog(showMembersBtn, addMemberBtn)">
         <div class="channel-members-preview">
           @for(member of channelService.currentChannel.members; track member; let index = $index) {
           @if(index
@@ -51,7 +51,7 @@
       </div>
 
       <!-- btn add-member -->
-      <button class="btn-icon-v4 w40" #addMemberBtn (click)="isMobile() ? openShowMembersDialog(addMemberBtn) : openAddUserDialog(addMemberBtn)">
+      <button class="btn-icon-v4 w40" #addMemberBtn (click)="isMobile() ? openShowMembersDialog(showMembersBtn, addMemberBtn) : openAddUserDialog(addMemberBtn)">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <mask id="mask0_813_12118" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
             height="24">

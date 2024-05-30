@@ -88,7 +88,7 @@ export class DialogAddMemberMobileComponent {
     this.profileService.setViewingUserId(userId);
 
     const component = DialogShowProfileComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right');
+    this.customDialogService.openDialogAbsolute({button, component, position : 'right', maxWidth: '500px'});
     // this.dialogRef.close();
   }
 }

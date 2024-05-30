@@ -100,6 +100,6 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
   
   openAddUserDialog(button: HTMLElement): void {
     const component = AddMemberCardComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'mid', 'bottom');
+    this.customDialogService.openDialogAbsolute({button, component, position : 'mid', mobilePosition: 'bottom', maxWidth : '554px'});
   }
 }

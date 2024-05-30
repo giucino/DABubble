@@ -2,11 +2,23 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ComponentType } from '@angular/cdk/portal';
 
+
+interface DialogParams {
+  button: HTMLElement;
+  component: ComponentType<any>;
+  position: 'left' | 'right' | 'mid';
+  mobilePosition?: 'mid' | 'bottom';
+  mobileButton?: HTMLElement;
+  maxWidth: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class CustomDialogService {
   dialogRef: MatDialogRef<any> | null = null;
+
+  
 
   isMobile() {
     return window.innerWidth <= 768;
@@ -14,29 +26,27 @@ export class CustomDialogService {
 
   constructor(public dialog: MatDialog) {}
 
-  public openDialog(dialogComponent: ComponentType<any>): MatDialogRef<any> {
-    return this.dialog.open(dialogComponent, {
+  public openDialog(component: ComponentType<any>): MatDialogRef<any> {
+    return this.dialog.open(component, {
       panelClass: 'custom-dialog',
     });
   }
 
   public openDialogAbsolute(
-    button: HTMLElement,
-    dialogComponent: ComponentType<any>,
-    position: 'left' | 'right' | 'mid',
-    mobilePosition?: 'mid' | 'bottom'
+    {button, component, position, mobilePosition, mobileButton, maxWidth} : DialogParams
   ) {
-    let positionAsJSON = this.getPosition(button, position, mobilePosition);
+    let buttonUsed = this.isMobile() && mobileButton ? mobileButton : button;
+    let positionAsJSON = this.getPosition(buttonUsed, position, mobilePosition);
     let panelClass = this.getPanelClass(position, mobilePosition);
-    this.dialogRef = this.dialog.open(dialogComponent, {
+    this.dialogRef = this.dialog.open(component, {
       panelClass: panelClass,
       position: positionAsJSON,
       width: '100%',
-      maxWidth: '872px',
+      maxWidth: maxWidth,
     });
     if (this.dialogRef) {
       window.addEventListener('resize', () =>
-        this.updateDialogPosition(button, position, mobilePosition)
+        this.updateDialogPosition(button, position, mobilePosition, mobileButton)
       );
     }
   }
@@ -45,10 +55,12 @@ export class CustomDialogService {
   updateDialogPosition(
     button: HTMLElement,
     position: 'left' | 'right' | 'mid',
-    mobilePosition?: 'mid' | 'bottom'
+    mobilePosition?: 'mid' | 'bottom',
+    mobileButton?: HTMLElement,
   ): void {
     if (this.dialogRef) {
-      let positionAsJSON = this.getPosition(button, position, mobilePosition);
+      let buttonUsed = this.isMobile() && mobileButton ? mobileButton : button;
+      let positionAsJSON = this.getPosition(buttonUsed, position, mobilePosition);
       this.dialogRef.updatePosition(positionAsJSON);
     }
   }
@@ -62,11 +74,16 @@ export class CustomDialogService {
       return this.getMobilePosition(mobilePosition);
     } else {
       const rect = button.getBoundingClientRect();
-      if(position == 'mid') return {};
-      else return {
+      
+      if (position == 'left') return {
         top: rect.bottom + 'px',
-        left: position == 'left' ? rect.left + 'px' : rect.right + 'px',
+        left:  rect.left + 'px',
       };
+      else if (position == 'right') return {
+        top: rect.bottom + 'px',
+        right:  (window.innerWidth - rect.right) + 'px',
+      };
+      else return {};
     }
   }
 

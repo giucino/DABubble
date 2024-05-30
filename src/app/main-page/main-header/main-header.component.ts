@@ -52,7 +52,7 @@ export class MainHeaderComponent {
 
   openLogOutDialog(button: HTMLElement) {
     const component = LogOutDialogComponent;
-    this.customDialogService.openDialogAbsolute(button, component, 'right', 'bottom');
+    this.customDialogService.openDialogAbsolute({button, component, position : 'right', mobilePosition : 'bottom', maxWidth : '100%'});
   }
 
 }

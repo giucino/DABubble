@@ -1,5 +1,6 @@
 .dialog-edit-channel {
-  width: 872px;
+  width: 100%;
+  max-width: 872px;
   // height: 616px;
   display: flex;
   flex-direction: column;
@@ -226,14 +227,31 @@ textarea {
 
 @media (max-width: 768px) {
   .dialog-edit-channel {
-    width: 100vw;
+    // width: 100vw;
     // height: calc(100dvh - 220px);
     // position: relative;
     // left: 10px;
     // top: 220px;
+    gap: 0;
+    padding: 0;
     border-radius: 0px;
-    overflow: scroll;
+    // overflow: scroll;
+    height: 100%;
+    max-height: 100vh;
   }
+
+  .dialog-header {
+    padding: 44px 16px 16px 14px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .dialog-content {
+    height: 100%;
+    max-height: 100vh;
+    overflow: auto;
+    padding: 20px 16px;
+  }
+
   .members-list{
     display: flex;
     flex-direction: column;

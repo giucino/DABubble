@@ -1,5 +1,6 @@
 .dialog-show-members {
-    width: 415px;
+    width: 100%;
+    max-width: 415px;
     display: flex;
     flex-direction: column;
     gap: 20px;
