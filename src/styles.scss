@@ -388,6 +388,7 @@ button {
     // position: absolute !important;
     &-mobile {
       @extend .custom-dialog-anchorTopLeft;
+      margin-right: 0;
     }
   }
   &-anchorTopRight {
@@ -397,6 +398,7 @@ button {
     // transform: translateX(-100%);
     &-mobile {
       @extend .custom-dialog-anchorTopRight;
+      margin-left: 0;
     }
   }
 }
@@ -429,12 +431,10 @@ app-avatar {
     // max-height: 100vh !important;
     &-anchorTopLeft-mobile {
       // position: absolute !important;
-      
       transform: unset;
     }
     &-anchorTopRight-mobile {
       // position: absolute !important;
-  
       transform: unset;
     }
   }
