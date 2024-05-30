@@ -30,7 +30,9 @@ export class AppComponent {
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: Event) {
     this.userAuth.logout();
+    if (this.userId) {
     this.userService.updateOnlineStatus(this.userId, false); // geht
+    }
   }
 
   ngOnInit(): void {

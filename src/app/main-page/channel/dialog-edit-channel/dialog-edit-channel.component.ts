@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DialogAddMemberMobileComponent } from '../dialog-add-member-mobile/dialog-add-member-mobile.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
+import { MessageService } from '../../../firebase.service/message.service';
 
 @Component({
   selector: 'app-dialog-edit-channel',
@@ -34,6 +35,7 @@ export class DialogEditChannelComponent implements OnInit {
     public channelService: ChannelFirebaseService,
     private router: Router,
     public customDialogService: CustomDialogService,
+    public messageService: MessageService
   ) {}
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -141,7 +143,9 @@ export class DialogEditChannelComponent implements OnInit {
             this.userService.currentUser.id
         );
         this.dialogRef.close();
-        console.log('Erfolgreich aus dem Kanal entfernt', this.channelService.currentChannel, this.userService.currentUser);
+        // console.log('Erfolgreich aus dem Kanal entfernt', this.channelService.currentChannel, this.userService.currentUser);
+        this.channelService.openNewChannel(this.userService.currentUser.id);
+        this.router.navigate(['/main-page/' + this.channelService.currentChannel.id]);
     } catch (error) {
         console.error('Fehler beim Verlassen des Kanals', error);
     }
