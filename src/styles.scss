@@ -427,6 +427,10 @@ app-avatar {
 
 @media (max-width: 768px) {
 
+  .cdk-overlay-pane{
+    max-width: 100dvw !important;
+    width: unset !important;
+  }
   .custom-dialog {
     &-anchorTopLeft-mobile {
       transform: unset;
