@@ -58,8 +58,8 @@ export class ThreadComponent {
         this.setFocus();
       }
     })
-    if (userService.currentUser.last_thread == '') {
-    this.closeThread();
+    if (this.userService.currentUser && this.userService.currentUser.last_thread == '') {
+      this.closeThread();
     }
 
   }
