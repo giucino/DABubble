@@ -49,18 +49,16 @@ export class MessageInputComponent {
   }
 
   async saveMessage(channelInput : HTMLDivElement, fileInput : HTMLInputElement) {
-    if (this.messageInput != '' || this.currentFile != null) {
-      // create new message and receive message id
+    const trimmedMessageInput = this.messageInput.trim();
+    if (trimmedMessageInput != '' || this.currentFile != null) {
       this.message.user_id = this.currentUser.id;
-      this.message.message.text = this.messageInput;
+      this.message.message.text = trimmedMessageInput;
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
       if(this.usedIn == 'channel') this.message.channel_id = this.channelService.currentChannel.id;
       if(this.usedIn == 'thread') this.message.thread_id = this.channelService.currentThread.id;
       this.message.id = await this.messageService.addMessage(this.message);
-      // thread message update
       if(this.usedIn == 'thread') this.updateThreadMessage();
-      // upload currentFile
       if(this.currentFile != null) {
         const path = 'users/' + this.currentUser.id + '/messages/' + this.message.id + '/' + this.currentFile.name;
         await this.messageService.uploadFile(this.currentFile,path);
@@ -69,7 +67,6 @@ export class MessageInputComponent {
         this.messageService.updateMessage(this.message);
         this.removeFile(fileInput);
       }
-      // empty input
       this.messageInput = '';
       channelInput.innerText = '';
     }

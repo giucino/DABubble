@@ -132,10 +132,14 @@ export class MessageComponent {
   }
 
   updateMessage() {
+  const trimmedMessageText = this.editableMessage.message.text.trim();
+  if (trimmedMessageText != '') {
+    this.editableMessage.message.text = trimmedMessageText;
     this.editableMessage.modified_at = new Date().getTime();
     this.messageService.updateMessage(this.editableMessage);
     this.editMessage = false;
     this.showMoreOptions = false;
+  }
   }
 
   getTimeDifferenceForLastReply(dateAsNumber: number) {
