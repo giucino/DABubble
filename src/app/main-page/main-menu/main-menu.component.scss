@@ -101,7 +101,9 @@
   }
 
   @media (max-width: 768px) {
-
+    .menu-header{
+      display: none;
+    }
     .edit-circle {
       display: block;
     }

@@ -107,6 +107,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
   }
 
+  onBlur(): void {
+    this.clearSearch();
+  }
+
   displayChannelTime(): string {
     return this.utilityService.getChannelCreationTime();
   }
