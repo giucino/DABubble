@@ -24,6 +24,7 @@ import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
 import { StateManagementService } from '../../services/state-management.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 
 @Component({
   selector: 'app-channel',
@@ -37,7 +38,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     ReactiveFormsModule,
     OpenProfileDirective,
     RouterModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    PopupSearchComponent,
   ],
 
   templateUrl: './channel.component.html',
@@ -68,12 +70,15 @@ export class ChannelComponent {
 
   channelId: string = '';
   isLoading = false;
-  searchControl = new FormControl();
-  private subscriptions = new Subscription();
-  filteredUsers: User[] = [];
-  filteredChannels: Channel[] = [];
 
-  selectedUserId: string = '';
+  // searchControl = new FormControl();
+  // private subscriptions = new Subscription();
+  // filteredUsers: User[] = [];
+  // filteredChannels: Channel[] = [];
+  // selectedUserId: string = '';
+
+  inputText : string = '';
+  
   newDirectChannel: Channel = {
     id: '',
     name: 'Direct Channel',
@@ -115,46 +120,46 @@ export class ChannelComponent {
     if (this.userService.currentUser.last_channel) {
       this.openChannel();
     }
-    this.subscriptions.add(
-      this.searchControl.valueChanges
-        .pipe(debounceTime(300))
-        .subscribe((value) => {
-          this.filter(value);
-        })
-    );
+    // this.subscriptions.add(
+    //   this.searchControl.valueChanges
+    //     .pipe(debounceTime(300))
+    //     .subscribe((value) => {
+    //       this.filter(value);
+    //     })
+    // );
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    // this.subscriptions.unsubscribe();
     this.messageService.unsubMessages();
   }
 
-  clearSearch(): void {
-    this.searchControl.setValue('');
-  }
+  // clearSearch(): void {
+  //   this.searchControl.setValue('');
+  // }
 
-  filter(searchTerm: string): void {
-    if (searchTerm.startsWith('@')) {
-      // Suche Benutzer mit dem Präfix '@'
-      this.filteredUsers = this.searchService.filterUsersByPrefix(
-        searchTerm,
-        this.userService.allUsers
-      );
-      this.filteredChannels = [];
-    } else if (searchTerm.startsWith('#')) {
-      // Suche Kanäle vom Typ 'main' mit dem Präfix '#'
-      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
-        searchTerm,
-        ChannelTypeEnum.main
-      );
-      this.filteredUsers = [];
-    } else {
-      // Klare Filter, wenn kein Suchbegriff vorhanden ist
-      const results = this.searchService.clearFilters();
-      this.filteredUsers = results.users;
-      this.filteredChannels = results.channels;
-    }
-  }
+  // filter(searchTerm: string): void {
+  //   if (searchTerm.startsWith('@')) {
+  //     // Suche Benutzer mit dem Präfix '@'
+  //     this.filteredUsers = this.searchService.filterUsersByPrefix(
+  //       searchTerm,
+  //       this.userService.allUsers
+  //     );
+  //     this.filteredChannels = [];
+  //   } else if (searchTerm.startsWith('#')) {
+  //     // Suche Kanäle vom Typ 'main' mit dem Präfix '#'
+  //     this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
+  //       searchTerm,
+  //       ChannelTypeEnum.main
+  //     );
+  //     this.filteredUsers = [];
+  //   } else {
+  //     // Klare Filter, wenn kein Suchbegriff vorhanden ist
+  //     const results = this.searchService.clearFilters();
+  //     this.filteredUsers = results.users;
+  //     this.filteredChannels = results.channels;
+  //   }
+  // }
 
   async openDirectChannel(user_id: string): Promise<void> {
     let channel_id = this.channelService.getDirectChannelId(

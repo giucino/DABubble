@@ -1,4 +1,4 @@
-@import "../../../app/main-page/main-header/search-bar/search-bar.component.scss";
+// @import "../../../app/main-page/main-header/search-bar/search-bar.component.scss";
 
 .channel-container {
   width: 100%;
@@ -373,12 +373,12 @@ input, textarea, #channelInput {
   display: none;
 }
 
-.search-container {
-  position: absolute;
-  top: 140px;
-  left: 10%;
-  width: 80%;
-}
+// .search-container {
+//   position: absolute;
+//   top: 140px;
+//   left: 10%;
+//   width: 80%;
+// }
 
 /* Safari */
 @-webkit-keyframes spin {
