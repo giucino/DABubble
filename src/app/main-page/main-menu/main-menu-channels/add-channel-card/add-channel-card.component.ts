@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../../firebase.service/user.service';
 import { CustomDialogService } from '../../../../services/custom-dialog.service';
 import { AddMemberCardComponent } from '../add-member-card/add-member-card.component';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-channel-card',
@@ -30,12 +32,13 @@ import { AddMemberCardComponent } from '../add-member-card/add-member-card.compo
     MatDialogActions,
     MatDialogModule,
     FormsModule,
+    CommonModule
   ],
   templateUrl: './add-channel-card.component.html',
   styleUrl: './add-channel-card.component.scss',
 })
 export class AddChannelCardComponent implements OnInit, OnDestroy {
-
+  duplicateName = false;
   channel: Channel = {
     id: '',
     name: '',
@@ -53,6 +56,7 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
     public channelService : ChannelFirebaseService,
     public userService : UserService,
     public customDialogService: CustomDialogService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -79,20 +83,21 @@ export class AddChannelCardComponent implements OnInit, OnDestroy {
 
   async createChannel(button: HTMLElement): Promise<void> {
     try {
-      const allChannels = await this.channelService.getAllChannels();
+      // const allChannels = await this.channelService.getAllChannels();
   
-      const isDuplicate = allChannels.some(channel => channel.name === this.channel.name);
+      const isDuplicate = this.channelService.channels.some(channel => channel.name === this.channel.name);
       if (isDuplicate) {
-        //Todo: Show error message in dialog
-        alert('Ein Kanal mit diesem Namen existiert bereits. Bitte wählen Sie einen anderen Namen.');
-        return;
-      }
+        this.duplicateName = true;
+        // warum werden alle channel geladen
+      } else {
       const channelId = await this.channelService.addChannel(this.channel);
       this.channelService.setCurrentChannel(channelId);
+      this.router.navigate(['/main-page', channelId]);
       // console.log('Channel created and set as currentChannel', this.channelService.currentChannel);
 
       this.dialogRef.close();
       this.openAddUserDialog(button);
+      }
     } catch (error) {
       console.error('Fehler beim Erstellen des Channels:', error);
     }
