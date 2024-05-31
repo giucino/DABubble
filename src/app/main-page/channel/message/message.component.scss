@@ -404,12 +404,17 @@ textarea,
     }
   }
 
-
-      
+  .btn-primary,.btn-secondary{
+    padding: 6px 12px;
+    font-size: 16px;
+  }
+  .message-edit-container{
+    padding: 10px 20px 10px 20px;
+    max-width: 80dvw; 
+  }
 
 
 }
-
 @media (max-width: 550px) {
   .message-container,
   .message-container-reverse {
@@ -418,6 +423,39 @@ textarea,
     .message-content {
       .message {
         width: 80%;
+      }
+    }
+  }
+  .reaction-bar{
+    .more-options-button-container{
+      .more-options-menu{
+        padding: 5px 10px;
+        top: 120%;
+        left: calc(-60% + 8px);
+      }
+    }
+  }
+  .btn-text-v2{
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+  .message-edit-container{
+    max-width: 70dvw; 
+  }
+}
+@media(max-width: 450px){
+  .btn-primary,.btn-secondary{
+    // padding: 6px 12px;
+    font-size: 14px;
+  }
+  .message-edit-container{
+    padding: 5px 10px 5px 10px;
+  }
+  .reaction-bar{
+    .more-options-button-container{
+      .more-options-menu{
+        // top: 120%;
+        left: calc(-220% + 8px);
       }
     }
   }
@@ -440,8 +478,6 @@ textarea,
   }
   .message-container,
   .message-container-reverse {
-
-
     .message-content {
       .message {
         width: 90%;
@@ -457,5 +493,15 @@ textarea,
 
     }
   }
-
+  .reaction-bar{
+    left: 20px;
+  }
+  .message-edit-buttons{
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .btn-primary,.btn-secondary{
+    padding: 3px 6px;
+    // font-size: 14px;
+  }
 }

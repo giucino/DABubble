@@ -144,7 +144,7 @@
             @if (isCurrentUser()) {
                             <!-- more-options-button -->
             <div class="more-options-button-container">
-                <button class="btn-icon w40" (click)="showMoreOptions = true">
+                <button class="btn-icon w40" (click)="showMoreOptions = !showMoreOptions">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_1817_16514" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                         <rect width="24" height="24" fill="#D9D9D9"/>
@@ -156,7 +156,7 @@
                 </button>
                 @if(showMoreOptions) {
                     <div class="more-options-menu">
-                        <button class="btn-text-v2 fs-24" (click)="editMessage = true">Nachricht bearbeiten</button>
+                        <button class="btn-text-v2 fs-20" (click)="editMessage = true">Nachricht bearbeiten</button>
                     </div>
                 }
             </div>
