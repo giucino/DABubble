@@ -66,6 +66,7 @@ export class PopupSearchComponent {
     if (changes['inputText']) {
       this.filter(this.inputText);
       console.log(this.inputText);
+      console.log(this.filteredUsers);
     }
   }
 
@@ -74,17 +75,19 @@ export class PopupSearchComponent {
   }
 
   filter(searchTerm: string): void {
-    if (searchTerm.startsWith('@')) {
+    let allMatches = searchTerm.match(/[@#]\w*/g);
+    let lastMatch = allMatches ? allMatches[allMatches.length - 1] : '';
+    if (lastMatch.startsWith('@')) {
       // Suche Benutzer mit dem Präfix '@'
       this.filteredUsers = this.searchService.filterUsersByPrefix(
-        searchTerm,
+        lastMatch,
         this.userService.allUsers
       );
       this.filteredChannels = [];
-    } else if (searchTerm.startsWith('#')) {
+    } else if (lastMatch.startsWith('#')) {
       // Suche Kanäle vom Typ 'main' mit dem Präfix '#'
       this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
-        searchTerm,
+        lastMatch,
         ChannelTypeEnum.main
       );
       this.filteredUsers = [];
@@ -106,6 +109,8 @@ export class PopupSearchComponent {
     this.threadService.closeThread();
   }
 
+
+  // for the header searchbar
   async openDirectChannel(user_id: string): Promise<void> {
     let channel_id = this.channelService.getDirectChannelId(
       this.userService.currentUser.id,

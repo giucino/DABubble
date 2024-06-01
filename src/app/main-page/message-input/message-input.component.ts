@@ -7,11 +7,12 @@ import { Message } from '../../interfaces/message.interface';
 import { MessageService } from '../../firebase.service/message.service';
 import { CustomDialogService } from '../../services/custom-dialog.service';
 import { DialogEmojiPickerComponent } from '../channel/dialog-emoji-picker/dialog-emoji-picker.component';
+import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 
 @Component({
   selector: 'app-message-input',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, PopupSearchComponent],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss'
 })

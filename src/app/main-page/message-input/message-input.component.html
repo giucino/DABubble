@@ -1,6 +1,7 @@
 <div class="message-input-container">
     <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
     </div>
+    <app-popup-search [inputText]="messageInput"></app-popup-search>
     <!-- img & pdf preview -->
     <div class="documents-preview">
       @if(currentFile) {
