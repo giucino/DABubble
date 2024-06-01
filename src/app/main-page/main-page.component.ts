@@ -20,7 +20,7 @@ import { SharedService } from '../services/shared.service';
 })
 
 export class MainPageComponent {
-  isMenuOpen: boolean = true;
+  // sharedService.isMenuOpen: boolean = true;
 
   constructor(public userService: UserService,
     public channelService: ChannelFirebaseService,
@@ -39,7 +39,7 @@ export class MainPageComponent {
       this.toggleMenu();
     });
     if (typeof window !== 'undefined' && window.innerWidth > 768 && window.innerWidth < 1500 && this.threadService.threadOpen) {
-      this.isMenuOpen = false;
+      this.sharedService.isMenuOpen = false;
     }
 
   }
@@ -49,7 +49,8 @@ export class MainPageComponent {
 
   toggleMenu(): void {
     //opens smoothly and gives channel + thread the remaining space
-    this.isMenuOpen = !this.isMenuOpen;
+    // this.sharedService.isMenuOpen = !this.sharedService.isMenuOpen;
+    this.sharedService.isMenuOpen = !this.sharedService.isMenuOpen;
     if (this.threadService.threadOpen && window.innerWidth > 768 && window.innerWidth < 1500) {
       this.threadService.closeThread();
     }
@@ -60,20 +61,20 @@ export class MainPageComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
     if (typeof window !== 'undefined') {
-    if (event.target.innerWidth < 1200 && event.target.innerWidth > 768 && this.isMenuOpen) {
-      this.isMenuOpen = false;
+    if (event.target.innerWidth < 1200 && event.target.innerWidth > 768 && this.sharedService.isMenuOpen) {
+      this.sharedService.isMenuOpen = false;
       this.sharedService.showMobileDiv();
-    } if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && !this.isMenuOpen) {
+    } if (event.target.innerWidth < 1500 && event.target.innerWidth > 768 && !this.sharedService.isMenuOpen) {
       //nothing
     }
     if (event.target.innerWidth < 768) {
       //nothing
     } if (event.target.innerWidth > 1200 && event.target.innerWidth < 1500 && this.threadService.threadOpen) {
-      this.isMenuOpen = false;
+      this.sharedService.isMenuOpen = false;
     }
     else {
-      if (event.target.innerWidth > 1200 && !this.isMenuOpen) {
-        this.isMenuOpen = true;
+      if (event.target.innerWidth > 1200 && !this.sharedService.isMenuOpen) {
+        this.sharedService.isMenuOpen = true;
         this.sharedService.showMobileDiv();
       }
     }

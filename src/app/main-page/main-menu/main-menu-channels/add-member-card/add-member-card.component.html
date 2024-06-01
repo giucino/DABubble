@@ -62,12 +62,12 @@
     <div class="input-container">
         <div class="relative">
             <input type="text" class="name-input" placeholder="Name eingeben" [(ngModel)]="searchInput"
-                (ngModelChange)="onFilterUsers()" (focus)="onFilterUsers()">
-            @if (filteredUsers.length > 0) {
+                (ngModelChange)="onFilterUsers()" (focus)="onFilterUsers()" (blur)="showUserList = false">
+            @if (filteredUsers.length > 0 && showUserList) {
             <div class="users-list-container">
                 <div class="users-list">
                     @for(user of filteredUsers; track user.id) {
-                    <div class="user" (click)="onSelectUser(user)">
+                    <div class="user" (mousedown)="onSelectUser(user)">
                         <div class="user-img-container">
                             <img [src]="user.profile_img" alt="" class="profile-img" />
                             @if (!user.logged_in){

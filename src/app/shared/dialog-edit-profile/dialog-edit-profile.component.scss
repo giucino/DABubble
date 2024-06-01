@@ -125,13 +125,52 @@
 
 @media (max-width: 768px){
   .show-profile-dialog {
-    // width: calc(100dvw - 20px);
-    // position: relative;
-    // left: 10px;
-    // top: 15dvh;
+    max-width: 500px;
+    width: 100dvw;
     border-radius: 30px;
   }
   .editing-container{
     align-items: center !important;
+  }
+}
+@media (max-width: 500px){
+  .show-profile-dialog {
+    max-width: 95dvw;
+    width: 95dvw;
+    padding: 30px 20px;
+    gap: 35px;
+  }
+  
+}
+@media(max-width: 400px ){
+  .show-profile-dialog{
+    padding: 20px 10px;
+    .profile-head{
+      .profile-headline{
+        font-size: 20px;
+      }
+    }
+    .editing-container{
+      .email-container{
+        .input-field{
+          >input{
+            font-size: 16px;
+          }
+        }
+        .email{
+          .email-label{
+            font-size: 18px;
+          }
+        }
+      }
+    }
+    .btn-wrapper{
+      justify-content: space-between;
+      gap: unset;
+    }
+  }
+  .btn-primary, .btn-secondary{
+    padding: 10px 20px;
+    font-size: 16px;
   }
 }

@@ -8,6 +8,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 // um allgemein funktionen zwischen den komponenten zu teilen/nutzen
 export class SharedService {
 
+  isMenuOpen: boolean = true;
   private showMobileDivSubject = new Subject<void>();
   private backToChannelsSubject = new Subject<void>();
 

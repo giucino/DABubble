@@ -1,8 +1,8 @@
 <div class="main-page">
   <app-main-header></app-main-header>
   <div class="content">
-    <app-main-menu id="menu-none" class="main-menu" [class.main-menu-hidden]="!isMenuOpen"></app-main-menu>
-    <div class="channel" [class.channel-expanded]="!isMenuOpen">
+    <app-main-menu id="menu-none" class="main-menu" [class.main-menu-hidden]="!sharedService.isMenuOpen"></app-main-menu>
+    <div class="channel" [class.channel-expanded]="!sharedService.isMenuOpen">
       <router-outlet></router-outlet>
     </div>
     @if(threadService.threadOpen) {
@@ -14,9 +14,9 @@
 <!-- Overlay-button for toggling visibility -->
 <mat-card class="menu-overlay" (click)="toggleMenu()">
   <mat-card-title>
-    {{ isMenuOpen ? 'Workspace-Menü schließen' : 'Workspace-Menü öffnen' }}
+    {{ sharedService.isMenuOpen ? 'Workspace-Menü schließen' : 'Workspace-Menü öffnen' }}
 
-    @if (!isMenuOpen) {
+    @if (!sharedService.isMenuOpen) {
     <svg class="svg-color" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="8" width="16" height="16" rx="1" stroke="black" stroke-width="2" />
       <path d="M13.7144 9V25" stroke="black" stroke-width="2" />
@@ -25,7 +25,7 @@
     </svg>
     }
 
-    @if (isMenuOpen) {
+    @if (sharedService.isMenuOpen) {
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="8" width="16" height="16" rx="1" stroke="black" stroke-width="2" />
       <path d="M13.7144 9V25" stroke="black" stroke-width="2" />

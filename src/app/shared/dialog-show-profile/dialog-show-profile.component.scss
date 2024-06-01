@@ -2,7 +2,7 @@
 @import "../../../assets/scss/mixin.scss";
 
 .show-profile-dialog {
-  width: 100%;
+  width: 500px;
   max-width: 500px;
   display: inline-flex;
   flex-direction: column;
@@ -117,7 +117,7 @@
       font-weight: 500;
       line-height: 120%;
       padding-left: 50px;
-      cursor: default;
+      cursor: pointer;
     }
   }
 
@@ -136,6 +136,7 @@
 }
 .mobile-img{
   display: none;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -158,8 +159,8 @@
   }
   .mobile-img{
     display: block;
-    height: 30px;
-    width: 30px;
+    height: 24px;
+    width: 24px;
   }
 }
 @media (max-width: 500px){
@@ -169,16 +170,17 @@
     gap: 45px;
   }
 }
-// @media (max-width: 400px){
-//   .show-profile-dialog{
-//     .img-container{
-//       .profile-img{
-//         width: 150px;
-//         height: 150px;
-//       }
-//     }
-//     .name-container{
-
-//     }
-//   }
-// }
+@media (max-width: 400px){
+  .show-profile-dialog{
+    padding: 45px 20px;
+    gap: 38px;
+    .email-container{
+      .email{
+        gap: 10px;
+      }
+      .email-address{
+        padding-left: 2px;
+      }
+    }
+  }
+}

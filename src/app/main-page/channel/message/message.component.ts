@@ -195,7 +195,7 @@ export class MessageComponent {
       this.message.thread_id = newThreadId;
       this.messageService.updateMessage(this.message);
       if (window.innerWidth < 1500 ){
-        this.mainpage.isMenuOpen = false;
+        this.sharedService.isMenuOpen = false;
         // console.log('test1');
       } 
       this.threadService.openThread();
@@ -207,7 +207,7 @@ export class MessageComponent {
         thread_id
       );
       if (window.innerWidth < 1500 ){
-        this.mainpage.isMenuOpen = false;
+        this.sharedService.isMenuOpen = false;
         // console.log('test2');
       }
       this.threadService.openThread();
