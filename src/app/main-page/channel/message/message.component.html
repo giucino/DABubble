@@ -169,8 +169,7 @@
     @if(editMessage) {
         <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">
             <!-- <textarea placeholder="" [(ngModel)]="editableMessage.message.text"></textarea> -->
-            <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text= channelInput.innerText">
-                {{this.message.message.text}}
+            <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text= channelInput.innerText" [innerHTML]="message.message.text">
             </div>
             <div class="message-edit-buttons">
                 <!-- add emoticon -->

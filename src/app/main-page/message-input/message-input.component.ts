@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { UserService } from '../../firebase.service/user.service';
@@ -45,7 +45,8 @@ export class MessageInputComponent {
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public messageService: MessageService,
-    public customDialogService: CustomDialogService
+    public customDialogService: CustomDialogService,
+    private renderer: Renderer2,
   ) {}
 
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
@@ -183,7 +184,6 @@ export class MessageInputComponent {
       const atIndex = textBeforeCursor.lastIndexOf('@');
       if (atIndex !== -1) {
         const charBeforeAt = textBeforeCursor[atIndex - 1];
-        const wordAfterAt = textBeforeCursor.slice(atIndex + 1, cursorPosition);
         if (!charBeforeAt || charBeforeAt.match(/\s/)) {
           this.tagText = textBeforeCursor.slice(atIndex);
         }
@@ -198,5 +198,32 @@ export class MessageInputComponent {
     }
     return 0;
   }
+
+  handleKeyDown(event: KeyboardEvent, element : HTMLElement) {
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const container = range.startContainer;
+      
+      // Prüfen ob die Backspace- oder Delete-Taste gedrückt wurde
+      if (event.key === 'Backspace' || event.key === 'Delete') {
+        // Finden Sie das nächste Element
+        let elementToRemove = null;
+        
+        if (container.nodeType === Node.ELEMENT_NODE) {
+          elementToRemove = container as HTMLElement;
+        } else if (container.nodeType === Node.TEXT_NODE) {
+          elementToRemove = container.parentElement;
+        }
+        
+        if (elementToRemove && elementToRemove.classList.contains('tag')) {
+          event.preventDefault();
+          this.renderer.removeChild(element, elementToRemove);
+          console.log('Tag-Element entfernt:', elementToRemove);
+        }
+      }
+    }
+  }
+
   //#endregion
 }
