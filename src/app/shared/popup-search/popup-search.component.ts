@@ -53,41 +53,29 @@ export class PopupSearchComponent {
 
 
   ngOnInit() {
-    // this.subscriptions.add(
-    //   this.searchControl.valueChanges
-    //     .pipe(debounceTime(300))
-    //     .subscribe((value) => {
-    //       this.filter(value);
-    //     })
-    // );
   }
 
   ngOnChanges(changes :  SimpleChanges) {
     if (changes['inputText']) {
       this.filter(this.inputText);
-      console.log(this.inputText);
-      console.log(this.filteredUsers);
     }
   }
 
   ngOnDestroy(): void {
-    // this.subscriptions.unsubscribe();
   }
 
   filter(searchTerm: string): void {
-    let allMatches = searchTerm.match(/[@#]\w*/g);
-    let lastMatch = allMatches ? allMatches[allMatches.length - 1] : '';
-    if (lastMatch.startsWith('@')) {
+    if (searchTerm.startsWith('@')) {
       // Suche Benutzer mit dem Präfix '@'
       this.filteredUsers = this.searchService.filterUsersByPrefix(
-        lastMatch,
+        searchTerm,
         this.userService.allUsers
       );
       this.filteredChannels = [];
-    } else if (lastMatch.startsWith('#')) {
+    } else if (searchTerm.startsWith('#')) {
       // Suche Kanäle vom Typ 'main' mit dem Präfix '#'
       this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
-        lastMatch,
+        searchTerm,
         ChannelTypeEnum.main
       );
       this.filteredUsers = [];
