@@ -67,11 +67,7 @@ export class AddMemberCardComponent {
     const channelId = this.userManagementService.getCurrentChannelId();
     if (channelId) {
       this.userManagementService.updateMembers(channelId, memberIds)
-      if (window.innerWidth < 768) {
-        // this.sharedService.showMobileDiv();
-        this.sharedService.isMenuOpen = false;
-        this.sharedService.showMobileDiv();
-      }
+        this.closeMenuIfMobile();
       this.router.navigate(['/main-page/' + channelId])
         .then(() => 
           this.dialogRef.close()
@@ -82,5 +78,11 @@ export class AddMemberCardComponent {
       console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
     }
     
+  }
+  closeMenuIfMobile (){
+    if (window.innerWidth < 768) {
+      this.sharedService.isMenuOpen = false;
+      this.sharedService.showMobileDiv();
+    }
   }
 }
