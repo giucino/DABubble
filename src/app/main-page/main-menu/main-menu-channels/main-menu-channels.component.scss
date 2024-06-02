@@ -1,9 +1,16 @@
 @import "../../../../styles.scss";
 @import "../../../../assets/scss/mixin.scss";
-
-.menu-channel-container {
+.scroll-channels{
   @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
   width: 100%;
+  // max-height: 40%;
+  // overflow-y: auto;
+}
+.menu-channel-container {
+  // @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
+  @include dFlex($fd: column,$gap: 15px);
+  width: 100%;
+  // max-height: calc(100% - 100px);
 
   .menu-channel-header {
     @include dFlex($jc: space-between);

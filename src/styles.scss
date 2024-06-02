@@ -340,18 +340,33 @@ button {
   color: var(--color-gray);
 }
 
-/* scrollbar */
+/* For Webkit browsers like Chrome and Safari */
 ::-webkit-scrollbar {
   width: 8px;
+}
+::-webkit-scrollbar-button{
+  display: none;
 }
 
 ::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.02);
+  
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-light-purple);
   border-radius: 30px;
+}
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-light-purple) rgba(0, 0, 0, 0.02);
+  // scrollbar
+}
+
+/* For IE and Edge */
+* {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 /* generic classes */
