@@ -92,6 +92,14 @@ form {
     // bottom: -4px;
     margin-top: 4px;
 }
+.passErrorMsg{
+    position: absolute;
+    color: var(--color-error);
+    font-size: 14px;
+    // bottom: -4px;
+    margin-top: 4px;
+
+}
 
 
 input[type="password"] {
@@ -215,7 +223,7 @@ input[type="password"] {
     .signin-container{
         width: calc(100dvw - 32px);
         padding: 30px 16px;
-        height: auto;
+        height: 100%;
         >p{
             width: 90%;
         }
@@ -245,6 +253,11 @@ input[type="password"] {
         text-align: start;
         width: 90%;
         margin-top: 65px;
+    }
+    .passErrorMsg{
+        text-align: start;
+        width: 60%;
+        margin-top: 30px;
     }
     .next-btn-container{
         width: 90%;
@@ -293,8 +306,16 @@ input[type="password"] {
     .errorMsg{
         margin-top: 50px;
     }
+    .passErrorMsg{
+        margin-top: 25px;
+    }
     .back-to-login{
         left: 16px;
+    }
+}
+@media(max-width: 470px){
+    .passErrorMsg{
+        margin-top: 4px;
     }
 }
 @media (max-width: 420px) {
@@ -316,7 +337,7 @@ input[type="password"] {
             }
         }
     }
-    .errorMsg{
+    .errorMsg, .passErrorMsg{
         font-size: 12px;
     }
     .next-btn-container{
@@ -356,7 +377,7 @@ input[type="password"] {
     .iconOverlay{
         left: 16px
     }
-    .errorMsg{
+    .errorMsg, .passErrorMsg{
         font-size: 10px;
     }
     input[type="name"]{
