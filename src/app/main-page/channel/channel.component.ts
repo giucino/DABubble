@@ -96,23 +96,27 @@ export class ChannelComponent {
     private stateService: StateManagementService,
     public searchService: SearchService
   ) {
-    this.channelId =
-      this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
-    this.userService.getCurrentUser();
-    if (
-      userService.currentUser.last_channel &&
-      userService.currentUser.last_channel != ''
-    ) {
-      this.router.navigateByUrl(
-        '/main-page/' + this.userService.currentUser.last_channel
-      ); // open last channel
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.initUserAndChannel();
+    // this.userService.getCurrentUser();
+    // if (userService.currentUser && userService.currentUser.last_channel != '') {
+    //   this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
+    // } else {
+    //   this.router.navigateByUrl('/main-page/');
+    }
+  
+
+  async initUserAndChannel() {
+    await this.userService.getCurrentUser();
+    if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
+      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
     } else {
       this.router.navigateByUrl('/main-page/');
     }
   }
 
   ngOnInit() {
-    if (this.userService.currentUser.last_channel) {
+    if (this.userService.currentUser && this.userService.currentUser.last_channel) {
       this.openChannel();
     }
     this.subscriptions.add(
