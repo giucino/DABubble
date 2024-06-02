@@ -22,12 +22,13 @@ export class DialogEditProfileComponent implements OnInit {
       Validators.email,
     ]),
   });
+  emailExists: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditProfileComponent>,
     public userService: UserService,
     public userAuth: UserAuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userAuth.currentUser().then((user) => {
@@ -56,35 +57,55 @@ export class DialogEditProfileComponent implements OnInit {
     return this.userService.currentUser?.email == this.userAuth.googleEmail;
   }
 
-  async onSubmit(): Promise<void> {
+  // async onSubmit(): Promise<void> {
+  //   if (this.editForm.valid) {
+  //     const displayName = this.editForm.get('name')?.value || '';
+  //     const email = this.editForm.get('email')?.value || '';
+
+  //     try {
+  //       await this.userAuth.updateUserProfile({
+  //         displayName: displayName,
+  //         email: email,
+  //       });
+
+  //       const tempSubscription = this.userService
+  //       .getRealtimeUser(this.userService.currentUser.id)
+  //       .subscribe({
+  //         next: (user) => {
+  //           this.userService.currentUser = user;
+  //           tempSubscription.unsubscribe();
+  //           // console.log('subscribed', this.userService.currentUser);
+  //           // console.log('Unsubscribed after single use');
+  //           this.dialogRef.close();
+  //         },
+  //           error: (error) => {
+  //             console.error('Failed to get user data:', error);
+  //             tempSubscription.unsubscribe();
+  //           },
+  //         });
+  //       } catch (error) {
+  //         console.error('Fehler beim Aktualisieren des Benutzers:', error);
+  //       }
+  //     }
+  //   }
+
+  async onSubmit() {
     if (this.editForm.valid) {
-      const displayName = this.editForm.get('name')?.value || '';
-      const email = this.editForm.get('email')?.value || '';
-  
+      const displayName = this.editForm.get('name')?.value;
+      const email = this.editForm.get('email')?.value;
       try {
-        await this.userAuth.updateUserProfile({
-          displayName: displayName,
-          email: email,
-        });
-        
-        const tempSubscription = this.userService
-        .getRealtimeUser(this.userService.currentUser.id)
-        .subscribe({
-          next: (user) => {
-            this.userService.currentUser = user;
-            tempSubscription.unsubscribe();
-            // console.log('subscribed', this.userService.currentUser);
-            // console.log('Unsubscribed after single use');
-            this.dialogRef.close();
-          },
-            error: (error) => {
-              console.error('Failed to get user data:', error);
-              tempSubscription.unsubscribe();
-            },
-          });
-        } catch (error) {
-          console.error('Fehler beim Aktualisieren des Benutzers:', error);
+        const emailExists = await this.userAuth.emailExists(email);
+        if (emailExists) {
+          console.error('Email already exists');
+          this.emailExists = true;
+          return;
         }
+        this.emailExists = false;
+        await this.userAuth.changeCurrentUser(displayName, email);
+      }
+      catch (error) {
+        console.error('Fehler beim Aktualisieren des Benutzers:', error);
       }
     }
+  }
 }

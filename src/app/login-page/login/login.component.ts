@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { Firestore } from '@angular/fire/firestore';
@@ -24,10 +24,12 @@ export class LoginComponent {
   loginEmail: string = '';
   loginPassword: string = '';
   isLoading = false;
-  iconSrc = '/assets/img/mail.png'
+  iconSrc = '/assets/img/mail.png';
+  oobCode: string = '';
 
-  constructor(private userAuth: UserAuthService, private userService: UserService, 
-    private router: Router, private channelService: ChannelFirebaseService) { }
+  constructor(private userAuth: UserAuthService, private userService: UserService,
+    private router: Router, private channelService: ChannelFirebaseService,
+    public route: ActivatedRoute) { }
 
   ngonInit() {
     this.error = false;
@@ -39,27 +41,27 @@ export class LoginComponent {
     // loading balken true 
     this.isLoading = true;
     this.userAuth.loginUser(email, password)
-    .then(() => {
-      return Promise.all([
-        this.error = false,
-        this.userService.getUsers(),
-        this.userService.getCurrentUser(this.loginEmail),
-        this.channelService.getChannelsForCurrentUser()
-      ]);
-    })
-    .then(() => {
-      this.error = false;
-      this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
-      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
-      this.isLoading = false;
-      this.router.navigate(['/main-page']);
-    })
-    .catch((error) => {
-      console.error(error);
-      this.error = true;
-      this.isLoading = false;
-      // loading balken false
-    });
+      .then(() => {
+        return Promise.all([
+          this.error = false,
+          this.userService.getUsers(),
+          this.userService.getCurrentUser(this.loginEmail),
+          this.channelService.getChannelsForCurrentUser()
+        ]);
+      })
+      .then(() => {
+        this.error = false;
+        this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
+        localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)); // to stay logged in after reload/refresh
+        this.isLoading = false;
+        this.router.navigate(['/main-page']);
+      })
+      .catch((error) => {
+        console.error(error);
+        this.error = true;
+        this.isLoading = false;
+        // loading balken false
+      });
 
     // try {
     //   await this.userAuth.loginUser(email, password);
@@ -88,7 +90,7 @@ export class LoginComponent {
       this.isLoading = true;
       let user = this.setGoogleUser();
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail)?.id;
-  
+
       if (googleUserId) {
         // User exists, login with that user
         await Promise.all([
@@ -183,7 +185,7 @@ export class LoginComponent {
         this.userService.getCurrentUser('guest'),
         this.channelService.getChannelsForCurrentUser(),
         localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser)),
-      this.userService.updateOnlineStatus(this.userService.currentUser.id, true)
+        this.userService.updateOnlineStatus(this.userService.currentUser.id, true)
       ]);
       //then
       this.isLoading = false;
@@ -198,7 +200,7 @@ export class LoginComponent {
     // this.userService.getCurrentUser('guest');
     // localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
     // await this.channelService.getChannelsForCurrentUser();
-    
+
     // setTimeout(() => {
     //   this.userService.updateOnlineStatus(this.userService.currentUser.id, true);
     // }, 500);

@@ -69,8 +69,11 @@
             </div> -->
 
             <div class="input-field fs-18">
-                <input type="email" formControlName="email" [placeholder]="emailPlaceholder()">
+                <input type="email" formControlName="email" [placeholder]="emailPlaceholder()">                
             </div>
+            @if (emailExists) {
+                <p class="errorMsg">Email existiert bereits</p>
+            }
             
         </div>
     </div>

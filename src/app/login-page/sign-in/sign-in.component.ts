@@ -38,6 +38,9 @@ export class SignInComponent {
 
   ngonInit() {
     this.userService.getUsers();
+    if (window.innerWidth < 630) {
+      this.checkbox.checked = true;
+    }
   }
 
 

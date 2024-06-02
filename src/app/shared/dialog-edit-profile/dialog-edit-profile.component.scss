@@ -123,6 +123,12 @@
   gap: 45px;
 }
 
+.errorMsg{
+  color: var(--color-error);
+  font-size: 16px;
+  font-weight: 500;
+
+}
 @media (max-width: 768px){
   .show-profile-dialog {
     max-width: 500px;

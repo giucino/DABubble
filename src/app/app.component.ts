@@ -39,6 +39,9 @@ export class AppComponent {
     
     this.userAuth.checkAuth().then(isLoggedIn => {
       if (isLoggedIn) {
+        if (this.router.url.includes('/reset-password')){
+          return;
+        }
         this.userService.getUsers();
         this.userService.getCurrentUser();
         setTimeout(() => {
@@ -48,16 +51,18 @@ export class AppComponent {
           if (this.channelService.currentChannel.active_members.includes(this.userService.currentUser.id)) { // falls user in den channel  darf ändern
             this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
             
-          } else { // for all channels includes user id show channel[0] irgendwie so
+          } else { 
             this.router.navigate(['/main-page']);
           }
         }
-        // }, 500);
 
       } if (!isLoggedIn) {
         if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
           return;
-        } else {
+        } if (this.router.url.includes('/login-page/login')) {
+          return;
+        }
+        else {
         this.userAuth.logout();
         this.router.navigate(['/login-page/login']);
         }

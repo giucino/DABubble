@@ -2,10 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
+  applyActionCode,
+  checkActionCode,
   confirmPasswordReset,
   getAuth,
   sendPasswordResetEmail,
   signInWithPopup,
+  updateEmail,
   verifyPasswordResetCode,
 } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
@@ -35,79 +38,111 @@ export class UserAuthService {
 
   constructor(public auth: Auth, public userService: UserService, private route: ActivatedRoute) { }
 
+  //#region Sign In
   async loginUser(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
+  //#region Guest
   guestLogin() {
     return signInAnonymously(this.auth);
   }
 
-  async updateUserProfile(data: {
-    displayName?: string;
-    email?: string;
-  }): Promise<void> {
+  emailExists(email: any) {
+    return fetchSignInMethodsForEmail(this.auth, email);
+  }
+
+  async changeCurrentUser(name: any, email: any){
     const user = this.auth.currentUser;
-
-    const firestoreUser: User = {
-      id: this.userService.currentUser.id || '',
-      name: data.displayName || user?.displayName || '',
-      email: user?.email || '',  // Initial setzen auf aktuelle E-Mail
-      password: '',
-      logged_in: this.userService.currentUser.logged_in || false,
-      is_typing: this.userService.currentUser.is_typing || false,
-      profile_img: this.userService.currentUser.profile_img || '',
-      last_channel: this.userService.currentUser.last_channel || '',
-      last_thread: this.userService.currentUser.last_thread || '',
-      toJSON() {
-        return {
-          id: this.id,
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          logged_in: this.logged_in,
-          is_typing: this.is_typing,
-          profile_img: this.profile_img,
-          last_channel: this.last_channel,
-          last_thread: this.last_thread,
-        };
-      },
-    };
-
-    if (data.displayName) {
-      await updateProfile(user!, { displayName: data.displayName });
-      // console.log('User profile updated successfully!', user?.displayName);
+    try{
+      await updateProfile(user!, {displayName: name});
+      await verifyBeforeUpdateEmail(user!, email);
+      await this.userService.updateUserName(this.userService.currentUser.id, name);
+      await this.userService.updateUserEmail(this.userService.currentUser.id, email);
+      this.logout();
     }
-
-    if (data.email && user?.email !== data.email) {
-      try {
-        await verifyBeforeUpdateEmail(user!, data.email);
-        console.log('Verification email sent for new email address.');
-
-        // firestoreUser.email = data.email;
-      } catch (error) {
-        console.error('Error sending verification email:', error);
-        return;
-      }
-    }
-
-    try {
-      await this.userService.updateUser(firestoreUser);
-      localStorage.setItem('currentUser', JSON.stringify(firestoreUser));
-      console.log('Firestore user updated successfully', firestoreUser);
-    } catch (error) {
-      console.error('Error updating Firestore user:', error);
+    catch(error){
+      console.error('Error updating user', error);
     }
   }
+
+  async handleActionCode(oobCode: string) {
+    const auth = getAuth();
+    try {
+      await applyActionCode(auth, oobCode);
+      const info = await checkActionCode(auth, oobCode);
+      const newEmail = info.data.email;
+      const user = auth.currentUser;
+      if (user) {
+        await updateEmail(user, newEmail!);
+      }
+    } catch (error) {
+      console.error('Error handling action code:', error);
+    }
+  }
+
+  // async updateUserProfile(data: {
+  //   displayName?: string;
+  //   email?: string;
+  // }): Promise<void> {
+  //   const user = this.auth.currentUser;
+
+  //   const firestoreUser: User = {
+  //     id: this.userService.currentUser.id || '',
+  //     name: data.displayName || user?.displayName || '',
+  //     email: user?.email || '',  // Initial setzen auf aktuelle E-Mail
+  //     password: '',
+  //     logged_in: this.userService.currentUser.logged_in || false,
+  //     is_typing: this.userService.currentUser.is_typing || false,
+  //     profile_img: this.userService.currentUser.profile_img || '',
+  //     last_channel: this.userService.currentUser.last_channel || '',
+  //     last_thread: this.userService.currentUser.last_thread || '',
+  //     toJSON() {
+  //       return {
+  //         id: this.id,
+  //         name: this.name,
+  //         email: this.email,
+  //         password: this.password,
+  //         logged_in: this.logged_in,
+  //         is_typing: this.is_typing,
+  //         profile_img: this.profile_img,
+  //         last_channel: this.last_channel,
+  //         last_thread: this.last_thread,
+  //       };
+  //     },
+  //   };
+
+  //   if (data.displayName) {
+  //     await updateProfile(user!, { displayName: data.displayName });
+  //     // console.log('User profile updated successfully!', user?.displayName);
+  //   }
+
+  //   if (data.email && user?.email !== data.email) {
+  //     try {
+  //       await verifyBeforeUpdateEmail(user!, data.email);
+  //       console.log('Verification email sent for new email address.');
+
+  //       // firestoreUser.email = data.email;
+  //     } catch (error) {
+  //       console.error('Error sending verification email:', error);
+  //       return;
+  //     }
+  //   }
+
+  //   try {
+  //     await this.userService.updateUser(firestoreUser);
+  //     localStorage.setItem('currentUser', JSON.stringify(firestoreUser));
+  //     console.log('Firestore user updated successfully', firestoreUser);
+  //   } catch (error) {
+  //     console.error('Error updating Firestore user:', error);
+  //   }
+  // }
 
   async currentUser() {
     return this.auth.currentUser;
   }
 
   logout() {
-    // if (typeof localStorage !== 'undefined' && localStorage.getItem('currentUser') !== null) {
-    //   localStorage.removeItem('currentUser');
-    // }
     return signOut(this.auth);
   }
 
@@ -156,7 +191,6 @@ export class UserAuthService {
       const auth = getAuth();
       const email = await verifyPasswordResetCode(auth, oobCode);
       await confirmPasswordReset(auth, oobCode, newPassword);
-      // console.log(`Password has been reset for ${email}`);
     } catch (error) {
       console.error('Error updating password', error);
     }

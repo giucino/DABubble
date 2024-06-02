@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -19,8 +19,9 @@ import { UserAuthService } from '../firebase.service/user.auth.service';
 export class LoginPageComponent {
   hideElement = false;
   hideExtras = false;
-  
-  constructor(private router: Router, private userAuth: UserAuthService) { 
+  oobCode: string = '';
+
+  constructor(private router: Router, private userAuth: UserAuthService, public route: ActivatedRoute) { 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -41,7 +42,20 @@ export class LoginPageComponent {
   }
 
   ngOnInit(): void {
+    if(this.router.url.includes('/login-page/email-reset')){
+      this.oobCode = this.route.snapshot.queryParams['oobCode'];
+      console.log(this.oobCode);
+        try{
+          if (this.oobCode) {
+          this.userAuth.handleActionCode(this.oobCode);
+          }
+        }
+        catch(error){
+          console.error('Error updating user', error);
+        }
+    } else {
     this.router.navigate(['login-page/login']);
+    }
   }
 
   resetUser(): void {

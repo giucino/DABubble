@@ -158,6 +158,23 @@ async getCurrentUser(email?: string): Promise<User | null> {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
+  async updateUserName(userId: string, name: string) {
+    let singleUserRef = doc(this.getUserRef(), userId);
+    await updateDoc(singleUserRef, { name: name });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.name = name;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+  async updateUserEmail(userId: string, email: string) {
+    let singleUserRef = doc(this.getUserRef(), userId);
+    await updateDoc(singleUserRef, { email: email });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.email = email;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+  }
+
   saveLastThread(userId: string, threadId: string) {
     let singleUserRef = doc(this.getUserRef(), userId);
     updateDoc(singleUserRef, { last_thread: threadId });
