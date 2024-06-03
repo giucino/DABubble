@@ -354,7 +354,8 @@ export class MessageComponent {
     let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
       const user = this.userService.allUsers.find((user) => user.id == userId);
       if (user) {
-        return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+        // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+        return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
       }
       return match;
     });

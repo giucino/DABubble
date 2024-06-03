@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { UserService } from '../../firebase.service/user.service';
@@ -18,6 +18,7 @@ import { PopupSearchComponent } from '../../shared/popup-search/popup-search.com
 })
 export class MessageInputComponent {
   @Input() usedIn: 'channel' | 'thread' = 'channel';
+  // @ViewChild('channelInput') channelInput! :ElementRef<HTMLDivElement>
 
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
@@ -47,7 +48,12 @@ export class MessageInputComponent {
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
     private renderer: Renderer2,
-  ) {}
+  ) {
+  }
+
+  // ngAfterViewInit() {
+  //   this.channelInput.nativeElement.focus();
+  // }
 
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
     if (this.messageInput != '' || this.currentFile != null) {
@@ -236,8 +242,8 @@ export class MessageInputComponent {
   }
 
   formatTagForSave(text : string) {
-    // let formattedText = text.replace(/<div class="tag" data-id="(\d+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@\w+<\/div>/g, '@$1');
-    const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
+    // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
+    const formattedText = text.replace(/`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g, '@$1');
     console.log(formattedText);
     return formattedText;
   }
@@ -252,7 +258,8 @@ export class MessageInputComponent {
     let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
       const user = this.userService.allUsers.find((user) => user.id == userId);
       if (user) {
-        return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+        // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+        return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
       }
       return match;
     });

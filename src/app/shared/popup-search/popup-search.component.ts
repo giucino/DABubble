@@ -103,7 +103,9 @@ export class PopupSearchComponent {
     // const cursorPosition = this.getSelectionPosition();
     let innerHTML = this.inputElement.innerHTML;
     if(innerHTML) {
-      let newHTML = innerHTML.replace(this.inputText, `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`);
+      // let newHTML = innerHTML.replace(this.inputText, `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`);
+      let newHTML = innerHTML.replace(this.inputText, `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`);
+      
       this.inputElement.innerHTML = newHTML;
       console.log('InnerHTML:' , newHTML);
       console.log('innerText', this.inputElement.innerText)
