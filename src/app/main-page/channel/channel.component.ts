@@ -378,7 +378,6 @@ export class ChannelComponent {
   @ViewChild(MessageInputComponent) messageInputComponent!: MessageInputComponent;
 
   async setFocus() {
-    console.log('setting focus');
     await this.messageInputComponent.setFocusOnInput();
   }
 
