@@ -7,6 +7,7 @@ import { User } from '../../interfaces/user.interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import e from 'express';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-edit-profile',
@@ -23,12 +24,25 @@ export class DialogEditProfileComponent implements OnInit {
       Validators.email,
     ]),
   });
+  avatars = [
+    'assets/img/avatar-1.jpg',
+    'assets/img/avatar-2.jpg',
+    'assets/img/avatar-3.jpg',
+    'assets/img/avatar-4.jpg',
+    'assets/img/avatar-5.jpg',
+    'assets/img/avatar-6.jpg',
+  ];
   emailExists: boolean = false;
+  changeAvatar: boolean = false;
+  thisAvatar: string = this.userService.currentUser?.profile_img; 
+  imageChanged: boolean = false;
+
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditProfileComponent>,
     public userService: UserService,
-    public userAuth: UserAuthService
+    public userAuth: UserAuthService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +71,40 @@ export class DialogEditProfileComponent implements OnInit {
 
   isEmailDisabled(): boolean {
     return this.userService.currentUser?.email == this.userAuth.googleEmail;
+  }
+
+  openAvatarDialog() {
+    this.changeAvatar = true;
+  }
+
+  closeAvatarDialog() {
+    if (this.changeAvatar) {
+      this.userService.currentUser.profile_img = this.thisAvatar; // instant change
+      this.router.navigate(['/main-page']);
+      // this.userService.unsubUsers();
+      this.changeAvatar = false;
+    }
+    
+  }
+
+  async changeUserAvatar(i : number) {
+    //set avatar
+    this.thisAvatar = this.avatars[i];
+
+    // speichern in service und localstorage
+    await this.userService.updateUserImage(this.userService.currentUser.id, this.thisAvatar);
+
+    this.imageChanged = true;
+    
+  }
+
+  async uploadAvatar(event: any) {
+    const file = event.target.files[0];
+    const imageUrl = await this.userService.uploadImage(file);
+    this.thisAvatar = imageUrl;
+    await this.userService.updateUserImage(this.userService.currentUser.id, this.thisAvatar);
+    this.closeAvatarDialog();
+    this.imageChanged = true;
   }
 
   // async onSubmit(): Promise<void> {
@@ -104,6 +152,7 @@ export class DialogEditProfileComponent implements OnInit {
     const email = this.editForm.get('email')?.value;
     if (displayName != this.userService.currentUser.name) {
       await this.userAuth.changeCurrentUser(displayName);
+      this.userService.currentUser.name = displayName; //instant change
       this.dialogRef.close();
     }
     if (email != this.userService.currentUser.email) {

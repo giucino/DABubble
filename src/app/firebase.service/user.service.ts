@@ -167,7 +167,14 @@ async getCurrentUser(email?: string): Promise<User | null> {
     let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     currentUser.email = email;
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
 
+  async updateUserImage(userId: string, image: string) {
+    let singleUserRef = doc(this.getUserRef(), userId);
+    await updateDoc(singleUserRef, { profile_img: image });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.profile_img = image;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
   saveLastThread(userId: string, threadId: string) {

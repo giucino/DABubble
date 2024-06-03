@@ -39,7 +39,7 @@
                 <div class="channel-member" [class.selected]="userService.currentUser?.id === selectedUserId"
                     (click)="openDirectChannel(userService.currentUser?.id)">
                     <div class="profile-img-container">
-                        <img [src]="userService.currentUser?.profile_img" alt="" class="profile-img">
+                        <img [src]="profileImg" alt="" class="profile-img">
                         <div class="online-status-wborder online"></div>
 
                     </div>

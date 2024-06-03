@@ -27,11 +27,21 @@
   .img-container {
     width: 100%;
     @include dFlex($fd: column, $gap: 20px);
+    position: relative;
+    &:hover {
+      background-color: rgba(0,0,0,0.1);
+      background-image: url('/assets/img/edit.png');
+      background-position: bottom right;
+      background-repeat: no-repeat;
+      background-size: 40px 40px;
+    }
 
     .profile-img {
       width: 200px;
       height: 200px;
       flex-shrink: 0;
+      cursor: pointer;
+      
     }
   }
 
@@ -114,6 +124,39 @@
     justify-content: center;
     align-items: center;
     gap: 32px;
+  }
+}
+
+.change-avatar{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 100px;
+  gap: 10px;
+  background-color: var(--color-white);
+  padding: 20px 20px 130px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--color-light-purple);
+  top: 200px;
+  .avatar-list{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    button{
+      img{
+        border-radius: 30px;
+        width: 50px;
+        height: 50px;
+        // &:hover{
+          // border: 1px solid var(--color-purple-1);
+        // }
+      }
+      
+    }  
+  }
+  .upload-container{
+    display: flex;
+    justify-content: center;
   }
 }
 
