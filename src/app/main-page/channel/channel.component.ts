@@ -102,43 +102,29 @@ export class ChannelComponent {
     
     }
     this.initUserAndChannel();
-    // this.userAuth.logout();
     }
   
 
   async initUserAndChannel() {
-    // await this.userService.getCurrentUser();
     if (this.userService.currentUser && this.userService.currentUser.last_channel == '') {
       this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
       this.router.navigateByUrl('/main-page/');
     }
     if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
       this.openChannel();
-      // this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); 
-      // await this.channelService.getCurrentChannel(this.userService.currentUser.last_channel);
-      // this.messageService.getMessagesFromChannel(this.userService.currentUser.last_channel);
     } 
     if (this.userService.currentUser &&  this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
       this.router.navigateByUrl('/main-page/');
     }
-    // if (this.userService.currentUser && this.channelId == null || this.channelId == '' || this.channelId == undefined) {
-    //   this.router.navigateByUrl('/main-page/');
-    // }
     
 
   }
 
   ngAfterViewInit() {
-    // setTimeout(() => {
       this.setFocus();
-      // console.log('set focus');
-    // }, 1500);
   }
 
   ngOnInit() {
-    // if (this.userService.currentUser && this.userService.currentUser.last_channel) {
-    //   this.openChannel();
-    // }
     this.subscriptions.add(
       this.searchControl.valueChanges
         .pipe(debounceTime(300))
@@ -146,12 +132,6 @@ export class ChannelComponent {
           this.filter(value);
         })
     );
-      // Check if the user_id of each message exists in userService.allUsers
-  // this.messageService.messages.forEach(message => {
-  //   if (!this.userService.allUsers.some(user => user.id === message.user_id)) {
-  //     message.user_id = 'deleted';
-  //   }
-  // });
   }
 
   ngOnDestroy(): void {
@@ -221,9 +201,17 @@ export class ChannelComponent {
             this.isLoading = false;
             this.setFocus();
           })
-          .catch(() => {
+      }
+      else {
+        this.isLoading = true;
+        const loadChannel = this.channelService.getCurrentChannel(this.userService.currentUser.last_channel);
+        const loadMessages = this.messageService.getMessagesFromChannel(this.userService.currentUser.last_channel);
+        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, this.userService.currentUser.last_channel); // save last channel
+        Promise.all([loadChannel, loadMessages, updateUser])
+          .then(() => {
             this.isLoading = false;
-          });
+            this.setFocus();
+          })
       }
     });
   }
