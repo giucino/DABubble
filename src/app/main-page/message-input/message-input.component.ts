@@ -155,8 +155,8 @@ export class MessageInputComponent {
 
  
 
-  setFocusOnInput() {
-    this.channelInput.nativeElement.focus();
+  async setFocusOnInput() {
+    await this.channelInput.nativeElement.focus();
   }
 
 }
