@@ -113,8 +113,11 @@ export class ChannelComponent {
       this.router.navigateByUrl('/main-page/');
     }
     if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
-      this.channelService.getCurrentChannel(this.userService.currentUser.last_channel);
       this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); 
+      await this.channelService.getCurrentChannel(this.userService.currentUser.last_channel);
+      this.messageService.getMessagesFromChannel(this.userService.currentUser.last_channel);
+      
+      // this.openChannel();
     } 
     if (this.userService.currentUser && !this.isUserInChannel()) {
       this.router.navigateByUrl('/main-page/');
