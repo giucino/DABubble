@@ -78,10 +78,10 @@
         </button>
         <img class="mobile-img" src="assets/img/edit.png" alt="" (click)="editChannelName = true">
         } @else {
-        <button class="btn-text-v3 fs-18" (click)="updateEditedChannel()" [mat-dialog-close]>
+        <button class="btn-text-v3 fs-18" (click)="updateEditedChannel()">
           Speichern
         </button>
-        <img class="mobile-img" src="assets/img/check_circle.png" alt="" (click)="updateEditedChannel()" [mat-dialog-close]>
+        <img class="mobile-img" src="assets/img/check_circle.png" alt="" (click)="updateEditedChannel()">
         }
       </div>
       <div class="channel-name">
@@ -101,6 +101,9 @@
         <input type="text" placeholder="Channel-Name" value="{{ channelService.currentChannel.name }}"
           [(ngModel)]="tempChannelName" [readOnly]="!editChannelName" />
       </div>
+      @if(channelExists){
+        <p class="errorMsg">Dieser Channel existiert bereits.</p>
+      }
     </div>
     <!-- channel description -->
     <div [ngClass]="{

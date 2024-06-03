@@ -27,6 +27,7 @@ export class DialogEditChannelComponent implements OnInit {
   tempChannelName!: string;
   tempChannelDescription!: string;
   selectedUserId: string = '';
+  channelExists: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditChannelComponent>,
@@ -36,7 +37,7 @@ export class DialogEditChannelComponent implements OnInit {
     private router: Router,
     public customDialogService: CustomDialogService,
     public messageService: MessageService
-  ) {}
+  ) { }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
@@ -48,7 +49,7 @@ export class DialogEditChannelComponent implements OnInit {
 
   openAddUserDialog(button: HTMLElement) { // anderen
     const component = DialogAddMemberMobileComponent;
-    this.customDialogService.openDialogAbsolute({button, component,position : 'mid', mobilePosition : 'bottom', maxWidth: '100dvw'});
+    this.customDialogService.openDialogAbsolute({ button, component, position: 'mid', mobilePosition: 'bottom', maxWidth: '100dvw' });
     // this.dialogRef.close();
   }
 
@@ -98,19 +99,34 @@ export class DialogEditChannelComponent implements OnInit {
   // }
 
   async updateEditedChannel(): Promise<void> {
-    this.channelService.currentChannel.name = this.tempChannelName;
-    this.channelService.currentChannel.description =
-      this.tempChannelDescription;
+
 
     try {
-      await this.channelService.updateChannel(
-        this.channelService.currentChannel
-      );
-      // console.log('Kanal erfolgreich aktualisiert', this.channelService.currentChannel);
-      this.cancelEditing();
+      if (this.duplicateChannelName()) {
+        this.channelExists = true;
+        return;
+      } else {
+        this.channelExists = false;
+        this.channelService.currentChannel.name = this.tempChannelName;
+        this.channelService.currentChannel.description = this.tempChannelDescription;
+        await this.channelService.updateChannel(
+          this.channelService.currentChannel
+        );
+        // console.log('Kanal erfolgreich aktualisiert', this.channelService.currentChannel);
+        this.cancelEditing();
+        this.dialogRef.close();
+      }
     } catch (error) {
       console.error('Fehler beim Aktualisieren des Channels:', error);
     }
+  }
+
+  duplicateChannelName(): boolean {
+    return this.channelService.channels.some(
+      (channel) =>
+        channel.name === this.tempChannelName &&
+        channel.id !== this.channelService.currentChannel.id
+    );
   }
 
   cancelEditing(): void {
@@ -134,22 +150,22 @@ export class DialogEditChannelComponent implements OnInit {
 
   async leaveChannel(): Promise<void> {
     if (!this.channelService.currentChannel || !this.channelService.currentChannel.id) {
-        console.error('Der aktuelle Kanal ist nicht definiert oder hat keine ID.');
-        return;
+      console.error('Der aktuelle Kanal ist nicht definiert oder hat keine ID.');
+      return;
     }
     try {
-        await this.channelService.removeUserFromChannel(
-            this.channelService.currentChannel.id,
-            this.userService.currentUser.id
-        );
-        this.dialogRef.close();
-        // console.log('Erfolgreich aus dem Kanal entfernt', this.channelService.currentChannel, this.userService.currentUser);
-        this.channelService.openNewChannel(this.userService.currentUser.id);
-        this.router.navigate(['/main-page/' + this.channelService.currentChannel.id]);
+      await this.channelService.removeUserFromChannel(
+        this.channelService.currentChannel.id,
+        this.userService.currentUser.id
+      );
+      this.dialogRef.close();
+      // console.log('Erfolgreich aus dem Kanal entfernt', this.channelService.currentChannel, this.userService.currentUser);
+      this.channelService.openNewChannel(this.userService.currentUser.id);
+      this.router.navigate(['/main-page/' + this.channelService.currentChannel.id]);
     } catch (error) {
-        console.error('Fehler beim Verlassen des Kanals', error);
+      console.error('Fehler beim Verlassen des Kanals', error);
     }
-}
+  }
 
 
   // leaveChannel(): void {

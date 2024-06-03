@@ -10,7 +10,10 @@
   background-color: var(--color-white);
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
 }
-
+.errorMsg{
+  color: var(--color-error);
+  font-size: 16px;
+}
 .dialog-header,
 .dialog-header-mobile {
   display: flex;
