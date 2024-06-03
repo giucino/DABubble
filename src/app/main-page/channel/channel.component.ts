@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageComponent } from './message/message.component';
 import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 import { CustomDialogService } from '../../services/custom-dialog.service';
@@ -14,7 +14,6 @@ import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.s
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
 import { MessageInputComponent } from '../message-input/message-input.component';
-import { finalize } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, Subscription } from 'rxjs';
@@ -24,6 +23,7 @@ import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
 import { StateManagementService } from '../../services/state-management.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { UserAuthService } from '../../firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-channel',
@@ -94,25 +94,32 @@ export class ChannelComponent {
     private router: Router,
     public threadService: ThreadService,
     private stateService: StateManagementService,
-    public searchService: SearchService
+    public searchService: SearchService,
+    public userAuth: UserAuthService
   ) {
-    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || ''; //get url param
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? '';
     this.initUserAndChannel();
-    // this.userService.getCurrentUser();
-    // if (userService.currentUser && userService.currentUser.last_channel != '') {
-    //   this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
-    // } else {
-    //   this.router.navigateByUrl('/main-page/');
+    // this.userAuth.logout();
     }
   
 
   async initUserAndChannel() {
-    await this.userService.getCurrentUser();
-    if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
-      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); // open last channel
-    } else {
+    // await this.userService.getCurrentUser();
+    if (this.userService.currentUser && this.userService.currentUser.last_channel == '') {
+      this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
       this.router.navigateByUrl('/main-page/');
     }
+    if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
+      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); 
+    } 
+    if (this.userService.currentUser && !this.isUserInChannel()) {
+      this.router.navigateByUrl('/main-page/');
+    }
+    // if (this.userService.currentUser && this.channelId == null || this.channelId == '' || this.channelId == undefined) {
+    //   this.router.navigateByUrl('/main-page/');
+    // }
+    
+
   }
 
   ngOnInit() {
@@ -126,6 +133,13 @@ export class ChannelComponent {
           this.filter(value);
         })
     );
+  }
+
+  isUserInChannel(): boolean {
+    if (this.userService.currentUser && this.channelService.currentChannel.members) {
+      return this.channelService.currentChannel.members.includes(this.userService.currentUser.id);
+    }
+    return false;
   }
 
   ngOnDestroy(): void {
@@ -184,19 +198,12 @@ export class ChannelComponent {
 
   openChannel() {
     this.activatedRoute.params.subscribe((params) => {
-      if (params['channelId']) {
+      if (params['channelId'] && this.isUserInChannel()) {
         this.isLoading = true;
         this.setFocus();
-        const loadChannel = this.channelService.getCurrentChannel(
-          params['channelId']
-        );
-        const loadMessages = this.messageService.getMessagesFromChannel(
-          params['channelId']
-        );
-        const updateUser = this.userService.updateLastChannel(
-          this.userService.currentUser.id,
-          params['channelId']
-        ); // save last channel
+        const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
+        const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
+        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
         // alle 3 promises müssen geladen werden + halbe.sekunde bis der loadingspinner weggeht
         Promise.all([loadChannel, loadMessages, updateUser])
           .then(() => {

@@ -6,6 +6,7 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { User } from '../../interfaces/user.interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import e from 'express';
 
 @Component({
   selector: 'app-dialog-edit-profile',
@@ -31,6 +32,7 @@ export class DialogEditProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
     this.userAuth.currentUser().then((user) => {
       if (user) {
         this.editForm.patchValue({
@@ -89,23 +91,36 @@ export class DialogEditProfileComponent implements OnInit {
   //     }
   //   }
 
+
+
+  
+   
+  //Checks if the input value is different from the current user's name and email
+  //If the input value is different, it will update the user's name and/or email
+  
   async onSubmit() {
-    if (this.editForm.valid) {
-      const displayName = this.editForm.get('name')?.value;
-      const email = this.editForm.get('email')?.value;
-      try {
-        const emailExists = await this.userAuth.emailExists(email);
-        if (emailExists) {
-          console.error('Email already exists');
-          this.emailExists = true;
-          return;
-        }
-        this.emailExists = false;
-        await this.userAuth.changeCurrentUser(displayName, email);
-      }
-      catch (error) {
-        console.error('Fehler beim Aktualisieren des Benutzers:', error);
-      }
+  if (this.editForm.valid) {
+    const displayName = this.editForm.get('name')?.value;
+    const email = this.editForm.get('email')?.value;
+    if (displayName != this.userService.currentUser.name) {
+      await this.userAuth.changeCurrentUser(displayName);
+      this.dialogRef.close();
     }
+    if (email != this.userService.currentUser.email) {
+      const emailExists = await this.userAuth.emailExists(email);
+      if (emailExists) {
+        this.emailExists = true;
+        return;
+      }
+      this.emailExists = false;
+      await this.userAuth.changeCurrentUser(email);
+      this.dialogRef.close();
+    }
+    else {
+      // this.dialogRef.close();
+      return;
+    }
+
   }
+}
 }

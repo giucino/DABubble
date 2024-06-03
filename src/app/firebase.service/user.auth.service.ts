@@ -23,8 +23,7 @@ import {
   verifyBeforeUpdateEmail,
 } from 'firebase/auth';
 import { UserService } from './user.service';
-import { User } from '../models/user';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -36,14 +35,13 @@ export class UserAuthService {
   googleEmail: any = '';
   googleProfileImg: any = '';
 
-  constructor(public auth: Auth, public userService: UserService, private route: ActivatedRoute) { }
+  constructor(public auth: Auth, public userService: UserService, private router: Router) { }
 
   //#region Sign In
   async loginUser(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  //#region Guest
   guestLogin() {
     return signInAnonymously(this.auth);
   }
@@ -52,33 +50,31 @@ export class UserAuthService {
     return fetchSignInMethodsForEmail(this.auth, email);
   }
 
-  async changeCurrentUser(name: any, email: any){
+  async changeCurrentUser(name?: any, email?: any) {
     const user = this.auth.currentUser;
-    try{
-      await updateProfile(user!, {displayName: name});
+    if (email) {
       await verifyBeforeUpdateEmail(user!, email);
-      await this.userService.updateUserName(this.userService.currentUser.id, name);
       await this.userService.updateUserEmail(this.userService.currentUser.id, email);
       this.logout();
     }
-    catch(error){
-      console.error('Error updating user', error);
+    if (name) {
+      await updateProfile(user!, { displayName: name });
+      await this.userService.updateUserName(this.userService.currentUser.id, name);
+      this.router.navigate(['/main-page']);
     }
+
   }
 
   async handleActionCode(oobCode: string) {
     const auth = getAuth();
-    try {
-      await applyActionCode(auth, oobCode);
-      const info = await checkActionCode(auth, oobCode);
-      const newEmail = info.data.email;
-      const user = auth.currentUser;
-      if (user) {
-        await updateEmail(user, newEmail!);
-      }
-    } catch (error) {
-      console.error('Error handling action code:', error);
+    await applyActionCode(auth, oobCode);
+    const info = await checkActionCode(auth, oobCode);
+    const newEmail = info.data.email;
+    const user = auth.currentUser;
+    if (user) {
+      await updateEmail(user, newEmail!);
     }
+
   }
 
   // async updateUserProfile(data: {

@@ -100,7 +100,6 @@ export class UserService implements OnDestroy {
   }
 
 async getCurrentUser(email?: string): Promise<User | null> {
-    try {
       if (typeof window !== 'undefined' && window.localStorage) {
         const storedUser = localStorage.getItem('currentUser');
         if (email) {
@@ -113,10 +112,7 @@ async getCurrentUser(email?: string): Promise<User | null> {
         return this.currentUser || null;
       }
       return null;
-    } catch (error) {
-      console.error("Error retrieving user from localStorage", error);
-      return null;
-    }
+
   }
   
   ngOnDestroy(): void {
