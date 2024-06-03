@@ -28,6 +28,7 @@ export class PopupSearchComponent {
   selectedUserId: string = '';
 
   @Input() inputText : string = '';
+  @Input() inputElement!: HTMLElement ;
 
   newDirectChannel: Channel = {
     id: '',
@@ -53,6 +54,7 @@ export class PopupSearchComponent {
 
 
   ngOnInit() {
+    console.log(this.inputElement)
   }
 
   ngOnChanges(changes :  SimpleChanges) {
@@ -97,29 +99,51 @@ export class PopupSearchComponent {
     this.threadService.closeThread();
   }
 
+  addTagLinkToText(user : User) {
+    // const cursorPosition = this.getSelectionPosition();
+    let innerHTML = this.inputElement.innerHTML;
+    if(innerHTML) {
+      let newHTML = innerHTML.replace(this.inputText, `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`);
+      this.inputElement.innerHTML = newHTML;
+      console.log('InnerHTML:' , newHTML);
+      console.log('innerText', this.inputElement.innerText)
+    }
+  }
+
+  // TODO: maybe export into service
+  getSelectionPosition(): number {
+    const selection = window.getSelection();
+    if (selection) {
+      return selection.getRangeAt(0).startOffset;
+    }
+    return 0;
+  }
+
+
+
 
   // for the header searchbar
-  async openDirectChannel(user_id: string): Promise<void> {
-    let channel_id = this.channelService.getDirectChannelId(
-      this.userService.currentUser.id,
-      user_id
-    );
-    if (channel_id != '') {
-      this.router.navigateByUrl('/main-page/' + channel_id);
-    } else {
-      channel_id = await this.createNewDirectChannel(user_id);
-      this.router.navigateByUrl('/main-page/' + channel_id);
-    }
-    this.closeThread();
-    this.stateService.setSelectedUserId(user_id);
-  }
+  // async openDirectChannel(user_id: string): Promise<void> {
+  //   let channel_id = this.channelService.getDirectChannelId(
+  //     this.userService.currentUser.id,
+  //     user_id
+  //   );
+  //   if (channel_id != '') {
+  //     this.router.navigateByUrl('/main-page/' + channel_id);
+  //   } else {
+  //     channel_id = await this.createNewDirectChannel(user_id);
+  //     this.router.navigateByUrl('/main-page/' + channel_id);
+  //   }
+  //   this.closeThread();
+  //   this.stateService.setSelectedUserId(user_id);
+  // }
 
-  async createNewDirectChannel(user_id: string) {
-    this.newDirectChannel.creator = this.userService.currentUser.id;
-    this.newDirectChannel.created_at = new Date().getTime();
-    this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
-    return await this.channelService.addChannel(this.newDirectChannel);
-  }
+  // async createNewDirectChannel(user_id: string) {
+  //   this.newDirectChannel.creator = this.userService.currentUser.id;
+  //   this.newDirectChannel.created_at = new Date().getTime();
+  //   this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
+  //   return await this.channelService.addChannel(this.newDirectChannel);
+  // }
 
 
 }

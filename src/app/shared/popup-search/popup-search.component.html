@@ -5,20 +5,20 @@
           <ul class="filtered">
             <span class="categoryName">Users:</span>
             @for(user of filteredUsers; track user.id) {
-            <li [class.selected]="user.id === selectedUserId" (click)="openDirectChannel(user.id); clearSearch()">
-              <div class="user">
-                <div class="user-img-container">
-                  <img [src]="user.profile_img" alt="" class="profile-img" />
-                  <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
+              <li [class.selected]="user.id === selectedUserId" (click)="addTagLinkToText(user)">
+                <div class="user">
+                  <div class="user-img-container">
+                    <img [src]="user.profile_img" alt="" class="profile-img" />
+                    <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
+                  </div>
+                  <div class="user-name fs-18">{{user.name}}</div>
                 </div>
-                <div class="user-name fs-18">{{user.name}}</div>
-              </div>
-            </li>
+              </li>
             }
           </ul>
           }
       
-          @if (filteredChannels.length > 0) {
+          <!-- @if (filteredChannels.length > 0) {
           <ul class="filtered">
             <span class="categoryName">Channels:</span>
             @for(channel of filteredChannels; track channel.id) {
@@ -30,7 +30,7 @@
             </li>
             }
           </ul>
-          }
+          } -->
       </div>
       
     </div>

@@ -16,11 +16,12 @@ import { ReactionService } from '../../../firebase.service/reaction.service';
 import { Reaction } from '../../../interfaces/reaction.interface';
 import { SharedService } from '../../../services/shared.service';
 import { MainPageComponent } from '../../main-page.component';
+import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, OpenProfileDirective],
+  imports: [CommonModule, FormsModule, OpenProfileDirective, SafeHtmlPipe],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
@@ -66,6 +67,7 @@ export class MessageComponent {
     public sharedService: SharedService,
     public mainpage : MainPageComponent
   ) {
+    
   }
 
   ngOnInit() {
@@ -74,7 +76,7 @@ export class MessageComponent {
     // get attachements data
     this.getAttachementsData();
     this.getReactions();
-    
+    this.message.message.text = this.formatMessageForRead(this.message.message.text);
   }
 
 
@@ -327,10 +329,10 @@ export class MessageComponent {
       this.addReaction(reaction.unicode);
     }
   }
-
+  // TODO: nicht gefundene User abfangen
   getUserName(userId : string) {
     let user = this.userService.allUsers.find((user) => user.id == userId);
-    return user.name;
+    return user?.name || 'UNKNOWN USER';
   }
 
  sortedReactionsByLastTimeUsed() {
@@ -339,5 +341,30 @@ export class MessageComponent {
     return sortedByLastTimeUsed;
   }
 
+  //#endregion
+
+
+
+  //#region formatting
+  escapeHTML(text : string) {
+    return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  formatTagForRead(text:  string) {
+    let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
+      const user = this.userService.allUsers.find((user) => user.id == userId);
+      if (user) {
+        return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+      }
+      return match;
+    });
+    return formattedText;
+  }
+
+  formatMessageForRead(text : string) {
+   let formattedText = this.escapeHTML(text);
+   formattedText = this.formatTagForRead(formattedText);
+   return formattedText;
+  }
   //#endregion
 }

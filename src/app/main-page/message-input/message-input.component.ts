@@ -53,7 +53,7 @@ export class MessageInputComponent {
     if (this.messageInput != '' || this.currentFile != null) {
       // create new message and receive message id
       this.message.user_id = this.currentUser.id;
-      this.message.message.text = this.messageInput;
+      this.message.message.text = this.formatMessageForSave(channelInput.innerHTML);
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
       if (this.usedIn == 'channel')
@@ -224,6 +224,46 @@ export class MessageInputComponent {
       }
     }
   }
+
+  //#endregion
+
+  //#region Utility XSS Prevention
+
+
+
+  escapeHTML(text : string) {
+    return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  formatTagForSave(text : string) {
+    // let formattedText = text.replace(/<div class="tag" data-id="(\d+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@\w+<\/div>/g, '@$1');
+    const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
+    console.log(formattedText);
+    return formattedText;
+  }
+
+  formatMessageForSave(text : string) {
+    let formattedText = this.formatTagForSave(text);
+    return this.escapeHTML(formattedText);
+    // return message.message.text.replace(/<span class="tag" data-id="(\d+)">@\w+<\/span>/g, '@$1');
+  }
+
+  formatTagForRead(text:  string) {
+    let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
+      const user = this.userService.allUsers.find((user) => user.id == userId);
+      if (user) {
+        return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+      }
+      return match;
+    });
+    return formattedText;
+  }
+
+  formatMessageForRead(text : string) {
+   let formattedText = this.escapeHTML(text);
+   formattedText = this.formatTagForRead(formattedText);
+  }
+
 
   //#endregion
 }
