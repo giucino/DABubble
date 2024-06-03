@@ -99,27 +99,23 @@ export class DialogEditChannelComponent implements OnInit {
   // }
 
   async updateEditedChannel(): Promise<void> {
-
-
-    try {
       if (this.duplicateChannelName()) {
         this.channelExists = true;
         return;
       } else {
-        this.channelExists = false;
-        this.channelService.currentChannel.name = this.tempChannelName;
-        this.channelService.currentChannel.description = this.tempChannelDescription;
-        await this.channelService.updateChannel(
-          this.channelService.currentChannel
-        );
-        // console.log('Kanal erfolgreich aktualisiert', this.channelService.currentChannel);
-        this.cancelEditing();
-        this.dialogRef.close();
+        this.changeChannelName();
       }
-    } catch (error) {
-      console.error('Fehler beim Aktualisieren des Channels:', error);
-    }
   }
+
+  async changeChannelName(): Promise<void> {
+    this.channelExists = false;
+    this.channelService.currentChannel.name = this.tempChannelName;
+    this.channelService.currentChannel.description = this.tempChannelDescription;
+    await this.channelService.updateChannel(this.channelService.currentChannel);
+    this.cancelEditing();
+    this.dialogRef.close();
+  }
+
 
   duplicateChannelName(): boolean {
     return this.channelService.channels.some(
