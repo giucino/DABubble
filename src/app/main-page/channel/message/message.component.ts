@@ -43,6 +43,7 @@ export class MessageComponent {
     total_replies: 0,
     last_reply: 0,
   };
+  deleted_img: string = 'assets/img/deleted.png';
 
   currentUser: User = this.userService.currentUser;
   currentChannel = this.channelService.currentChannel;

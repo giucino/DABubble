@@ -98,6 +98,9 @@ export class ChannelComponent {
     public userAuth: UserAuthService
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? '';
+    if (this.channelId){
+    
+    }
     this.initUserAndChannel();
     // this.userAuth.logout();
     }
@@ -110,6 +113,7 @@ export class ChannelComponent {
       this.router.navigateByUrl('/main-page/');
     }
     if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
+      this.channelService.getCurrentChannel(this.userService.currentUser.last_channel);
       this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel); 
     } 
     if (this.userService.currentUser && !this.isUserInChannel()) {
@@ -133,11 +137,21 @@ export class ChannelComponent {
           this.filter(value);
         })
     );
+      // Check if the user_id of each message exists in userService.allUsers
+  // this.messageService.messages.forEach(message => {
+  //   if (!this.userService.allUsers.some(user => user.id === message.user_id)) {
+  //     message.user_id = 'deleted';
+  //   }
+  // });
   }
 
   isUserInChannel(): boolean {
-    if (this.userService.currentUser && this.channelService.currentChannel.members) {
+    if (this.userService.currentUser) {
+      // this.channelService.getCurrentChannel(this.channelId)
+      if (this.channelService.currentChannel.members){
+      // console.log(this.channelService.currentChannel.members);
       return this.channelService.currentChannel.members.includes(this.userService.currentUser.id);
+      }
     }
     return false;
   }
@@ -179,6 +193,7 @@ export class ChannelComponent {
       this.userService.currentUser.id,
       user_id
     );
+    this.channelService.getCurrentChannel(channel_id);
     if (channel_id != '') {
       this.router.navigateByUrl('/main-page/' + channel_id);
     } else {

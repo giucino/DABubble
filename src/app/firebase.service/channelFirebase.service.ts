@@ -17,9 +17,7 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
-import { Subject } from 'rxjs';
 import { runTransaction } from 'firebase/firestore';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',

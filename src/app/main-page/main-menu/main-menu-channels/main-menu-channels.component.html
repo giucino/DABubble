@@ -58,7 +58,7 @@
         @for(channel of channelService.channels; track channel.id) {
         @if (channel.channel_type === 'main') {
 
-        <div class="menu-channel-content" [routerLink]="['/main-page' , channel.id]" (click)="closeThread()">
+        <div class="menu-channel-content" [routerLink]="['/main-page' , channel.id]">
             <!-- <div class="channel" [class.active]="channel.id === activeChannelId" (click)="selectChannel(channel.id)"> -->
             <div class="channel" [class.active]="channel.id === channelService.currentChannel.id"
                 (click)="selectChannel(channel.id)">

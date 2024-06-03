@@ -31,7 +31,6 @@ export class UserService implements OnDestroy {
   user = new User();
   currentUser: any;
   currentUserThread$ = new Subject<string>();
-
   unsubUsers;
 
   constructor() {

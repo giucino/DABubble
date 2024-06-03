@@ -1,10 +1,10 @@
 <div [ngClass]="{'message-container' : !isCurrentUser(), 'message-container-reverse' : isCurrentUser()}">
-    <img class="profile-img" [src]="messageCreator?.profile_img" alt="">
+    <img class="profile-img" [src]="messageCreator?.profile_img ?? deleted_img" alt="">
     <!-- message -->
     @if(!editMessage) {
         <div class="message-content">
             <div class="message-creator">
-                <span #profileBtn appOpenProfile [userId]="this.messageCreator?.id || ''" [button]="profileBtn" class="name fs-18">{{ this.messageCreator?.name }}</span>
+                <span #profileBtn appOpenProfile [userId]="this.messageCreator?.id || ''" [button]="profileBtn" class="name fs-18">{{ this.messageCreator?.name ?? 'gelöschter Nutzer' }}</span>
                 <span class="time fs-14">{{ getTime(this.message.created_at) }} Uhr</span>
                 @if(message.created_at != message.modified_at){<span class="edited fs-14">(Bearbeitet)</span>}
             </div>
