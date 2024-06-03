@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MessageComponent } from './message/message.component';
 import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 import { CustomDialogService } from '../../services/custom-dialog.service';
@@ -381,10 +381,16 @@ export class ChannelComponent {
     }
   }
 
+  @ViewChild(MessageInputComponent) messageInputComponent!: MessageInputComponent;
+
   setFocus() {
-    document.getElementById('channelInput')?.focus();
-    this.messageInput = '';
+    this.messageInputComponent.setFocusOnInput();
   }
+
+  // setFocus() {
+  //   document.getElementById('channelInput')?.focus();
+  //   this.messageInput = '';
+  // }
 
   updateInput(newContent: string) {
     this.messageInput = newContent;
