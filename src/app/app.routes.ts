@@ -21,12 +21,13 @@ export const routes: Routes = [
             { path: 'avatar/:id', component: AvatarComponent },
             { path: 'email-sent', component: EmailSentComponent },
             { path: 'check-email', component: CheckEmailComponent },
-            { path: 'imprint', component: ImprintComponent },
-            { path: 'privacy-policy', component: PrivacyPolicyComponent },
+
             { path: 'email-reset', component: LoginPageComponent}
         ]
     },
     { path: 'reset-password', component: ResetPasswordComponent },
+    { path: 'imprint', component: ImprintComponent },
+    { path: 'privacy-policy', component: PrivacyPolicyComponent },
 
 
     {path: 'main-page', component: MainPageComponent, children: [

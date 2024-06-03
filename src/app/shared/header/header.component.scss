@@ -1,43 +1,133 @@
-header{
+header {
     width: calc(100% - 150px);
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 75px;
-    animation: fadeIn 1s forwards 4200ms;
-    opacity: 0;
+    position: absolute;
+    top: -40px;
+    left: -30px;
+    // align-items: center;
+    // padding: 75px;
+    // animation: fadeIn 1s forwards 4200ms;
+    // opacity: 0;
 }
-.logo-login{
+
+.logo-login {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 16px;
-    
-    img{
+
+    img {
         width: 70px;
 
     }
-    p{
+
+    p {
         margin: 0;
         font-size: 40px;
     }
 }
 
-.loggedIn{
+.loggedIn {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    a{
+
+    a {
         text-decoration: none;
         color: var(--color-purple-2);
     }
 }
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
+.intro-logo-container {
+    // display: none;
+    height: 100vh;
+    width: 100dvw;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    // pointer-events: none;
+    // touch-action: none;
+
+}
+
+.intro-logo {
+    position: absolute;
+    top: var(--moveToTop);
+    left: var(--changeLeft);
+    transform: var(--changeTransform);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    max-width: 696px;
+    height: 70px;
+    font-size: var(--changeFontSize);
+    color: var(--color-black);
+
+}
+
+.intro-logo-img {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+.intro-logo-text-container {
+    width: 100%;
+    max-width: 496px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.intro-logo-text {
+    font-weight: 700;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    transform: translateX(0%);
+    // animation: revealText 1000ms forwards 1500ms;
+}
+
+.create-new-account-container {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 20px;
+    position: absolute;
+    top: 50px;
+    right: 75px;
+
+    p {
+        font-size: 18px;
+        line-height: 24.55px;
+        font-weight: 400;
     }
-    100% {
-        opacity: 1;
+
+    button {
+        font-size: 18px;
+        line-height: 21.6px;
+        font-weight: 400;
+        font-family: 'Figtree', sans-serif;
+        color: var(--color-purple-2);
+        border: 1px solid transparent;
+        padding: 10px 15px;
+
+        a {
+            text-decoration: none;
+        }
+
+        &:hover {
+            border: 1px solid var(--color-black);
+            border-radius: 20px;
+            color: var(--color-purple-1);
+        }
     }
 }
+

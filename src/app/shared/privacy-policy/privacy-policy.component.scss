@@ -1,8 +1,5 @@
 .privacy-container{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 90dvw;
     display: flex;
     flex-direction: column;
     border-radius: 30px;
@@ -20,8 +17,8 @@
 }
 .back-to-login {
     position: absolute;
-    left: 32px;
-    top: 50px;
+    left: 120px;
+    top: 200px;
     width: 40px;
     height: 40px;
 
@@ -29,5 +26,67 @@
         width: 24px !important;
         height: 24px !important;
 
+    }
+}
+
+@media (max-width: 850px){
+    .privacy-container{
+        padding: 40px 30px;
+        width: 95dvw;
+    }
+    .back-to-login{
+        left: 60px;
+    }
+}
+@media(max-width: 700px){
+    .privacy-container{
+        h1{
+            font-size: 36px;
+        }
+    }
+    .back-to-login{
+        top: 195px;
+    }
+}
+@media(max-width: 600px){
+    .privacy-container{
+        h1{
+            font-size: 30px;
+        }
+    }
+    .back-to-login{
+        left: 35px;
+        top: 190px;
+        img{
+            width: 20px !important;
+            height: 20px !important;
+        }
+        
+    }
+}
+@media (max-width: 470px){
+    .privacy-container{
+        h1{
+            font-size: 26px;
+        }
+    }
+    .back-to-login{
+        left: 26px;
+        top: 188px;
+        img{
+            width: 16px !important;
+            height: 16px !important;
+        }
+        
+    }
+}
+@media (max-width: 400px){
+    .privacy-container{
+        h1{
+            font-size: 22px;
+        }
+    }
+    .back-to-login{
+        top: 156px;
     }
 }
