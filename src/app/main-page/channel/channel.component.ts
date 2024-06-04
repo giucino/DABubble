@@ -111,6 +111,7 @@ export class ChannelComponent {
       this.router.navigateByUrl('/main-page/');
     }
     if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
+      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
       this.openChannel();
     } 
     if (this.userService.currentUser &&  this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
@@ -366,7 +367,9 @@ export class ChannelComponent {
   @ViewChild(MessageInputComponent) messageInputComponent!: MessageInputComponent;
 
   async setFocus() {
-    await this.messageInputComponent.setFocusOnInput();
+    if (this.messageInputComponent) {
+      await this.messageInputComponent.setFocusOnInput();
+    }
   }
 
   // setFocus() {
