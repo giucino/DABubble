@@ -4,7 +4,9 @@
     @if(!editMessage) {
         <div class="message-content">
             <div class="message-creator">
-                <span #profileBtn appOpenProfile [userId]="this.messageCreator?.id || ''" [button]="profileBtn" class="name fs-18">{{ this.messageCreator?.name ?? 'gelöschter Nutzer' }}</span>
+                @if (!this.messageCreator){<span class="name fs-18">gelöschter Nutzer</span>}
+                @if (this.messageCreator){<span #profileBtn appOpenProfile [userId]="this.messageCreator.id" [button]="profileBtn" class="name fs-18">{{ this.messageCreator.name }}</span>}
+                <!-- <span #profileBtn appOpenProfile [userId]="this.messageCreator?.id || ''" [button]="profileBtn" class="name fs-18">{{ this.messageCreator?.name ?? 'gelöschter Nutzer' }}</span> -->
                 <span class="time fs-14">{{ getTime(this.message.created_at) }} Uhr</span>
                 @if(message.created_at != message.modified_at){<span class="edited fs-14">(Bearbeitet)</span>}
             </div>
@@ -71,11 +73,13 @@
                                 <div class="reaction-hover-info-container">
                                     <div class="emojicon"> {{reaction.unicode}} </div>
                                     <div class="reaction-hover-info">
-                                        @for(userId of reaction.users; track userId; let i = $index) {
-                                            <div class="reaction-user fs-18">
-                                                {{getUserName(userId)}}{{(reaction.users.length > 1 && i < reaction.users.length - 1) ? ',' : ''}}
-                                            </div>
-                                        }
+                                            @for(userId of reaction.users; track userId; let i = $index) {
+                                                    <div class="reaction-user fs-18">
+                                                        {{getUserName(userId)}}{{(reaction.users.length > 1 && i < reaction.users.length - 1) ? ',' : ''}}
+                                                </div>
+                                                }
+                                    
+                                        
                                         <div class="reaction-text fs-16">{{ reaction.users.length > 1 ? 'haben reagiert'  : 'hat reagiert'}}</div>
                                     </div>
                                 </div>

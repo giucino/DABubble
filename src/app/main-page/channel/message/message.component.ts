@@ -335,7 +335,7 @@ export class MessageComponent {
 
   getUserName(userId : string) {
     let user = this.userService.allUsers.find((user) => user.id == userId);
-    return user.name;
+    return user ? user.name : 'Gelöschter Nutzer';
   }
 
  sortedReactionsByLastTimeUsed() {

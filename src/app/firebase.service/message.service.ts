@@ -9,6 +9,8 @@ import {
   where,
   query,
   orderBy,
+  deleteDoc,
+  getDocs,
 } from '@angular/fire/firestore';
 import { Message } from '../interfaces/message.interface';
 import {
@@ -224,4 +226,28 @@ export class MessageService {
         // Uh-oh, an error occurred!
       });
   }
+
+  async removeThreadMessagesFromChannel(threadId: string){
+      const q = query(this.getMessagesRef(), where('thread_id', '==', threadId));
+      const querySnapshot = await getDocs(q);
+    
+      for (let doc of querySnapshot.docs) {
+        await deleteDoc(doc.ref);
+      }
+  
+    // console.log(`Alle Nachrichten für Thread ${threadId} wurden gelöscht.`);
+  }
+
+  async removeMessagesFromEmptyChannel(channelId: string){
+    const q = query(this.getMessagesRef(), where('channel_id', '==', channelId));
+    const querySnapshot = await getDocs(q);
+  
+    for (let doc of querySnapshot.docs) {
+      await deleteDoc(doc.ref);
+    }
+  
+    // console.log(`Alle Nachrichten für Channel ${channelId} wurden gelöscht.`);
+  }
+
+
 }

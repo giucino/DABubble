@@ -130,32 +130,31 @@ export class DialogEditChannelComponent implements OnInit {
     this.editChannelDescription = false;
   }
 
-  // async leaveChannel(): Promise<void> {
-  //   try {
-  //     await this.channelService.removeUserFromChannel(
-  //       this.channelService.currentChannel.id,
-  //       this.userService.currentUser.id
-  //     );
-  //     this.dialogRef.close();
-  //     console.log('Erfolgreich aus dem Kanal entfernt', this.channelService.currentChannel, this.userService.currentUser);
-  //   }
-  //   catch (error) {
-  //     console.error('Fehler beim Verlassen des Kanals', error);
-  //   }
-  // }
-
   async leaveChannel(): Promise<void> {
     if (!this.channelService.currentChannel || !this.channelService.currentChannel.id) {
       console.error('Der aktuelle Kanal ist nicht definiert oder hat keine ID.');
       return;
     }
     try {
+      if (this.channelService.currentChannel.members.length === 1){
+        //delete reactions
+        for (let thread of this.channelService.channels) {
+          if (thread.name === this.channelService.currentChannel.name) {
+            this.messageService.removeThreadMessagesFromChannel(thread.id);
+            this.messageService.removeThreadMessagesFromChannel(this.channelService.currentChannel.id);
+            this.channelService.deleteChannel(thread.id);
+            
+          }
+        }
+        this.messageService.removeMessagesFromEmptyChannel(this.channelService.currentChannel.id);
+
+      }
       await this.channelService.removeUserFromChannel(
         this.channelService.currentChannel.id,
         this.userService.currentUser.id
       );
+      
       this.dialogRef.close();
-      // console.log('Erfolgreich aus dem Kanal entfernt', this.channelService.currentChannel, this.userService.currentUser);
       this.channelService.openNewChannel(this.userService.currentUser.id);
       this.router.navigate(['/main-page/' + this.channelService.currentChannel.id]);
     } catch (error) {
