@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, ComponentRef, ElementRef, Input, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { Message } from '../../../interfaces/message.interface';
 import { User } from '../../../interfaces/user.interface';
 import { MessageService } from '../../../firebase.service/message.service';
@@ -17,6 +17,7 @@ import { Reaction } from '../../../interfaces/reaction.interface';
 import { SharedService } from '../../../services/shared.service';
 import { MainPageComponent } from '../../main-page.component';
 import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
+import { ProfileButtonComponent } from '../../../shared/profile-button/profile-button.component';
 
 @Component({
   selector: 'app-message',
@@ -57,6 +58,9 @@ export class MessageComponent {
   unsubReactions: Function = () => {};
   reactions: Reaction[] = [];
 
+  @ViewChild('messageText') messageText!: ElementRef;
+  @ViewChild('dynamicHost', { read: ViewContainerRef}) dynamicHost!: ViewContainerRef;
+
   constructor(
     public messageService: MessageService,
     public userService: UserService,
@@ -65,9 +69,37 @@ export class MessageComponent {
     public customDialogService: CustomDialogService,
     public reactionService: ReactionService,
     public sharedService: SharedService,
-    public mainpage : MainPageComponent
+    public mainpage : MainPageComponent, // TODO: als Service
+    private renderer: Renderer2,
   ) {
     
+  }
+
+  ngAfterViewInit() {
+    this.loadDynamicComponents();
+  }
+
+  loadDynamicComponents() {
+    let container = this.messageText.nativeElement;
+
+    this.userService.allUsers.forEach(user => {
+      const regex = new RegExp(`@${user.id}`, 'g');
+      container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
+    });
+
+    // Replace placeholders with dynamic components
+    const dynamicUserElements = container.querySelectorAll('.dynamic-user');
+    dynamicUserElements.forEach((element: HTMLElement) => {
+      const userId = element.getAttribute('data-userid');
+      const userName = element.innerText;
+
+      const componentRef: ComponentRef<ProfileButtonComponent> = this.dynamicHost.createComponent(ProfileButtonComponent);
+      componentRef.instance.userId = userId!;
+      componentRef.instance.userName = userName;
+
+      this.renderer.appendChild(container, componentRef.location.nativeElement);
+      this.renderer.removeChild(container, element);
+    });
   }
 
   ngOnInit() {
@@ -76,7 +108,7 @@ export class MessageComponent {
     // get attachements data
     this.getAttachementsData();
     this.getReactions();
-    this.message.message.text = this.formatMessageForRead(this.message.message.text);
+    // this.message.message.text = this.formatMessageForRead(this.message.message.text);
   }
 
 

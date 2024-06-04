@@ -9,7 +9,8 @@
                 @if(message.created_at != message.modified_at){<span class="edited fs-14">(Bearbeitet)</span>}
             </div>
             <div class="message">
-                <div class="text" [innerHTML]="message.message.text | safeHtml"></div>
+                <div #messageText class="text" [innerHTML]="message.message.text | safeHtml"></div>
+                <ng-template #dynamicHost></ng-template>
                 @if(this.message.message.attachements) {
                     @for(attachementPath of message.message.attachements; track attachementPath) {
                         @if(attachementPath != 'deleted') {
