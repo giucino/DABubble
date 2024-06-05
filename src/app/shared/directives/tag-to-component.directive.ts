@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, ComponentRef, Directive, ElementRef, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, ComponentRef, Directive, ElementRef, HostListener, Input, Renderer2, SimpleChange, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
 import { UserService } from '../../firebase.service/user.service';
 import { ProfileButtonComponent } from '../profile-button/profile-button.component';
+import { SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
   selector: '[appTagToComponent]',
@@ -9,6 +10,8 @@ import { ProfileButtonComponent } from '../profile-button/profile-button.compone
 export class TagToComponentDirective {
 
   // @Input() dynamicHost! : ViewContainerRef;
+  @Input() message: string = '';
+  isViewInitialized : boolean = false;
 
   constructor(
     private viewContainer: ViewContainerRef,
@@ -23,11 +26,16 @@ export class TagToComponentDirective {
   ngAfterViewInit() {
     this.loadDynamicComponents();
     this.cdr.detectChanges();
+    this.isViewInitialized = true;
   }
 
   ngOnChanges() {
-    this.loadDynamicComponents();
-    this.cdr.detectChanges();
+    if(this.isViewInitialized) {
+      this.loadDynamicComponents();
+      this.cdr.detectChanges();
+      // console.log('triggered', this.message)
+    }
+
   }
 
   loadDynamicComponents() {
@@ -51,6 +59,20 @@ export class TagToComponentDirective {
       this.renderer.insertBefore(container, componentRef.location.nativeElement, element);
       this.renderer.removeChild(container, element);
     });
+  }
+
+  // TODO: move to own directive?
+  @HostListener('paste', ['$event'])
+  handlePaste(event: ClipboardEvent): void {
+    // Prevent the default paste behavior
+    event.preventDefault();
+
+    // Get the text from the clipboard
+    const clipboardData = event.clipboardData || (window as any).clipboardData;
+    const text = clipboardData.getData('text');
+
+    // Insert the text into the contenteditable div
+    document.execCommand('insertText', false, text);
   }
 
 }

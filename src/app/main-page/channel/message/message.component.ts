@@ -173,6 +173,7 @@ export class MessageComponent {
 
   updateMessage() {
     this.editableMessage.modified_at = new Date().getTime();
+    this.editableMessage.message.text = this.formatMessageForSave(this.editableMessage.message.text);
     this.messageService.updateMessage(this.editableMessage);
     this.editMessage = false;
     this.showMoreOptions = false;
@@ -389,22 +390,37 @@ export class MessageComponent {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  formatTagForRead(text:  string) {
-    let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
-      const user = this.userService.allUsers.find((user) => user.id == userId);
-      if (user) {
-        // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
-        return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
-      }
-      return match;
-    });
-    return formattedText;
-  }
+  // formatTagForRead(text:  string) {
+  //   let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
+  //     const user = this.userService.allUsers.find((user) => user.id == userId);
+  //     if (user) {
+  //       // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+  //       return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
+  //     }
+  //     return match;
+  //   });
+  //   return formattedText;
+  // }
 
   formatMessageForRead(text : string) {
    let formattedText = this.escapeHTML(text);
   //  formattedText = this.formatTagForRead(formattedText);
    return formattedText;
+  }
+
+  formatTagForSave(text : string) {
+    // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
+    // const formattedText = text.replace(/`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g, '@$1');
+    const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
+    const formattedText = text.replace(regex, '@$1');
+    // console.log(formattedText);
+    return formattedText;
+  }
+
+  formatMessageForSave(text : string) {
+    let formattedText = this.formatTagForSave(text);
+    return this.escapeHTML(formattedText);
+    // return message.message.text.replace(/<span class="tag" data-id="(\d+)">@\w+<\/span>/g, '@$1');
   }
   //#endregion
 }
