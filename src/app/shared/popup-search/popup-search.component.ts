@@ -107,8 +107,8 @@ export class PopupSearchComponent {
       let newHTML = innerHTML.replace(this.inputText, `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`);
       
       this.inputElement.innerHTML = newHTML;
-      console.log('InnerHTML:' , newHTML);
-      console.log('innerText', this.inputElement.innerText)
+      // console.log('InnerHTML:' , newHTML);
+      // console.log('innerText', this.inputElement.innerText)
     }
   }
 

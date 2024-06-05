@@ -18,11 +18,12 @@ import { SharedService } from '../../../services/shared.service';
 import { MainPageComponent } from '../../main-page.component';
 import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
 import { ProfileButtonComponent } from '../../../shared/profile-button/profile-button.component';
+import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, OpenProfileDirective, SafeHtmlPipe],
+  imports: [CommonModule, FormsModule, OpenProfileDirective, SafeHtmlPipe, TagToComponentDirective],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
@@ -58,8 +59,9 @@ export class MessageComponent {
   unsubReactions: Function = () => {};
   reactions: Reaction[] = [];
 
-  @ViewChild('messageText') messageText!: ElementRef;
-  @ViewChild('dynamicHost', { read: ViewContainerRef}) dynamicHost!: ViewContainerRef;
+  // @ViewChild('messageText') messageText!: ElementRef;
+  // @ViewChild('channelInput') channelInput!: ElementRef;
+  // @ViewChild('dynamicHost', { read: ViewContainerRef}) dynamicHost!: ViewContainerRef;
 
   constructor(
     public messageService: MessageService,
@@ -70,37 +72,40 @@ export class MessageComponent {
     public reactionService: ReactionService,
     public sharedService: SharedService,
     public mainpage : MainPageComponent, // TODO: als Service
-    private renderer: Renderer2,
+    // private renderer: Renderer2,
   ) {
     
   }
 
-  ngAfterViewInit() {
-    this.loadDynamicComponents();
-  }
+  //#region profile
+  // ngAfterViewInit() {
+  //   this.loadDynamicComponents();
+  // }
 
-  loadDynamicComponents() {
-    let container = this.messageText.nativeElement;
+  // loadDynamicComponents() {
+  //   let container = this.editMessage ? this.channelInput.nativeElement : this.messageText.nativeElement;
 
-    this.userService.allUsers.forEach(user => {
-      const regex = new RegExp(`@${user.id}`, 'g');
-      container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
-    });
+  //   this.userService.allUsers.forEach(user => {
+  //     const regex = new RegExp(`@${user.id}`, 'g');
+  //     container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
+  //   });
 
-    // Replace placeholders with dynamic components
-    const dynamicUserElements = container.querySelectorAll('.dynamic-user');
-    dynamicUserElements.forEach((element: HTMLElement) => {
-      const userId = element.getAttribute('data-userid');
-      const userName = element.innerText;
+  //   // Replace placeholders with dynamic components
+  //   const dynamicUserElements = container.querySelectorAll('.dynamic-user');
+  //   dynamicUserElements.forEach((element: HTMLElement) => {
+  //     const userId = element.getAttribute('data-userid');
+  //     const userName = element.innerText;
 
-      const componentRef: ComponentRef<ProfileButtonComponent> = this.dynamicHost.createComponent(ProfileButtonComponent);
-      componentRef.instance.userId = userId!;
-      componentRef.instance.userName = userName;
+  //     const componentRef: ComponentRef<ProfileButtonComponent> = this.dynamicHost.createComponent(ProfileButtonComponent);
+  //     componentRef.instance.userId = userId!;
+  //     componentRef.instance.userName = userName;
 
-      this.renderer.appendChild(container, componentRef.location.nativeElement);
-      this.renderer.removeChild(container, element);
-    });
-  }
+  //     this.renderer.appendChild(container, componentRef.location.nativeElement);
+  //     this.renderer.removeChild(container, element);
+  //   });
+  // }
+
+  //#endregion
 
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
@@ -116,6 +121,7 @@ export class MessageComponent {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
     this.getReactions();
+    // this.loadDynamicComponents();
   }
 
   ngOnDestroy() {

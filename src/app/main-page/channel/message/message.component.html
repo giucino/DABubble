@@ -9,8 +9,8 @@
                 @if(message.created_at != message.modified_at){<span class="edited fs-14">(Bearbeitet)</span>}
             </div>
             <div class="message">
-                <div #messageText class="text" [innerHTML]="message.message.text | safeHtml"></div>
-                <ng-template #dynamicHost></ng-template>
+                <div #messageText class="text" [innerHTML]="message.message.text | safeHtml" appTagToComponent></div>
+                <!-- <ng-template #dynamicHost></ng-template> -->
                 @if(this.message.message.attachements) {
                     @for(attachementPath of message.message.attachements; track attachementPath) {
                         @if(attachementPath != 'deleted') {
@@ -170,8 +170,9 @@
     @if(editMessage) {
         <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">
             <!-- <textarea placeholder="" [(ngModel)]="editableMessage.message.text"></textarea> -->
-            <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text= channelInput.innerText" [innerHTML]="message.message.text">
+            <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text = channelInput.innerText" [innerHTML]="message.message.text | safeHtml" appTagToComponent>
             </div>
+            <!-- <ng-template #dynamicHost></ng-template> -->
             <div class="message-edit-buttons">
                 <!-- add emoticon -->
                 <button class="btn-icon w40" (click)="openDialogEmojiPicker(channelInput)">
