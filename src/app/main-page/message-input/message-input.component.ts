@@ -174,7 +174,7 @@ export class MessageInputComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.messageInput = this.messageInput + result;
-        input.innerText = this.messageInput;
+        input.innerHTML = this.messageInput;
       }
     });
   }

@@ -113,7 +113,7 @@ export class MessageComponent {
     // get attachements data
     this.getAttachementsData();
     this.getReactions();
-    // this.message.message.text = this.formatMessageForRead(this.message.message.text);
+    this.message.message.text = this.formatMessageForRead(this.message.message.text);
   }
 
 
@@ -277,7 +277,7 @@ export class MessageComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.editableMessage.message.text += result;
-        input.innerText = this.editableMessage.message.text;
+        input.innerHTML = this.editableMessage.message.text;
       }
     });
   }
@@ -384,6 +384,7 @@ export class MessageComponent {
 
 
   //#region formatting
+  // TODO: evtl. in pipe
   escapeHTML(text : string) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
@@ -402,7 +403,7 @@ export class MessageComponent {
 
   formatMessageForRead(text : string) {
    let formattedText = this.escapeHTML(text);
-   formattedText = this.formatTagForRead(formattedText);
+  //  formattedText = this.formatTagForRead(formattedText);
    return formattedText;
   }
   //#endregion

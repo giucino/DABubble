@@ -25,9 +25,10 @@ export class TagToComponentDirective {
     this.cdr.detectChanges();
   }
 
-  // ngOnChanges() {
-  //   this.loadDynamicComponents();
-  // }
+  ngOnChanges() {
+    this.loadDynamicComponents();
+    this.cdr.detectChanges();
+  }
 
   loadDynamicComponents() {
     let container = this.elementRef.nativeElement;
@@ -47,7 +48,7 @@ export class TagToComponentDirective {
       componentRef.instance.userId = userId!;
       componentRef.instance.userName = userName;
 
-      this.renderer.appendChild(container, componentRef.location.nativeElement);
+      this.renderer.insertBefore(container, componentRef.location.nativeElement, element);
       this.renderer.removeChild(container, element);
     });
   }
