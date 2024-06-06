@@ -409,11 +409,8 @@ export class MessageComponent {
   }
 
   formatTagForSave(text : string) {
-    // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
-    // const formattedText = text.replace(/`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g, '@$1');
     const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
     const formattedText = text.replace(regex, '@$1');
-    // console.log(formattedText);
     return formattedText;
   }
 

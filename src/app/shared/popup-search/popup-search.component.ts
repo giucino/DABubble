@@ -31,14 +31,12 @@ import { CursorPositionService } from '../../services/cursor-position.service';
   styleUrl: './popup-search.component.scss',
 })
 export class PopupSearchComponent {
-  // searchControl = new FormControl();
-  // private subscriptions = new Subscription();
+
   filteredUsers: User[] = [];
   filteredChannels: Channel[] = [];
   selectedUserId: string = '';
 
   @Input() inputText: string = '';
-  // @Input() inputElement!: any ;
   @Input() inputElement!: ElementRef;
   @Input() viewContainerRef!: ViewContainerRef;
 
@@ -59,10 +57,7 @@ export class PopupSearchComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['inputText']) {
-      this.filter(this.inputText);
-      console.log('tagText', this.inputText);
-    }
+    if (changes['inputText']) this.filter(this.inputText);
   }
 
   ngOnDestroy(): void {}
@@ -91,13 +86,6 @@ export class PopupSearchComponent {
   }
 
 
-  // addTagLinkToText(user : User) {
-  //   let innerHTML = this.inputElement.innerHTML;
-  //   if(innerHTML) {
-  //     let newHTML = innerHTML.replace(this.inputText, `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`);
-  //     this.inputElement.innerHTML = newHTML;
-  //   }
-  // }
 
   addTagLinkToText(user: User, event : Event) {
     // replace inputText with HMTL Element
@@ -120,12 +108,11 @@ export class PopupSearchComponent {
       componentRef.instance.userId = userId!;
       componentRef.instance.userName = userName;
 
-      this.renderer.insertBefore(
-        container,
-        componentRef.location.nativeElement,
-        element
-      );
+      range!.setStartAfter(element); // set cursor after tag
+      this.renderer.insertBefore(container,componentRef.location.nativeElement,element);
       this.renderer.removeChild(container, element);
+      // set cursor position after tag
+      
       this.inputText = '';
     });
   }
@@ -157,55 +144,6 @@ export class PopupSearchComponent {
   }
 
 
-  // replaceRangeWithText(range: Range, newText: string) {
-  //   // Lösche den aktuellen Inhalt der Range
-  //   range.deleteContents();
-  //   // Erstelle ein Textknoten mit dem neuen Text
-  //   const textNode = document.createTextNode(newText);
-  //   // Füge den Textknoten in die Range ein
-  //   range.insertNode(textNode);
-  // }
 
 
-  // TODO: maybe export into service
-  // getSelectionPosition(element: HTMLElement): number {
-  //   const selection = window.getSelection();
-  //   if (!selection || selection.rangeCount === 0) {
-  //     return 0;
-  //   }
-  //   const range = selection.getRangeAt(0);
-  //   const preCaretRange = range.cloneRange();
-  //   let preCaretRangeSTring = preCaretRange.toString();
-  //   preCaretRange.selectNodeContents(element);
-  //   preCaretRangeSTring = preCaretRange.toString();
-  //   preCaretRange.setEnd(range.startContainer, range.startOffset);
-  //   preCaretRangeSTring = preCaretRange.toString();
-  //   let preCaretText = preCaretRange.toString();
-  //   // preCaretText = preCaretText.replace(/<div>|<\/div>|<br>/g, '');
-  //   const startOffset = preCaretText.length;
-  //   return startOffset;
-  // }
-
-  // for the header searchbar
-  // async openDirectChannel(user_id: string): Promise<void> {
-  //   let channel_id = this.channelService.getDirectChannelId(
-  //     this.userService.currentUser.id,
-  //     user_id
-  //   );
-  //   if (channel_id != '') {
-  //     this.router.navigateByUrl('/main-page/' + channel_id);
-  //   } else {
-  //     channel_id = await this.createNewDirectChannel(user_id);
-  //     this.router.navigateByUrl('/main-page/' + channel_id);
-  //   }
-  //   this.closeThread();
-  //   this.stateService.setSelectedUserId(user_id);
-  // }
-
-  // async createNewDirectChannel(user_id: string) {
-  //   this.newDirectChannel.creator = this.userService.currentUser.id;
-  //   this.newDirectChannel.created_at = new Date().getTime();
-  //   this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
-  //   return await this.channelService.addChannel(this.newDirectChannel);
-  // }
 }

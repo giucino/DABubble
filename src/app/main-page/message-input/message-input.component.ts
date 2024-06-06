@@ -263,19 +263,28 @@ export class MessageInputComponent {
 
   //#endregion
 
-  //#region Utility XSS Prevention
+  //#region Utility XSS Prevention TODO: in Service
 
   escapeHTML(text: string) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  formatTagForSave(text: string) {
+  // formatTagForSave(text: string) {
+  //   // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
+  //   const formattedText = text.replace(
+  //     /`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g,
+  //     '@$1'
+  //   );
+  //   console.log(formattedText);
+  //   return formattedText;
+  // }
+
+  formatTagForSave(text : string) {
     // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
-    const formattedText = text.replace(
-      /`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g,
-      '@$1'
-    );
-    console.log(formattedText);
+    // const formattedText = text.replace(/`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g, '@$1');
+    const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
+    const formattedText = text.replace(regex, '@$1');
+    // console.log(formattedText);
     return formattedText;
   }
 
@@ -285,21 +294,22 @@ export class MessageInputComponent {
     // return message.message.text.replace(/<span class="tag" data-id="(\d+)">@\w+<\/span>/g, '@$1');
   }
 
-  formatTagForRead(text: string) {
-    let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
-      const user = this.userService.allUsers.find((user) => user.id == userId);
-      if (user) {
-        // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
-        return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
-      }
-      return match;
-    });
-    return formattedText;
-  }
+  // formatTagForRead(text: string) {
+  //   let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
+  //     const user = this.userService.allUsers.find((user) => user.id == userId);
+  //     if (user) {
+  //       // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
+  //       return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
+  //     }
+  //     return match;
+  //   });
+  //   return formattedText;
+  // }
 
   formatMessageForRead(text: string) {
     let formattedText = this.escapeHTML(text);
-    formattedText = this.formatTagForRead(formattedText);
+    return formattedText;
+    // formattedText = this.formatTagForRead(formattedText);
   }
 
   //#endregion
