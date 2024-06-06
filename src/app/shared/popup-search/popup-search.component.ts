@@ -63,6 +63,7 @@ export class PopupSearchComponent {
   ngOnDestroy(): void {}
 
   filter(searchTerm: string): void {
+    console.log('searchterm', searchTerm)
     if (searchTerm.startsWith('@')) {
       // Suche Benutzer mit dem Präfix '@'
       this.filteredUsers = this.searchService.filterUsersByPrefix(

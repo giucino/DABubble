@@ -209,7 +209,8 @@ export class MessageInputComponent {
       const atIndex = textBeforeCursor.lastIndexOf('@');
       if (atIndex !== -1) {
         const charBeforeAt = textBeforeCursor[atIndex - 1];
-        if (!charBeforeAt || charBeforeAt.match(/\s/)) {
+        const charAfterAt = textBeforeCursor[atIndex + 1];
+        if ((!charBeforeAt || charBeforeAt.match(/\s/)) && (!charAfterAt?.match(/\s/))) {
           this.tagText = textBeforeCursor.slice(atIndex);
         }
       }
