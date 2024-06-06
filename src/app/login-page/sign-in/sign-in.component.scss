@@ -89,14 +89,12 @@ form {
     position: absolute;
     color: var(--color-error);
     font-size: 14px;
-    // bottom: -4px;
     margin-top: 4px;
 }
 .passErrorMsg{
     position: absolute;
     color: var(--color-error);
     font-size: 14px;
-    // bottom: -4px;
     margin-top: 4px;
 
 }
@@ -347,7 +345,6 @@ input[type="password"] {
         }
     }
     .back-to-login {
-        // top: 30px;
         left: 10px;
         >img{
             width: 16px !important;

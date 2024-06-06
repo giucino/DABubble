@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserCreatedSnackbarComponent } from '../../popups/user-created-snackbar/user-created-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../firebase.service/user.service';
-import { onSnapshot } from '@angular/fire/firestore';
 import { User } from '../../models/user';
 
 @Component({
@@ -27,7 +26,6 @@ export class AvatarComponent {
   selectedAvatar = this.avatars[0];
   uploadedAvatar = '';
   imageChanged: boolean = false;
-  // newUser: string | any;
   userId: string | any;
   user: User = new User();
   currentUser: any;
@@ -37,7 +35,6 @@ export class AvatarComponent {
     private userService: UserService) { 
       const navigation = this.router.getCurrentNavigation();
       this.currentUser = navigation?.extras.state?.['user'];
-      // console.log(JSON.stringify(this.currentUser, null, 2)); // endlich
     }
 
 
@@ -52,26 +49,28 @@ export class AvatarComponent {
     this.router.navigate(['/login-page/signin']);
   }
 
+
   goToLogin(){
     setTimeout(() => {
       this.router.navigate(['/login-page/login']);
     }, 2000);
-    // console.log(this.userService.currentUser.email);
   }
+
 
   async uploadAvatar(event: any) {
     const file = event.target.files[0];
     const imageUrl = await this.userService.uploadImage(file);
     this.selectedAvatar = imageUrl;
-    // console.log('Avatar uploaded');
     this.uploadedAvatar = this.selectedAvatar;
     this.imageChanged = true;
   }
+
 
   changeAvatar(i:number){
     this.selectedAvatar = this.avatars[i];
     this.imageChanged = true;
   }
+
 
   findCurrentUserId(): void {
     for (let user of this.userService.allUsers) {
@@ -84,30 +83,32 @@ export class AvatarComponent {
     }
   }
 
+
   setAvatarToUser(){
     this.findCurrentUserId();
     this.user.profile_img = this.selectedAvatar;
     this.userService.addAvatarToUser(this.currentUserId, this.selectedAvatar);
   }
 
+
   createUser(){
-    // save this.selectedAvatar to user singleuserRef
     this.setAvatarToUser();
     this.confirmPopup();
     this.triggerAnimation();
     this.goToLogin();
   }
 
+
   triggerAnimation() {
     const element = document.querySelector('.cdk-overlay-container');
     if (element) {
       element.classList.add('animate');
-  
       setTimeout(() => {
         element.classList.remove('animate');
       }, 2000);
     }
   }
+  
 
   confirmPopup(){
     this._snackBar.openFromComponent(UserCreatedSnackbarComponent, {

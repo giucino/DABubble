@@ -36,6 +36,7 @@ export class SignInComponent {
 
   }
 
+
   ngonInit() {
     this.userService.getUsers();
     if (window.innerWidth < 630) {
@@ -48,6 +49,7 @@ export class SignInComponent {
     this.router.navigate(['/login-page/login']);
   }
 
+
   checkEmail() {
     const userExists = this.userService.allUsers.some(user => user.email === this.user.email);
     if (userExists) {
@@ -56,6 +58,7 @@ export class SignInComponent {
     this.emailExists = false;
     return userExists;
   }
+
 
   async goToAvatar() {
     if (this.checkEmail()) { return; }
@@ -66,8 +69,8 @@ export class SignInComponent {
     }).then(() => {
       this.router.navigate(['/login-page/avatar'], { state: { user: this.user } });
     });
-
   }
+
 
   checkWindowWidth() {
     if (typeof window !== 'undefined') {
@@ -78,11 +81,11 @@ export class SignInComponent {
     return false;
   }
 
+
   validatePassword(password: string): boolean {
     // Mindestens 6 Zeichen, mindestens eine Großbuchstabe, eine Kleinbuchstabe und ein Sonderzeichen
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     if (!passwordRegex.test(password)) {
-
       this.passwordError = true;
       return false;
     }
@@ -90,17 +93,13 @@ export class SignInComponent {
     return true;
   }
 
+
   changeIconName(focus: boolean) {
     this.iconName = focus ? '/assets/img/person_filled_b.png' : '/assets/img/person_filled.png';
-
   }
+
 
   changeIconMail(focus: boolean) {
       this.iconMail = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
-
   }
-
 }
-
-
-

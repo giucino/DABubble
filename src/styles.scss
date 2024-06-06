@@ -163,6 +163,7 @@ button {
 
     &:disabled {
       background-color: var(--color-gray);
+      cursor: unset;
     }
   }
 
@@ -188,6 +189,7 @@ button {
       color: var(--color-gray);
       background-color: transparent;
       border-color: var(--color-gray);
+      cursor: unset;
     }
   }
 

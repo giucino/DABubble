@@ -22,19 +22,17 @@ export class ResetPasswordComponent {
     private userAuth: UserAuthService, private route: ActivatedRoute) { }
 
 
-  ngonInit(): void {
-  }
-
-
-
   goToCheckEmail() {
     this.router.navigate(['/login-page/check-email']);
   }
+
+
   returnToLogin() {
     setTimeout(() => {
       this.router.navigate(['/login-page/login']);
     }, 1000);
   }
+
 
   confirmPopup() {
     this._snackBar.openFromComponent(LoginSnackbarComponent, {
@@ -44,6 +42,7 @@ export class ResetPasswordComponent {
       direction: 'rtl',
     });
   }
+
 
   triggerAnimation() {
     const element = document.querySelector('.cdk-overlay-container');
@@ -56,10 +55,12 @@ export class ResetPasswordComponent {
     }
   }
 
+
   updateUserPassword(newPassword: string) {
     this.oobCode = this.route.snapshot.queryParams['oobCode'];
     this.userAuth.changePassword(newPassword, this.oobCode);
   }
+  
 
   changePassword(newPassword: string) {
     Promise.resolve(this.updateUserPassword(newPassword)).then(() => {

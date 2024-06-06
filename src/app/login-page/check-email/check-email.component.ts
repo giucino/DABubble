@@ -21,9 +21,11 @@ export class CheckEmailComponent {
 
   constructor(private router: Router, private _snackBar: MatSnackBar, private userAuth: UserAuthService) { }
 
+
   goToLogin(){
     this.router.navigate(['/login-page/login']);
   }
+
 
   sendPasswordResetEmail(){
     this.userAuth.resetPassword(this.resetEmail).then(() => {
@@ -36,16 +38,17 @@ export class CheckEmailComponent {
     });
   }
 
+
   triggerAnimation() {
     const element = document.querySelector('.cdk-overlay-container');
     if (element) {
       element.classList.add('animate');
-  
       setTimeout(() => {
         element.classList.remove('animate');
       }, 2000);
     }
   }
+
 
   confirmPopup(){
     this._snackBar.openFromComponent(EmailSnackbarComponent, {
@@ -55,5 +58,4 @@ export class CheckEmailComponent {
       direction: 'rtl',
     });
   }
-  
 }
