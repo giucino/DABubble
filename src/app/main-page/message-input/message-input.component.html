@@ -2,7 +2,7 @@
     <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText; checkForTag($event, channelInput)" (keyup)="checkForTag($event, channelInput)" (mouseup)="checkForTag($event, channelInput)" (keydown)="handleKeyDown($event, channelInput)" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
       <!-- <span class="tag">example</span> -->
     </div>
-    <app-popup-search [inputText]="tagText" [inputElement]="channelInput"></app-popup-search>
+    <app-popup-search [inputText]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>
     <!-- img & pdf preview -->
     <div class="documents-preview">
       @if(currentFile) {

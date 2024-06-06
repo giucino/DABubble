@@ -5,7 +5,7 @@
           <ul class="filtered">
             <span class="categoryName">Users:</span>
             @for(user of filteredUsers; track user.id) {
-              <li [class.selected]="user.id === selectedUserId" (click)="addTagLinkToText(user)">
+              <li [class.selected]="user.id === selectedUserId" (click)="addTagLinkToText(user, $event)">
                 <div class="user">
                   <div class="user-img-container">
                     <img [src]="user.profile_img" alt="" class="profile-img" />

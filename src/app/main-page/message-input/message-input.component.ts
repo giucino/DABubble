@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { UserService } from '../../firebase.service/user.service';
@@ -8,17 +15,23 @@ import { MessageService } from '../../firebase.service/message.service';
 import { CustomDialogService } from '../../services/custom-dialog.service';
 import { DialogEmojiPickerComponent } from '../channel/dialog-emoji-picker/dialog-emoji-picker.component';
 import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
+import { TagToComponentDirective } from '../../shared/directives/tag-to-component.directive';
+import { CursorPositionService } from '../../services/cursor-position.service';
 
 @Component({
   selector: 'app-message-input',
   standalone: true,
-  imports: [FormsModule, PopupSearchComponent],
+  imports: [FormsModule, PopupSearchComponent, TagToComponentDirective],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
 })
 export class MessageInputComponent {
   @Input() usedIn: 'channel' | 'thread' = 'channel';
+  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
+  @ViewChild('channelInput', { read: ViewContainerRef, static: true })
+  channelInputViewRef!: ViewContainerRef;
   // @ViewChild('channelInput') channelInput! :ElementRef<HTMLDivElement>
+
 
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
@@ -48,7 +61,11 @@ export class MessageInputComponent {
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
     private renderer: Renderer2,
-  ) {
+    public cursorPositionService : CursorPositionService,
+  ) {}
+
+  get channelInputElement(): ElementRef {
+    return this.channelInput;
   }
 
   // ngAfterViewInit() {
@@ -59,7 +76,9 @@ export class MessageInputComponent {
     if (this.messageInput != '' || this.currentFile != null) {
       // create new message and receive message id
       this.message.user_id = this.currentUser.id;
-      this.message.message.text = this.formatMessageForSave(channelInput.innerHTML);
+      this.message.message.text = this.formatMessageForSave(
+        channelInput.innerHTML
+      );
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
       if (this.usedIn == 'channel')
@@ -182,7 +201,7 @@ export class MessageInputComponent {
   //#region @/# Tag System
   checkForTag(event: Event, element: HTMLElement) {
     const text = element.innerText;
-    const cursorPosition = this.getSelectionPosition();
+    const cursorPosition = this.getSelectionPosition(element);
     const textBeforeCursor = text.slice(0, cursorPosition);
     const charBeforeCursor = textBeforeCursor[cursorPosition - 1];
     this.tagText = '';
@@ -197,31 +216,42 @@ export class MessageInputComponent {
     }
   }
 
-  getSelectionPosition(): number {
+  getSelectionPosition(element: HTMLElement): number {
     const selection = window.getSelection();
-    if (selection) {
-      return selection.getRangeAt(0).startOffset;
+    this.cursorPositionService.setLastCursorPosition(element);
+    if (!selection || selection.rangeCount === 0) {
+      return 0;
     }
-    return 0;
+  
+    const range = selection.getRangeAt(0);
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(element);
+    preCaretRange.setEnd(range.startContainer, range.startOffset);
+    let preCaretText = preCaretRange.toString();
+    // preCaretText = preCaretText.replace(/<div>|<\/div>|<br>/g, '');
+  
+    const startOffset = preCaretText.length;
+    return startOffset;
   }
 
-  handleKeyDown(event: KeyboardEvent, element : HTMLElement) {
+
+  handleKeyDown(event: KeyboardEvent, element: HTMLElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
       const container = range.startContainer;
-      
+
       // Prüfen ob die Backspace- oder Delete-Taste gedrückt wurde
       if (event.key === 'Backspace' || event.key === 'Delete') {
         // Finden Sie das nächste Element
         let elementToRemove = null;
-        
+
         if (container.nodeType === Node.ELEMENT_NODE) {
           elementToRemove = container as HTMLElement;
         } else if (container.nodeType === Node.TEXT_NODE) {
           elementToRemove = container.parentElement;
         }
-        
+
         if (elementToRemove && elementToRemove.classList.contains('tag')) {
           event.preventDefault();
           this.renderer.removeChild(element, elementToRemove);
@@ -235,26 +265,27 @@ export class MessageInputComponent {
 
   //#region Utility XSS Prevention
 
-
-
-  escapeHTML(text : string) {
+  escapeHTML(text: string) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  formatTagForSave(text : string) {
+  formatTagForSave(text: string) {
     // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
-    const formattedText = text.replace(/`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g, '@$1');
+    const formattedText = text.replace(
+      /`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g,
+      '@$1'
+    );
     console.log(formattedText);
     return formattedText;
   }
 
-  formatMessageForSave(text : string) {
+  formatMessageForSave(text: string) {
     let formattedText = this.formatTagForSave(text);
     return this.escapeHTML(formattedText);
     // return message.message.text.replace(/<span class="tag" data-id="(\d+)">@\w+<\/span>/g, '@$1');
   }
 
-  formatTagForRead(text:  string) {
+  formatTagForRead(text: string) {
     let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
       const user = this.userService.allUsers.find((user) => user.id == userId);
       if (user) {
@@ -266,11 +297,11 @@ export class MessageInputComponent {
     return formattedText;
   }
 
-  formatMessageForRead(text : string) {
-   let formattedText = this.escapeHTML(text);
-   formattedText = this.formatTagForRead(formattedText);
+  formatMessageForRead(text: string) {
+    let formattedText = this.escapeHTML(text);
+    formattedText = this.formatTagForRead(formattedText);
   }
 
-
   //#endregion
+
 }
