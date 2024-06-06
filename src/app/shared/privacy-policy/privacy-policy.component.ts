@@ -12,8 +12,8 @@ import { HeaderComponent } from '../header/header.component';
 export class PrivacyPolicyComponent {
   constructor(private router: Router) { }
 
+  
   goBack(){
     this.router.navigate(['/login-page/login']);
   }
-
 }

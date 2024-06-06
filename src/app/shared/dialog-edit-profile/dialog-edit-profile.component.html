@@ -78,14 +78,6 @@
                     </svg>
                     <div class="email-label fs-20">E-Mail-Adresse</div>
                 </div>
-                <!-- <div class="input-field fs-18">
-                @if (userService.currentUser?.email == userAuth.googleEmail) {
-                    <input type="email" formControlName="email" placeholder="Kann hier nicht bearbeitet werden" disabled>
-                }
-                @if (userService.currentUser?.email != userAuth.googleEmail){
-                    <input type="email" formControlName="email" [(ngModel)]="editableEmail" placeholder={{userService.currentUser?.email}}>
-                }
-            </div> -->
 
                 <div class="input-field fs-18">
                     <input type="email" formControlName="email" [placeholder]="emailPlaceholder()">

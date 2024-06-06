@@ -11,6 +11,8 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderComponent {
   hideElement = false;
+
+  
   constructor(
     private router: Router
   ) { 
@@ -20,6 +22,8 @@ export class HeaderComponent {
       }
     });
   }
+
+
   goToSignin() {
     this.router.navigate(['/login-page/signin']);
   }

@@ -14,14 +14,17 @@ export class StateManagementService {
     this.selectedUserId.next(null); 
   }
 
+
   setSelectedUserId(id: string) {
     this.selectedUserId.next(id);
     this.selectedChannelId.next(null);
   }
 
+
   getSelectedChannelId() {
     return this.selectedChannelId.asObservable();
   }
+  
 
   getSelectedUserId() {
     return this.selectedUserId.asObservable();

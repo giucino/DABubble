@@ -5,8 +5,22 @@ import { ChannelFirebaseService } from '../firebase.service/channelFirebase.serv
   providedIn: 'root'
 })
 export class UtilityService {
-
+  months = [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
+  ];
   constructor(private channelService: ChannelFirebaseService) { }
+
 
   convertToDate(dateAsNumber: number) {
     let date = new Date(dateAsNumber);
@@ -19,21 +33,8 @@ export class UtilityService {
     return result;
   }
 
+
   getChannelCreationTime() {
-    const months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
     let date = new Date(this.channelService.currentChannel.created_at);
     let d: number | string = date.getDate();
     let m: number | string = date.getMonth();
@@ -44,7 +45,7 @@ export class UtilityService {
     ) {
       return 'heute';
     } else {
-      return 'am' + ' ' + d + '. ' + months[m] + ' ' + y;
+      return 'am' + ' ' + d + '. ' + this.months[m] + ' ' + y;
     }
   }
 }

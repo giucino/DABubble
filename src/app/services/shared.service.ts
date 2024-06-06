@@ -16,13 +16,16 @@ export class SharedService {
   showMobileDiv$ = this.showMobileDivSubject.asObservable();
   constructor() { }
 
+  
   showMobileDiv() {
     this.showMobileDivSubject.next();
   }
 
+
   backToChannels() {
     this.backToChannelsSubject.next();         
   }
+
 
   subscribeToBackToChannels(toggleMenu: () => void): Subscription {
     return this.backToChannels$.subscribe(toggleMenu);

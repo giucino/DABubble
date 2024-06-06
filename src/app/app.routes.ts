@@ -19,14 +19,12 @@ export const routes: Routes = [
             { path: 'avatar', component: AvatarComponent },
             { path: 'avatar/:id', component: AvatarComponent },
             { path: 'check-email', component: CheckEmailComponent },
-
             { path: 'email-reset', component: LoginPageComponent}
         ]
     },
     { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'imprint', component: ImprintComponent },
     { path: 'privacy-policy', component: PrivacyPolicyComponent },
-
 
     {path: 'main-page', component: MainPageComponent, children: [
         { path: '', component: ChannelComponent},

@@ -9,9 +9,11 @@ export class ThreadService {
 
   constructor() { }
 
+  
   openThread() {
     this.threadOpen = true;
   }
+
 
   closeThread() {
     this.threadOpen = false;

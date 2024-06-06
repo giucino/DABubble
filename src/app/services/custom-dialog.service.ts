@@ -18,19 +18,21 @@ interface DialogParams {
 export class CustomDialogService {
   dialogRef: MatDialogRef<any> | null = null;
 
-  
-
-  isMobile() {
-    return window.innerWidth <= 768;
-  }
 
   constructor(public dialog: MatDialog) {}
+
 
   public openDialog(component: ComponentType<any>): MatDialogRef<any> {
     return this.dialog.open(component, {
       panelClass: 'custom-dialog',
     });
   }
+
+
+  isMobile() {
+    return window.innerWidth <= 768;
+  }
+
 
   public openDialogAbsolute(
     {button, component, position, mobilePosition, mobileButton, maxWidth} : DialogParams
@@ -51,6 +53,7 @@ export class CustomDialogService {
     }
   }
 
+
   // Funktion zum Aktualisieren der Dialogposition
   updateDialogPosition(
     button: HTMLElement,
@@ -64,6 +67,7 @@ export class CustomDialogService {
       this.dialogRef.updatePosition(positionAsJSON);
     }
   }
+
 
   getPosition(
     button: HTMLElement,
@@ -87,6 +91,7 @@ export class CustomDialogService {
     }
   }
 
+
   getMobilePosition(mobilePosition: 'mid' | 'bottom') {
     switch (mobilePosition) {
       case 'mid':
@@ -95,6 +100,7 @@ export class CustomDialogService {
         return { left: '0px', bottom: '0px' };
     }
   }
+  
 
   getPanelClass(position: 'left' | 'right' | 'mid', mobilePosition?: 'mid' | 'bottom') {
     let pannelClass = '';

@@ -17,6 +17,7 @@ export class SearchService {
     private messageService: MessageService
   ) {}
 
+
   applyFilters(searchTerm: string): {
     users: User[];
     channels: Channel[];
@@ -29,6 +30,7 @@ export class SearchService {
     };
   }
 
+
   clearFilters(): { users: User[]; channels: Channel[]; messages: Message[] } {
     return {
       users: [],
@@ -37,9 +39,11 @@ export class SearchService {
     };
   }
 
+
   private searchTerm(searchTerm: string): string {
     return searchTerm.trim().toLowerCase();
   }
+
 
   filterUsers(searchTerm: string, users: User[]): User[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
@@ -50,6 +54,7 @@ export class SearchService {
     );
   }
 
+
   filterChannels(searchTerm: string, channels: Channel[]): Channel[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
     return channels.filter((channel) =>
@@ -59,12 +64,14 @@ export class SearchService {
     );
   }
 
+
   filterMessages(searchTerm: string, messages: Message[]): Message[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
     return messages.filter((message) =>
       message.message.text.toLowerCase().includes(lowerCaseTerm)
     );
   }
+
 
   filterUsersByPrefix(prefix: string, users: User[]): User[] {
     const lowerCaseTerm = this.searchTerm(prefix.slice(1)); // Entferne das @-Zeichen
@@ -75,6 +82,7 @@ export class SearchService {
         .some((part: string) => part.toLowerCase().startsWith(lowerCaseTerm))
     );
   }
+  
 
   filterChannelsByTypeAndPrefix(
     prefix: string,

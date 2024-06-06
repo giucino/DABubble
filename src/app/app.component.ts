@@ -20,12 +20,14 @@ export class AppComponent {
   title = 'DABubble';
   timeoutId: any;
   userId: any;
+
   constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService,
     public userService: UserService, public channelService: ChannelFirebaseService) {
     if (userService.currentUser) {
       this.userId = userService.currentUser.id;
     }
   }
+
 
   @HostListener('window:unload', ['$event'])
   unloadHandler(event: Event) {
@@ -35,42 +37,54 @@ export class AppComponent {
     }
   }
 
+
   ngOnInit(): void {
-    
     this.userAuth.checkAuth().then(isLoggedIn => {
       if (isLoggedIn) {
         if (this.router.url.includes('/reset-password')){
           return;
         }
-        this.userService.getUsers();
-        this.userService.getCurrentUser();
-        setTimeout(() => {
-          localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
-        }, 500);
-        if (this.userService.currentUser) {
-          if (this.channelService.currentChannel.active_members.includes(this.userService.currentUser.id)) { // falls user in den channel  darf ändern
-            this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
-            
-          } else { 
-            this.router.navigate(['/main-page']);
-          }
-        }
-
+        this.getUserData();
+        this.setUserChannel();
       } if (!isLoggedIn) {
-        if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
-          return;
-        } if (this.router.url.includes('/login-page/login')) {
-          return;
-        }
-        else {
-        this.userAuth.logout();
-        this.router.navigate(['/login-page/login']);
-        }
+        this.checkUrls();
       }
     });
-
-
   }
+
+
+  checkUrls(){
+    if (this.router.url.includes('/reset-password?mode=action&oobCode=code') || this.router.url.includes('/reset-password')) {
+      return;
+    } if (this.router.url.includes('/login-page/login')) {
+      return;
+    }
+    else {
+    this.userAuth.logout();
+    this.router.navigate(['/login-page/login']);
+    }
+  }
+
+
+  setUserChannel() {
+    if (this.userService.currentUser) {
+      if (this.channelService.currentChannel.active_members.includes(this.userService.currentUser.id)) {
+        this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
+      } else { 
+        this.router.navigate(['/main-page']);
+      }
+    }
+  }
+
+
+  getUserData(){
+    this.userService.getUsers();
+    this.userService.getCurrentUser();
+    setTimeout(() => {
+      localStorage.setItem('currentUser', JSON.stringify(this.userService.currentUser));
+    }, 500);
+  }
+
 
   confirmPopup() {
     this._snackBar.openFromComponent(EmailSnackbarComponent, {

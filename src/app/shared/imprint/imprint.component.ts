@@ -14,8 +14,8 @@ export class ImprintComponent {
 
   constructor(private router: Router) { }
 
+  
   goBack(){
     this.router.navigate(['/login-page/login']);
   }
-
 }

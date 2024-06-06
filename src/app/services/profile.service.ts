@@ -13,11 +13,11 @@ export class ProfileService {
 
   constructor(private userService: UserService, private customDialogService: CustomDialogService) {}
 
+
   openProfile(userId: string, button: HTMLElement): void {
     const isOwnProfile = userId === this.userService.currentUser.id;
     this.setOwnProfileStatus(isOwnProfile);
     this.setViewingUserId(userId);
-
     const component = DialogShowProfileComponent;
     let userHeadButton = document.getElementById('userHead');
     if (isOwnProfile && userHeadButton) {
@@ -25,20 +25,23 @@ export class ProfileService {
     } else {
       this.customDialogService.openDialog(component);
     }
-    
   }
+
 
   setOwnProfileStatus(status: boolean): void {
     this.isOwnProfile = status;
   }
 
+
   getOwnProfileStatus(): boolean {
     return this.isOwnProfile;
   }
 
+
   setViewingUserId(userId: string | null): void {
     this.viewingUserId = userId;
   }
+  
 
   getViewingUserId(): string | null {
     return this.viewingUserId;
