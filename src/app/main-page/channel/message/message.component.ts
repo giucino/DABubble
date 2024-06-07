@@ -19,11 +19,14 @@ import { MainPageComponent } from '../../main-page.component';
 import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
 import { ProfileButtonComponent } from '../../../shared/profile-button/profile-button.component';
 import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
+import { PopupSearchComponent } from '../../../shared/popup-search/popup-search.component';
+import { CursorPositionService } from '../../../services/cursor-position.service';
+import { EditMessageComponent } from './edit-message/edit-message.component';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, OpenProfileDirective, SafeHtmlPipe, TagToComponentDirective],
+  imports: [CommonModule, FormsModule, OpenProfileDirective, SafeHtmlPipe, TagToComponentDirective, PopupSearchComponent, EditMessageComponent],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
@@ -59,9 +62,10 @@ export class MessageComponent {
   unsubReactions: Function = () => {};
   reactions: Reaction[] = [];
 
-  // @ViewChild('messageText') messageText!: ElementRef;
-  // @ViewChild('channelInput') channelInput!: ElementRef;
-  // @ViewChild('dynamicHost', { read: ViewContainerRef}) dynamicHost!: ViewContainerRef;
+  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
+  @ViewChild('channelInput', { read: ViewContainerRef, static: true })
+  channelInputViewRef!: ViewContainerRef;
+  tagText: string = '';
 
   constructor(
     public messageService: MessageService,
@@ -72,40 +76,16 @@ export class MessageComponent {
     public reactionService: ReactionService,
     public sharedService: SharedService,
     public mainpage : MainPageComponent, // TODO: als Service
-    // private renderer: Renderer2,
+    private renderer: Renderer2,
+    public cursorPositionService : CursorPositionService,
   ) {
     
   }
+  // TODO: Service
+  get channelInputElement(): ElementRef {
+    return this.channelInput;
+  }
 
-  //#region profile
-  // ngAfterViewInit() {
-  //   this.loadDynamicComponents();
-  // }
-
-  // loadDynamicComponents() {
-  //   let container = this.editMessage ? this.channelInput.nativeElement : this.messageText.nativeElement;
-
-  //   this.userService.allUsers.forEach(user => {
-  //     const regex = new RegExp(`@${user.id}`, 'g');
-  //     container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
-  //   });
-
-  //   // Replace placeholders with dynamic components
-  //   const dynamicUserElements = container.querySelectorAll('.dynamic-user');
-  //   dynamicUserElements.forEach((element: HTMLElement) => {
-  //     const userId = element.getAttribute('data-userid');
-  //     const userName = element.innerText;
-
-  //     const componentRef: ComponentRef<ProfileButtonComponent> = this.dynamicHost.createComponent(ProfileButtonComponent);
-  //     componentRef.instance.userId = userId!;
-  //     componentRef.instance.userName = userName;
-
-  //     this.renderer.appendChild(container, componentRef.location.nativeElement);
-  //     this.renderer.removeChild(container, element);
-  //   });
-  // }
-
-  //#endregion
 
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
@@ -115,13 +95,14 @@ export class MessageComponent {
     this.getReactions();
     this.message.message.text = this.formatMessageForRead(this.message.message.text);
   }
+  
 
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
     this.getReactions();
-    // this.loadDynamicComponents();
+
   }
 
   ngOnDestroy() {
@@ -171,13 +152,13 @@ export class MessageComponent {
     return i;
   }
 
-  updateMessage() {
-    this.editableMessage.modified_at = new Date().getTime();
-    this.editableMessage.message.text = this.formatMessageForSave(this.editableMessage.message.text);
-    this.messageService.updateMessage(this.editableMessage);
-    this.editMessage = false;
-    this.showMoreOptions = false;
-  }
+  // updateMessage() {
+  //   this.editableMessage.modified_at = new Date().getTime();
+  //   this.editableMessage.message.text = this.formatMessageForSave(this.editableMessage.message.text);
+  //   this.messageService.updateMessage(this.editableMessage);
+  //   this.editMessage = false;
+  //   this.showMoreOptions = false;
+  // }
 
   getTimeDifferenceForLastReply(dateAsNumber: number) {
     let currentDate = new Date().getTime();
@@ -270,6 +251,11 @@ export class MessageComponent {
   }
 
   /* Edit Message */
+
+  closeEdit() {
+    this.editMessage = false;
+    this.showMoreOptions = false;
+  }
 
   /* Dialog Emoji Picker */
   openDialogEmojiPicker(input: HTMLDivElement) {
@@ -408,16 +394,80 @@ export class MessageComponent {
    return formattedText;
   }
 
-  formatTagForSave(text : string) {
-    const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
-    const formattedText = text.replace(regex, '@$1');
-    return formattedText;
-  }
+  // formatTagForSave(text : string) {
+  //   const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
+  //   const formattedText = text.replace(regex, '@$1');
+  //   return formattedText;
+  // }
 
-  formatMessageForSave(text : string) {
-    let formattedText = this.formatTagForSave(text);
-    return this.escapeHTML(formattedText);
-    // return message.message.text.replace(/<span class="tag" data-id="(\d+)">@\w+<\/span>/g, '@$1');
-  }
+  // formatMessageForSave(text : string) {
+  //   let formattedText = this.formatTagForSave(text);
+  //   return this.escapeHTML(formattedText);
+  // }
+  //#endregion
+
+
+  //#region  @/# Tag System
+  // checkForTag(element: HTMLElement) {
+  //   const text = element.innerText;
+  //   const cursorPosition = this.getSelectionPosition(element);
+  //   const textBeforeCursor = text.slice(0, cursorPosition);
+  //   const charBeforeCursor = textBeforeCursor[cursorPosition - 1];
+  //   this.tagText = '';
+  //   if (charBeforeCursor && !/\s/.test(charBeforeCursor)) {
+  //     const atIndex = textBeforeCursor.lastIndexOf('@');
+  //     if (atIndex !== -1) {
+  //       const charBeforeAt = textBeforeCursor[atIndex - 1];
+  //       const charAfterAt = textBeforeCursor[atIndex + 1];
+  //       if ((!charBeforeAt || charBeforeAt.match(/\s/)) && (!charAfterAt?.match(/\s/))) {
+  //         this.tagText = textBeforeCursor.slice(atIndex);
+  //       }
+  //     }
+  //   }
+  // }
+
+  // getSelectionPosition(element: HTMLElement): number {
+  //   const selection = window.getSelection();
+  //   this.cursorPositionService.setLastCursorPosition(element);
+  //   if (!selection || selection.rangeCount === 0) {
+  //     return 0;
+  //   }
+  
+  //   const range = selection.getRangeAt(0);
+  //   const preCaretRange = range.cloneRange();
+  //   preCaretRange.selectNodeContents(element);
+  //   preCaretRange.setEnd(range.startContainer, range.startOffset);
+  //   let preCaretText = preCaretRange.toString();
+  
+  //   const startOffset = preCaretText.length;
+  //   return startOffset;
+  // }
+
+
+  // handleKeyDown(event: KeyboardEvent, element: HTMLElement) {
+  //   const selection = window.getSelection();
+  //   if (selection && selection.rangeCount > 0) {
+  //     const range = selection.getRangeAt(0);
+  //     const container = range.startContainer;
+
+  //     // Prüfen ob die Backspace- oder Delete-Taste gedrückt wurde
+  //     if (event.key === 'Backspace' || event.key === 'Delete') {
+  //       // Finden Sie das nächste Element
+  //       let elementToRemove = null;
+
+  //       if (container.nodeType === Node.ELEMENT_NODE) {
+  //         elementToRemove = container as HTMLElement;
+  //       } else if (container.nodeType === Node.TEXT_NODE) {
+  //         elementToRemove = container.parentElement;
+  //       }
+
+  //       if (elementToRemove && elementToRemove.classList.contains('tag')) {
+  //         event.preventDefault();
+  //         this.renderer.removeChild(element, elementToRemove);
+  //         console.log('Tag-Element entfernt:', elementToRemove);
+  //       }
+  //     }
+  //   }
+  // }
   //#endregion
 }

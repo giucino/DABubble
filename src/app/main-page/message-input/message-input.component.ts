@@ -17,6 +17,7 @@ import { DialogEmojiPickerComponent } from '../channel/dialog-emoji-picker/dialo
 import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 import { TagToComponentDirective } from '../../shared/directives/tag-to-component.directive';
 import { CursorPositionService } from '../../services/cursor-position.service';
+import { eventNames } from 'node:process';
 
 @Component({
   selector: 'app-message-input',
@@ -199,7 +200,7 @@ export class MessageInputComponent {
   }
 
   //#region @/# Tag System
-  checkForTag(event: Event, element: HTMLElement) {
+  checkForTag(element: HTMLElement) {
     const text = element.innerText;
     const cursorPosition = this.getSelectionPosition(element);
     const textBeforeCursor = text.slice(0, cursorPosition);
@@ -229,7 +230,6 @@ export class MessageInputComponent {
     preCaretRange.selectNodeContents(element);
     preCaretRange.setEnd(range.startContainer, range.startOffset);
     let preCaretText = preCaretRange.toString();
-    // preCaretText = preCaretText.replace(/<div>|<\/div>|<br>/g, '');
   
     const startOffset = preCaretText.length;
     return startOffset;
@@ -262,6 +262,60 @@ export class MessageInputComponent {
     }
   }
 
+  //#region add @ Button
+  addTag(input : HTMLElement) {
+    if(document.activeElement !== input)  this.setFocusAtTextEnd(input);
+    this.insertTag(input);
+  }
+
+  setFocusAtTextEnd(input : HTMLElement) {
+      input.focus();
+      var range = document.createRange();
+      range.selectNodeContents(input);
+      range.collapse(false);
+      var selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+  }
+
+  insertTag(input: HTMLElement) {
+    const text = input.innerText;
+    const cursorPosition = this.getSelectionPosition(input);
+    const charBeforeCursor =   text[cursorPosition - 1];
+    if(!charBeforeCursor || charBeforeCursor.match(/\s/)) {
+      this.insertAtCursor('@', input);
+    } else {
+      this.insertAtCursor(' @', input);
+    }
+    this.checkForTag(input);
+  }
+
+  insertAtCursor(text :  string, input: HTMLElement) {
+    const sel = window.getSelection();
+    // Check if there is a selection and range
+    if (sel && sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0);
+
+      // Create a text node with the text to insert
+      const textNode = document.createTextNode(text);
+
+      // Insert the text node at the current cursor position
+      range.insertNode(textNode);
+
+      // Move the cursor after the inserted text node
+      range.setStartAfter(textNode);
+      range.setEndAfter(textNode);
+
+      // Remove any selection (collapse the range)
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+  //#endregion add @ Button
+  
+
   //#endregion
 
   //#region Utility XSS Prevention TODO: in Service
@@ -270,47 +324,23 @@ export class MessageInputComponent {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // formatTagForSave(text: string) {
-  //   // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
-  //   const formattedText = text.replace(
-  //     /`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g,
-  //     '@$1'
-  //   );
-  //   console.log(formattedText);
-  //   return formattedText;
-  // }
 
   formatTagForSave(text : string) {
-    // const formattedText = text.replace(/<div class="tag" data-id="([^"]+)" contenteditable="false" style="display: inline-block; background-color: aqua;">@[^<]+<\/div>/g, '@$1');
-    // const formattedText = text.replace(/`<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="([^"]+)" [button]="profileBtn">@[^<]+<\/button>`/g, '@$1');
     const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
     const formattedText = text.replace(regex, '@$1');
-    // console.log(formattedText);
     return formattedText;
   }
+
 
   formatMessageForSave(text: string) {
     let formattedText = this.formatTagForSave(text);
     return this.escapeHTML(formattedText);
-    // return message.message.text.replace(/<span class="tag" data-id="(\d+)">@\w+<\/span>/g, '@$1');
   }
 
-  // formatTagForRead(text: string) {
-  //   let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
-  //     const user = this.userService.allUsers.find((user) => user.id == userId);
-  //     if (user) {
-  //       // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
-  //       return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
-  //     }
-  //     return match;
-  //   });
-  //   return formattedText;
-  // }
 
   formatMessageForRead(text: string) {
     let formattedText = this.escapeHTML(text);
     return formattedText;
-    // formattedText = this.formatTagForRead(formattedText);
   }
 
   //#endregion

@@ -1,6 +1,5 @@
 <div class="message-input-container">
-    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText; checkForTag($event, channelInput)" (keyup)="checkForTag($event, channelInput)" (mouseup)="checkForTag($event, channelInput)" (keydown)="handleKeyDown($event, channelInput)" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
-      <!-- <span class="tag">example</span> -->
+    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" attr.placeholder-text="{{getTextareaPlaceholderText()}}">
     </div>
     <app-popup-search [inputText]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>
     <!-- img & pdf preview -->
@@ -93,7 +92,7 @@
           </svg>
         </button>
         <!-- add tag -->
-        <button class="btn-icon w40">
+        <button class="btn-icon w40" (click)="addTag(channelInput)" (mousedown)="$event.preventDefault()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_813_12157" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
               height="24">
