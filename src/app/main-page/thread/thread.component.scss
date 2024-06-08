@@ -45,13 +45,6 @@
 }
 
 /*-- channel header - new --*/
-
-// input-container
-//   .channel-header-new {
-//       .input-container {
-//           width: 100%;
-//       }
-//   }
 .input-container {
   border: 1px solid var(--color-light-purple);
   padding: 15px 20px;
@@ -227,6 +220,11 @@ textarea {
     }
   }
 }
+@media (max-width: 1080px) {
+  .channel-container {
+    max-width: unset;
+  }
+}
 
 
 @media (max-width: 1024px) {
@@ -239,14 +237,9 @@ textarea {
 @media (max-width: 768px) {
   .channel-container {
     border-radius: 0;
-    // position: absolute;
     max-height: unset;
-    // top: 140px;
     max-width: unset;
     width: 100%;
-    // left: 0;
-    // right: 0;
-    // bottom: 0;
   }
 }
 @media (max-width: 500px){
@@ -257,7 +250,6 @@ textarea {
     padding: 10px 16px;
     width: 100%;
     position: relative;
-    // left: 20px;
     .channel-name-container{
       padding: 6px 0px;
     }

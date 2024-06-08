@@ -6,7 +6,6 @@
             <div class="message-creator">
                 @if (!this.messageCreator){<span class="name fs-18">gelöschter Nutzer</span>}
                 @if (this.messageCreator){<span #profileBtn appOpenProfile [userId]="this.messageCreator.id" [button]="profileBtn" class="name fs-18">{{ this.messageCreator.name }}</span>}
-                <!-- <span #profileBtn appOpenProfile [userId]="this.messageCreator?.id || ''" [button]="profileBtn" class="name fs-18">{{ this.messageCreator?.name ?? 'gelöschter Nutzer' }}</span> -->
                 <span class="time fs-14">{{ getTime(this.message.created_at) }} Uhr</span>
                 @if(message.created_at != message.modified_at){<span class="edited fs-14">(Bearbeitet)</span>}
             </div>
@@ -22,7 +21,7 @@
                                         <div class="file-name">{{attachementData(attachementPath).name}}</div>
                                     </div>
                                 }
-                                @else { <!-- image type -->
+                                @else {
                                         <img class="attachement-img" src="{{attachementData(attachementPath)?.url}}" alt="">
                                 }
                                 <div class="overlay">
@@ -104,13 +103,6 @@
         <div class="reaction-bar">
             @if (channelType != 'thread') {
                 @if(message.message.reactions && message.message.reactions.length > 0) {
-                    <!-- @for(reactionId of message.message.reactions; track reactionId; let index = $index) {
-                        @if(index >= message.message.reactions.length - 2) {
-                            <button class="btn-icon-v6 w40" (click)="addReaction(getReactionData(reactionId)?.unicode!)">
-                                <div class="emojicone">{{getReactionData(reactionId)?.unicode}}</div>
-                            </button>
-                        }
-                    } -->
                     @for(reaction of sortedReactionsByLastTimeUsed(); track reaction; let index = $index) {
                         @if(index < 2) {
                             <button class="btn-icon-v6 w40" (click)="addReaction(getReactionData(reaction.id)?.unicode!)">
@@ -172,7 +164,6 @@
     <!-- edit - message -->
     @if(editMessage) {
         <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">
-            <!-- <textarea placeholder="" [(ngModel)]="editableMessage.message.text"></textarea> -->
             <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text= channelInput.innerText">
                 {{this.message.message.text}}
             </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +39,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   filteredMessages: Message[] = [];
   searchControl = new FormControl();
   private subscriptions = new Subscription();
-
   newDirectChannel: Channel = {
     id: '',
     name: 'Direct Channel',
@@ -59,7 +58,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public router: Router,
     public threadService: ThreadService,
     public utilityService: UtilityService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -81,17 +80,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   filter(searchTerm: string): void {
     if (searchTerm.startsWith('@')) {
-      this.filteredUsers = this.searchService.filterUsersByPrefix(
-        searchTerm,
-        this.userService.allUsers
-      );
+      this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
       this.filteredChannels = [];
       this.filteredMessages = [];
     } else if (searchTerm.startsWith('#')) {
-      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
-        searchTerm,
-        ChannelTypeEnum.main
-      );
+      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
       this.filteredUsers = [];
       this.filteredMessages = [];
     } else if (searchTerm.length > 0) {
@@ -118,5 +111,19 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+  }
+
+
+  getChannelName(channelId: string) {
+    const channel = this.channelService.channels.find((channel) => channel.id === channelId);
+    return channel ? channel.name : '';
+  }
+
+
+  getUserImg(messageId: any) {
+    const message = this.messageService.messages.find((message) => message.id === messageId);
+    const user = this.userService.getUser(message!.user_id);
+    return user?.profile_img || 'assets/img/deleted.png';
+
   }
 }

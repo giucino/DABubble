@@ -37,6 +37,7 @@ export class DialogAddMemberMobileComponent {
     private profileService: ProfileService
   ) { }
 
+
   ngOnInit(): void {
     if (this.channelService.currentChannel && this.channelService.currentChannel.members) {
       this.selectedUsers = this.userService.getUsersByIds(this.channelService.currentChannel.members);
@@ -44,25 +45,27 @@ export class DialogAddMemberMobileComponent {
     }
   }
 
+
   onFilterUsers(): void {
     this.filteredUsers = this.userManagementService.filterUsers(this.searchInput, this.selectedUsers);
   }
+
 
   removeFilterUsers(): void {
     this.filteredUsers = [];
   }
 
+
   onSelectUser(user: User): void {
     this.selectedUsers = this.userManagementService.selectUser(this.selectedUsers, user);
-
     if (!this.newlyAddedUsers.find(u => u.id === user.id)) {
       this.newlyAddedUsers.push(user);
     }
     this.filteredUsers = this.filteredUsers.filter(u => u.id !== user.id);
-
     this.searchInput = '';
     this.onFilterUsers();
   }
+
 
   onRemoveSelectedUser(user: User): void {
     this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);
@@ -70,9 +73,9 @@ export class DialogAddMemberMobileComponent {
     this.onFilterUsers();
   }
 
+
   onUpdateMembers(): void {
     const memberIds = this.userManagementService.getMemberIds(this.selectedUsers);
-
     const channelId = this.userManagementService.getCurrentChannelId();
     if (channelId) {
       this.userManagementService.updateMembers(channelId, memberIds)
@@ -82,17 +85,14 @@ export class DialogAddMemberMobileComponent {
         .catch(error => {
           console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
         });
-    } else {
-      console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
-    }
+    } 
   }
+
 
   openUserProfile(userId: string, button: HTMLElement): void {
     this.profileService.setOwnProfileStatus(false);
     this.profileService.setViewingUserId(userId);
-
     const component = DialogShowProfileComponent;
     this.customDialogService.openDialogAbsolute({ button, component, position: 'right', maxWidth: '500px' });
-    // this.dialogRef.close();
   }
 }

@@ -19,8 +19,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from 'firebase/storage';
-import { deleteObject, getBlob, getMetadata } from '@angular/fire/storage';
-import { error } from 'console';
+import { deleteObject, getMetadata } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -43,33 +42,37 @@ export class MessageService {
     is_deleted: false,
     total_replies: 0,
   };
-
   unsubMessages = () => {};
   unsubMessagesThread =  () => {};
-  // private unsubscribeAllMessages!: () => void;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnDestroy() {
     this.unsubMessages();
     this.unsubMessagesThread();
   }
 
+
   getMessagesFromChannel(channel_id: any) {
     this.unsubMessages = this.subMessages(channel_id);
   }
+
 
   getMessagesFromThread(thread_id: any) {
     this.unsubMessagesThread = this.subMessagesThread(thread_id);
   }
 
+
   getMessagesRef() {
     return collection(this.firestore, 'messages');
   }
 
+
   getMessageRef(message_id: string) {
     return doc(collection(this.firestore, 'messages', message_id));
   }
+
 
   setMessage(data: any, id?: string): Message {
     return {
@@ -78,9 +81,9 @@ export class MessageService {
       channel_id: data.channel_id || '',
       thread_id: data.thread_id || '',
       message: {
-        text: data.message.text || '', // 'This is an example <@user_id> <#channel_id>'
-        reactions: data.message.reactions || [], // 'reaction_id_1', 'reaction_id_2' ...
-        attachements: data.message.attachements || [], // 'img.jpg' , 'document.pdf' ...
+        text: data.message.text || '',
+        reactions: data.message.reactions || [],
+        attachements: data.message.attachements || [],
       },
       created_at: data.created_at || 0,
       modified_at: data.modified_at || 0,
@@ -234,8 +237,6 @@ export class MessageService {
       for (let doc of querySnapshot.docs) {
         await deleteDoc(doc.ref);
       }
-  
-    // console.log(`Alle Nachrichten für Thread ${threadId} wurden gelöscht.`);
   }
 
   async removeMessagesFromEmptyChannel(channelId: string){
@@ -245,9 +246,6 @@ export class MessageService {
     for (let doc of querySnapshot.docs) {
       await deleteDoc(doc.ref);
     }
-  
-    // console.log(`Alle Nachrichten für Channel ${channelId} wurden gelöscht.`);
   }
-
 
 }

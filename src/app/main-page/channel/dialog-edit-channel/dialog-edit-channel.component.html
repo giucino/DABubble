@@ -65,7 +65,6 @@
   </div>
   
   <div class="dialog-content">
-    <!-- channel name -->
     <div [ngClass]="{
         'channel-edit-container': !editChannelName,
         'channel-edit-container-edit': editChannelName
@@ -105,7 +104,6 @@
         <p class="errorMsg">Dieser Channel existiert bereits.</p>
       }
     </div>
-    <!-- channel description -->
     <div [ngClass]="{
         'channel-edit-container': !editChannelDescription,
         'channel-edit-container-edit': editChannelDescription
@@ -172,7 +170,6 @@
       </div>
 
     </div>
-      <!-- leaving channel btn -->
   <button class="btn-primary" (click)="leaveChannel()">Channel verlassen</button>
   </div>
 

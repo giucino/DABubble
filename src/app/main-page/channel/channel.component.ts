@@ -22,13 +22,12 @@ import { Channel } from '../../interfaces/channel.interface';
 import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
 import { StateManagementService } from '../../services/state-management.service';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 
 @Component({
   selector: 'app-channel',
   standalone: true,
-
   imports: [
     CommonModule,
     MessageComponent,
@@ -39,20 +38,18 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
     RouterModule,
     MatProgressBarModule
   ],
-
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss',
 })
 export class ChannelComponent {
+  @ViewChild(MessageInputComponent) messageInputComponent!: MessageInputComponent;
+
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
-
-  // alle user die im channel sind
   channelMembers = this.channelService.currentChannel.members;
   users: User[] = this.userService.allUsers.filter((user) =>
     this.channelMembers.includes(user.id)
   );
-
   message: Message = {
     user_id: '',
     channel_id: this.channelService.currentChannel.id,
@@ -65,14 +62,13 @@ export class ChannelComponent {
     is_deleted: false,
     last_reply: 0,
   };
-
   channelId: string = '';
   isLoading = false;
   searchControl = new FormControl();
   private subscriptions = new Subscription();
   filteredUsers: User[] = [];
   filteredChannels: Channel[] = [];
-
+  // filteredMessages: Message[] = [];
   selectedUserId: string = '';
   newDirectChannel: Channel = {
     id: '',
@@ -84,6 +80,29 @@ export class ChannelComponent {
     active_members: [],
     channel_type: ChannelTypeEnum.direct,
   };
+  weekdays = [
+    'Sonntag',
+    'Montag',
+    'Dienstag',
+    'Mittwoch',
+    'Donnerstag',
+    'Freitag',
+    'Samstag',
+  ];
+  months = [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
+  ];
 
   constructor(
     public customDialogService: CustomDialogService,
@@ -98,12 +117,9 @@ export class ChannelComponent {
     public userAuth: UserAuthService
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? '';
-    if (this.channelId){
-    
-    }
     this.initUserAndChannel();
-    }
-  
+  }
+
 
   async initUserAndChannel() {
     if (this.userService.currentUser && this.userService.currentUser.last_channel == '') {
@@ -113,17 +129,16 @@ export class ChannelComponent {
     if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
       this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
       this.openChannel();
-    } 
-    if (this.userService.currentUser &&  this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
+    }
+    if (this.userService.currentUser && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
       this.router.navigateByUrl('/main-page/');
     }
-    
-
   }
 
   ngAfterViewInit() {
-      this.setFocus();
+    this.setFocus();
   }
+
 
   ngOnInit() {
     this.subscriptions.add(
@@ -135,29 +150,26 @@ export class ChannelComponent {
     );
   }
 
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     this.messageService.unsubMessages();
   }
 
+
   clearSearch(): void {
     this.searchControl.setValue('');
   }
 
+
   filter(searchTerm: string): void {
     if (searchTerm.startsWith('@')) {
       // Suche Benutzer mit dem Präfix '@'
-      this.filteredUsers = this.searchService.filterUsersByPrefix(
-        searchTerm,
-        this.userService.allUsers
-      );
+      this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
       this.filteredChannels = [];
     } else if (searchTerm.startsWith('#')) {
       // Suche Kanäle vom Typ 'main' mit dem Präfix '#'
-      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
-        searchTerm,
-        ChannelTypeEnum.main
-      );
+      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
       this.filteredUsers = [];
     } else {
       // Klare Filter, wenn kein Suchbegriff vorhanden ist
@@ -167,11 +179,9 @@ export class ChannelComponent {
     }
   }
 
+
   async openDirectChannel(user_id: string): Promise<void> {
-    let channel_id = this.channelService.getDirectChannelId(
-      this.userService.currentUser.id,
-      user_id
-    );
+    let channel_id = this.channelService.getDirectChannelId(this.userService.currentUser.id, user_id);
     this.channelService.getCurrentChannel(channel_id);
     if (channel_id != '') {
       this.router.navigateByUrl('/main-page/' + channel_id);
@@ -183,6 +193,7 @@ export class ChannelComponent {
     this.stateService.setSelectedUserId(user_id);
   }
 
+
   async createNewDirectChannel(user_id: string) {
     this.newDirectChannel.creator = this.userService.currentUser.id;
     this.newDirectChannel.created_at = new Date().getTime();
@@ -190,63 +201,54 @@ export class ChannelComponent {
     return await this.channelService.addChannel(this.newDirectChannel);
   }
 
+
   async openChannel() {
     this.activatedRoute.params.subscribe((params) => {
       if (params['channelId']) {
-        this.isLoading = true;
-        const loadChannel = this.channelService.getCurrentChannel(params['channelId']);
-        const loadMessages = this.messageService.getMessagesFromChannel(params['channelId']);
-        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, params['channelId']); // save last channel
-        Promise.all([loadChannel, loadMessages, updateUser])
-          .then(() => {
-            this.isLoading = false;
-            this.setFocus();
-          })
+        this.loadChannelData(params['channelId']);
       }
       else {
-        this.isLoading = true;
-        const loadChannel = this.channelService.getCurrentChannel(this.userService.currentUser.last_channel);
-        const loadMessages = this.messageService.getMessagesFromChannel(this.userService.currentUser.last_channel);
-        const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, this.userService.currentUser.last_channel); // save last channel
-        Promise.all([loadChannel, loadMessages, updateUser])
-          .then(() => {
-            this.isLoading = false;
-            this.setFocus();
-          })
+        this.loadChannelData(this.userService.currentUser.last_channel);
       }
     });
   }
 
+
+  loadChannelData(channelId: string) {
+    this.isLoading = true;
+    const loadChannel = this.channelService.getCurrentChannel(channelId);
+    const loadMessages = this.messageService.getMessagesFromChannel(channelId);
+    const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, channelId); 
+    Promise.all([loadChannel, loadMessages, updateUser])
+      .then(() => {
+        this.isLoading = false;
+        this.setFocus();
+      })
+  }
+
+
   openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberComponent;
-    this.customDialogService.openDialogAbsolute({button, component, position : 'right', maxWidth: '554px'});
+    this.customDialogService.openDialogAbsolute({ button, component, position: 'right', maxWidth: '554px' });
   }
+
 
   openShowMembersDialog(button: HTMLElement, mobileButton: HTMLElement) {
     const component = DialogShowMembersComponent;
-    this.customDialogService.openDialogAbsolute({button, component , position : 'right', mobileButton, maxWidth : '415px'});
+    this.customDialogService.openDialogAbsolute({ button, component, position: 'right', mobileButton, maxWidth: '415px' });
   }
+
 
   openEditChannelDialog(button: HTMLElement) {
     const component = DialogEditChannelComponent;
-    this.customDialogService.openDialogAbsolute({button, component, position : 'left', mobilePosition : 'mid', maxWidth : '872px'});
+    this.customDialogService.openDialogAbsolute({ button, component, position: 'left', mobilePosition: 'mid', maxWidth: '872px' });
   }
+
 
   isMobile() {
     return window.innerWidth <= 768;
   }
 
-  // saveMessage() {
-  //   if (this.messageInput != '') {
-  //     this.message.user_id = this.currentUser.id;
-  //     this.message.message.text = this.messageInput;
-  //     this.message.created_at = new Date().getTime();
-  //     this.message.modified_at = this.message.created_at;
-  //     this.message.channel_id = this.channelService.currentChannel.id;
-  //     this.messageService.addMessage(this.message);
-  //     this.messageInput = '';
-  //   }
-  // }
 
   isNewDate(oldDate: number, newDate: number) {
     let oldDateAsString = this.convertToDate(oldDate);
@@ -254,39 +256,18 @@ export class ChannelComponent {
     return oldDateAsString != newDateAsString;
   }
 
+
   getDateFormat(dateInput: number) {
-    const weekdays = [
-      'Sonntag',
-      'Montag',
-      'Dienstag',
-      'Mittwoch',
-      'Donnerstag',
-      'Freitag',
-      'Samstag',
-    ];
-    const months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
     let d = new Date(dateInput);
     let date = d.getDate();
     let day: number | string = d.getDay();
     let month: number | string = d.getMonth() + 1;
-    day = weekdays[day];
-    month = months[month];
+    day = this.weekdays[day];
+    month = this.months[month];
     let result = day + ',' + ' ' + date + ' ' + month;
     return result;
   }
+
 
   convertToDate(dateAsNumber: number) {
     let date = new Date(dateAsNumber);
@@ -299,10 +280,6 @@ export class ChannelComponent {
     return result;
   }
 
-  // TODO: move to userService
-  // getUser(user_id : string) {
-  //   return this.users.find((user) => user.id == user_id);
-  // }
 
   getDirectChannelUser() {
     let contact = this.channelService.currentChannel.members.find(
@@ -312,21 +289,8 @@ export class ChannelComponent {
     else return this.currentUser;
   }
 
+
   getChannelCreationTime() {
-    const months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
     let date = new Date(this.channelService.currentChannel.created_at);
     let d: number | string = date.getDate();
     let m: number | string = date.getMonth();
@@ -337,34 +301,26 @@ export class ChannelComponent {
     ) {
       return 'heute';
     } else {
-      return 'am' + ' ' + d + '. ' + months[m] + ' ' + y;
+      return 'am' + ' ' + d + '. ' + this.months[m] + ' ' + y;
     }
   }
+
 
   getTextareaPlaceholderText() {
-    switch (this.channelService.currentChannel.channel_type) {
-      case 'main':
-        return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
-        break;
-      case 'direct':
-        if (this.channelService.currentChannel.members.length == 2) {
-          return 'Nachricht an ' + this.getDirectChannelUser()?.name;
-        } else {
-          return 'Nachricht an ' + 'dich';
-        }
-        break;
-      case 'thread':
-        return 'Antworten...';
-        break;
-      case 'new':
-        return 'Starte eine neue Nachricht';
-        break;
-      default:
-        return 'Starte eine neue Nachricht';
+    const { currentChannel } = this.channelService;
+    const { channel_type, members, name } = currentChannel;
+    if (channel_type === 'main') {
+      return `Nachricht an #${name}`;
     }
+    if (channel_type === 'direct') {
+      return `Nachricht an ${members.length === 2 ? this.getDirectChannelUser()?.name : 'dich'}`;
+    }
+    if (channel_type === 'thread') {
+      return 'Antworten...';
+    }
+    return 'Starte eine neue Nachricht';
   }
 
-  @ViewChild(MessageInputComponent) messageInputComponent!: MessageInputComponent;
 
   async setFocus() {
     if (this.messageInputComponent) {
@@ -372,14 +328,11 @@ export class ChannelComponent {
     }
   }
 
-  // setFocus() {
-  //   document.getElementById('channelInput')?.focus();
-  //   this.messageInput = '';
-  // }
 
   updateInput(newContent: string) {
     this.messageInput = newContent;
   }
+
 
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');

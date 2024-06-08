@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, NgZone, ViewChild, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
@@ -7,9 +7,6 @@ import { UserService } from '../../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { DialogAddMemberMobileComponent } from '../dialog-add-member-mobile/dialog-add-member-mobile.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { MessageService } from '../../../firebase.service/message.service';
@@ -47,56 +44,25 @@ export class DialogEditChannelComponent implements OnInit {
       this.channelService.currentChannel.description;
   }
 
-  openAddUserDialog(button: HTMLElement) { // anderen
+
+  openAddUserDialog(button: HTMLElement) {
     const component = DialogAddMemberMobileComponent;
     this.customDialogService.openDialogAbsolute({ button, component, position: 'mid', mobilePosition: 'bottom', maxWidth: '100dvw' });
-    // this.dialogRef.close();
   }
 
-  // private unsubscribe$ = new Subject<void>();
-
-  // ngOnInit() {
-  //   this.channelService.currentChannel$
-  //     .pipe(takeUntil(this.unsubscribe$))
-  //     .subscribe(channel => {
-  //       if (channel) {
-  //         this.tempChannelName = channel.name;
-  //         this.tempChannelDescription = channel.description;
-  //       }
-  //     });
-  //     console.log('DialogEditChannelComponent initialized');
-  // }
-
-  // ngOnDestroy() {
-  //   this.unsubscribe$.next();
-  //   this.unsubscribe$.complete();
-  //   console.log('DialogEditChannelComponent destroyed');
-  // }
 
   getCreatorName(userId: string): string {
     const user = this.userService.getUser(userId);
     return user ? user.name : 'Unbekannter Benutzer';
   }
 
+
   triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
     this._ngZone.onStable
       .pipe(take(1))
       .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  // updateEditedChannel(): void {
-  //   this.channelService.currentChannel.name = this.tempChannelName;
-  //   this.channelService.currentChannel.description = this.tempChannelDescription;
-  //   this.channelService
-  //     .updateChannel(this.channelService.currentChannel)
-  //     .then(() => {
-  //       this.cancelEditing();
-  //     })
-  //     .catch((error) => {
-  //       console.error('Fehler beim Aktualisieren des Channels:', error);
-  //     });
-  // }
 
   async updateEditedChannel(): Promise<void> {
       if (this.duplicateChannelName()) {
@@ -106,6 +72,7 @@ export class DialogEditChannelComponent implements OnInit {
         this.changeChannelName();
       }
   }
+
 
   async changeChannelName(): Promise<void> {
     this.channelExists = false;
@@ -125,55 +92,40 @@ export class DialogEditChannelComponent implements OnInit {
     );
   }
 
+
   cancelEditing(): void {
     this.editChannelName = false;
     this.editChannelDescription = false;
   }
 
+
   async leaveChannel(): Promise<void> {
     if (!this.channelService.currentChannel || !this.channelService.currentChannel.id) {
-      console.error('Der aktuelle Kanal ist nicht definiert oder hat keine ID.');
       return;
     }
-    try {
       if (this.channelService.currentChannel.members.length === 1){
-        //delete reactions
-        for (let thread of this.channelService.channels) {
-          if (thread.name === this.channelService.currentChannel.name) {
-            this.messageService.removeThreadMessagesFromChannel(thread.id);
-            this.messageService.removeThreadMessagesFromChannel(this.channelService.currentChannel.id);
-            this.channelService.deleteChannel(thread.id);
-            
-          }
-        }
-        this.messageService.removeMessagesFromEmptyChannel(this.channelService.currentChannel.id);
-
+        this.deleteChannelAndMessages();
       }
-      await this.channelService.removeUserFromChannel(
-        this.channelService.currentChannel.id,
-        this.userService.currentUser.id
-      );
-      
-      this.dialogRef.close();
-      this.channelService.openNewChannel(this.userService.currentUser.id);
-      this.router.navigate(['/main-page/' + this.channelService.currentChannel.id]);
-    } catch (error) {
-      console.error('Fehler beim Verlassen des Kanals', error);
-    }
+      await this.channelService.removeUserFromChannel(this.channelService.currentChannel.id, this.userService.currentUser.id);
+      this.openNewChannel();
   }
 
 
-  // leaveChannel(): void {
-  //   this.channelService
-  //     .removeUserFromChannel(this.channelService.currentChannel.id, this.userService.currentUser.id)
-  //     .then(() => {
-  //       this.dialogRef.close();
-  //       // this.router.navigate(['/main-page/' + this.userService.currentUser.last_channel]);
-  //       // this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel)
-  //       console.log('Erfolgreich aus dem Kanal entfernt');
-  //     })
-  //     .catch((error) => {
-  //       console.error('Fehler beim Verlassen des Kanals', error);
-  //     });
-  // }
+  openNewChannel(){
+    this.dialogRef.close();
+    this.channelService.openNewChannel(this.userService.currentUser.id);
+    this.router.navigate(['/main-page/' + this.channelService.currentChannel.id]);
+  }
+
+
+  deleteChannelAndMessages(){
+    for (let thread of this.channelService.channels) {
+      if (thread.name === this.channelService.currentChannel.name) {
+        this.messageService.removeThreadMessagesFromChannel(thread.id);
+        this.messageService.removeThreadMessagesFromChannel(this.channelService.currentChannel.id);
+        this.channelService.deleteChannel(thread.id);
+      }
+    }
+    this.messageService.removeMessagesFromEmptyChannel(this.channelService.currentChannel.id);
+  }
 }

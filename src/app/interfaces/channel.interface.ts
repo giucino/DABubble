@@ -1,7 +1,6 @@
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 
 export interface Channel {
-
   id: string;
   name: string;
   description: string;

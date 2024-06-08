@@ -27,9 +27,9 @@ export class MainPageComponent {
     public threadService: ThreadService,
     public sharedService: SharedService) {
     if (this.userService.currentUser) this.channelService.getChannelsForCurrentUser();
-    if (this.userService.currentUser && this.userService.currentUser.last_thread && this.userService.currentUser.last_thread != '') {
-      this.threadService.threadOpen = true;
-    }
+    // if (this.userService.currentUser && this.userService.currentUser.last_thread && this.userService.currentUser.last_thread != '') {
+    //   this.threadService.threadOpen = true;
+    // }
 
   }
 
