@@ -1,13 +1,11 @@
 
 <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}">
-    <!-- <textarea placeholder="" [(ngModel)]="editableMessage.message.text"></textarea> -->
-    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text = channelInput.innerHTML; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" [innerHTML]="message.message.text | safeHtml" appTagToComponent>
+    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text = channelInput.innerHTML; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" [innerText]="message.message.text" appTagToComponent>
     </div>
     <app-popup-search [inputText]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>
-    <!-- <ng-template #dynamicHost></ng-template> -->
     <div class="message-edit-buttons">
         <!-- add emoticon -->
-        <button class="btn-icon w40" (click)="openDialogEmojiPicker(channelInput)">
+        <button class="btn-icon w40" (click)="openDialogEmojiPicker(channelInput)" (mousedown)="$event.preventDefault()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_813_12139" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
               <rect width="24" height="24" fill="#D9D9D9"/>

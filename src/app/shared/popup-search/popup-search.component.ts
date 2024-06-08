@@ -118,33 +118,82 @@ export class PopupSearchComponent {
     });
   }
 
+  // extendRangeBeforeCursor(range: Range, inputText: string) {
+  //   // Hole den Startpunkt der Range
+  //   const startContainer = range.startContainer;
+  //   const startOffset = range.startOffset;
+  //   // Berechne die neue Startposition, indem du die Länge des Eingabetextes abziehst
+  //   const newStartOffset = startOffset - inputText.length;
+  //   // Setze den neuen Startpunkt der Range
+  //   range.setStart(startContainer, newStartOffset);
+  //   // Setze den Endpunkt der Range auf den ursprünglichen Startpunkt
+  //   range.setEnd(startContainer, startOffset);
+  //   return range;
+  // }
+
   extendRangeBeforeCursor(range: Range, inputText: string) {
     // Hole den Startpunkt der Range
     const startContainer = range.startContainer;
     const startOffset = range.startOffset;
-    // Berechne die neue Startposition, indem du die Länge des Eingabetextes abziehst
-    const newStartOffset = startOffset - inputText.length;
-    // Setze den neuen Startpunkt der Range
-    range.setStart(startContainer, newStartOffset);
-    // Setze den Endpunkt der Range auf den ursprünglichen Startpunkt
-    range.setEnd(startContainer, startOffset);
+    const inputLength = inputText.length;
+  
+    let currentNode = startContainer;
+    let newStartOffset = startOffset;
+  
+    while (newStartOffset < inputLength && currentNode.previousSibling) {
+      currentNode = currentNode.previousSibling;
+      if (currentNode.nodeType === Node.TEXT_NODE) {
+        newStartOffset += currentNode.textContent!.length;
+      } else if (currentNode.nodeType === Node.ELEMENT_NODE && currentNode.nodeName === 'BR') {
+        newStartOffset++;
+      }
+    }
+  
+    range.setStart(currentNode, Math.max(0, startOffset - inputLength));
+    range.setEnd(currentNode, startOffset);
     return range;
   }
 
+  // replaceRangeWithHTML(range: Range, newHTML: string) {
+  //   let string = range.toString();
+  //   range.deleteContents();
+  //   const container = range.startContainer.parentElement;
+  //   const tempDiv = document.createElement('div');
+  //   tempDiv.innerHTML = newHTML;
+  //   const fragment = document.createDocumentFragment();
+  //   while (tempDiv.firstChild) {
+  //     fragment.appendChild(tempDiv.firstChild);
+  //   }
+  //   range.insertNode(fragment);
+  // }
+
+
   replaceRangeWithHTML(range: Range, newHTML: string) {
-    let string = range.toString();
-    range.deleteContents();
-    const container = range.startContainer.parentElement;
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = newHTML;
+  
     const fragment = document.createDocumentFragment();
-    while (tempDiv.firstChild) {
-      fragment.appendChild(tempDiv.firstChild);
+    let child;
+    while ((child = tempDiv.firstChild)) {
+      fragment.appendChild(child);
     }
-    range.insertNode(fragment);
+  
+    // Ensure the range is within a valid element
+    const startContainer = range.startContainer;
+    if (startContainer.nodeType === Node.TEXT_NODE) {
+      range.deleteContents();
+      range.insertNode(fragment);
+    } else if (startContainer.nodeType === Node.ELEMENT_NODE) {
+      const element = startContainer as HTMLElement;
+      const offset = range.startOffset;
+      const childNodes = element.childNodes;
+  
+      if (offset < childNodes.length) {
+        element.insertBefore(fragment, childNodes[offset]);
+      } else {
+        element.appendChild(fragment);
+      }
+    }
   }
-
-
-
 
 }

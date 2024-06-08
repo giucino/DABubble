@@ -77,9 +77,8 @@ export class MessageInputComponent {
     if (this.messageInput != '' || this.currentFile != null) {
       // create new message and receive message id
       this.message.user_id = this.currentUser.id;
-      this.message.message.text = this.formatMessageForSave(
-        channelInput.innerHTML
-      );
+      channelInput.innerHTML = this.formatMessageForSave(channelInput.innerHTML);
+      this.message.message.text = channelInput.innerText;
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
       if (this.usedIn == 'channel')
@@ -193,16 +192,22 @@ export class MessageInputComponent {
     const dialogRef = this.customDialogService.openDialog(component);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.messageInput = this.messageInput + result;
-        input.innerHTML = this.messageInput;
+        // this.messageInput = this.messageInput + result;
+        // input.innerHTML = this.messageInput;
+        this.addEmoji(input, result);
       }
     });
+  }
+
+  addEmoji(input : HTMLElement, result : any) {
+    if(document.activeElement !== input)  this.setFocusAtTextEnd(input);
+    this.insertAtCursor(result, input);
   }
 
   //#region @/# Tag System
   checkForTag(element: HTMLElement) {
     const text = element.innerText;
-    const cursorPosition = this.getSelectionPosition(element);
+    const cursorPosition = this.setSelectionPosition(element);
     const textBeforeCursor = text.slice(0, cursorPosition);
     const charBeforeCursor = textBeforeCursor[cursorPosition - 1];
     this.tagText = '';
@@ -218,21 +223,25 @@ export class MessageInputComponent {
     }
   }
 
-  getSelectionPosition(element: HTMLElement): number {
-    const selection = window.getSelection();
-    this.cursorPositionService.setLastCursorPosition(element);
-    if (!selection || selection.rangeCount === 0) {
-      return 0;
-    }
+  // getSelectionPosition(element: HTMLElement): number {
+  //   const selection = window.getSelection();
+  //   this.cursorPositionService.setLastCursorPosition(element);
+  //   if (!selection || selection.rangeCount === 0) {
+  //     return 0;
+  //   }
   
-    const range = selection.getRangeAt(0);
-    const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(element);
-    preCaretRange.setEnd(range.startContainer, range.startOffset);
-    let preCaretText = preCaretRange.toString();
+  //   const range = selection.getRangeAt(0);
+  //   const preCaretRange = range.cloneRange();
+  //   preCaretRange.selectNodeContents(element);
+  //   preCaretRange.setEnd(range.startContainer, range.startOffset);
+  //   let preCaretText = preCaretRange.toString();
   
-    const startOffset = preCaretText.length;
-    return startOffset;
+  //   const startOffset = preCaretText.length;
+  //   return startOffset;
+  // }
+
+  setSelectionPosition(element: HTMLElement): number {
+    return this.cursorPositionService.saveCursorPosition(element);
   }
 
 
@@ -277,12 +286,13 @@ export class MessageInputComponent {
       if (selection) {
         selection.removeAllRanges();
         selection.addRange(range);
+        this.cursorPositionService.setLastCursorPosition(input);
       }
   }
 
   insertTag(input: HTMLElement) {
     const text = input.innerText;
-    const cursorPosition = this.getSelectionPosition(input);
+    const cursorPosition = this.setSelectionPosition(input);
     const charBeforeCursor =   text[cursorPosition - 1];
     if(!charBeforeCursor || charBeforeCursor.match(/\s/)) {
       this.insertAtCursor('@', input);
@@ -292,27 +302,32 @@ export class MessageInputComponent {
     this.checkForTag(input);
   }
 
+  
   insertAtCursor(text :  string, input: HTMLElement) {
     const sel = window.getSelection();
-    // Check if there is a selection and range
-    if (sel && sel.rangeCount > 0) {
-      const range = sel.getRangeAt(0);
-
-      // Create a text node with the text to insert
+      const range = this.cursorPositionService.restoreCursorPosition(input);
+      if(sel && range) {
       const textNode = document.createTextNode(text);
-
-      // Insert the text node at the current cursor position
       range.insertNode(textNode);
-
-      // Move the cursor after the inserted text node
       range.setStartAfter(textNode);
       range.setEndAfter(textNode);
-
-      // Remove any selection (collapse the range)
       sel.removeAllRanges();
       sel.addRange(range);
-    }
+      }
   }
+
+  // insertAtCursor(text :  string, input: HTMLElement) {
+  //   const sel = window.getSelection();
+  //   if (sel && sel.rangeCount > 0) {
+  //     const range = sel.getRangeAt(0);
+  //     const textNode = document.createTextNode(text);
+  //     range.insertNode(textNode);
+  //     range.setStartAfter(textNode);
+  //     range.setEndAfter(textNode);
+  //     sel.removeAllRanges();
+  //     sel.addRange(range);
+  //   }
+  // }
   //#endregion add @ Button
   
 
@@ -334,7 +349,7 @@ export class MessageInputComponent {
 
   formatMessageForSave(text: string) {
     let formattedText = this.formatTagForSave(text);
-    return this.escapeHTML(formattedText);
+    return formattedText;
   }
 
 
