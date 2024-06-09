@@ -112,7 +112,6 @@ export class PopupSearchComponent {
       range!.setStartAfter(element); // set cursor after tag
       this.renderer.insertBefore(container,componentRef.location.nativeElement,element);
       this.renderer.removeChild(container, element);
-      // set cursor position after tag
       
       this.inputText = '';
     });

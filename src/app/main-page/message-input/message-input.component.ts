@@ -74,7 +74,7 @@ export class MessageInputComponent {
   // }
 
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
-    if (this.messageInput != '' || this.currentFile != null) {
+    if (this.messageInput != '' || this.currentFile != null || channelInput.innerHTML != '') {
       // create new message and receive message id
       this.message.user_id = this.currentUser.id;
       channelInput.innerHTML = this.formatMessageForSave(
@@ -207,18 +207,7 @@ export class MessageInputComponent {
     this.insertAtCursor(result, input);
   }
 
-  setFocusAtTextEnd(input : HTMLElement) {
-    input.focus();
-    var range = document.createRange();
-    range.selectNodeContents(input);
-    range.collapse(false);
-    var selection = window.getSelection();
-    if (selection) {
-      selection.removeAllRanges();
-      selection.addRange(range);
-      this.cursorPositionService.saveCursorPosition(input);
-    }
-}
+ 
 
   //#region @/# Tag System
   checkForTag(element: HTMLElement) {
@@ -254,27 +243,40 @@ export class MessageInputComponent {
   handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const container = range.startContainer;
-
-      // Prüfen ob die Backspace- oder Delete-Taste gedrückt wurde
-      if (event.key === 'Backspace' || event.key === 'Delete') {
-        // Finden Sie das nächste Element
-        let elementToRemove = null;
-
-        if (container.nodeType === Node.ELEMENT_NODE) {
-          elementToRemove = container as HTMLElement;
-        } else if (container.nodeType === Node.TEXT_NODE) {
-          elementToRemove = container.parentElement;
+      const curRange = selection.getRangeAt(selection.rangeCount - 1);
+      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) {
+        // we are in child selection. The characters of the text node is being deleted
+        return;
+    }
+  
+      // Prüfen, ob die Backspace-Taste gedrückt wurde
+      if (event.key === 'Backspace') {
+        
+        const range = document.createRange();
+        if (selection.anchorNode && selection.anchorNode != element) {
+            // selection is in character mode. expand it to the whole editable field
+            range.selectNodeContents(element);
+            range.setEndBefore(selection.anchorNode);
+        } else if (selection.anchorOffset > 0) {
+            range.setEnd(element, selection.anchorOffset);
+        } else {
+            // reached the beginning of editable field
+            return;
         }
+        range.setStart(element, range.endOffset - 1);
 
-        if (elementToRemove && elementToRemove.classList.contains('tag')) {
-          event.preventDefault();
-          this.renderer.removeChild(element, elementToRemove);
-          console.log('Tag-Element entfernt:', elementToRemove);
+
+        const previousNode = range.cloneContents().lastChild;
+        if (previousNode && previousNode.nodeType == Node.ELEMENT_NODE) {
+          const previousElement = previousNode as HTMLElement;
+          if (previousElement.contentEditable === 'false') {
+            // This is some rich content, e.g. smiley. We should help the user to delete it.
+            range.deleteContents();
+            event.preventDefault();
+          }
         }
       }
-
+  
       if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
         this.saveMessage(element, this.addDocumentInput);
@@ -288,18 +290,18 @@ export class MessageInputComponent {
     this.insertTag(input);
   }
 
-  // setFocusAtTextEnd(input: HTMLElement) {
-  //   input.focus();
-  //   var range = document.createRange();
-  //   range.selectNodeContents(input);
-  //   range.collapse(false);
-  //   var selection = window.getSelection();
-  //   if (selection) {
-  //     selection.removeAllRanges();
-  //     selection.addRange(range);
-  //     this.cursorPositionService.setLastCursorPosition(input);
-  //   }
-  // }
+  setFocusAtTextEnd(input : HTMLElement) {
+    input.focus();
+    var range = document.createRange();
+    range.selectNodeContents(input);
+    range.collapse(false);
+    var selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      this.cursorPositionService.setLastCursorPosition(input);
+    }
+}
 
   insertTag(input: HTMLElement) {
     const text = input.innerText;
@@ -331,6 +333,7 @@ export class MessageInputComponent {
     } else {
       console.error('Selection or range is invalid.');
     }
+    this.setSelectionPosition(input);
   }
 
   //#endregion add @ Button

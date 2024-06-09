@@ -113,6 +113,21 @@ restoreCursorPosition(container: HTMLElement): Range | null {
     if (node.nodeType === Node.TEXT_NODE) {
       const nextCharIndex = charIndex + node.textContent!.length;
       if (this.lastCursorPosition <= nextCharIndex) {
+
+        let parentElement = node.parentElement;
+        while (parentElement && parentElement !== container) {
+          if (parentElement.classList.contains('tag')) {
+            // Move the range to after the parent element
+            range.setStartAfter(parentElement);
+            range.setEndAfter(parentElement);
+            range.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            return range;
+          }
+          parentElement = parentElement.parentElement;
+        }
+
         range.setStart(node, this.lastCursorPosition - charIndex);
         range.setEnd(node, this.lastCursorPosition - charIndex);
         range.collapse(true);

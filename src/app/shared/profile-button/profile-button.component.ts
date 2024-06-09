@@ -17,6 +17,7 @@ export class ProfileButtonComponent {
 
   ngOnInit(): void {
     this.renderer.setAttribute(this.el.nativeElement, 'contenteditable', 'false');
+    this.renderer.addClass(this.el.nativeElement, 'tag');
   }
 
 }

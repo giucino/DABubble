@@ -106,7 +106,7 @@
           </svg>
         </button>
       </div>
-      <button class="btn-send-message w40" [disabled]="(messageInput == '' && currentFile == null)" (click)="saveMessage(channelInput,addDocumentInput)">
+      <button class="btn-send-message w40" [disabled]="(messageInput == '' && currentFile == null && channelInput.innerHTML == '')" (click)="saveMessage(channelInput,addDocumentInput)">
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <mask id="mask0_813_12250" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30"
             height="30">
