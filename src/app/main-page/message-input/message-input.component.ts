@@ -31,8 +31,8 @@ export class MessageInputComponent {
   @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
   @ViewChild('channelInput', { read: ViewContainerRef, static: true })
   channelInputViewRef!: ViewContainerRef;
+  @ViewChild('addDocumentInput') addDocumentInput!: HTMLInputElement;
   // @ViewChild('channelInput') channelInput! :ElementRef<HTMLDivElement>
-
 
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
@@ -62,7 +62,7 @@ export class MessageInputComponent {
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
     private renderer: Renderer2,
-    public cursorPositionService : CursorPositionService,
+    public cursorPositionService: CursorPositionService
   ) {}
 
   get channelInputElement(): ElementRef {
@@ -77,7 +77,9 @@ export class MessageInputComponent {
     if (this.messageInput != '' || this.currentFile != null) {
       // create new message and receive message id
       this.message.user_id = this.currentUser.id;
-      channelInput.innerHTML = this.formatMessageForSave(channelInput.innerHTML);
+      channelInput.innerHTML = this.formatMessageForSave(
+        channelInput.innerHTML
+      );
       this.message.message.text = channelInput.innerText;
       this.message.created_at = new Date().getTime();
       this.message.modified_at = this.message.created_at;
@@ -85,7 +87,13 @@ export class MessageInputComponent {
         this.message.channel_id = this.channelService.currentChannel.id;
       if (this.usedIn == 'thread')
         this.message.thread_id = this.channelService.currentThread.id;
+
+      // empty input
+      this.messageInput = '';
+      channelInput.innerText = '';
+      
       this.message.id = await this.messageService.addMessage(this.message);
+
       // thread message update
       if (this.usedIn == 'thread') this.updateThreadMessage();
       // upload currentFile
@@ -103,9 +111,6 @@ export class MessageInputComponent {
         this.messageService.updateMessage(this.message);
         this.removeFile(fileInput);
       }
-      // empty input
-      this.messageInput = '';
-      channelInput.innerText = '';
     }
   }
 
@@ -192,8 +197,6 @@ export class MessageInputComponent {
     const dialogRef = this.customDialogService.openDialog(component);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.messageInput = this.messageInput + result;
-        // input.innerHTML = this.messageInput;
         this.addEmoji(input, result);
       }
     });
@@ -204,9 +207,22 @@ export class MessageInputComponent {
     this.insertAtCursor(result, input);
   }
 
+  setFocusAtTextEnd(input : HTMLElement) {
+    input.focus();
+    var range = document.createRange();
+    range.selectNodeContents(input);
+    range.collapse(false);
+    var selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      this.cursorPositionService.saveCursorPosition(input);
+    }
+}
+
   //#region @/# Tag System
   checkForTag(element: HTMLElement) {
-    const text = element.innerText;
+    const text = this.getTextWithLineBreaks(element);
     const cursorPosition = this.setSelectionPosition(element);
     const textBeforeCursor = text.slice(0, cursorPosition);
     const charBeforeCursor = textBeforeCursor[cursorPosition - 1];
@@ -214,38 +230,28 @@ export class MessageInputComponent {
     if (charBeforeCursor && !/\s/.test(charBeforeCursor)) {
       const atIndex = textBeforeCursor.lastIndexOf('@');
       if (atIndex !== -1) {
-        const charBeforeAt = textBeforeCursor[atIndex - 1];
         const charAfterAt = textBeforeCursor[atIndex + 1];
-        if ((!charBeforeAt || charBeforeAt.match(/\s/)) && (!charAfterAt?.match(/\s/))) {
+        if (!charAfterAt?.match(/\s/)) {
           this.tagText = textBeforeCursor.slice(atIndex);
         }
       }
     }
   }
 
-  // getSelectionPosition(element: HTMLElement): number {
-  //   const selection = window.getSelection();
-  //   this.cursorPositionService.setLastCursorPosition(element);
-  //   if (!selection || selection.rangeCount === 0) {
-  //     return 0;
-  //   }
-  
-  //   const range = selection.getRangeAt(0);
-  //   const preCaretRange = range.cloneRange();
-  //   preCaretRange.selectNodeContents(element);
-  //   preCaretRange.setEnd(range.startContainer, range.startOffset);
-  //   let preCaretText = preCaretRange.toString();
-  
-  //   const startOffset = preCaretText.length;
-  //   return startOffset;
-  // }
+  getTextWithLineBreaks(input: HTMLElement): string {
+    return input.innerHTML
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/?p>/gi, '\n')
+      .replace(/<\/?div>/gi, '\n')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/<[^>]+>/g, '');
+  }
 
   setSelectionPosition(element: HTMLElement): number {
     return this.cursorPositionService.saveCursorPosition(element);
   }
 
-
-  handleKeyDown(event: KeyboardEvent, element: HTMLElement) {
+  handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
@@ -268,33 +274,38 @@ export class MessageInputComponent {
           console.log('Tag-Element entfernt:', elementToRemove);
         }
       }
+
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        this.saveMessage(element, this.addDocumentInput);
+      }
     }
   }
 
   //#region add @ Button
-  addTag(input : HTMLElement) {
-    if(document.activeElement !== input)  this.setFocusAtTextEnd(input);
+  addTag(input: HTMLElement) {
+    if (document.activeElement !== input) this.setFocusAtTextEnd(input);
     this.insertTag(input);
   }
 
-  setFocusAtTextEnd(input : HTMLElement) {
-      input.focus();
-      var range = document.createRange();
-      range.selectNodeContents(input);
-      range.collapse(false);
-      var selection = window.getSelection();
-      if (selection) {
-        selection.removeAllRanges();
-        selection.addRange(range);
-        this.cursorPositionService.setLastCursorPosition(input);
-      }
-  }
+  // setFocusAtTextEnd(input: HTMLElement) {
+  //   input.focus();
+  //   var range = document.createRange();
+  //   range.selectNodeContents(input);
+  //   range.collapse(false);
+  //   var selection = window.getSelection();
+  //   if (selection) {
+  //     selection.removeAllRanges();
+  //     selection.addRange(range);
+  //     this.cursorPositionService.setLastCursorPosition(input);
+  //   }
+  // }
 
   insertTag(input: HTMLElement) {
     const text = input.innerText;
     const cursorPosition = this.setSelectionPosition(input);
-    const charBeforeCursor =   text[cursorPosition - 1];
-    if(!charBeforeCursor || charBeforeCursor.match(/\s/)) {
+    const charBeforeCursor = text[cursorPosition - 1];
+    if (!charBeforeCursor || charBeforeCursor.match(/\s/)) {
       this.insertAtCursor('@', input);
     } else {
       this.insertAtCursor(' @', input);
@@ -302,34 +313,27 @@ export class MessageInputComponent {
     this.checkForTag(input);
   }
 
-  
-  insertAtCursor(text :  string, input: HTMLElement) {
+  insertAtCursor(text: string, input: HTMLElement) {
     const sel = window.getSelection();
-      const range = this.cursorPositionService.restoreCursorPosition(input);
-      if(sel && range) {
-      const textNode = document.createTextNode(text);
-      range.insertNode(textNode);
-      range.setStartAfter(textNode);
-      range.setEndAfter(textNode);
-      sel.removeAllRanges();
-      sel.addRange(range);
+    const range = this.cursorPositionService.restoreCursorPosition(input);
+  
+    if (sel && range) {
+      try {
+        const textNode = document.createTextNode(text);
+        range.insertNode(textNode);
+        range.setStartAfter(textNode);
+        range.setEndAfter(textNode);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } catch (error) {
+        console.error('Error inserting text node:', error);
       }
+    } else {
+      console.error('Selection or range is invalid.');
+    }
   }
 
-  // insertAtCursor(text :  string, input: HTMLElement) {
-  //   const sel = window.getSelection();
-  //   if (sel && sel.rangeCount > 0) {
-  //     const range = sel.getRangeAt(0);
-  //     const textNode = document.createTextNode(text);
-  //     range.insertNode(textNode);
-  //     range.setStartAfter(textNode);
-  //     range.setEndAfter(textNode);
-  //     sel.removeAllRanges();
-  //     sel.addRange(range);
-  //   }
-  // }
   //#endregion add @ Button
-  
 
   //#endregion
 
@@ -339,19 +343,18 @@ export class MessageInputComponent {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-
-  formatTagForSave(text : string) {
-    const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
+  formatTagForSave(text: string) {
+    const regex = new RegExp(
+      /<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g
+    );
     const formattedText = text.replace(regex, '@$1');
     return formattedText;
   }
-
 
   formatMessageForSave(text: string) {
     let formattedText = this.formatTagForSave(text);
     return formattedText;
   }
-
 
   formatMessageForRead(text: string) {
     let formattedText = this.escapeHTML(text);
@@ -359,5 +362,4 @@ export class MessageInputComponent {
   }
 
   //#endregion
-
 }

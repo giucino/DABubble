@@ -26,7 +26,7 @@ import { TagToComponentDirective } from '../../../../shared/directives/tag-to-co
   imports: [
     CommonModule,
     PopupSearchComponent,
-    SafeHtmlPipe,
+    // SafeHtmlPipe,
     OpenProfileDirective,
     TagToComponentDirective
   ],
@@ -99,9 +99,6 @@ export class EditMessageComponent {
     return formattedText;
   }
 
-  // escapeHTML(text : string) {
-  //   return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  // }
   //#endregion
 
   //#region emoji picker
@@ -110,8 +107,6 @@ export class EditMessageComponent {
     const dialogRef = this.customDialogService.openDialog(component);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.editableMessage.message.text += result;
-        // input.innerText = this.editableMessage.message.text;
         this.addEmoji(input, result);
       }
     });
@@ -138,27 +133,15 @@ export class EditMessageComponent {
 
   insertAtCursor(text :  string, input: HTMLElement) {
     const sel = window.getSelection();
-    // Check if there is a selection and range
-    // if (sel && sel.rangeCount > 0) {
-      const range = this.cursorPositionService.restoreCursorPosition(input);
+    const range = this.cursorPositionService.restoreCursorPosition(input);
       if(sel && range) {
-          // Create a text node with the text to insert
       const textNode = document.createTextNode(text);
-
-      // Insert the text node at the current cursor position
       range.insertNode(textNode);
-
-      // Move the cursor after the inserted text node
       range.setStartAfter(textNode);
       range.setEndAfter(textNode);
-
-      // Remove any selection (collapse the range)
       sel.removeAllRanges();
       sel.addRange(range);
       }
-
-    
-    // }
   }
   //#endregion emoji picker
 
@@ -174,11 +157,7 @@ export class EditMessageComponent {
       if (atIndex !== -1) {
         // const charBeforeAt = textBeforeCursor[atIndex - 1];
         const charAfterAt = textBeforeCursor[atIndex + 1];
-        if (
-          // (!charBeforeAt || charBeforeAt.match(/\s/)) 
-          // &&
-          !charAfterAt?.match(/\s/)
-        ) {
+        if (!charAfterAt?.match(/\s/)) {
           this.tagText = textBeforeCursor.slice(atIndex);
         }
       }
@@ -222,10 +201,10 @@ export class EditMessageComponent {
         }
       }
 
-      // if(event.key === 'Enter') {
-      //   event.preventDefault();
-      //   this.updateMessage(element);
-      // }
+      if(event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        this.updateMessage(element);
+      }
     }
   }
   //#endregion
