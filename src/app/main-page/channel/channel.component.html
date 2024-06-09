@@ -194,7 +194,8 @@
       </div>
       }
       <!-- personal channel -->
-      @if (channelService.currentChannel.members.length == 2 && channelService.currentChannel.members[0] == channelService.currentChannel.members[1]) {
+      @if (channelService.currentChannel.members.length == 2 && channelService.currentChannel.members[0] == channelService.currentChannel.members[1]
+      || channelService.currentChannel.members.length == 1) {
       <div class="channel-info-container">
         <div class="channel-name-container">
           <img src="{{ currentUser.profile_img }}" alt="" class="profile-img w100">
@@ -222,7 +223,7 @@
       </div>
       }
       }
-      <app-message [message]="message" [channelType]="channelService.currentChannel.channel_type"></app-message>
+      <app-message [message]="message" [channelType]="channelService.currentChannel.channel_type" [id]="'message-' + message.id"></app-message>
       }
 
     </div>

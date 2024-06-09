@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
@@ -17,6 +17,7 @@ import { OpenProfileDirective } from '../../../shared/directives/open-profile.di
 import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { UtilityService } from '../../../services/utility.service';
+import { ChannelComponent } from '../../channel/channel.component';
 // import { SearchResultsComponent } from '../../../shared/search-results/search-results.component';
 
 @Component({
@@ -58,6 +59,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public router: Router,
     public threadService: ThreadService,
     public utilityService: UtilityService,
+    public viewportScroller: ViewportScroller,
   ) { }
 
   ngOnInit(): void {
@@ -142,6 +144,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     const message = this.messageService.allMessages.find((message) => message.id === messageId);
     const user = this.userService.getUser(message!.user_id);
     return user?.profile_img || 'assets/img/deleted.png';
+  }
 
+
+  navigateToMessage(message: Message) {
+    if (message.channel_id != '') {
+      this.router.navigate(['/main-page', message.channel_id])
+        console.log('channel', message.id)
+        this.messageService.changeMessage(message.id);
+    } if (message.thread_id != '' && message.channel_id == '') {
+      this.router.navigate(['/main-page', message.thread_id])
+      console.log('thread', message.id)
+    }
   }
 }

@@ -68,7 +68,7 @@
         <ul class="filtered">
             <span class="categoryName">Messages:</span>
             @for(message of filteredMessages; track message.id; ) {
-            <li>
+            <li (click)="navigateToMessage(message)">
                 <div class="channelList">
                     <img class="user-avatar" [src]="getUserImg(message.id)" alt="Avatar">
                     <div class="messageContainer">

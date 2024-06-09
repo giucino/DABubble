@@ -286,6 +286,26 @@ input, textarea, #channelInput {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@-webkit-keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blink {
+  animation: blink 1s linear 2;
+}
+
+
+
+
 @media (max-width: 1080px){
   .channel-container{
     min-width: 500px;

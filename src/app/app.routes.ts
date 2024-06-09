@@ -29,7 +29,8 @@ export const routes: Routes = [
     {path: 'main-page', component: MainPageComponent, children: [
         { path: '', component: ChannelComponent},
         { path: ':channelId', component: ChannelComponent, children: [
-            ]
+            { path: ':messageId', component: ChannelComponent},
+        ]
         },
     ]},
 

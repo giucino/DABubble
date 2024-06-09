@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
+import { Component, ElementRef, QueryList, ViewChild } from '@angular/core';
 import { MessageComponent } from './message/message.component';
 import { DialogAddMemberComponent } from './dialog-add-member/dialog-add-member.component';
 import { CustomDialogService } from '../../services/custom-dialog.service';
@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
 import { MessageInputComponent } from '../message-input/message-input.component';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, filter, Subscription } from 'rxjs';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { Channel } from '../../interfaces/channel.interface';
 import { SearchService } from '../../services/search.service';
@@ -43,6 +43,7 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
 })
 export class ChannelComponent {
   @ViewChild(MessageInputComponent) messageInputComponent!: MessageInputComponent;
+  @ViewChild(MessageComponent) private messages!: QueryList<MessageComponent>;
 
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
@@ -114,9 +115,10 @@ export class ChannelComponent {
     public threadService: ThreadService,
     private stateService: StateManagementService,
     public searchService: SearchService,
-    public userAuth: UserAuthService
+    public userAuth: UserAuthService,
+    public viewportScroller: ViewportScroller,
   ) {
-    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? '';
+    this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? ''
     this.initUserAndChannel();
   }
 
@@ -137,6 +139,9 @@ export class ChannelComponent {
 
   ngAfterViewInit() {
     this.setFocus();
+    this.messageService.currentMessage.subscribe(messageId => {
+      setTimeout(() => this.scrollToMessage(messageId), 0);
+    });
   }
 
 
@@ -148,6 +153,20 @@ export class ChannelComponent {
           this.filter(value);
         })
     );
+
+  }
+
+
+  async scrollToMessage(messageId: string) {
+    let messageElement = document.getElementById('message-' + messageId);
+    while (!messageElement) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      messageElement = document.getElementById('message-' + messageId);
+    }
+    if (messageElement) {
+      messageElement.scrollIntoView({ behavior: 'smooth' });
+      messageElement.classList.add('blink');
+    }
   }
 
 
@@ -218,7 +237,7 @@ export class ChannelComponent {
     this.isLoading = true;
     const loadChannel = this.channelService.getCurrentChannel(channelId);
     const loadMessages = this.messageService.getMessagesFromChannel(channelId);
-    const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, channelId); 
+    const updateUser = this.userService.updateLastChannel(this.userService.currentUser.id, channelId);
     Promise.all([loadChannel, loadMessages, updateUser])
       .then(() => {
         this.isLoading = false;

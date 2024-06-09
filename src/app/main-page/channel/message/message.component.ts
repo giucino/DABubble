@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { Message } from '../../../interfaces/message.interface';
 import { User } from '../../../interfaces/user.interface';
 import { MessageService } from '../../../firebase.service/message.service';
@@ -61,7 +61,8 @@ export class MessageComponent {
     public customDialogService: CustomDialogService,
     public reactionService: ReactionService,
     public sharedService: SharedService,
-    public mainpage: MainPageComponent
+    public mainpage: MainPageComponent,
+    public elementRef: ElementRef,
   ) {
   }
 

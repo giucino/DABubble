@@ -1,13 +1,11 @@
 import { Component, HostListener } from '@angular/core';
-import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserAuthService } from './firebase.service/user.auth.service';
 import { UserService } from './firebase.service/user.service';
-import { user } from '@angular/fire/auth';
 import { ChannelFirebaseService } from './firebase.service/channelFirebase.service';
-import e from 'express';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +19,11 @@ export class AppComponent {
   timeoutId: any;
   userId: any;
 
-  constructor(private router: Router, private _snackBar: MatSnackBar, public userAuth: UserAuthService,
-    public userService: UserService, public channelService: ChannelFirebaseService) {
+  constructor(private router: Router, 
+    private _snackBar: MatSnackBar, 
+    public userAuth: UserAuthService,
+    public userService: UserService, 
+    public channelService: ChannelFirebaseService) {
     if (userService.currentUser) {
       this.userId = userService.currentUser.id;
     }
@@ -33,7 +34,7 @@ export class AppComponent {
   unloadHandler(event: Event) {
     this.userAuth.logout();
     if (this.userId) {
-    this.userService.updateOnlineStatus(this.userId, false); // geht
+    this.userService.updateOnlineStatus(this.userId, false);
     }
   }
 
