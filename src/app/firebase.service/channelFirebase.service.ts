@@ -74,7 +74,7 @@ export class ChannelFirebaseService {
     );
     let channel = undefined;
     if (currentUser_id == dm_target_id) {
-      channel = directChannels.find((channel) => channel.members.length == 1);
+      channel = directChannels.find((channel) => channel.members[0] == channel.members[1]);
     } else {
       channel = directChannels.find((channel) =>
         channel.members.includes(dm_target_id)

@@ -50,7 +50,7 @@ export class MessageService {
   constructor() {
     this.unsubAllMessages = this.subAllMessages();
   }
-  
+
 
   ngOnDestroy() {
     this.unsubMessages();
@@ -145,6 +145,7 @@ export class MessageService {
     });
   }
 
+  
 
   /* UPDATE */
   async updateMessage(message: Message) {
