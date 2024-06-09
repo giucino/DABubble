@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { Message } from '../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,22 @@ export class UtilityService {
     if (
       this.convertToDate(new Date().getTime()) ==
       this.convertToDate(this.channelService.currentChannel.created_at)
+    ) {
+      return 'heute';
+    } else {
+      return 'am' + ' ' + d + '. ' + this.months[m] + ' ' + y;
+    }
+  }
+
+
+  getMessageCreationTime(message: Message) {
+    let date = new Date(message.created_at);
+    let d: number | string = date.getDate();
+    let m: number | string = date.getMonth();
+    let y = date.getFullYear();
+    if (
+      this.convertToDate(new Date().getTime()) ==
+      this.convertToDate(message.created_at)
     ) {
       return 'heute';
     } else {

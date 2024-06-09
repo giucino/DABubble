@@ -15,7 +15,7 @@ export class SearchService {
     private userService: UserService,
     private channelService: ChannelFirebaseService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
 
   applyFilters(searchTerm: string): {
@@ -68,8 +68,20 @@ export class SearchService {
   filterMessages(searchTerm: string, messages: Message[]): Message[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
     return messages.filter((message) =>
-      message.message.text.toLowerCase().includes(lowerCaseTerm)
+      message.message.text.toLowerCase().includes(lowerCaseTerm) &&
+      this.channelExists(message.channel_id, this.channelService.channels) ||
+      this.threadExists(message.thread_id!, this.channelService.channels)
     );
+  }
+
+
+  channelExists(channelId: string, channels: Channel[]): boolean {
+    return channels.some(channel => channel.id === channelId);
+  }
+
+
+  threadExists(threadId: string, threads: Channel[]): boolean {
+    return threads.some(thread => thread.id === threadId);
   }
 
 
@@ -82,7 +94,7 @@ export class SearchService {
         .some((part: string) => part.toLowerCase().startsWith(lowerCaseTerm))
     );
   }
-  
+
 
   filterChannelsByTypeAndPrefix(
     prefix: string,

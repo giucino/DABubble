@@ -90,8 +90,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     } else if (searchTerm.length > 0) {
       const results = this.searchService.applyFilters(searchTerm);
       this.filteredUsers = results.users;
-      this.filteredChannels = results.channels;
-      this.filteredMessages = results.messages;
+      this.filteredChannels = this.sortChannels(results.channels); // muss nicht aber hey
+      this.filteredMessages = this.sortMessages(results.messages);
     } else {
       const results = this.searchService.clearFilters();
       this.filteredUsers = results.users;
@@ -100,13 +100,31 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  sortMessages(messages: Message[]): Message[] {
+    return messages.sort((a, b) => b.created_at - a.created_at);
+  }
+
+
+  sortChannels(channels: Channel[]): Channel[] {
+    return channels.sort((a, b) => b.created_at - a.created_at);
+  }
+
+
   onBlur(): void {
     this.clearSearch();
   }
 
+
   displayChannelTime(): string {
     return this.utilityService.getChannelCreationTime();
   }
+
+
+  displayMessageTime(message: Message): string {
+    return this.utilityService.getMessageCreationTime(message);
+  }
+
 
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
