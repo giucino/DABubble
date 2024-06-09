@@ -150,11 +150,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   navigateToMessage(message: Message) {
     if (message.channel_id != '') {
       this.router.navigate(['/main-page', message.channel_id])
-        console.log('channel', message.id)
-        this.messageService.changeMessage(message.id);
+      this.messageService.changeMessage(message.id);
     } if (message.thread_id != '' && message.channel_id == '') {
       this.router.navigate(['/main-page', message.thread_id])
-      console.log('thread', message.id)
+      this.messageService.changeMessage(message.id);
     }
   }
 }
