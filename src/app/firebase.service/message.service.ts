@@ -27,6 +27,7 @@ import { deleteObject, getMetadata } from '@angular/fire/storage';
 export class MessageService {
   firestore: Firestore = inject(Firestore);
   messages: Message[] = [];
+  allMessages: any[] = [];
   messagesThread: Message[] = [];
   message: Message = {
     user_id: '',
@@ -44,13 +45,17 @@ export class MessageService {
   };
   unsubMessages = () => {};
   unsubMessagesThread =  () => {};
+  unsubAllMessages;
 
   constructor() {
+    this.unsubAllMessages = this.subAllMessages();
   }
+  
 
   ngOnDestroy() {
     this.unsubMessages();
     this.unsubMessagesThread();
+    this.unsubAllMessages();
   }
 
 
@@ -128,6 +133,18 @@ export class MessageService {
       });
     });
   }
+
+
+  subAllMessages() {
+    const q = query(this.getMessagesRef(), orderBy('created_at'));
+    return onSnapshot(q, (messages) => {
+      this.allMessages = [];
+      messages.forEach((message) => {
+        this.allMessages.push(this.setMessage(message.data(), message.id));
+      });
+    });
+  }
+
 
   /* UPDATE */
   async updateMessage(message: Message) {

@@ -121,7 +121,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
 
   getUserImg(messageId: any) {
-    const message = this.messageService.messages.find((message) => message.id === messageId);
+    const message = this.messageService.allMessages.find((message) => message.id === messageId);
     const user = this.userService.getUser(message!.user_id);
     return user?.profile_img || 'assets/img/deleted.png';
 

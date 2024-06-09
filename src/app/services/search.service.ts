@@ -26,7 +26,7 @@ export class SearchService {
     return {
       users: this.filterUsers(searchTerm, this.userService.allUsers),
       channels: this.filterChannels(searchTerm, this.channelService.channels),
-      messages: this.filterMessages(searchTerm, this.messageService.messages),
+      messages: this.filterMessages(searchTerm, this.messageService.allMessages),
     };
   }
 
