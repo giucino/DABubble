@@ -182,7 +182,6 @@ export class MessageComponent {
     if (this.threadService.threadOpen) {
       this.closeThread();
     }
-
     if (thread_id == undefined || thread_id == '') {
       let newThread: Channel = this.newThreadData();
       this.openNewThread(newThread);
@@ -192,7 +191,6 @@ export class MessageComponent {
       this.userService.currentUser.last_thread = thread_id;
       this.userService.saveLastThread(this.userService.currentUser.id, thread_id);
       this.closeUnder1500();
-
     }
   }
 

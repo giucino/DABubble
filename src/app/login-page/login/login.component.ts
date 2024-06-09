@@ -8,6 +8,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { create } from 'domain';
 
 @Component({
   selector: 'app-login',
@@ -41,15 +42,12 @@ export class LoginComponent {
     this.isLoading = true;
     this.userAuth.loginUser(this.loginEmail, this.loginPassword)
       .then(() => {
-        return Promise.all([
-          this.loadUserData(this.loginEmail)
-        ]);
+        return Promise.all([this.loadUserData(this.loginEmail)]);
       })
       .then(() => {
         this.updateLoggedInUser();
       })
       .catch((error) => {
-        console.error(error);
         this.error = true;
         this.isLoading = false;
       });
@@ -79,7 +77,6 @@ export class LoginComponent {
       let user = this.setGoogleUser();
       let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail)?.id;
       if (!googleUserId) {
-        // User does not exist, add Google user
         await this.userService.addUser(user);
       }
       await Promise.all([
@@ -97,6 +94,11 @@ export class LoginComponent {
 
   setGoogleUser() {
     let user = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail);
+    return this.createUserObject(user);
+  }
+
+
+  createUserObject(user: any) {
     return {
       name: this.userAuth.googleName,
       email: this.userAuth.googleEmail,
@@ -108,20 +110,21 @@ export class LoginComponent {
       is_typing: false,
       password: '',
       toJSON() {
-        return {
-          name: this.name,
-          email: this.email,
-          profile_img: this.profile_img,
-          id: this.id,
-          last_channel: this.last_channel,
-          last_thread: this.last_thread,
-          logged_in: this.logged_in,
-          is_typing: this.is_typing,
-          password: this.password
-        };
+          return {
+              name: this.name,
+              email: this.email,
+              profile_img: this.profile_img,
+              id: this.id,
+              last_channel: this.last_channel,
+              last_thread: this.last_thread,
+              logged_in: this.logged_in,
+              is_typing: this.is_typing,
+              password: this.password
+          };
       }
-    };
+  };
   }
+
 
   async loginAsGuest() {
     this.isLoading = true;
