@@ -130,6 +130,7 @@ export class LoginComponent {
 
   async loginAsGuest() {
     this.isLoading = true;
+    this.error = false;
     await this.userAuth.guestLogin();
     await Promise.all([
       this.loadUserData('guest'),
