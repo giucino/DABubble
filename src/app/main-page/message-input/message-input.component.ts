@@ -25,6 +25,9 @@ import { CursorPositionService } from '../../services/cursor-position.service';
   styleUrl: './message-input.component.scss',
 })
 export class MessageInputComponent {
+//   @ViewChild('channelInput') channelInput!: ElementRef;
+//   @Input() usedIn: 'channel' | 'thread' = 'channel';
+
 
   @Input() usedIn: 'channel' | 'thread' = 'channel';
 
@@ -49,10 +52,12 @@ export class MessageInputComponent {
     last_reply: 0,
   };
 
+
   currentFile: any | null = null;
   errorMessage: string = '';
 
   tagText: string = '';
+
 
   constructor(
     public userService: UserService,
@@ -157,13 +162,8 @@ export class MessageInputComponent {
         setTimeout(() => (this.errorMessage = ''), 5000);
       }
 
-      const allowedTypes = [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/svg+xml',
-        'application/pdf',
-      ];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'application/pdf'];
+
       if (!allowedTypes.includes(file.type)) {
         this.currentFile = null;
         this.errorMessage = 'Ungültiger Dateityp. Bitte wählen Sie eine Bild- oder PDF-Datei.';
@@ -185,6 +185,7 @@ export class MessageInputComponent {
 
 
   //#region emoji
+
 
   openDialogEmojiPicker(input: HTMLDivElement) {
     const component = DialogEmojiPickerComponent;
@@ -277,6 +278,7 @@ export class MessageInputComponent {
     this.insertTag(input);
   }
 
+
   insertTag(input: HTMLElement) {
     const text = input.innerText;
     const cursorPosition = this.setSelectionPosition(input);
@@ -344,4 +346,11 @@ export class MessageInputComponent {
   // }
 
   //#endregion
+
+ 
+
+  async setFocusOnInput() {
+    await this.channelInput.nativeElement.focus();
+  }
+
 }

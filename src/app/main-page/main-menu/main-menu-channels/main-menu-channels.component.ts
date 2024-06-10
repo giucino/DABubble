@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -12,7 +12,6 @@ import { ThreadService } from '../../../services/thread.service';
 import { MainPageComponent } from '../../main-page.component';
 import { SharedService } from '../../../services/shared.service';
 import { StateManagementService } from '../../../services/state-management.service';
-import { SearchBarComponent } from '../../main-header/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-main-menu-channels',
@@ -38,14 +37,10 @@ export class MainMenuChannelsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.stateService.getSelectedChannelId().subscribe(id => {
-    //   this.activeChannelId = id ? id : '';
-    // });
   }
 
   selectChannel(channelId: string) {
     this.stateService.setSelectedChannelId(channelId);
-    // console.log('Channel selected: ' + channelId);
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }

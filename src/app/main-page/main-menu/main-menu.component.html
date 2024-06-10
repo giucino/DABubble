@@ -2,8 +2,11 @@
 <!-- <mat-card id="menu-none" class="main-menu" [class.menu-open]="isMenuOpen" [class.menu-closed]="!isMenuOpen"> -->
     <app-search-bar class="mobile-search-bar"></app-search-bar>
     <app-main-menu-header class="menu-header"></app-main-menu-header>
-    <app-main-menu-channels class="menu-channels"></app-main-menu-channels>
-    <app-main-menu-dm class="menu-dm"></app-main-menu-dm>
+    <div class="menu-content">
+        <app-main-menu-channels class="menu-channels"></app-main-menu-channels>
+        <app-main-menu-dm class="menu-dm"></app-main-menu-dm>
+    </div>
+    
 
     <div class="mobile-menu" (click)="openNewChannel()">
         <img src="assets/img/edit_square.png" alt="">

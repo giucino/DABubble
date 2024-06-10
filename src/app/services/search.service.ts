@@ -15,7 +15,8 @@ export class SearchService {
     private userService: UserService,
     private channelService: ChannelFirebaseService,
     private messageService: MessageService
-  ) {}
+  ) { }
+
 
   applyFilters(searchTerm: string): {
     users: User[];
@@ -25,9 +26,10 @@ export class SearchService {
     return {
       users: this.filterUsers(searchTerm, this.userService.allUsers),
       channels: this.filterChannels(searchTerm, this.channelService.channels),
-      messages: this.filterMessages(searchTerm, this.messageService.messages),
+      messages: this.filterMessages(searchTerm, this.messageService.allMessages),
     };
   }
+
 
   clearFilters(): { users: User[]; channels: Channel[]; messages: Message[] } {
     return {
@@ -37,9 +39,11 @@ export class SearchService {
     };
   }
 
+
   private searchTerm(searchTerm: string): string {
     return searchTerm.trim().toLowerCase();
   }
+
 
   filterUsers(searchTerm: string, users: User[]): User[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
@@ -50,6 +54,7 @@ export class SearchService {
     );
   }
 
+
   filterChannels(searchTerm: string, channels: Channel[]): Channel[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
     return channels.filter((channel) =>
@@ -59,12 +64,26 @@ export class SearchService {
     );
   }
 
+
   filterMessages(searchTerm: string, messages: Message[]): Message[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
     return messages.filter((message) =>
-      message.message.text.toLowerCase().includes(lowerCaseTerm)
+      message.message.text.toLowerCase().includes(lowerCaseTerm) &&
+      this.channelExists(message.channel_id, this.channelService.channels) ||
+      this.threadExists(message.thread_id!, this.channelService.channels)
     );
   }
+
+
+  channelExists(channelId: string, channels: Channel[]): boolean {
+    return channels.some(channel => channel.id === channelId);
+  }
+
+
+  threadExists(threadId: string, threads: Channel[]): boolean {
+    return threads.some(thread => thread.id === threadId);
+  }
+
 
   filterUsersByPrefix(prefix: string, users: User[]): User[] {
     const lowerCaseTerm = this.searchTerm(prefix.slice(1)); // Entferne das @-Zeichen
@@ -75,6 +94,7 @@ export class SearchService {
         .some((part: string) => part.toLowerCase().startsWith(lowerCaseTerm))
     );
   }
+
 
   filterChannelsByTypeAndPrefix(
     prefix: string,

@@ -1,26 +1,8 @@
-import {
-  Injectable,
-  OnDestroy,
-  inject,
-} from '@angular/core';
-import {
-  Firestore,
-  collection,
-  onSnapshot,
-  DocumentData,
-  addDoc,
-  doc,
-  updateDoc,
-  deleteDoc,
-} from '@angular/fire/firestore';
+import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Firestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable, Subject } from 'rxjs';
 import { User } from '../models/user';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from '@angular/fire/storage';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable, } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +13,6 @@ export class UserService implements OnDestroy {
   user = new User();
   currentUser: any;
   currentUserThread$ = new Subject<string>();
-
   unsubUsers;
 
   constructor() {
@@ -39,15 +20,18 @@ export class UserService implements OnDestroy {
     this.getCurrentUser();
   }
 
+
   getUser(user_id: string) {
     return this.allUsers.find((user) => user.id == user_id);
   }
+
 
   getUsersByIds(ids: string[]): User[] {
     return ids
       .map((id) => this.getUser(id))
       .filter((user) => user !== undefined);
   }
+
 
   getUsers() {
     return onSnapshot(this.getUserRef(), (list) => {
@@ -60,12 +44,14 @@ export class UserService implements OnDestroy {
     });
   }
 
+
   subCurrentUserForThread(user_id: string) {
     return onSnapshot(this.getSingleUserRef(user_id), (user) => {
       let threadId = this.setUsers(user.data(), user.id).last_thread || '';
       this.currentUserThread$.next(threadId);
     });
   }
+
 
   setUsers(data: any, id: string): User {
     return {
@@ -94,43 +80,43 @@ export class UserService implements OnDestroy {
     };
   }
 
+
   addDatabaseIdToUser(userId: string) {
     let singleUserRef = doc(this.getUserRef(), userId);
     updateDoc(singleUserRef, { id: userId });
   }
 
-async getCurrentUser(email?: string): Promise<User | null> {
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        const storedUser = localStorage.getItem('currentUser');
-        if (email) {
-          this.currentUser = this.allUsers.find((user) => user.email === email);
-          localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
-        } else if (storedUser) {
-          this.currentUser = JSON.parse(storedUser);
-        }
-        
-        return this.currentUser || null;
+
+  async getCurrentUser(email?: string): Promise<User | null> {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedUser = localStorage.getItem('currentUser');
+      if (email) {
+        this.currentUser = this.allUsers.find((user) => user.email === email);
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      } else if (storedUser) {
+        this.currentUser = JSON.parse(storedUser);
       }
-      return null;
-    } catch (error) {
-      console.error("Error retrieving user from localStorage", error);
-      return null;
+      return this.currentUser || null;
     }
+    return null;
   }
-  
+
+
   ngOnDestroy(): void {
     this.unsubUsers();
     this.currentUserThread$.unsubscribe();
   }
 
+
   getUserRef() {
     return collection(this.firestore, 'users');
   }
 
+
   getSingleUserRef(userId: string) {
     return doc(collection(this.firestore, 'users'), userId);
   }
+
 
   async addUser(user: User) {
     await addDoc(this.getUserRef(), user.toJSON());
@@ -142,6 +128,7 @@ async getCurrentUser(email?: string): Promise<User | null> {
     updateDoc(singleUserRef, { profile_img: avatar });
   }
 
+
   async updateLastChannel(userId: string, channelId: string) {
     let singleUserRef = doc(this.getUserRef(), userId);
     await updateDoc(singleUserRef, { last_channel: channelId });
@@ -149,6 +136,7 @@ async getCurrentUser(email?: string): Promise<User | null> {
     currentUser.last_channel = channelId;
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
+
 
   async updateOnlineStatus(userId: string, status: boolean) {
     let singleUserRef = doc(this.getUserRef(), userId);
@@ -158,16 +146,42 @@ async getCurrentUser(email?: string): Promise<User | null> {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
-  saveLastThread(userId: string, threadId: string) {
+
+  async updateUserName(userId: string, name: string) {
     let singleUserRef = doc(this.getUserRef(), userId);
-    updateDoc(singleUserRef, { last_thread: threadId });
+    await updateDoc(singleUserRef, { name: name });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.name = name;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
-//  from feature/messages-img-pdf can be deleted probably 
-//     async saveLastThread(userId: string, threadId: string) {
-//         let singleUserRef = doc(this.getUserRef(), userId);
-//         await updateDoc(singleUserRef, { last_thread: threadId });
-//     }
+
+  async updateUserEmail(userId: string, email: string) {
+    let singleUserRef = doc(this.getUserRef(), userId);
+    await updateDoc(singleUserRef, { email: email });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.email = email;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+
+  async updateUserImage(userId: string, image: string) {
+    let singleUserRef = doc(this.getUserRef(), userId);
+    await updateDoc(singleUserRef, { profile_img: image });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.profile_img = image;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+
+  async saveLastThread(userId: string, threadId: string) {
+    let singleUserRef = doc(this.getUserRef(), userId);
+    await updateDoc(singleUserRef, { last_thread: threadId });
+    let currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    currentUser.last_thread = threadId;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
 
   getCleanJson(user: User): {} {
     return {
@@ -191,7 +205,6 @@ async getCurrentUser(email?: string): Promise<User | null> {
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          // use this section to display the upload progress
         },
         (error) => {
           reject(error);
@@ -205,30 +218,24 @@ async getCurrentUser(email?: string): Promise<User | null> {
     });
   }
 
+
   async loadUser(userId: string) {
     this.getSingleUserRef(userId);
   }
 
+
   async deleteUser(userId: string) {
-    try {
       await deleteDoc(doc(this.firestore, 'users', userId));
-    } catch (error) {
-      console.error('Error removing document: ', error);
-    }
   }
+
 
   async updateUser(user: User): Promise<void> {
     if (user.id) {
       const docRef = doc(this.getUserRef(), user.id);
-      try {
         await updateDoc(docRef, this.getCleanJson(user));
-        // console.log("Benutzerdaten erfolgreich aktualisiert");
-      } catch (error) {
-        console.error("Fehler beim Aktualisieren des Benutzers:", error);
-        throw new Error("Update fehlgeschlagen. Bitte versuchen Sie es erneut.");
-      }
     }
   }
+  
 
   getRealtimeUser(userId: string): Observable<User> {
     return new Observable((observer) => {

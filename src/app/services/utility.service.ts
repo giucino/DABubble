@@ -1,12 +1,27 @@
 import { Injectable } from '@angular/core';
 import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { Message } from '../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
-
+  months = [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
+  ];
   constructor(private channelService: ChannelFirebaseService) { }
+
 
   convertToDate(dateAsNumber: number) {
     let date = new Date(dateAsNumber);
@@ -19,21 +34,8 @@ export class UtilityService {
     return result;
   }
 
+
   getChannelCreationTime() {
-    const months = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
     let date = new Date(this.channelService.currentChannel.created_at);
     let d: number | string = date.getDate();
     let m: number | string = date.getMonth();
@@ -44,7 +46,23 @@ export class UtilityService {
     ) {
       return 'heute';
     } else {
-      return 'am' + ' ' + d + '. ' + months[m] + ' ' + y;
+      return 'am' + ' ' + d + '. ' + this.months[m] + ' ' + y;
+    }
+  }
+
+
+  getMessageCreationTime(message: Message) {
+    let date = new Date(message.created_at);
+    let d: number | string = date.getDate();
+    let m: number | string = date.getMonth();
+    let y = date.getFullYear();
+    if (
+      this.convertToDate(new Date().getTime()) ==
+      this.convertToDate(message.created_at)
+    ) {
+      return 'heute';
+    } else {
+      return 'am' + ' ' + d + '. ' + this.months[m] + ' ' + y;
     }
   }
 }

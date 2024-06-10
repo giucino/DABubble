@@ -47,16 +47,14 @@ export class MessageComponent {
     total_replies: 0,
     last_reply: 0,
   };
-
+  deleted_img: string = 'assets/img/deleted.png';
   currentUser: User = this.userService.currentUser;
   currentChannel = this.channelService.currentChannel;
   channelMembers = this.currentChannel.members;
   messageCreator: User | undefined = undefined;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
-
   attachementsData: any[] = [];
-
-  unsubReactions: Function = () => {};
+  unsubReactions: Function = () => { };
   reactions: Reaction[] = [];
 
   @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
@@ -71,6 +69,7 @@ export class MessageComponent {
     public customDialogService: CustomDialogService,
     public reactionService: ReactionService,
     public sharedService: SharedService,
+    public elementRef: ElementRef,
     public mainpage : MainPageComponent, // TODO: als Service
     public cursorPositionService : CursorPositionService,
   ) {}
@@ -95,6 +94,7 @@ export class MessageComponent {
 
   }
 
+
   ngOnDestroy() {
     this.unsubReactions();
   }
@@ -113,6 +113,7 @@ export class MessageComponent {
     }
   }
 
+
   attachementData(path: string) {
     let attachementData = this.attachementsData.find(
       (data) => data.path == path
@@ -120,13 +121,16 @@ export class MessageComponent {
     return attachementData;
   }
 
+
   isCurrentUser(): boolean {
     return this.currentUser.id === this.message.user_id;
   }
 
+
   getUser(user_id: string) {
     return this.userService.allUsers.find((user) => user.id == user_id);
   }
+
 
   getTime(timeNumber: number) {
     let date = new Date(timeNumber);
@@ -135,6 +139,7 @@ export class MessageComponent {
     let time = h + ':' + m;
     return time;
   }
+
 
   addZero(i: any) {
     if (i < 10) {
@@ -147,14 +152,11 @@ export class MessageComponent {
   getTimeDifferenceForLastReply(dateAsNumber: number) {
     let currentDate = new Date().getTime();
     let difference = 0;
-
     difference = currentDate - dateAsNumber;
-
     let seconds = Math.floor(difference / 1000);
     let minutes = Math.floor(seconds / 60);
     let hours = Math.floor(minutes / 60);
     let days = Math.floor(hours / 24);
-
     if (this.convertToDate(currentDate) == this.convertToDate(dateAsNumber)) {
       return this.getTime(dateAsNumber) + ' ' + 'Uhr';
     } else if (hours > 24 && hours < 48) {
@@ -163,6 +165,7 @@ export class MessageComponent {
       return this.convertToDate(dateAsNumber);
     }
   }
+
 
   convertToDate(dateAsNumber: number) {
     let date = new Date(dateAsNumber);
@@ -175,48 +178,58 @@ export class MessageComponent {
     return result;
   }
 
+
   //#region thread
+
   async openThread(thread_id: string | undefined) {
-    if (this.threadService.threadOpen) this.closeThread();
+    if (this.threadService.threadOpen) {
+      this.closeThread();
+    }
+
     if (thread_id == undefined || thread_id == '') {
-      let newThread: Channel = {
-        id: '',
-        name: this.channelService.currentChannel.name,
-        description: '',
-        created_at: new Date().getTime(),
-        creator: this.userService.currentUser.id, // 'user_id'
-        members: [this.userService.currentUser.id],
-        active_members: [],
-        channel_type: ChannelTypeEnum.thread,
-      };
-      let newThreadId = await this.channelService.addChannel(newThread);
-      this.userService.currentUser.last_thread = newThreadId;
-      this.userService.saveLastThread(
-        this.userService.currentUser.id,
-        newThreadId
-      );
-      this.message.thread_id = newThreadId;
+      let newThread: Channel = this.newThreadData();
+      this.openNewThread(newThread);
       this.messageService.updateMessage(this.message);
-      if (window.innerWidth < 1500 ){
-        this.mainpage.isMenuOpen = false;
-        // console.log('test1');
-      } 
-      this.threadService.openThread();
-      
+      this.closeUnder1500();
     } else {
       this.userService.currentUser.last_thread = thread_id;
-      this.userService.saveLastThread(
-        this.userService.currentUser.id,
-        thread_id
-      );
-      if (window.innerWidth < 1500 ){
-        this.mainpage.isMenuOpen = false;
-        // console.log('test2');
-      }
-      this.threadService.openThread();
-      
+      this.userService.saveLastThread(this.userService.currentUser.id, thread_id);
+      this.closeUnder1500();
+
     }
   }
+
+
+  newThreadData() {
+    return {
+      id: '',
+      name: this.channelService.currentChannel.name,
+      description: '',
+      created_at: new Date().getTime(),
+      creator: this.userService.currentUser.id,
+      members: [this.userService.currentUser.id],
+      active_members: [],
+      channel_type: ChannelTypeEnum.thread,
+    };
+  }
+
+
+  async openNewThread(newThread: Channel) {
+    let newThreadId = await this.channelService.addChannel(newThread);
+    this.userService.saveLastThread(this.userService.currentUser.id, newThreadId);
+    this.userService.currentUser.last_thread = newThreadId;
+    this.message.thread_id = newThreadId;
+  }
+
+
+  closeUnder1500() {
+    if (window.innerWidth < 1500) {
+      this.sharedService.isMenuOpen = false;
+      this.threadService.openThread();
+    }
+    this.threadService.openThread();
+  }
+
 
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
@@ -224,10 +237,9 @@ export class MessageComponent {
   }
   //#endregion thread
 
+
   deleteFile(path: string) {
-    // remove file from storage
     this.messageService.deleteFile(path);
-    // remove attachement path
     if (this.message.message.attachements) {
       const index = this.message.message.attachements.indexOf(path);
       if (index > -1) this.message.message.attachements[index] = 'deleted';
@@ -235,7 +247,6 @@ export class MessageComponent {
       this.messageService.updateMessage(this.message);
     }
   }
-
   
   
   closeEdit() {
@@ -246,17 +257,21 @@ export class MessageComponent {
 
   //#region REACTIONS
 
+
+  //#region REACTIONS
   getReactions() {
-    if(this.message.message.reactions && this.message.message.reactions.length > 0) {
+    if (this.message.message.reactions && this.message.message.reactions.length > 0) {
       let result = this.reactionService.subReactionsForMessage(this.message.id!);
       this.unsubReactions = result.snapshot;
       this.reactions = result.reactionsArray;
     }
   }
 
-  getReactionData(reactionId : string) {
+
+  getReactionData(reactionId: string) {
     return this.reactions.find((reaction) => reaction.id == reactionId);
   }
+
 
   openReactionPicker() {
     const component = DialogEmojiPickerComponent;
@@ -268,76 +283,84 @@ export class MessageComponent {
     });
   }
 
+
   async addReaction(emoji: string) {
-    // does currentUser has a reaction on this message?
     let currentUserReaction = this.reactions.find((reaction) => reaction.users.includes(this.currentUser.id));
-    // does a reaction with the emoji exists
     let reactionWithEmoji = this.reactions.find((reaction) => reaction.unicode == emoji);
-    // if current user has a reaction and it isn't the same emoji delete the user from old reaction
     if (currentUserReaction && currentUserReaction.unicode != emoji) this.removeCurrentUserFromReaction(currentUserReaction);
     if (reactionWithEmoji) {
-      if(!currentUserReaction || currentUserReaction != reactionWithEmoji) this.addCurrentUserToReaction(reactionWithEmoji);
+      if (!currentUserReaction || currentUserReaction != reactionWithEmoji) this.addCurrentUserToReaction(reactionWithEmoji);
     } else {
-      // if not create new reaction with user
-      let newReaction: Reaction = {
-        id: '',
-        message_id: this.message.id!,
-        users: [this.currentUser.id],
-        unicode: emoji,
-        created_at: new Date().getTime(),
-        lastTimeUsed: new Date().getTime(),
-      };
-      const reactionId = await this.reactionService.addReaction(newReaction);
-      this.message.message.reactions?.push(reactionId);
-      this.messageService.updateMessage(this.message);
+      this.createNewReaction(emoji);
     }
   }
 
-  addCurrentUserToReaction(reaction : Reaction) {
-    // set new creation time
-    if(reaction.users.length == 0) reaction.created_at = new Date().getTime();
-    // add current user
+
+  async createNewReaction(emoji: string) {
+    let newReaction: Reaction = this.getNewReactionData(emoji);
+    const reactionId = await this.reactionService.addReaction(newReaction);
+    this.message.message.reactions?.push(reactionId);
+    this.messageService.updateMessage(this.message);
+  }
+
+
+  getNewReactionData(emoji: string) {
+    return {
+      id: '',
+      message_id: this.message.id!,
+      users: [this.currentUser.id],
+      unicode: emoji,
+      created_at: new Date().getTime(),
+      lastTimeUsed: new Date().getTime(),
+    };
+  }
+
+
+  addCurrentUserToReaction(reaction: Reaction) {
+    if (reaction.users.length == 0) reaction.created_at = new Date().getTime();
     reaction.users.push(this.currentUser.id);
-    // add it to message if not already in
-    if(!this.message.message.reactions?.includes(reaction.id)) {
+    if (!this.message.message.reactions?.includes(reaction.id)) {
       this.message.message.reactions?.push(reaction.id);
       this.messageService.updateMessage(this.message);
     }
-    // change last time used
     reaction.lastTimeUsed = new Date().getTime();
     this.reactionService.updateReaction(reaction);
   }
 
-  removeCurrentUserFromReaction(reaction : Reaction) {
+
+  removeCurrentUserFromReaction(reaction: Reaction) {
     let index = reaction.users.indexOf(this.currentUser.id);
     reaction.users.splice(index, 1);
-    // if no users,delete reaction and delete connection to message
-    if(reaction.users.length == 0) {
+    if (reaction.users.length == 0) {
       let reactionIdIndex = this.message.message.reactions?.indexOf(reaction.id);
       if (reactionIdIndex != undefined) {
-        this.message.message.reactions?.splice(reactionIdIndex,1);
+        this.message.message.reactions?.splice(reactionIdIndex, 1);
         this.messageService.updateMessage(this.message);
       }
-    } 
+    }
     this.reactionService.updateReaction(reaction);
   }
 
-  toggleReaction(reaction : Reaction) {
-    if(reaction.users.includes(this.currentUser.id)) {
+
+  toggleReaction(reaction: Reaction) {
+    if (reaction.users.includes(this.currentUser.id)) {
       this.removeCurrentUserFromReaction(reaction);
     } else {
       this.addReaction(reaction.unicode);
     }
   }
-  // TODO: nicht gefundene User abfangen
-  getUserName(userId : string) {
+
+
+
+  getUserName(userId: string) {
     let user = this.userService.allUsers.find((user) => user.id == userId);
-    return user?.name || 'UNKNOWN USER';
+    return user ? user.name : 'Gelöschter Nutzer';
   }
 
- sortedReactionsByLastTimeUsed() {
+
+  sortedReactionsByLastTimeUsed() {
     let filteredReactionsForNoUsers = [...this.reactions].filter((reaction) => reaction.users.length > 0)
-    let sortedByLastTimeUsed = filteredReactionsForNoUsers.sort((a,b) => b.lastTimeUsed - a.lastTimeUsed);
+    let sortedByLastTimeUsed = filteredReactionsForNoUsers.sort((a, b) => b.lastTimeUsed - a.lastTimeUsed);
     return sortedByLastTimeUsed;
   }
 
@@ -357,4 +380,5 @@ export class MessageComponent {
   }
 
   //#endregion
+
 }

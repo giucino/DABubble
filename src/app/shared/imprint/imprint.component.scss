@@ -1,12 +1,10 @@
-.imprint-container{
+.imprint-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    // width: 606px;
-    // height: 769px;
     border-radius: 30px;
     background-color: white;
     align-items: center;
@@ -19,12 +17,14 @@
         font-size: 46px;
         font-weight: 700;
     }
-    h2{
+
+    h2 {
         color: var(--color-purple-1);
         font-size: 32px;
         font-weight: 700;
     }
 }
+
 .back-to-login {
     position: absolute;
     left: 32px;
@@ -36,5 +36,38 @@
         width: 24px !important;
         height: 24px !important;
 
+    }
+}
+
+.names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adress {
+    display: flex;
+}
+
+.mail-link {
+    text-decoration: none;
+    color: var(--color-purple-1);
+}
+
+@media (max-width: 430px) {
+    .imprint-container {
+        width: 95dvw;
+        padding: 40px 20px;
+        h1 {
+            font-size: 36px;
+        }
+        h2 {
+            font-size: 26px;
+        }
+    }
+
+    .back-to-login {
+        left: 10px;
+        top: 42px;
     }
 }

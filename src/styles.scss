@@ -163,6 +163,7 @@ button {
 
     &:disabled {
       background-color: var(--color-gray);
+      cursor: unset;
     }
   }
 
@@ -188,6 +189,7 @@ button {
       color: var(--color-gray);
       background-color: transparent;
       border-color: var(--color-gray);
+      cursor: unset;
     }
   }
 
@@ -340,18 +342,33 @@ button {
   color: var(--color-gray);
 }
 
-/* scrollbar */
+/* For Webkit browsers like Chrome and Safari */
 ::-webkit-scrollbar {
   width: 8px;
+}
+::-webkit-scrollbar-button{
+  display: none;
 }
 
 ::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.02);
+  
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-light-purple);
   border-radius: 30px;
+}
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-light-purple) rgba(0, 0, 0, 0.02);
+  // scrollbar
+}
+
+/* For IE and Edge */
+* {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 /* generic classes */
@@ -424,9 +441,21 @@ app-avatar {
   align-items: center;
   justify-content: center;
 }
+app-privacy-policy{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 150px;
+  margin-bottom: 100px;
+}
 
 @media (max-width: 768px) {
 
+  .cdk-overlay-pane{
+    max-width: 100dvw !important;
+    width: unset !important;
+  }
   .custom-dialog {
     &-anchorTopLeft-mobile {
       transform: unset;

@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     width: 606px;
-    // height: 769px;
     border-radius: 30px;
     background-color: white;
     align-items: center;
@@ -20,7 +19,6 @@
     }
 
     >p {
-        // align-items: center;
         text-align: center;
         font-weight: 400;
         font-size: 20px;
@@ -155,8 +153,6 @@ input[type="password"] {
     .login-container{
        padding: 30px 16px;
        height: auto; 
-    //    position: relative;
-    //    transform: unset;
     }
 }
 @media (max-width: 630px) {
@@ -171,7 +167,6 @@ input[type="password"] {
         >div{
             width: 100%;
             input{
-                // width: 90%;
                 width: 100%;
             }
         }

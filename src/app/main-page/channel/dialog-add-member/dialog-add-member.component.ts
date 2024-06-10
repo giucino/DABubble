@@ -20,16 +20,16 @@ export class DialogAddMemberComponent implements OnInit {
   filteredUsers: User[] = [];
   selectedUsers: User[] = [];
   newlyAddedUsers: User[] = [];
-
-  currentChannel: Channel = 
-  this.channelService.currentChannel;
+  currentChannel: Channel =
+    this.channelService.currentChannel;
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddMemberComponent>,
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public userManagementService: UserManagementService,
-  ) {}
+  ) { }
+
 
   ngOnInit(): void {
     if (this.channelService.currentChannel && this.channelService.currentChannel.members) {
@@ -38,42 +38,41 @@ export class DialogAddMemberComponent implements OnInit {
     }
   }
 
+
   onFilterUsers(): void {
     this.filteredUsers = this.userManagementService.filterUsers(this.searchInput, this.selectedUsers);
   }
 
+
   onSelectUser(user: User): void {
     this.selectedUsers = this.userManagementService.selectUser(this.selectedUsers, user);
-    
     if (!this.newlyAddedUsers.find(u => u.id === user.id)) {
-        this.newlyAddedUsers.push(user);
+      this.newlyAddedUsers.push(user);
     }
     this.filteredUsers = this.filteredUsers.filter(u => u.id !== user.id);
-    
     this.searchInput = '';
-    this.onFilterUsers(); 
-}
+    this.onFilterUsers();
+  }
+
 
   onRemoveSelectedUser(user: User): void {
-    this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);    
+    this.selectedUsers = this.userManagementService.removeSelectedUser(this.selectedUsers, user);
     this.newlyAddedUsers = this.newlyAddedUsers.filter(u => u.id !== user.id);
-    this.onFilterUsers(); 
+    this.onFilterUsers();
   }
+
 
   onUpdateMembers(): void {
     const memberIds = this.userManagementService.getMemberIds(this.selectedUsers);
-
     const channelId = this.userManagementService.getCurrentChannelId();
     if (channelId) {
       this.userManagementService.updateMembers(channelId, memberIds)
         .then(() => {
-          this.dialogRef.close(); 
+          this.dialogRef.close();
         })
         .catch(error => {
           console.error('Fehler beim Aktualisieren der Mitgliederliste:', error);
         });
-    } else {
-      console.error('Keine Channel-ID verfügbar zum Aktualisieren der Mitglieder.');
     }
   }
 }

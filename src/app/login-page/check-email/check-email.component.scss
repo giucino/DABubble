@@ -50,9 +50,11 @@ form {
                 line-height: 21.6px;
 
             }
-            &:hover{
+
+            &:hover {
                 border: 1px solid var(--color-black);
             }
+
             &:focus {
                 border: 1px solid var(--color-purple-2);
                 outline: none;
@@ -70,15 +72,17 @@ form {
     font-size: 14px;
     margin-top: 4px;
 }
-.textMsgAbove{
+
+.textMsgAbove {
     font-family: Nunito;
-font-size: 20px;
-font-weight: 400;
-line-height: 24px;
-text-align: center;
-width: 486px;
-color: var(--color-black);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    width: 486px;
+    color: var(--color-black);
 }
+
 .textMsgBelow {
     width: 354px;
     font-family: Nunito;
@@ -108,92 +112,107 @@ color: var(--color-black);
     display: flex;
     justify-content: flex-end;
 
-    button {
-        background-color: var(--color-purple-1);
-        border-radius: 25px;
-        padding: 12px 25px;
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 24.55px;
-        color: white;
+    // button {
+    //     background-color: var(--color-purple-1);
+    //     border-radius: 25px;
+    //     padding: 12px 25px;
+    //     font-size: 18px;
+    //     font-weight: 700;
+    //     line-height: 24.55px;
+    //     color: white;
 
-        &:disabled {
-            background-color: var(--color-gray);
-            cursor: unset;
-        }
-    }
+    //     &:disabled {
+    //         background-color: var(--color-gray);
+    //         cursor: unset;
+    //     }
+    // }
 }
 
 @media (max-width: 710px) {
-    .check-email-container{
+    .check-email-container {
         padding: 30px 16px;
         width: calc(100dvw - 32px);
         height: auto;
+
         h1 {
             font-size: 42px;
         }
     }
+
     .back-to-login {
         left: 24px;
         top: 40px;
     }
 }
+
 @media (max-width: 630px) {
-    .check-email-container{
-        h1{
+    .check-email-container {
+        h1 {
             font-size: 36px;
             text-align: center;
             width: 85%;
         }
     }
+
     .back-to-login {
         left: 18px;
         top: 34px;
-        img{
+
+        img {
             width: 20px !important;
             height: 20px !important;
         }
     }
-    form{
+
+    form {
         width: 100%;
-        >div{
+
+        >div {
             width: 100%;
             display: flex;
             align-items: center;
             flex-direction: column;
-            input{
+
+            input {
                 width: 90%;
             }
         }
 
     }
-    .errorMsg{
+
+    .errorMsg {
         text-align: start;
         width: 90%;
         margin-top: 65px;
     }
-    .next-btn-container{
+
+    .next-btn-container {
         width: 90%;
-    } 
+    }
 }
+
 @media (max-width: 500px) {
-    .check-email-container{
-        h1{
+    .check-email-container {
+        h1 {
             font-size: 32px;
             width: 80%;
         }
-        p{
+
+        p {
             font-size: 16px;
             width: 100%;
         }
     }
-    form{
+
+    form {
         margin-bottom: 10px;
-        >div{
-            input{
+
+        >div {
+            input {
                 background-position: left 20px center;
                 padding: 13px 32px 13px 70px;
                 text-align: start;
+
                 &::placeholder {
                     font-size: 16px;
                 }
@@ -201,17 +220,19 @@ color: var(--color-black);
         }
     }
 }
+
 @media (max-width: 400px) {
-    form{
-        >div{
-            input{
-                
+    form {
+        >div {
+            input {
+
                 padding: 13px 24px 13px 55px;
 
             }
         }
     }
 }
+
 @media (max-width: 350px) {
     .back-to-login {
         top: unset;

@@ -1,10 +1,5 @@
 <div class="login-container">
-    @if (isLoading) {
-        <!-- <div class="loading-overlay">
-          <div class="loading-spinner"></div>
-        </div> -->
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        }
+    @if (isLoading) {<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
         
     <h1>Anmeldung</h1>
 
@@ -14,7 +9,6 @@
         <div>
             <img class="iconOverlay" [src]="iconSrc" alt="">
             <input (keyup.enter)="login()" [(ngModel)]="loginEmail" (focus)="changeIcon(true)" (blur)="changeIcon(false)" type="email" class="fs-18" #email="ngModel" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$" ngModel required name="loginEmail" id="loginEmail" placeholder="beispielname@email.com">
-            <!-- <div class="iconOverlay"></div> -->
             <p *ngIf="!email.valid && email.touched || error" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p>
         </div>
 

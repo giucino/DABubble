@@ -23,6 +23,7 @@ export class MainMenuDmComponent implements OnInit, OnDestroy {
   isExpanded: boolean = true;
   users: User[] = [];
   selectedUserId: string = '';
+  profileImg = this.userService.currentUser?.profile_img;
 
   newDirectChannel : Channel = {
     id: '',

@@ -31,10 +31,17 @@
 
     .message-content {
       align-items: flex-end;
+      max-width: 90%;
     }
 
     .message-creator {
       flex-direction: row-reverse;
+      .name{
+        cursor: pointer;
+        &:hover{
+          color: var(--color-purple-3);
+        }
+      }
     }
 
     .message {
@@ -67,14 +74,18 @@
   flex-direction: column;
   gap: 8px;
   flex-grow: 1;
+  max-width: 85%;
 }
 
 .message-creator {
   display: flex;
   gap: 20px;
-
   .name {
     font-weight: 700;
+    cursor: pointer;
+    &:hover{
+      color: var(--color-purple-3);
+    }
   }
 
   .time,
@@ -88,12 +99,17 @@
   padding: 15px;
   background-color: var(--color-bg);
   width: fit-content;
-  max-width: calc(100% - 70px - 30px); // 100% - profile-img - gap
+  max-width: calc(100% - 70px - 30px);
 
   &:hover {
     background-color: var(--color-white);
   }
+  .text{
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
 }
+
 
 input,
 textarea,
@@ -343,12 +359,17 @@ app-edit-message {
     }
   }
 
-
-      
+  .btn-primary,.btn-secondary{
+    padding: 6px 12px;
+    font-size: 16px;
+  }
+  .message-edit-container{
+    padding: 10px 20px 10px 20px;
+    max-width: 80dvw; 
+  }
 
 
 }
-
 @media (max-width: 550px) {
   .message-container,
   .message-container-reverse {
@@ -358,6 +379,43 @@ app-edit-message {
       .message {
         width: 80%;
       }
+    }
+  }
+  .reaction-bar{
+    .more-options-button-container{
+      .more-options-menu{
+        padding: 5px 10px;
+        top: 120%;
+        left: calc(-60% + 8px);
+      }
+    }
+  }
+  .btn-text-v2{
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+  .message-edit-container{
+    max-width: 70dvw; 
+  }
+}
+@media(max-width: 450px){
+  .btn-primary,.btn-secondary{
+    font-size: 14px;
+  }
+  .message-edit-container{
+    padding: 5px 10px 5px 10px;
+  }
+  .reaction-bar{
+    .more-options-button-container{
+      .more-options-menu{
+        left: calc(-220% + 8px);
+      }
+    }
+  }
+  .message-container,
+  .message-container-reverse {
+    .message-content {
+      max-width: 80%;
     }
   }
 }
@@ -373,14 +431,11 @@ app-edit-message {
       display: none;
     }
     .count{
-      // margin-right: 0;
       font-size: 14px;
     }
   }
   .message-container,
   .message-container-reverse {
-
-
     .message-content {
       .message {
         width: 90%;
@@ -396,5 +451,22 @@ app-edit-message {
 
     }
   }
-
+  .reaction-bar{
+    left: 20px;
+  }
+  .message-edit-buttons{
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .btn-primary,.btn-secondary{
+    padding: 3px 6px;
+  }
+}
+@media (max-width: 320px){
+  .message-container,
+  .message-container-reverse {
+    .message-content {
+      max-width: 70%;
+    }
+  }
 }

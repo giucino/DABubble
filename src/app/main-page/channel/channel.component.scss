@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  cursor: pointer;
 }
 
 /*-- channel header --*/
@@ -156,7 +155,6 @@
 
 /*-- channel header - new --*/
 
-// input-container
 .channel-header-new {
     .input-container {
         width: 100%;
@@ -267,108 +265,6 @@ input, textarea, #channelInput {
     padding: 40px 45px;
 }
 
-// .message-input-container {
-//     border: 1px solid var(--color-light-purple);
-//     border-radius: 20px;
-//     padding: 20px;
-//     &:hover {
-//         border-color: var(--color-purple-2);
-//     }
-//     &:focus-within {
-//         border-color: var(--color-purple-1);
-//     } 
-//     textarea {
-//         width: 100%;
-//         min-height: 50px;
-//         max-height: 200px;
-//         resize: vertical;
-//         padding-right: 10px;
-//     } 
-// }
-
-// // placeholder text
-// [contentEditable=true]:empty:not(:focus):before {
-//   content: attr(placeholder-text);
-//   color: var(--color-gray);
-// }
-
-// .documents-preview {
-//   display: flex;
-//   align-items: center;
-//   gap: 8px;
-//   width: 100%;
-// }
-
-// .message-img {
-//   width: 64px;
-//   height: 64px;
-//   border-radius: 8px;
-//   overflow: hidden;
-//   img {
-//     width: 100%;
-//     object-fit: cover;
-//   }
-// }
-
-// .message-input-buttons {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   .left-side {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 5px;
-//   }
-//   .separator-v {
-//     width: 1px;
-//     height: 40px;
-//     background-color: var(--color-light-purple);
-//   }
-//   .btn-send-message {
-//     aspect-ratio: 1 / 1;
-//     flex-shrink: 0;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     &:hover {
-//       svg path {
-//         fill: var(--color-purple-2);
-//       }
-//     }
-//     &:disabled {
-//       svg path {
-//         fill: var(--color-gray);
-//       }
-//     } 
-//   }
-// }
-
-
-
-
-// .loading-overlay {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, 0.1);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 99;
-// }
-
-// .loading-spinner {
-//   border: 16px solid #f3f3f3;
-//   border-radius: 50%;
-//   border-top: 16px solid #3498db;
-//   width: 120px;
-//   height: 120px;
-//   -webkit-animation: spin 2s linear infinite; /* Safari */
-//   animation: spin 2s linear infinite;
-// }
 .mobile{
   display: none;
 }
@@ -391,6 +287,30 @@ input, textarea, #channelInput {
   100% { transform: rotate(360deg); }
 }
 
+@-webkit-keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blink {
+  animation: blink 1s linear 2;
+}
+
+
+
+
+@media (max-width: 1080px){
+  .channel-container{
+    min-width: 500px;
+  }
+}
 @media (max-width: 768px) {
   .channel-container{
     border-radius: 0;
@@ -413,7 +333,6 @@ input, textarea, #channelInput {
     padding: 10px 16px;
     width: 100%;
     position: relative;
-    // left: 20px;
     .channel-name-container{
       padding: 6px 0px;
     }

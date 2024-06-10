@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
@@ -17,6 +17,7 @@ import { OpenProfileDirective } from '../../../shared/directives/open-profile.di
 import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { UtilityService } from '../../../services/utility.service';
+import { ChannelComponent } from '../../channel/channel.component';
 // import { SearchResultsComponent } from '../../../shared/search-results/search-results.component';
 
 @Component({
@@ -39,7 +40,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   filteredMessages: Message[] = [];
   searchControl = new FormControl();
   private subscriptions = new Subscription();
-
   newDirectChannel: Channel = {
     id: '',
     name: 'Direct Channel',
@@ -59,7 +59,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public router: Router,
     public threadService: ThreadService,
     public utilityService: UtilityService,
-  ) {}
+    public viewportScroller: ViewportScroller,
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -81,24 +82,18 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   filter(searchTerm: string): void {
     if (searchTerm.startsWith('@')) {
-      this.filteredUsers = this.searchService.filterUsersByPrefix(
-        searchTerm,
-        this.userService.allUsers
-      );
+      this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
       this.filteredChannels = [];
       this.filteredMessages = [];
     } else if (searchTerm.startsWith('#')) {
-      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(
-        searchTerm,
-        ChannelTypeEnum.main
-      );
+      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
       this.filteredUsers = [];
       this.filteredMessages = [];
     } else if (searchTerm.length > 0) {
       const results = this.searchService.applyFilters(searchTerm);
       this.filteredUsers = results.users;
-      this.filteredChannels = results.channels;
-      this.filteredMessages = results.messages;
+      this.filteredChannels = this.sortChannels(results.channels); // muss nicht aber hey
+      this.filteredMessages = this.sortMessages(results.messages);
     } else {
       const results = this.searchService.clearFilters();
       this.filteredUsers = results.users;
@@ -107,12 +102,58 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  sortMessages(messages: Message[]): Message[] {
+    return messages.sort((a, b) => b.created_at - a.created_at);
+  }
+
+
+  sortChannels(channels: Channel[]): Channel[] {
+    return channels.sort((a, b) => b.created_at - a.created_at);
+  }
+
+
+  onBlur(): void {
+    this.clearSearch();
+  }
+
+
   displayChannelTime(): string {
     return this.utilityService.getChannelCreationTime();
   }
 
+
+  displayMessageTime(message: Message): string {
+    return this.utilityService.getMessageCreationTime(message);
+  }
+
+
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+  }
+
+
+  getChannelName(channelId: string) {
+    const channel = this.channelService.channels.find((channel) => channel.id === channelId);
+    return channel ? channel.name : '';
+  }
+
+
+  getUserImg(messageId: any) {
+    const message = this.messageService.allMessages.find((message) => message.id === messageId);
+    const user = this.userService.getUser(message!.user_id);
+    return user?.profile_img || 'assets/img/deleted.png';
+  }
+
+
+  navigateToMessage(message: Message) {
+    if (message.channel_id != '') {
+      this.router.navigate(['/main-page', message.channel_id])
+      this.messageService.changeMessage(message.id);
+    } if (message.thread_id != '' && message.channel_id == '') {
+      this.router.navigate(['/main-page', message.thread_id])
+      this.messageService.changeMessage(message.id);
+    }
   }
 }

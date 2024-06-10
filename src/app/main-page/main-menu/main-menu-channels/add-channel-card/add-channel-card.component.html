@@ -36,7 +36,11 @@
                 </g>
             </svg>
             <input type="text" [(ngModel)]="channel.name" required class="input-description" matInput placeholder="z.B. Kooperationsprojekte">
+            
         </div>
+        @if (duplicateName){
+            <p class="error-text">Ein Kanal mit diesem Namen existiert bereits. Bitte wählen Sie einen anderen Namen.</p>
+        }
     </mat-dialog-content>
 
     <mat-dialog-content class="mat-dialog-content-custom">

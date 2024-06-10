@@ -1,7 +1,7 @@
 <div class="search-bar-container">
-    <input class="searchbar-input" type="text" matInput placeholder="DABubble durchsuchen" maxlength="40" autocomplete="off"
+    <input class="searchbar-input" (blur)="onBlur()" type="text" matInput placeholder="DABubble durchsuchen" maxlength="40" autocomplete="off"
     [formControl]="searchControl">
-    <input class="searchbar-input-mobile" type="text" matInput placeholder="Gehe zu..." maxlength="40" autocomplete="off"
+    <input class="searchbar-input-mobile" (blur)="onBlur()" type="text" matInput placeholder="Gehe zu..." maxlength="40" autocomplete="off"
     [formControl]="searchControl"> 
     <!-- ob die searchbar jetzt da sein soll weiß ich nicht genau, sieht aber so aus -->
     <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,18 +67,17 @@
         @if (filteredMessages.length > 0) {
         <ul class="filtered">
             <span class="categoryName">Messages:</span>
-            @for(message of filteredMessages; track message.id) {
-            <li>
+            @for(message of filteredMessages; track message.id; ) {
+            <li (click)="navigateToMessage(message)">
                 <div class="channelList">
-                    <img class="user-avatar" [src]="" alt="Avatar">
+                    <img class="user-avatar" [src]="getUserImg(message.id)" alt="Avatar">
                     <div class="messageContainer">
                         <div class="messageHeader">
                             <span class="user-name"></span>
-                            <span class="message-time">{{
-                                displayChannelTime() }}</span>
+                            <span class="message-time">{{displayMessageTime(message) }}</span>
                         </div>
                         <span>{{message.message.text}}</span>
-                        <span class="message-channel-name">{{message.channel_id}}</span>
+                        <span class="message-channel-name">#{{getChannelName(message.channel_id)}}</span>
                     </div>
                 </div>
             </li>

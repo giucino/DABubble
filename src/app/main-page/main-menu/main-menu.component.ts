@@ -28,7 +28,7 @@ import { SearchBarComponent } from '../main-header/search-bar/search-bar.compone
   styleUrl: './main-menu.component.scss',
 })
 export class MainMenuComponent{
-  isMenuOpen: boolean = this.mainPage.isMenuOpen;
+  isMenuOpen: boolean = this.sharedService.isMenuOpen;
   constructor(public channelService: ChannelFirebaseService, 
     public sharedService: SharedService,
   public userService: UserService,

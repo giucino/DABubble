@@ -9,9 +9,8 @@ import { User } from '../../interfaces/user.interface';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
-import { documentId } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dialog-show-profile',
@@ -44,6 +43,7 @@ export class DialogShowProfileComponent implements OnInit {
     public threadService : ThreadService,
   ) {}
 
+
   ngOnInit(): void {
     const userId = this.profileService.getViewingUserId();
     if (userId) {
@@ -51,9 +51,11 @@ export class DialogShowProfileComponent implements OnInit {
     }
   }
 
+
   isOwnProfile(): boolean {
     return this.profileService.getOwnProfileStatus();
   }
+
 
   editCurrentUser(button: HTMLElement): void {
     const component = DialogEditProfileComponent;
@@ -62,8 +64,6 @@ export class DialogShowProfileComponent implements OnInit {
     else {this.customDialogService.openDialog(component)};
     this.dialogRef.close();
   }
-
-
 
 
   async openDirectChannel(user_id: string): Promise<void> {
@@ -76,8 +76,8 @@ export class DialogShowProfileComponent implements OnInit {
     }
     this.closeThread();
     this.dialogRef.close();
-
   }
+
 
   async createNewDirectChannel(user_id : string) {
     this.newDirectChannel.creator = this.userService.currentUser.id;
@@ -85,6 +85,7 @@ export class DialogShowProfileComponent implements OnInit {
     this.newDirectChannel.members = [this.userService.currentUser.id, user_id];
     return await this.channelService.addChannel(this.newDirectChannel);
   }
+  
 
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');

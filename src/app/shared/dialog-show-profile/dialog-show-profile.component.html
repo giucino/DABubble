@@ -27,11 +27,14 @@
         <div class="name">
             <div class="first-name fs-32">{{ isOwnProfile() ? userService.currentUser.name : user?.name }}
             </div>
-            <!-- div zum bearbeiten nur anzeigen, wenn isOwnProfile = true ist -->
             @if (isOwnProfile()) {
             <div class="edit fs-18" #profileBtn (click)="editCurrentUser(profileBtn)">Bearbeiten
             </div>
+            <img class="mobile-img" src="assets/img/edit.png" alt="" (click)="editCurrentUser(profileBtn)" #profileBtn>
             }
+           @if (!isOwnProfile()){
+            <!-- <img class="mobile-img" src="assets/img/edit.png" alt="" (click)="editCurrentUser(profileBtn)" #profileBtn> -->
+           }
         </div>
 
         <div class="status-container">

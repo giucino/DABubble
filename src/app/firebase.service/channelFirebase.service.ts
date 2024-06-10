@@ -17,9 +17,7 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
-import { Subject } from 'rxjs';
 import { runTransaction } from 'firebase/firestore';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -76,7 +74,7 @@ export class ChannelFirebaseService {
     );
     let channel = undefined;
     if (currentUser_id == dm_target_id) {
-      channel = directChannels.find((channel) => channel.members.length == 1);
+      channel = directChannels.find((channel) => channel.members[0] == channel.members[1] || channel.members.length == 1);
     } else {
       channel = directChannels.find((channel) =>
         channel.members.includes(dm_target_id)
@@ -93,6 +91,11 @@ export class ChannelFirebaseService {
 
   async getCurrentChannel(channel_id: string) {
     return onSnapshot(this.getChannelRef(channel_id), (channel) => {
+      const channelData = channel.data();
+      if (!channelData) {
+        // console.error('Channel data is undefined');
+        return;
+      }
       this.currentChannel = this.setChannel(channel.data(), channel.id);
     });
   }
@@ -117,6 +120,15 @@ export class ChannelFirebaseService {
   }
 
   setChannel(data: any, id: string): Channel {
+    // if (!data) {
+      // console.error('Data is undefined');
+      // return;
+    // }
+  
+    // if (!data.name) {
+    //   console.error('Data does not have a name property');
+    //   return;
+    // }
     return {
       id: id || '',
       name: data.name || '',
@@ -240,63 +252,35 @@ export class ChannelFirebaseService {
       return;
     }
     const docRef = doc(this.getChannelsRef(), channelId);
-    try {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const channelData = docSnap.data() as Channel;
-        console.log("Channel Data:", channelData)
-        const newMembers = channelData.members.filter(memberId => memberId !== userId);
-        console.log("New Members:", newMembers)
-        channelData.members = newMembers;
+    const docSnap = await getDoc(docRef);
 
-        // await this.updateChannel(channelData);
-        await updateDoc(docRef, { members: newMembers })
-        console.log("Benutzer erfolgreich entfernt.");
+    if (docSnap.exists()) {
+      const channelData = docSnap.data() as Channel;
+      // console.log("Channel Data:", channelData)
+      const newMembers = channelData.members.filter(memberId => memberId !== userId);
+      // console.log("New Members:", newMembers)
+      channelData.members = newMembers;
+
+      if (newMembers.length === 0) {
+        this.deleteChannel(channelId);
+        // await deleteDoc(docRef);
+        // this.channels = this.channels.filter(channel => channel.id !== channelId);
       } else {
-        console.error("Kein solcher Channel gefunden.");
+        await updateDoc(docRef, { members: newMembers })
       }
-    } catch (error) {
-      console.error("Fehler beim Entfernen des Benutzers aus dem Channel:", error);
     }
   }
 
-  // async removeUserFromChannel(channelId: string, userId: string) {
-  //   if (!channelId) {
-  //     console.error("Channel ID ist leer oder ungültig");
-  //     return;
-  //   }
-
-  //   const docRef = this.getChannelRef(channelId);
-
-  //   try {
-  //     const docSnap = await getDoc(docRef);
-  //     if (docSnap.exists()) {
-  //       const channelData = docSnap.data() as Channel;
-  //       const newMembers = channelData.members.filter(memberId => memberId !== userId);
-  //       channelData.members = newMembers;
-
-  //       // Aktualisieren des Channels mit der neuen Mitgliederliste
-  //       await this.updateChannel(channelData);
-  //       console.log("Benutzer erfolgreich entfernt.");
-  //     } else {
-  //       console.error("Kein solcher Channel gefunden.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Fehler beim Entfernen des Benutzers aus dem Channel:", error);
-  //   }
-  // }
-
-
-  // getAllChannels() {
-  //   const allChannelsQuery = query(this.getChannelsRef());
-  //   this.unsubscribeAllChannels = onSnapshot(allChannelsQuery, (querySnapshot) => {
-  //     this.channels = [];
-  //     querySnapshot.forEach((doc) => {
-  //       const channel = this.setChannel(doc.data(), doc.id);
-  //       this.channels.push(channel);
-  //     });
-  //   });
-  // }
+  async deleteChannel(channelId: string) {
+    if (!channelId) {
+      console.error("Channel ID ist leer oder ungültig");
+      return;
+    }
+    const docRef = doc(this.getChannelsRef(), channelId);
+    await deleteDoc(docRef);
+    // console.log("Kanal:", channelId, "erfolgreich gelöscht.")
+    this.channels = this.channels.filter(channel => channel.id !== channelId);
+  }
 
   async getAllChannels(): Promise<Channel[]> {
     const allChannelsQuery = query(this.getChannelsRef());
