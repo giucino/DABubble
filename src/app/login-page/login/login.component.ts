@@ -8,7 +8,6 @@ import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { create } from 'domain';
 
 @Component({
   selector: 'app-login',
@@ -28,9 +27,12 @@ export class LoginComponent {
   iconSrc = '/assets/img/mail.png';
   oobCode: string = '';
 
-  constructor(private userAuth: UserAuthService, private userService: UserService,
-    private router: Router, private channelService: ChannelFirebaseService,
-    public route: ActivatedRoute) { }
+  constructor(private userAuth: UserAuthService, 
+    private userService: UserService,
+    private router: Router, 
+    private channelService: ChannelFirebaseService,
+    public route: ActivatedRoute
+  ) { }
 
 
   ngonInit() {
@@ -72,18 +74,18 @@ export class LoginComponent {
 
 
   async loginWithGoogle() {
-      await this.userAuth.loginWithGoogle();
-      this.isLoading = true;
-      let user = this.setGoogleUser();
-      let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail)?.id;
-      if (!googleUserId) {
-        await this.userService.addUser(user);
-      }
-      await Promise.all([
-        this.loadUserData(this.userAuth.googleEmail),
-      ]).then(() => {
-        this.updateLoggedInUser();
-      });
+    await this.userAuth.loginWithGoogle();
+    this.isLoading = true;
+    let user = this.setGoogleUser();
+    let googleUserId = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail)?.id;
+    if (!googleUserId) {
+      await this.userService.addUser(user);
+    }
+    await Promise.all([
+      this.loadUserData(this.userAuth.googleEmail),
+    ]).then(() => {
+      this.updateLoggedInUser();
+    });
   }
 
 
@@ -110,30 +112,30 @@ export class LoginComponent {
       is_typing: false,
       password: '',
       toJSON() {
-          return {
-              name: this.name,
-              email: this.email,
-              profile_img: this.profile_img,
-              id: this.id,
-              last_channel: this.last_channel,
-              last_thread: this.last_thread,
-              logged_in: this.logged_in,
-              is_typing: this.is_typing,
-              password: this.password
-          };
+        return {
+          name: this.name,
+          email: this.email,
+          profile_img: this.profile_img,
+          id: this.id,
+          last_channel: this.last_channel,
+          last_thread: this.last_thread,
+          logged_in: this.logged_in,
+          is_typing: this.is_typing,
+          password: this.password
+        };
       }
-  };
+    };
   }
 
 
   async loginAsGuest() {
     this.isLoading = true;
-      await this.userAuth.guestLogin();
-      await Promise.all([
-        this.loadUserData('guest'),
-      ]).then(() => {
-        this.updateLoggedInUser();
-      });
+    await this.userAuth.guestLogin();
+    await Promise.all([
+      this.loadUserData('guest'),
+    ]).then(() => {
+      this.updateLoggedInUser();
+    });
   }
 
 
