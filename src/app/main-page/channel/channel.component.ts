@@ -68,13 +68,13 @@ export class ChannelComponent {
   channelId: string = '';
   isLoading = false;
 
-  // searchControl = new FormControl();
-  // private subscriptions = new Subscription();
-  // filteredUsers: User[] = [];
-  // filteredChannels: Channel[] = [];
-  // selectedUserId: string = '';
+  searchControl = new FormControl();
+  private subscriptions = new Subscription();
+  filteredUsers: User[] = [];
+  filteredChannels: Channel[] = [];
+  selectedUserId: string = '';
 
-  inputText : string = '';
+  inputText: string = '';
 
   newDirectChannel: Channel = {
     id: '',
@@ -152,18 +152,16 @@ export class ChannelComponent {
 
 
   ngOnInit() {
-
     if (this.userService.currentUser && this.userService.currentUser.last_channel) {
       this.openChannel();
     }
-    // this.subscriptions.add(
-    //   this.searchControl.valueChanges
-    //     .pipe(debounceTime(300))
-    //     .subscribe((value) => {
-    //       this.filter(value);
-    //     })
-    // );
-
+    this.subscriptions.add(
+      this.searchControl.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe((value) => {
+          this.filter(value);
+        })
+    );
   }
 
 
@@ -181,7 +179,7 @@ export class ChannelComponent {
 
 
   ngOnDestroy(): void {
-    // this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe();
     this.messageService.unsubMessages();
   }
 
@@ -190,19 +188,19 @@ export class ChannelComponent {
   // }
 
 
-  // filter(searchTerm: string): void {
-  //   if (searchTerm.startsWith('@')) {
-  //     this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
-  //     this.filteredChannels = [];
-  //   } else if (searchTerm.startsWith('#')) {
-  //     this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
-  //     this.filteredUsers = [];
-  //   } else {
-  //     const results = this.searchService.clearFilters();
-  //     this.filteredUsers = results.users;
-  //     this.filteredChannels = results.channels;
-  //   }
-  // }
+  filter(searchTerm: string): void {
+    if (searchTerm.startsWith('@')) {
+      this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
+      this.filteredChannels = [];
+    } else if (searchTerm.startsWith('#')) {
+      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
+      this.filteredUsers = [];
+    } else {
+      const results = this.searchService.clearFilters();
+      this.filteredUsers = results.users;
+      this.filteredChannels = results.channels;
+    }
+  }
 
 
   async openDirectChannel(user_id: string): Promise<void> {
@@ -361,5 +359,13 @@ export class ChannelComponent {
   closeThread() {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
+  }
+
+
+  addDirectChannelToArray(userId: string) {
+  }
+
+
+  addChannelToArray(channelId: string) {
   }
 }

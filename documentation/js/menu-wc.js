@@ -93,6 +93,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/DialogShowProfileComponent.html" data-type="entity-link" >DialogShowProfileComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/EditMessageComponent.html" data-type="entity-link" >EditMessageComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/EmailSnackbarComponent.html" data-type="entity-link" >EmailSnackbarComponent</a>
                             </li>
                             <li class="link">
@@ -138,7 +141,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/MessageInputComponent.html" data-type="entity-link" >MessageInputComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/PopupSearchComponent.html" data-type="entity-link" >PopupSearchComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/PrivacyPolicyComponent.html" data-type="entity-link" >PrivacyPolicyComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/ProfileButtonComponent.html" data-type="entity-link" >ProfileButtonComponent</a>
                             </li>
                             <li class="link">
                                 <a href="components/ResetPasswordComponent.html" data-type="entity-link" >ResetPasswordComponent</a>
@@ -171,6 +180,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <li class="link">
                                     <a href="directives/OpenProfileDirective.html" data-type="entity-link" >OpenProfileDirective</a>
                                 </li>
+                                <li class="link">
+                                    <a href="directives/TagToComponentDirective.html" data-type="entity-link" >TagToComponentDirective</a>
+                                </li>
                             </ul>
                         </li>
                     <li class="chapter">
@@ -196,6 +208,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
                                     <a href="injectables/ChannelFirebaseService.html" data-type="entity-link" >ChannelFirebaseService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/CursorPositionService.html" data-type="entity-link" >CursorPositionService</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/CustomDialogService.html" data-type="entity-link" >CustomDialogService</a>

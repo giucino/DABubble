@@ -1,0 +1,2130 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>da-bubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">da-bubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  EditMessageComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/main-page/channel/message/edit-message/edit-message.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-edit-message</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                                <code><a href="../components/PopupSearchComponent.html" target="_self" >PopupSearchComponent</a></code>
+                                <code><a href="../directives/OpenProfileDirective.html" target="_self" >OpenProfileDirective</a></code>
+                                <code><a href="../directives/TagToComponentDirective.html" target="_self" >TagToComponentDirective</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./edit-message.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./edit-message.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#channelInput" >channelInput</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#channelInputViewRef" >channelInputViewRef</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cursorPositionService" >cursorPositionService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#customDialogService" >customDialogService</a>
+                            </li>
+                            <li>
+                                <a href="#editableMessage" >editableMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#messageService" >messageService</a>
+                            </li>
+                            <li>
+                                <a href="#tagText" >tagText</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addEmoji" >addEmoji</a>
+                            </li>
+                            <li>
+                                <a href="#checkForTag" >checkForTag</a>
+                            </li>
+                            <li>
+                                <a href="#closeEdit" >closeEdit</a>
+                            </li>
+                            <li>
+                                <a href="#formatMessageForSave" >formatMessageForSave</a>
+                            </li>
+                            <li>
+                                <a href="#formatTagForSave" >formatTagForSave</a>
+                            </li>
+                            <li>
+                                <a href="#getTextWithLineBreaks" >getTextWithLineBreaks</a>
+                            </li>
+                            <li>
+                                <a href="#handleEnter" >handleEnter</a>
+                            </li>
+                            <li>
+                                <a href="#handleKeyDown" >handleKeyDown</a>
+                            </li>
+                            <li>
+                                <a href="#insertAtCursor" >insertAtCursor</a>
+                            </li>
+                            <li>
+                                <a href="#isSmallWidth" >isSmallWidth</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openDialogEmojiPicker" >openDialogEmojiPicker</a>
+                            </li>
+                            <li>
+                                <a href="#setFocusAtTextEnd" >setFocusAtTextEnd</a>
+                            </li>
+                            <li>
+                                <a href="#setSelectionPosition" >setSelectionPosition</a>
+                            </li>
+                            <li>
+                                <a href="#updateMessage" >updateMessage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#channelType" >channelType</a>
+                            </li>
+                            <li>
+                                <a href="#message" >message</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#closeEditEvent" >closeEditEvent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#channelInputElement" >channelInputElement</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>, customDialogService: <a href="../injectables/CustomDialogService.html" target="_self">CustomDialogService</a>, renderer: Renderer2, cursorPositionService: <a href="../injectables/CursorPositionService.html" target="_self">CursorPositionService</a>, elementRef: ElementRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>messageService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>customDialogService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CustomDialogService.html" target="_self" >CustomDialogService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>cursorPositionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CursorPositionService.html" target="_self" >CursorPositionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>elementRef</td>
+                                                  
+                                                        <td>
+                                                                    <code>ElementRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="channelType"></a>
+                        <b>channelType</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;main&quot; | &quot;direct&quot; | &quot;thread&quot; | &quot;new&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;main&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="message"></a>
+                        <b>message</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Message.html" target="_self" >Message</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    user_id: &#x27;&#x27;,
+    channel_id: &#x27;&#x27;,
+    thread_id: &#x27;&#x27;,
+    message: {
+      text: &#x27;&#x27;,
+      reactions: [],
+      attachements: [],
+    },
+    created_at: 0,
+    modified_at: 0,
+    is_deleted: false,
+    total_replies: 0,
+    last_reply: 0,
+  }</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="closeEditEvent"></a>
+                        <b>closeEditEvent</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;void&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:53</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addEmoji"></a>
+                    <span class="name">
+                        <span ><b>addEmoji</b></span>
+                        <a href="#addEmoji"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addEmoji(input: HTMLElement, result: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:118</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>result</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkForTag"></a>
+                    <span class="name">
+                        <span ><b>checkForTag</b></span>
+                        <a href="#checkForTag"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkForTag(element: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeEdit"></a>
+                    <span class="name">
+                        <span ><b>closeEdit</b></span>
+                        <a href="#closeEdit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeEdit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:89</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatMessageForSave"></a>
+                    <span class="name">
+                        <span ><b>formatMessageForSave</b></span>
+                        <a href="#formatMessageForSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatMessageForSave(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatTagForSave"></a>
+                    <span class="name">
+                        <span ><b>formatTagForSave</b></span>
+                        <a href="#formatTagForSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatTagForSave(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTextWithLineBreaks"></a>
+                    <span class="name">
+                        <span ><b>getTextWithLineBreaks</b></span>
+                        <a href="#getTextWithLineBreaks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTextWithLineBreaks(input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="170"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:170</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleEnter"></a>
+                    <span class="name">
+                        <span ><b>handleEnter</b></span>
+                        <a href="#handleEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleEnter(event: Event, element: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="213"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:213</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleKeyDown"></a>
+                    <span class="name">
+                        <span ><b>handleKeyDown</b></span>
+                        <a href="#handleKeyDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleKeyDown(event: KeyboardEvent, element: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="185"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:185</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>KeyboardEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="insertAtCursor"></a>
+                    <span class="name">
+                        <span ><b>insertAtCursor</b></span>
+                        <a href="#insertAtCursor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>insertAtCursor(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSmallWidth"></a>
+                    <span class="name">
+                        <span ><b>isSmallWidth</b></span>
+                        <a href="#isSmallWidth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isSmallWidth()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDialogEmojiPicker"></a>
+                    <span class="name">
+                        <span ><b>openDialogEmojiPicker</b></span>
+                        <a href="#openDialogEmojiPicker"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDialogEmojiPicker(input: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="107"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setFocusAtTextEnd"></a>
+                    <span class="name">
+                        <span ><b>setFocusAtTextEnd</b></span>
+                        <a href="#setFocusAtTextEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setFocusAtTextEnd(input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectionPosition"></a>
+                    <span class="name">
+                        <span ><b>setSelectionPosition</b></span>
+                        <a href="#setSelectionPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectionPosition(element: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:179</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateMessage"></a>
+                    <span class="name">
+                        <span ><b>updateMessage</b></span>
+                        <a href="#updateMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateMessage(channelInput: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelInput</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelInput"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>channelInput</b></span>
+                        <a href="#channelInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ElementRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;channelInput&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelInputViewRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>channelInputViewRef</b></span>
+                        <a href="#channelInputViewRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ViewContainerRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;channelInput&#x27;, {read: ViewContainerRef, static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cursorPositionService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cursorPositionService</b></span>
+                        <a href="#cursorPositionService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/CursorPositionService.html" target="_self" >CursorPositionService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customDialogService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>customDialogService</b></span>
+                        <a href="#customDialogService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/CustomDialogService.html" target="_self" >CustomDialogService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editableMessage"></a>
+                    <span class="name">
+                        <span ><b>editableMessage</b></span>
+                        <a href="#editableMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>JSON.parse(JSON.stringify(this.message))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="messageService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>messageService</b></span>
+                        <a href="#messageService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/MessageService.html" target="_self" >MessageService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tagText"></a>
+                    <span class="name">
+                        <span ><b>tagText</b></span>
+                        <a href="#tagText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="channelInputElement"></a>
+                        <span class="name"><b>channelInputElement</b><a href="#channelInputElement"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>channelInputElement()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/main-page/channel/message/edit-message/edit-message.component.ts:76</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef,
+} from &#x27;@angular/core&#x27;;
+import { Message } from &#x27;../../../../interfaces/message.interface&#x27;;
+import { CursorPositionService } from &#x27;../../../../services/cursor-position.service&#x27;;
+import { PopupSearchComponent } from &#x27;../../../../shared/popup-search/popup-search.component&#x27;;
+import { OpenProfileDirective } from &#x27;../../../../shared/directives/open-profile.directive&#x27;;
+import { DialogEmojiPickerComponent } from &#x27;../../dialog-emoji-picker/dialog-emoji-picker.component&#x27;;
+import { CustomDialogService } from &#x27;../../../../services/custom-dialog.service&#x27;;
+import { MessageService } from &#x27;../../../../firebase.service/message.service&#x27;;
+import { TagToComponentDirective } from &#x27;../../../../shared/directives/tag-to-component.directive&#x27;;
+
+@Component({
+  selector: &#x27;app-edit-message&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    PopupSearchComponent,
+    OpenProfileDirective,
+    TagToComponentDirective
+  ],
+  templateUrl: &#x27;./edit-message.component.html&#x27;,
+  styleUrl: &#x27;./edit-message.component.scss&#x27;,
+})
+export class EditMessageComponent {
+  @Input() channelType: &#x27;main&#x27; | &#x27;direct&#x27; | &#x27;thread&#x27; | &#x27;new&#x27; &#x3D; &#x27;main&#x27;;
+  @Input() message: Message &#x3D; {
+    user_id: &#x27;&#x27;,
+    channel_id: &#x27;&#x27;,
+    thread_id: &#x27;&#x27;,
+    message: {
+      text: &#x27;&#x27;,
+      reactions: [],
+      attachements: [],
+    },
+    created_at: 0,
+    modified_at: 0,
+    is_deleted: false,
+    total_replies: 0,
+    last_reply: 0,
+  };
+
+  editableMessage &#x3D; JSON.parse(JSON.stringify(this.message));
+
+  @Output() closeEditEvent: EventEmitter&lt;void&gt; &#x3D; new EventEmitter&lt;void&gt;();
+
+  @ViewChild(&#x27;channelInput&#x27;, { static: true }) channelInput!: ElementRef;
+  @ViewChild(&#x27;channelInput&#x27;, { read: ViewContainerRef, static: true })
+  channelInputViewRef!: ViewContainerRef;
+  tagText: string &#x3D; &#x27;&#x27;;
+
+  constructor(
+    public messageService: MessageService,
+    public customDialogService: CustomDialogService,
+    private renderer: Renderer2,
+    public cursorPositionService: CursorPositionService,
+    private elementRef: ElementRef,
+  ) {}
+
+  isSmallWidth() {
+    return this.elementRef.nativeElement.offsetWidth &lt;&#x3D; 600;
+  }
+
+  ngOnInit() {
+    this.editableMessage &#x3D; JSON.parse(JSON.stringify(this.message));
+  }
+
+  get channelInputElement(): ElementRef {
+    return this.channelInput;
+  }
+
+  //#region update message
+  updateMessage(channelInput: HTMLDivElement) {
+    this.editableMessage.modified_at &#x3D; new Date().getTime();
+    channelInput.innerHTML &#x3D; this.formatMessageForSave(channelInput.innerHTML);
+    this.editableMessage.message.text &#x3D; channelInput.innerText;
+    this.messageService.updateMessage(this.editableMessage);
+    this.closeEdit();
+  }
+
+  closeEdit() {
+    this.closeEditEvent.emit();
+  }
+
+  formatTagForSave(text : string) {
+    const regex &#x3D; new RegExp(/&lt;app-profile-button[^&gt;]*&gt;&lt;button[^&gt;]*ng-reflect-user-id&#x3D;&quot;([^&quot;]+)&quot;[^&gt;]*&gt;[^&lt;]*&lt;\/button&gt;&lt;\/app-profile-button&gt;/g)
+    const formattedText &#x3D; text.replace(regex, &#x27;@$1&#x27;);
+    return formattedText;
+  }
+
+  formatMessageForSave(text : string) {
+    let formattedText &#x3D; this.formatTagForSave(text);
+    return formattedText;
+  }
+
+  //#endregion
+
+  //#region emoji picker
+  openDialogEmojiPicker(input: HTMLDivElement) {
+    const component &#x3D; DialogEmojiPickerComponent;
+    const dialogRef &#x3D; this.customDialogService.openDialog(component);
+    dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
+      if (result) {
+        this.addEmoji(input, result);
+      }
+    });
+  }
+
+
+  addEmoji(input : HTMLElement, result : any) {
+    if(document.activeElement !&#x3D;&#x3D; input)  this.setFocusAtTextEnd(input);
+    this.insertAtCursor(result, input);
+  }
+
+  setFocusAtTextEnd(input : HTMLElement) {
+    input.focus();
+    var range &#x3D; document.createRange();
+    range.selectNodeContents(input);
+    range.collapse(false);
+    var selection &#x3D; window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      this.cursorPositionService.setLastCursorPosition(input);
+    }
+  }
+
+
+  insertAtCursor(text: string, input: HTMLElement) {
+    const sel &#x3D; window.getSelection();
+    const range &#x3D; this.cursorPositionService.restoreCursorPosition(input);  
+    if (sel &amp;&amp; range) {
+        const textNode &#x3D; document.createTextNode(text);
+        range.insertNode(textNode);
+        range.setStartAfter(textNode);
+        range.setEndAfter(textNode);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    this.setSelectionPosition(input);
+  }
+  //#endregion emoji picker
+
+  //#region  @/# Tag System 
+  checkForTag(element: HTMLElement) {
+    const text &#x3D; this.getTextWithLineBreaks(element);
+    const cursorPosition &#x3D; this.setSelectionPosition(element);
+    const textBeforeCursor &#x3D; text.slice(0, cursorPosition);
+    const charBeforeCursor &#x3D; textBeforeCursor[cursorPosition - 1];
+    this.tagText &#x3D; &#x27;&#x27;;
+    if (charBeforeCursor &amp;&amp; !/\s/.test(charBeforeCursor)) {
+      const atIndex &#x3D; textBeforeCursor.lastIndexOf(&#x27;@&#x27;);
+      if (atIndex !&#x3D;&#x3D; -1) {
+        const charAfterAt &#x3D; textBeforeCursor[atIndex + 1];
+        if (!charAfterAt?.match(/\s/)) {
+          this.tagText &#x3D; textBeforeCursor.slice(atIndex);
+        }
+      }
+    }
+  }
+
+  getTextWithLineBreaks(input : HTMLElement): string {
+    return input.innerHTML
+    .replace(/&lt;br\s*\/?&gt;/gi, &#x27;\n&#x27;)
+    .replace(/&lt;\/?p&gt;/gi, &#x27;\n&#x27;)
+    .replace(/&lt;\/?div&gt;/gi, &#x27;\n&#x27;)
+    .replace(/&amp;nbsp;/g, &#x27; &#x27;)
+    .replace(/&lt;[^&gt;]+&gt;/g, &#x27;&#x27;);
+  }
+
+  setSelectionPosition(element: HTMLElement): number {
+    return this.cursorPositionService.saveCursorPosition(element);
+  }
+  
+
+
+  handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
+    const selection &#x3D; window.getSelection();
+    if (selection &amp;&amp; selection.rangeCount &gt; 0) {
+      const curRange &#x3D; selection.getRangeAt(selection.rangeCount - 1);
+      if (curRange.commonAncestorContainer.nodeType &#x3D;&#x3D; 3 &amp;&amp; curRange.startOffset &gt; 0) return; // we are in child selection. The characters of the text node is being deleted
+      // if (event.key &#x3D;&#x3D;&#x3D; &#x27;Backspace&#x27;) this.handleBackSpace(selection, element, event);
+      if (event.key &#x3D;&#x3D;&#x3D; &#x27;Enter&#x27; &amp;&amp; !event.shiftKey) this.handleEnter(event, element);
+    }
+  }
+
+  // handleBackSpace(selection : Selection, element : HTMLDivElement, event: Event) {
+  //   const range &#x3D; document.createRange();
+  //   if (selection.anchorNode &amp;&amp; selection.anchorNode !&#x3D; element) { // selection is in character mode. expand it to the whole editable field
+  //       range.selectNodeContents(element);
+  //       range.setEndBefore(selection.anchorNode);
+  //   } else if (selection.anchorOffset &gt; 0) range.setEnd(element, selection.anchorOffset);
+  //   else return; // reached the beginning of editable field
+  //   range.setStart(element, range.endOffset &#x3D;&#x3D; 0 ? 0 : range.endOffset - 1);
+  //   const previousNode &#x3D; range.cloneContents().lastChild;
+  //   if (previousNode &amp;&amp; previousNode.nodeType &#x3D;&#x3D; Node.ELEMENT_NODE) {
+  //     const previousElement &#x3D; previousNode as HTMLElement;
+  //     if (previousElement.contentEditable &#x3D;&#x3D;&#x3D; &#x27;false&#x27;) {  // This is some rich content, e.g. smiley. We should help the user to delete it.
+  //       range.deleteContents();
+  //       event.preventDefault();
+  //     }
+  //   }
+  // }
+
+  handleEnter(event: Event, element : HTMLDivElement) {
+    event.preventDefault();
+    this.updateMessage(element);
+  }
+  //#endregion
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">
+&lt;div [ngClass]&#x3D;&quot;{&#x27;message-edit-container&#x27; : channelType !&#x3D; &#x27;thread&#x27;, &#x27;message-edit-container-thread&#x27; : channelType &#x3D;&#x3D; &#x27;thread&#x27;}&quot;&gt;
+    &lt;div #channelInput name&#x3D;&quot;channelInput&quot; class&#x3D;&quot;message-input&quot; contenteditable&#x3D;&quot;true&quot; (input)&#x3D;&quot;this.editableMessage.message.text &#x3D; channelInput.innerHTML; checkForTag(channelInput)&quot; (keyup)&#x3D;&quot;checkForTag(channelInput)&quot; (mouseup)&#x3D;&quot;checkForTag(channelInput)&quot; (keydown)&#x3D;&quot;handleKeyDown($event, channelInput)&quot; [innerText]&#x3D;&quot;message.message.text&quot; appTagToComponent&gt;
+    &lt;/div&gt;
+    &lt;app-popup-search [searchTerm]&#x3D;&quot;tagText&quot; [inputElement]&#x3D;&quot;channelInputElement&quot; [viewContainerRef]&#x3D;&quot;channelInputViewRef&quot;&gt;&lt;/app-popup-search&gt;
+    &lt;div class&#x3D;&quot;message-edit-buttons&quot;&gt;
+        &lt;!-- add emoticon --&gt;
+        &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;openDialogEmojiPicker(channelInput)&quot; (mousedown)&#x3D;&quot;$event.preventDefault()&quot;&gt;
+            &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; viewBox&#x3D;&quot;0 0 24 24&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
+              &lt;mask id&#x3D;&quot;mask0_813_12139&quot; style&#x3D;&quot;mask-type:alpha&quot; maskUnits&#x3D;&quot;userSpaceOnUse&quot; x&#x3D;&quot;0&quot; y&#x3D;&quot;0&quot; width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot;&gt;
+              &lt;rect width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;#D9D9D9&quot;/&gt;
+              &lt;/mask&gt;
+              &lt;g mask&#x3D;&quot;url(#mask0_813_12139)&quot;&gt;
+              &lt;path d&#x3D;&quot;M15.5 11C15.9333 11 16.2917 10.8583 16.575 10.575C16.8583 10.2917 17 9.93333 17 9.5C17 9.06667 16.8583 8.70833 16.575 8.425C16.2917 8.14167 15.9333 8 15.5 8C15.0667 8 14.7083 8.14167 14.425 8.425C14.1417 8.70833 14 9.06667 14 9.5C14 9.93333 14.1417 10.2917 14.425 10.575C14.7083 10.8583 15.0667 11 15.5 11ZM8.5 11C8.93333 11 9.29167 10.8583 9.575 10.575C9.85833 10.2917 10 9.93333 10 9.5C10 9.06667 9.85833 8.70833 9.575 8.425C9.29167 8.14167 8.93333 8 8.5 8C8.06667 8 7.70833 8.14167 7.425 8.425C7.14167 8.70833 7 9.06667 7 9.5C7 9.93333 7.14167 10.2917 7.425 10.575C7.70833 10.8583 8.06667 11 8.5 11ZM12 17.5C12.95 17.5 13.8167 17.2877 14.6 16.863C15.3833 16.4377 15.9917 15.9 16.425 15.25C16.625 14.95 16.6543 14.6667 16.513 14.4C16.371 14.1333 16.15 14 15.85 14C15.7333 14 15.6167 14.0333 15.5 14.1C15.3833 14.1667 15.2917 14.25 15.225 14.35C14.8583 14.85 14.4 15.25 13.85 15.55C13.3 15.85 12.6833 16 12 16C11.3167 16 10.7 15.85 10.15 15.55C9.6 15.25 9.14167 14.85 8.775 14.35C8.70833 14.25 8.61267 14.1667 8.488 14.1C8.36267 14.0333 8.24167 14 8.125 14C7.84167 14 7.62933 14.129 7.488 14.387C7.346 14.6457 7.36667 14.9167 7.55 15.2C8 15.8833 8.61667 16.4377 9.4 16.863C10.1833 17.2877 11.05 17.5 12 17.5ZM12 22C10.6167 22 9.31667 21.7373 8.1 21.212C6.88333 20.6873 5.825 19.975 4.925 19.075C4.025 18.175 3.31267 17.1167 2.788 15.9C2.26267 14.6833 2 13.3833 2 12C2 10.6167 2.26267 9.31667 2.788 8.1C3.31267 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.31233 8.1 2.787C9.31667 2.26233 10.6167 2 12 2C13.3833 2 14.6833 2.26233 15.9 2.787C17.1167 3.31233 18.175 4.025 19.075 4.925C19.975 5.825 20.6873 6.88333 21.212 8.1C21.7373 9.31667 22 10.6167 22 12C22 13.3833 21.7373 14.6833 21.212 15.9C20.6873 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6873 15.9 21.212C14.6833 21.7373 13.3833 22 12 22ZM12 20C14.2167 20 16.1043 19.221 17.663 17.663C19.221 16.1043 20 14.2167 20 12C20 9.78333 19.221 7.89567 17.663 6.337C16.1043 4.779 14.2167 4 12 4C9.78333 4 7.896 4.779 6.338 6.337C4.77933 7.89567 4 9.78333 4 12C4 14.2167 4.77933 16.1043 6.338 17.663C7.896 19.221 9.78333 20 12 20Z&quot; fill&#x3D;&quot;#686868&quot;/&gt;
+              &lt;/g&gt;
+            &lt;/svg&gt;                               
+        &lt;/button&gt;
+        &lt;div class&#x3D;&quot;message-confirm-buttons&quot;&gt;
+            @if(channelType !&#x3D; &#x27;thread&#x27; &amp;&amp; !isSmallWidth()) {
+                &lt;button class&#x3D;&quot;btn-secondary fs-18&quot; (click)&#x3D;&quot;closeEdit()&quot;&gt;Abbrechen&lt;/button&gt;
+                &lt;button class&#x3D;&quot;btn-primary fs-18&quot; (click)&#x3D;&quot;updateMessage(channelInput)&quot;&gt;Speichern&lt;/button&gt;
+            }
+            @if(channelType &#x3D;&#x3D; &#x27;thread&#x27; || isSmallWidth()) {
+                &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;closeEdit()&quot;&gt;
+                    &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; height&#x3D;&quot;24&quot; viewBox&#x3D;&quot;0 -960 960 960&quot; width&#x3D;&quot;24&quot; fill&#x3D;&quot;var(--color-light-purple)&quot;&gt;&lt;path d&#x3D;&quot;m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z&quot;/&gt;&lt;/svg&gt;
+                &lt;/button&gt;
+                &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;updateMessage(channelInput)&quot;&gt;
+                    &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; viewBox&#x3D;&quot;0 0 24 24&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
+                        &lt;mask id&#x3D;&quot;mask0_1814_16197&quot; style&#x3D;&quot;mask-type:alpha&quot; maskUnits&#x3D;&quot;userSpaceOnUse&quot; x&#x3D;&quot;0&quot; y&#x3D;&quot;0&quot; width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot;&gt;
+                        &lt;rect width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;#D9D9D9&quot;/&gt;
+                        &lt;/mask&gt;
+                        &lt;g mask&#x3D;&quot;url(#mask0_1814_16197)&quot;&gt;
+                        &lt;path d&#x3D;&quot;M10.6 13.8L8.45 11.65C8.26667 11.4667 8.03333 11.375 7.75 11.375C7.46667 11.375 7.23333 11.4667 7.05 11.65C6.86667 11.8333 6.775 12.0667 6.775 12.35C6.775 12.6333 6.86667 12.8667 7.05 13.05L9.9 15.9C10.1 16.1 10.3333 16.2 10.6 16.2C10.8667 16.2 11.1 16.1 11.3 15.9L16.95 10.25C17.1333 10.0667 17.225 9.83333 17.225 9.55C17.225 9.26667 17.1333 9.03333 16.95 8.85C16.7667 8.66667 16.5333 8.575 16.25 8.575C15.9667 8.575 15.7333 8.66667 15.55 8.85L10.6 13.8ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z&quot; fill&#x3D;&quot;var(--color-purple-2)&quot;/&gt;
+                        &lt;/g&gt;
+                    &lt;/svg&gt;
+                &lt;/button&gt;
+            }
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div [ngClass]="{\'message-edit-container\' : channelType != \'thread\', \'message-edit-container-thread\' : channelType == \'thread\'}">    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text = channelInput.innerHTML; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" [innerText]="message.message.text" appTagToComponent>    </div>    <app-popup-search [searchTerm]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>    <div class="message-edit-buttons">        <!-- add emoticon -->        <button class="btn-icon w40" (click)="openDialogEmojiPicker(channelInput)" (mousedown)="$event.preventDefault()">            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">              <mask id="mask0_813_12139" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">              <rect width="24" height="24" fill="#D9D9D9"/>              </mask>              <g mask="url(#mask0_813_12139)">              <path d="M15.5 11C15.9333 11 16.2917 10.8583 16.575 10.575C16.8583 10.2917 17 9.93333 17 9.5C17 9.06667 16.8583 8.70833 16.575 8.425C16.2917 8.14167 15.9333 8 15.5 8C15.0667 8 14.7083 8.14167 14.425 8.425C14.1417 8.70833 14 9.06667 14 9.5C14 9.93333 14.1417 10.2917 14.425 10.575C14.7083 10.8583 15.0667 11 15.5 11ZM8.5 11C8.93333 11 9.29167 10.8583 9.575 10.575C9.85833 10.2917 10 9.93333 10 9.5C10 9.06667 9.85833 8.70833 9.575 8.425C9.29167 8.14167 8.93333 8 8.5 8C8.06667 8 7.70833 8.14167 7.425 8.425C7.14167 8.70833 7 9.06667 7 9.5C7 9.93333 7.14167 10.2917 7.425 10.575C7.70833 10.8583 8.06667 11 8.5 11ZM12 17.5C12.95 17.5 13.8167 17.2877 14.6 16.863C15.3833 16.4377 15.9917 15.9 16.425 15.25C16.625 14.95 16.6543 14.6667 16.513 14.4C16.371 14.1333 16.15 14 15.85 14C15.7333 14 15.6167 14.0333 15.5 14.1C15.3833 14.1667 15.2917 14.25 15.225 14.35C14.8583 14.85 14.4 15.25 13.85 15.55C13.3 15.85 12.6833 16 12 16C11.3167 16 10.7 15.85 10.15 15.55C9.6 15.25 9.14167 14.85 8.775 14.35C8.70833 14.25 8.61267 14.1667 8.488 14.1C8.36267 14.0333 8.24167 14 8.125 14C7.84167 14 7.62933 14.129 7.488 14.387C7.346 14.6457 7.36667 14.9167 7.55 15.2C8 15.8833 8.61667 16.4377 9.4 16.863C10.1833 17.2877 11.05 17.5 12 17.5ZM12 22C10.6167 22 9.31667 21.7373 8.1 21.212C6.88333 20.6873 5.825 19.975 4.925 19.075C4.025 18.175 3.31267 17.1167 2.788 15.9C2.26267 14.6833 2 13.3833 2 12C2 10.6167 2.26267 9.31667 2.788 8.1C3.31267 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.31233 8.1 2.787C9.31667 2.26233 10.6167 2 12 2C13.3833 2 14.6833 2.26233 15.9 2.787C17.1167 3.31233 18.175 4.025 19.075 4.925C19.975 5.825 20.6873 6.88333 21.212 8.1C21.7373 9.31667 22 10.6167 22 12C22 13.3833 21.7373 14.6833 21.212 15.9C20.6873 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6873 15.9 21.212C14.6833 21.7373 13.3833 22 12 22ZM12 20C14.2167 20 16.1043 19.221 17.663 17.663C19.221 16.1043 20 14.2167 20 12C20 9.78333 19.221 7.89567 17.663 6.337C16.1043 4.779 14.2167 4 12 4C9.78333 4 7.896 4.779 6.338 6.337C4.77933 7.89567 4 9.78333 4 12C4 14.2167 4.77933 16.1043 6.338 17.663C7.896 19.221 9.78333 20 12 20Z" fill="#686868"/>              </g>            </svg>                                       </button>        <div class="message-confirm-buttons">            @if(channelType != \'thread\' && !isSmallWidth()) {                <button class="btn-secondary fs-18" (click)="closeEdit()">Abbrechen</button>                <button class="btn-primary fs-18" (click)="updateMessage(channelInput)">Speichern</button>            }            @if(channelType == \'thread\' || isSmallWidth()) {                <button class="btn-icon w40" (click)="closeEdit()">                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="var(--color-light-purple)"><path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>                </button>                <button class="btn-icon w40" (click)="updateMessage(channelInput)">                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                        <mask id="mask0_1814_16197" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">                        <rect width="24" height="24" fill="#D9D9D9"/>                        </mask>                        <g mask="url(#mask0_1814_16197)">                        <path d="M10.6 13.8L8.45 11.65C8.26667 11.4667 8.03333 11.375 7.75 11.375C7.46667 11.375 7.23333 11.4667 7.05 11.65C6.86667 11.8333 6.775 12.0667 6.775 12.35C6.775 12.6333 6.86667 12.8667 7.05 13.05L9.9 15.9C10.1 16.1 10.3333 16.2 10.6 16.2C10.8667 16.2 11.1 16.1 11.3 15.9L16.95 10.25C17.1333 10.0667 17.225 9.83333 17.225 9.55C17.225 9.26667 17.1333 9.03333 16.95 8.85C16.7667 8.66667 16.5333 8.575 16.25 8.575C15.9667 8.575 15.7333 8.66667 15.55 8.85L10.6 13.8ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z" fill="var(--color-purple-2)"/>                        </g>                    </svg>                </button>            }        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AddChannelCardComponent', 'selector': 'app-add-channel-card'},{'name': 'AddMemberCardComponent', 'selector': 'app-add-member-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'app-avatar'},{'name': 'ChannelComponent', 'selector': 'app-channel'},{'name': 'CheckEmailComponent', 'selector': 'app-check-email'},{'name': 'DialogAddMemberComponent', 'selector': 'app-dialog-add-member'},{'name': 'DialogAddMemberMobileComponent', 'selector': 'app-dialog-add-member-mobile'},{'name': 'DialogEditChannelComponent', 'selector': 'app-dialog-edit-channel'},{'name': 'DialogEditProfileComponent', 'selector': 'app-dialog-edit-profile'},{'name': 'DialogEmojiPickerComponent', 'selector': 'app-dialog-emoji-picker'},{'name': 'DialogShowMembersComponent', 'selector': 'app-dialog-show-members'},{'name': 'DialogShowProfileComponent', 'selector': 'app-dialog-show-profile'},{'name': 'EditMessageComponent', 'selector': 'app-edit-message'},{'name': 'EmailSnackbarComponent', 'selector': 'app-email-snackbar'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'LoginSnackbarComponent', 'selector': 'app-login-snackbar'},{'name': 'LogOutDialogComponent', 'selector': 'app-log-out-dialog'},{'name': 'MainHeaderComponent', 'selector': 'app-main-header'},{'name': 'MainMenuChannelsComponent', 'selector': 'app-main-menu-channels'},{'name': 'MainMenuComponent', 'selector': 'app-main-menu'},{'name': 'MainMenuDmComponent', 'selector': 'app-main-menu-dm'},{'name': 'MainMenuHeaderComponent', 'selector': 'app-main-menu-header'},{'name': 'MainPageComponent', 'selector': 'app-main-page'},{'name': 'MessageComponent', 'selector': 'app-message'},{'name': 'MessageInputComponent', 'selector': 'app-message-input'},{'name': 'PopupSearchComponent', 'selector': 'app-popup-search'},{'name': 'PrivacyPolicyComponent', 'selector': 'app-privacy-policy'},{'name': 'ProfileButtonComponent', 'selector': 'app-profile-button'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'SearchResultsComponent', 'selector': 'app-search-results'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'UserCreatedSnackbarComponent', 'selector': 'app-user-created-snackbar'}];
+    var DIRECTIVES = [{'name': 'OpenProfileDirective', 'selector': '[appOpenProfile]'},{'name': 'TagToComponentDirective', 'selector': '[appTagToComponent]'}];
+    var ACTUAL_COMPONENT = {'name': 'EditMessageComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'EditMessageComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

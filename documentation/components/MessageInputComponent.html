@@ -154,6 +154,8 @@
                 <td class="col-md-3">imports</td>
                 <td class="col-md-9">
                             <code>FormsModule</code>
+                                <code><a href="../components/PopupSearchComponent.html" target="_self" >PopupSearchComponent</a></code>
+                                <code><a href="../directives/TagToComponentDirective.html" target="_self" >TagToComponentDirective</a></code>
                 </td>
             </tr>
 
@@ -194,7 +196,15 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier"></span>
+                                <a href="#addDocumentInput" >addDocumentInput</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#channelInput" >channelInput</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#channelInputViewRef" >channelInputViewRef</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -205,6 +215,10 @@
                             </li>
                             <li>
                                 <a href="#currentUser" >currentUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#cursorPositionService" >cursorPositionService</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -222,6 +236,9 @@
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#messageService" >messageService</a>
+                            </li>
+                            <li>
+                                <a href="#tagText" >tagText</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -243,14 +260,28 @@
                                 <a href="#addDocument" >addDocument</a>
                             </li>
                             <li>
+                                <a href="#addEmoji" >addEmoji</a>
+                            </li>
+                            <li>
+                                <a href="#addTag" >addTag</a>
+                            </li>
+                            <li>
+                                <a href="#checkForTag" >checkForTag</a>
+                            </li>
+                            <li>
                                 <a href="#checkIfFileIsTooBig" >checkIfFileIsTooBig</a>
                             </li>
                             <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#checkWhereToSaveMessage" >checkWhereToSaveMessage</a>
+                                <a href="#createURL" >createURL</a>
                             </li>
                             <li>
-                                <a href="#createURL" >createURL</a>
+                                <a href="#emptyInput" >emptyInput</a>
+                            </li>
+                            <li>
+                                <a href="#formatMessageForSave" >formatMessageForSave</a>
+                            </li>
+                            <li>
+                                <a href="#formatTagForSave" >formatTagForSave</a>
                             </li>
                             <li>
                                 <a href="#getDirectChannelUser" >getDirectChannelUser</a>
@@ -259,7 +290,25 @@
                                 <a href="#getTextareaPlaceholderText" >getTextareaPlaceholderText</a>
                             </li>
                             <li>
+                                <a href="#getTextWithLineBreaks" >getTextWithLineBreaks</a>
+                            </li>
+                            <li>
+                                <a href="#handleEnter" >handleEnter</a>
+                            </li>
+                            <li>
+                                <a href="#handleKeyDown" >handleKeyDown</a>
+                            </li>
+                            <li>
+                                <a href="#insertAtCursor" >insertAtCursor</a>
+                            </li>
+                            <li>
+                                <a href="#insertTag" >insertTag</a>
+                            </li>
+                            <li>
                                 <a href="#openDialogEmojiPicker" >openDialogEmojiPicker</a>
+                            </li>
+                            <li>
+                                <a href="#prepareMessageForSave" >prepareMessageForSave</a>
                             </li>
                             <li>
                                 <a href="#removeFile" >removeFile</a>
@@ -269,18 +318,21 @@
                                 <a href="#saveMessage" >saveMessage</a>
                             </li>
                             <li>
+                                <a href="#setFocusAtTextEnd" >setFocusAtTextEnd</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#setFocusOnInput" >setFocusOnInput</a>
                             </li>
                             <li>
-                                <a href="#setMessageData" >setMessageData</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#setMessageWithFile" >setMessageWithFile</a>
+                                <a href="#setSelectionPosition" >setSelectionPosition</a>
                             </li>
                             <li>
                                 <a href="#updateThreadMessage" >updateThreadMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadFile" >uploadFile</a>
                             </li>
                             <li>
                                 <a href="#wrongFileType" >wrongFileType</a>
@@ -307,6 +359,20 @@
 
 
 
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#channelInputElement" >channelInputElement</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
         </tbody>
     </table>
 </section>
@@ -317,12 +383,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, channelService: <a href="../injectables/ChannelFirebaseService.html" target="_self">ChannelFirebaseService</a>, messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>, customDialogService: <a href="../injectables/CustomDialogService.html" target="_self">CustomDialogService</a>)</code>
+<code>constructor(userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, channelService: <a href="../injectables/ChannelFirebaseService.html" target="_self">ChannelFirebaseService</a>, messageService: <a href="../injectables/MessageService.html" target="_self">MessageService</a>, customDialogService: <a href="../injectables/CustomDialogService.html" target="_self">CustomDialogService</a>, cursorPositionService: <a href="../injectables/CursorPositionService.html" target="_self">CursorPositionService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:37</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -387,6 +453,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>cursorPositionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CursorPositionService.html" target="_self" >CursorPositionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -419,7 +497,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:32</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -453,8 +531,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="115"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:115</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:151</a></div>
                         </td>
                     </tr>
 
@@ -504,6 +582,219 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="addEmoji"></a>
+                    <span class="name">
+                        <span ><b>addEmoji</b></span>
+                        <a href="#addEmoji"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addEmoji(input: HTMLElement, result: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="204"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:204</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>result</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addTag"></a>
+                    <span class="name">
+                        <span ><b>addTag</b></span>
+                        <a href="#addTag"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addTag(input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="280"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:280</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkForTag"></a>
+                    <span class="name">
+                        <span ><b>checkForTag</b></span>
+                        <a href="#checkForTag"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkForTag(element: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="checkIfFileIsTooBig"></a>
                     <span class="name">
                         <span ><b>checkIfFileIsTooBig</b></span>
@@ -520,8 +811,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="128"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:128</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="164"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:164</a></div>
                         </td>
                     </tr>
 
@@ -531,45 +822,6 @@
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="checkWhereToSaveMessage"></a>
-                    <span class="name">
-                            <span class="modifier">Async</span>
-                        <span ><b>checkWhereToSaveMessage</b></span>
-                        <a href="#checkWhereToSaveMessage"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>checkWhereToSaveMessage()</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="61"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:61</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                         </div>
                 </td>
@@ -596,8 +848,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="142"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:142</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="178"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:178</a></div>
                         </td>
                     </tr>
 
@@ -647,6 +899,207 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="emptyInput"></a>
+                    <span class="name">
+                        <span ><b>emptyInput</b></span>
+                        <a href="#emptyInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>emptyInput(channelInput: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="98"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelInput</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatMessageForSave"></a>
+                    <span class="name">
+                        <span ><b>formatMessageForSave</b></span>
+                        <a href="#formatMessageForSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatMessageForSave(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="342"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:342</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatTagForSave"></a>
+                    <span class="name">
+                        <span ><b>formatTagForSave</b></span>
+                        <a href="#formatTagForSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatTagForSave(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="336"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:336</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getDirectChannelUser"></a>
                     <span class="name">
                         <span ><b>getDirectChannelUser</b></span>
@@ -663,8 +1116,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:126</a></div>
                         </td>
                     </tr>
 
@@ -700,8 +1153,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="103"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:103</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="135"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:135</a></div>
                         </td>
                     </tr>
 
@@ -713,6 +1166,377 @@
                             <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTextWithLineBreaks"></a>
+                    <span class="name">
+                        <span ><b>getTextWithLineBreaks</b></span>
+                        <a href="#getTextWithLineBreaks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getTextWithLineBreaks(input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="231"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:231</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleEnter"></a>
+                    <span class="name">
+                        <span ><b>handleEnter</b></span>
+                        <a href="#handleEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleEnter(event: Event, element: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:273</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>Event</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleKeyDown"></a>
+                    <span class="name">
+                        <span ><b>handleKeyDown</b></span>
+                        <a href="#handleKeyDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleKeyDown(event: KeyboardEvent, element: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>KeyboardEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="insertAtCursor"></a>
+                    <span class="name">
+                        <span ><b>insertAtCursor</b></span>
+                        <a href="#insertAtCursor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>insertAtCursor(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="312"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:312</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>text</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="insertTag"></a>
+                    <span class="name">
+                        <span ><b>insertTag</b></span>
+                        <a href="#insertTag"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>insertTag(input: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="286"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:286</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -737,8 +1561,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="154"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:154</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:194</a></div>
                         </td>
                     </tr>
 
@@ -788,6 +1612,73 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="prepareMessageForSave"></a>
+                    <span class="name">
+                        <span ><b>prepareMessageForSave</b></span>
+                        <a href="#prepareMessageForSave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>prepareMessageForSave(channelInput: HTMLDivElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelInput</td>
+                                            <td>
+                                                        <code>HTMLDivElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="removeFile"></a>
                     <span class="name">
                         <span ><b>removeFile</b></span>
@@ -804,8 +1695,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="147"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:147</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="183"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:183</a></div>
                         </td>
                     </tr>
 
@@ -873,8 +1764,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="47"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:47</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -936,63 +1827,24 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="setFocusOnInput"></a>
+                    <a name="setFocusAtTextEnd"></a>
                     <span class="name">
-                            <span class="modifier">Async</span>
-                        <span ><b>setFocusOnInput</b></span>
-                        <a href="#setFocusOnInput"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>setFocusAtTextEnd</b></span>
+                        <a href="#setFocusAtTextEnd"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>setFocusOnInput()</code>
+<code>setFocusAtTextEnd(input: HTMLElement)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="166"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:166</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="setMessageData"></a>
-                    <span class="name">
-                        <span ><b>setMessageData</b></span>
-                        <a href="#setMessageData"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>setMessageData(trimmedMessageInput: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="79"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:79</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="298"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:298</a></div>
                         </td>
                     </tr>
 
@@ -1013,9 +1865,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>trimmedMessageInput</td>
+                                                <td>input</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        <code>HTMLElement</code>
                                             </td>
 
                                             <td>
@@ -1042,26 +1894,169 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="setMessageWithFile"></a>
+                    <a name="setFocusOnInput"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
-                        <span ><b>setMessageWithFile</b></span>
-                        <a href="#setMessageWithFile"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>setFocusOnInput</b></span>
+                        <a href="#setFocusOnInput"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>setMessageWithFile(fileInput: HTMLInputElement)</code>
+                    <code>setFocusOnInput()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="69"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:69</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="356"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:356</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSelectionPosition"></a>
+                    <span class="name">
+                        <span ><b>setSelectionPosition</b></span>
+                        <a href="#setSelectionPosition"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSelectionPosition(element: HTMLElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="240"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:240</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>element</td>
+                                            <td>
+                                                        <code>HTMLElement</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateThreadMessage"></a>
+                    <span class="name">
+                        <span ><b>updateThreadMessage</b></span>
+                        <a href="#updateThreadMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateThreadMessage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="103"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadFile"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadFile</b></span>
+                        <a href="#uploadFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadFile(fileInput: HTMLInputElement)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:111</a></div>
                         </td>
                     </tr>
 
@@ -1111,43 +2106,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="updateThreadMessage"></a>
-                    <span class="name">
-                        <span ><b>updateThreadMessage</b></span>
-                        <a href="#updateThreadMessage"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>updateThreadMessage()</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="87"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:87</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                        </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="wrongFileType"></a>
                     <span class="name">
                         <span ><b>wrongFileType</b></span>
@@ -1164,8 +2122,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="135"
-                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:135</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="171"
+                                    class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:171</a></div>
                         </td>
                     </tr>
 
@@ -1191,6 +2149,42 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="addDocumentInput"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>addDocumentInput</b></span>
+                        <a href="#addDocumentInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HTMLInputElement</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;addDocumentInput&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="channelInput"></a>
                     <span class="name">
                             <span class="modifier"></span>
@@ -1210,13 +2204,49 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ViewChild(&#x27;channelInput&#x27;)<br />
+                            @ViewChild(&#x27;channelInput&#x27;, {static: true})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelInputViewRef"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>channelInputViewRef</b></span>
+                        <a href="#channelInputViewRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ViewContainerRef</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;channelInput&#x27;, {read: ViewContainerRef, static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:36</a></div>
                         </td>
                     </tr>
 
@@ -1243,7 +2273,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:41</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:61</a></div>
                         </td>
                     </tr>
 
@@ -1274,7 +2304,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:36</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:53</a></div>
                         </td>
                     </tr>
 
@@ -1305,7 +2335,34 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cursorPositionService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>cursorPositionService</b></span>
+                        <a href="#cursorPositionService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/CursorPositionService.html" target="_self" >CursorPositionService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:64</a></div>
                         </td>
                     </tr>
 
@@ -1332,7 +2389,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:43</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -1363,7 +2420,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:37</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -1405,7 +2462,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -1436,7 +2493,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:39</a></div>
                         </td>
                     </tr>
 
@@ -1463,7 +2520,38 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:42</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tagText"></a>
+                    <span class="name">
+                        <span ><b>tagText</b></span>
+                        <a href="#tagText"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:56</a></div>
                         </td>
                     </tr>
 
@@ -1490,7 +2578,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -1499,11 +2587,44 @@
     </table>
 </section>
 
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="channelInputElement"></a>
+                        <span class="name"><b>channelInputElement</b><a href="#channelInputElement"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>channelInputElement()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/main-page/message-input/message-input.component.ts:68</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
 </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, Input, ViewChild } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+} from &#x27;@angular/core&#x27;;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { ChannelFirebaseService } from &#x27;../../firebase.service/channelFirebase.service&#x27;;
 import { UserService } from &#x27;../../firebase.service/user.service&#x27;;
@@ -1512,17 +2633,28 @@ import { Message } from &#x27;../../interfaces/message.interface&#x27;;
 import { MessageService } from &#x27;../../firebase.service/message.service&#x27;;
 import { CustomDialogService } from &#x27;../../services/custom-dialog.service&#x27;;
 import { DialogEmojiPickerComponent } from &#x27;../channel/dialog-emoji-picker/dialog-emoji-picker.component&#x27;;
+import { PopupSearchComponent } from &#x27;../../shared/popup-search/popup-search.component&#x27;;
+import { TagToComponentDirective } from &#x27;../../shared/directives/tag-to-component.directive&#x27;;
+import { CursorPositionService } from &#x27;../../services/cursor-position.service&#x27;;
 
 @Component({
   selector: &#x27;app-message-input&#x27;,
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, PopupSearchComponent, TagToComponentDirective],
   templateUrl: &#x27;./message-input.component.html&#x27;,
-  styleUrl: &#x27;./message-input.component.scss&#x27;
+  styleUrl: &#x27;./message-input.component.scss&#x27;,
 })
 export class MessageInputComponent {
-  @ViewChild(&#x27;channelInput&#x27;) channelInput!: ElementRef;
+//   @ViewChild(&#x27;channelInput&#x27;) channelInput!: ElementRef;
+//   @Input() usedIn: &#x27;channel&#x27; | &#x27;thread&#x27; &#x3D; &#x27;channel&#x27;;
+
+
   @Input() usedIn: &#x27;channel&#x27; | &#x27;thread&#x27; &#x3D; &#x27;channel&#x27;;
+
+  @ViewChild(&#x27;channelInput&#x27;, { static: true }) channelInput!: ElementRef;
+  @ViewChild(&#x27;channelInput&#x27;, { read: ViewContainerRef, static: true })
+  channelInputViewRef!: ViewContainerRef;
+  @ViewChild(&#x27;addDocumentInput&#x27;) addDocumentInput!: HTMLInputElement;
 
   messageInput: string &#x3D; &#x27;&#x27;;
   currentUser: User &#x3D; this.userService.currentUser;
@@ -1541,54 +2673,53 @@ export class MessageInputComponent {
   currentFile: any | null &#x3D; null;
   errorMessage: string &#x3D; &#x27;&#x27;;
 
+  tagText: string &#x3D; &#x27;&#x27;;
+
+
   constructor(
     public userService: UserService,
     public channelService: ChannelFirebaseService,
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
-  ) {  }
+    public cursorPositionService: CursorPositionService
+  ) {}
 
+
+  get channelInputElement(): ElementRef {
+    return this.channelInput;
+  }
+
+  //#region save message
 
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
-    const trimmedMessageInput &#x3D; this.messageInput.trim();
-    if (trimmedMessageInput !&#x3D; &#x27;&#x27; || this.currentFile !&#x3D; null) {
-      this.setMessageData(trimmedMessageInput);
-      this.checkWhereToSaveMessage();
-      if (this.currentFile !&#x3D; null) {
-        this.setMessageWithFile(fileInput);
-      }
-      this.messageInput &#x3D; &#x27;&#x27;;
-      channelInput.innerText &#x3D; &#x27;&#x27;;
+    if (this.messageInput !&#x3D; &#x27;&#x27; || this.currentFile !&#x3D; null || channelInput.innerHTML !&#x3D; &#x27;&#x27;) {
+      this.prepareMessageForSave(channelInput);
+      this.emptyInput(channelInput);
+      this.message.id &#x3D; await this.messageService.addMessage(this.message);
+      // thread message update
+      if (this.usedIn &#x3D;&#x3D; &#x27;thread&#x27;) this.updateThreadMessage();
+      // upload currentFile
+      if (this.currentFile !&#x3D; null) await this.uploadFile(fileInput);
     }
   }
 
-
-  async checkWhereToSaveMessage() {
-    if (this.usedIn &#x3D;&#x3D; &#x27;channel&#x27;) this.message.channel_id &#x3D; this.channelService.currentChannel.id;
-    if (this.usedIn &#x3D;&#x3D; &#x27;thread&#x27;) this.message.thread_id &#x3D; this.channelService.currentThread.id;
-    this.message.id &#x3D; await this.messageService.addMessage(this.message);
-    if (this.usedIn &#x3D;&#x3D; &#x27;thread&#x27;) this.updateThreadMessage();
-  }
-
-
-  async setMessageWithFile(fileInput: HTMLInputElement){
-    const path &#x3D; &#x27;users/&#x27; + this.currentUser.id + &#x27;/messages/&#x27; + this.message.id + &#x27;/&#x27; + this.currentFile.name;
-    await this.messageService.uploadFile(this.currentFile, path);
-    this.message.message.attachements &#x3D; [];
-    this.message.message.attachements.push(path);
-    this.messageService.updateMessage(this.message);
-    this.removeFile(fileInput);
-  }
-
-
-  setMessageData(trimmedMessageInput: string){
+  prepareMessageForSave(channelInput : HTMLDivElement) {
     this.message.user_id &#x3D; this.currentUser.id;
-    this.message.message.text &#x3D; trimmedMessageInput;
+    channelInput.innerHTML &#x3D; this.formatMessageForSave(channelInput.innerHTML);
+    this.message.message.text &#x3D; channelInput.innerText;
     this.message.created_at &#x3D; new Date().getTime();
     this.message.modified_at &#x3D; this.message.created_at;
+    if (this.usedIn &#x3D;&#x3D; &#x27;channel&#x27;)
+      this.message.channel_id &#x3D; this.channelService.currentChannel.id;
+    if (this.usedIn &#x3D;&#x3D; &#x27;thread&#x27;)
+      this.message.thread_id &#x3D; this.channelService.currentThread.id;
   }
 
-
+  emptyInput(channelInput : HTMLDivElement) {
+    this.messageInput &#x3D; &#x27;&#x27;;
+    channelInput.innerText &#x3D; &#x27;&#x27;;
+  }
+  
   updateThreadMessage() {
     let threadMessages &#x3D; this.messageService.messagesThread;
     let threadMessage &#x3D; this.messageService.messagesThread[0];
@@ -1597,25 +2728,45 @@ export class MessageInputComponent {
     this.messageService.updateMessage(threadMessage);
   }
 
+  async uploadFile(fileInput : HTMLInputElement) {
+    const path &#x3D; &#x27;users/&#x27; + this.currentUser.id + &#x27;/messages/&#x27; + this.message.id + &#x27;/&#x27; + this.currentFile.name;
+    await this.messageService.uploadFile(this.currentFile, path);
+    this.message.message.attachements &#x3D; [];
+    this.message.message.attachements.push(path);
+    this.messageService.updateMessage(this.message);
+    this.removeFile(fileInput);
+  }
+
+  //#endregion save message
+
+  
+
+  //#region placeholder
 
   getDirectChannelUser() {
-    let contact &#x3D; this.channelService.currentChannel.members.find((member) &#x3D;&gt; member !&#x3D; this.currentUser.id);
+    let contact &#x3D; this.channelService.currentChannel.members.find(
+      (member) &#x3D;&gt; member !&#x3D; this.currentUser.id
+    );
     if (contact) return this.userService.getUser(contact);
     else return this.currentUser;
   }
 
 
   getTextareaPlaceholderText() {
-    const channel &#x3D; this.channelService.currentChannel;
-    const channelType &#x3D; channel.channel_type;
-    const channelName &#x3D; channel.name;
-    const members &#x3D; channel.members;
-    if (channelType &#x3D;&#x3D;&#x3D; &#x27;main&#x27;) return &#x60;Nachricht an #${channelName}&#x60;;
-    if (channelType &#x3D;&#x3D;&#x3D; &#x27;direct&#x27;) return &#x60;Nachricht an ${members[0] &#x3D;&#x3D;&#x3D; members[1] || members.length &#x3D;&#x3D;&#x3D; 1 ? &#x27;dich&#x27; : this.getDirectChannelUser()?.name}&#x60;;
-    if (channelType &#x3D;&#x3D;&#x3D; &#x27;thread&#x27;) return &#x27;Antworten...&#x27;;
-    return &#x27;Starte eine neue Nachricht&#x27;;
+    switch (this.channelService.currentChannel.channel_type) {
+      case &#x27;main&#x27;: return &#x27;Nachricht an &#x27; + &#x27;#&#x27; + this.channelService.currentChannel.name;
+      case &#x27;direct&#x27;:
+        if (this.channelService.currentChannel.members.length &#x3D;&#x3D; 2) return &#x27;Nachricht an &#x27; + this.getDirectChannelUser()?.name;
+        else return &#x27;Nachricht an &#x27; + &#x27;dich&#x27;;    
+      case &#x27;thread&#x27;: return &#x27;Antworten...&#x27;;
+      case &#x27;new&#x27;: return &#x27;Starte eine neue Nachricht&#x27;;
+      default: return &#x27;Starte eine neue Nachricht&#x27;;
+    }
   }
 
+  //#endregion placeholder
+
+ //#region file add / remove
 
   addDocument(event: Event) {
     const input &#x3D; event.target as HTMLInputElement;
@@ -1654,19 +2805,173 @@ export class MessageInputComponent {
     input.value &#x3D; &#x27;&#x27;;
   }
 
+  //#endregion file add / remove
 
-  /* Dialog Emoji Picker */
+
+  //#region emoji
+
+
   openDialogEmojiPicker(input: HTMLDivElement) {
     const component &#x3D; DialogEmojiPickerComponent;
     const dialogRef &#x3D; this.customDialogService.openDialog(component);
-    dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+    dialogRef.afterClosed().subscribe((result) &#x3D;&gt; {
       if (result) {
-        this.messageInput &#x3D; this.messageInput + result;
-        input.innerText &#x3D; this.messageInput;
+        this.addEmoji(input, result);
       }
-    })
+    });
   }
 
+  addEmoji(input : HTMLElement, result : any) {
+    if(document.activeElement !&#x3D;&#x3D; input)  this.setFocusAtTextEnd(input);
+    this.insertAtCursor(result, input);
+  }
+
+  //#endregion emoji
+
+
+  //#region @ Tag System
+
+  checkForTag(element: HTMLElement) {
+    const text &#x3D; this.getTextWithLineBreaks(element);
+    const cursorPosition &#x3D; this.setSelectionPosition(element);
+    const textBeforeCursor &#x3D; text.slice(0, cursorPosition);
+    const charBeforeCursor &#x3D; textBeforeCursor[cursorPosition - 1];
+    this.tagText &#x3D; &#x27;&#x27;;
+    if (charBeforeCursor &amp;&amp; !/\s/.test(charBeforeCursor)) {
+      const atIndex &#x3D; textBeforeCursor.lastIndexOf(&#x27;@&#x27;);
+      if (atIndex !&#x3D;&#x3D; -1) {
+        const charAfterAt &#x3D; textBeforeCursor[atIndex + 1];
+        if (!charAfterAt?.match(/\s/)) {
+          this.tagText &#x3D; textBeforeCursor.slice(atIndex);
+        }
+      }
+    }
+  }
+
+  getTextWithLineBreaks(input: HTMLElement): string {
+    return input.innerHTML
+      .replace(/&lt;br\s*\/?&gt;/gi, &#x27;\n&#x27;)
+      .replace(/&lt;\/?p&gt;/gi, &#x27;\n&#x27;)
+      .replace(/&lt;\/?div&gt;/gi, &#x27;\n&#x27;)
+      .replace(/&amp;nbsp;/g, &#x27; &#x27;)
+      .replace(/&lt;[^&gt;]+&gt;/g, &#x27;&#x27;);
+  }
+
+  setSelectionPosition(element: HTMLElement): number {
+    return this.cursorPositionService.saveCursorPosition(element);
+  }
+
+  handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
+    const selection &#x3D; window.getSelection();
+    if (selection &amp;&amp; selection.rangeCount &gt; 0) {
+      const curRange &#x3D; selection.getRangeAt(selection.rangeCount - 1);
+      if (curRange.commonAncestorContainer.nodeType &#x3D;&#x3D; 3 &amp;&amp; curRange.startOffset &gt; 0) return; // we are in child selection. The characters of the text node is being deleted
+      // if (event.key &#x3D;&#x3D;&#x3D; &#x27;Backspace&#x27;) this.handleBackSpace(selection, element, event);
+      if (event.key &#x3D;&#x3D;&#x3D; &#x27;Enter&#x27; &amp;&amp; !event.shiftKey) this.handleEnter(event, element);
+    }
+  }
+
+
+  // handleBackSpace(selection : Selection, element : HTMLDivElement, event: Event) {
+  //   const range &#x3D; document.createRange();
+  //   if (selection.anchorNode &amp;&amp; selection.anchorNode !&#x3D; element) { // selection is in character mode. expand it to the whole editable field
+  //       range.selectNodeContents(element);
+  //       range.setEndBefore(selection.anchorNode);
+  //   } else if (selection.anchorOffset &gt; 0) range.setEnd(element, selection.anchorOffset);
+  //   else return; // reached the beginning of editable field
+  //   range.setStart(element, range.endOffset);
+  //   const previousNode &#x3D; range.cloneContents().lastChild;
+  //   if (previousNode &amp;&amp; previousNode.nodeType &#x3D;&#x3D; Node.ELEMENT_NODE) {
+  //     const previousElement &#x3D; previousNode as HTMLElement;
+  //     if (previousElement.contentEditable &#x3D;&#x3D;&#x3D; &#x27;false&#x27;) {  // This is some rich content, e.g. smiley. We should help the user to delete it.
+  //       range.deleteContents();
+  //       event.preventDefault();
+  //     }
+  //   }
+  // }
+
+  handleEnter(event: Event, element : HTMLDivElement) {
+    event.preventDefault();
+    this.saveMessage(element, this.addDocumentInput);
+  }
+
+  //#region add @ Button
+  
+  addTag(input: HTMLElement) {
+    if (document.activeElement !&#x3D;&#x3D; input) this.setFocusAtTextEnd(input);
+    this.insertTag(input);
+  }
+
+
+  insertTag(input: HTMLElement) {
+    const text &#x3D; input.innerText;
+    const cursorPosition &#x3D; this.setSelectionPosition(input);
+    const charBeforeCursor &#x3D; text[cursorPosition - 1];
+    if (!charBeforeCursor || charBeforeCursor.match(/\s/)) {
+      this.insertAtCursor(&#x27;@&#x27;, input);
+    } else {
+      this.insertAtCursor(&#x27; @&#x27;, input);
+    }
+    this.checkForTag(input);
+  }
+
+  setFocusAtTextEnd(input : HTMLElement) {
+    input.focus();
+    var range &#x3D; document.createRange();
+    range.selectNodeContents(input);
+    range.collapse(false);
+    var selection &#x3D; window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      this.cursorPositionService.setLastCursorPosition(input);
+    }
+  }
+
+
+  insertAtCursor(text: string, input: HTMLElement) {
+    const sel &#x3D; window.getSelection();
+    const range &#x3D; this.cursorPositionService.restoreCursorPosition(input);  
+    if (sel &amp;&amp; range) {
+        const textNode &#x3D; document.createTextNode(text);
+        range.insertNode(textNode);
+        range.setStartAfter(textNode);
+        range.setEndAfter(textNode);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    this.setSelectionPosition(input);
+  }
+
+  //#endregion add @ Button
+
+  //#endregion
+
+  //#region Utility XSS Prevention TODO: in Service
+
+  // escapeHTML(text: string) {
+  //   return text.replace(/&lt;/g, &#x27;&amp;lt;&#x27;).replace(/&gt;/g, &#x27;&amp;gt;&#x27;);
+  // }
+
+  formatTagForSave(text: string) {
+    const regex &#x3D; new RegExp(/&lt;app-profile-button[^&gt;]*&gt;&lt;button[^&gt;]*ng-reflect-user-id&#x3D;&quot;([^&quot;]+)&quot;[^&gt;]*&gt;[^&lt;]*&lt;\/button&gt;&lt;\/app-profile-button&gt;/g);
+    const formattedText &#x3D; text.replace(regex, &#x27;@$1&#x27;);
+    return formattedText;
+  }
+
+  formatMessageForSave(text: string) {
+    let formattedText &#x3D; this.formatTagForSave(text);
+    return formattedText;
+  }
+
+  // formatMessageForRead(text: string) {
+  //   let formattedText &#x3D; this.escapeHTML(text);
+  //   return formattedText;
+  // }
+
+  //#endregion
+
+ 
 
   async setFocusOnInput() {
     await this.channelInput.nativeElement.focus();
@@ -1677,12 +2982,15 @@ export class MessageInputComponent {
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;message-input-container&quot;&gt;
-    &lt;div #channelInput name&#x3D;&quot;channelInput&quot; class&#x3D;&quot;message-input&quot; contenteditable&#x3D;&quot;true&quot; (input)&#x3D;&quot;this.messageInput &#x3D; channelInput.innerText&quot; attr.placeholder-text&#x3D;&quot;{{getTextareaPlaceholderText()}}&quot;&gt;
-    &lt;/div&gt;
+    &lt;div #channelInput name&#x3D;&quot;channelInput&quot; class&#x3D;&quot;message-input&quot; contenteditable&#x3D;&quot;true&quot; (input)&#x3D;&quot;this.messageInput &#x3D; channelInput.innerText; checkForTag(channelInput)&quot; (keyup)&#x3D;&quot;checkForTag(channelInput)&quot; (mouseup)&#x3D;&quot;checkForTag(channelInput)&quot; (keydown)&#x3D;&quot;handleKeyDown($event, channelInput)&quot; attr.placeholder-text&#x3D;&quot;{{getTextareaPlaceholderText()}}&quot;&gt;&lt;/div&gt;
+
+    &lt;app-popup-search [searchTerm]&#x3D;&quot;tagText&quot; [inputElement]&#x3D;&quot;channelInputElement&quot; [viewContainerRef]&#x3D;&quot;channelInputViewRef&quot;&gt;&lt;/app-popup-search&gt;
+    
     &lt;!-- img &amp; pdf preview --&gt;
     &lt;div class&#x3D;&quot;documents-preview&quot;&gt;
       @if(currentFile) {
-          @if(currentFile.type &#x3D;&#x3D; &#x27;application/pdf&#x27;) { &lt;!-- type pdf --&gt;
+         &lt;!-- type pdf --&gt;
+          @if(currentFile.type &#x3D;&#x3D; &#x27;application/pdf&#x27;) {
             &lt;div class&#x3D;&quot;pdf-preview-container&quot;&gt;
               &lt;div class&#x3D;&quot;pdf-preview&quot;&gt;
                 &lt;div class&#x3D;&quot;pdf-icon&quot;&gt;&lt;b&gt;pdf&lt;/b&gt;&lt;/div&gt;
@@ -1702,7 +3010,8 @@ export class MessageInputComponent {
             &lt;/div&gt;
 
           }
-          @else { &lt;!-- type image --&gt;
+          @else { 
+            &lt;!-- type image --&gt;
             &lt;div class&#x3D;&quot;img-preview-container&quot;&gt;
               &lt;div class&#x3D;&quot;img-preview&quot;&gt;
                 &lt;div class&#x3D;&quot;message-img&quot;&gt;
@@ -1731,7 +3040,7 @@ export class MessageInputComponent {
     &lt;!-- button row --&gt;
     &lt;div class&#x3D;&quot;message-input-buttons&quot;&gt;
       &lt;div class&#x3D;&quot;left-side&quot;&gt;
-        &lt;!-- add document --&gt;
+        &lt;!-- button add document --&gt;
         &lt;input type&#x3D;&quot;file&quot; #addDocumentInput style&#x3D;&quot;display: none;&quot; accept&#x3D;&quot;image/*,application/pdf&quot; (change)&#x3D;&quot;addDocument($event)&quot;&gt;
         &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;addDocumentInput.click()&quot;&gt;
           &lt;svg width&#x3D;&quot;30&quot; height&#x3D;&quot;30&quot; viewBox&#x3D;&quot;0 0 30 30&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
@@ -1754,8 +3063,8 @@ export class MessageInputComponent {
           &lt;/svg&gt;
         &lt;/button&gt;
         &lt;div class&#x3D;&quot;separator-v&quot;&gt;&lt;/div&gt;
-        &lt;!-- add emoticon --&gt;
-        &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;openDialogEmojiPicker(channelInput)&quot;&gt;
+        &lt;!-- button add emoticon --&gt;
+        &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;openDialogEmojiPicker(channelInput)&quot; (mousedown)&#x3D;&quot;$event.preventDefault()&quot;&gt;
           &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; viewBox&#x3D;&quot;0 0 24 24&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
             &lt;mask id&#x3D;&quot;mask0_813_12139&quot; style&#x3D;&quot;mask-type:alpha&quot; maskUnits&#x3D;&quot;userSpaceOnUse&quot; x&#x3D;&quot;0&quot; y&#x3D;&quot;0&quot; width&#x3D;&quot;24&quot;
               height&#x3D;&quot;24&quot;&gt;
@@ -1768,8 +3077,8 @@ export class MessageInputComponent {
             &lt;/g&gt;
           &lt;/svg&gt;
         &lt;/button&gt;
-        &lt;!-- add tag --&gt;
-        &lt;button class&#x3D;&quot;btn-icon w40&quot;&gt;
+        &lt;!-- button add tag --&gt;
+        &lt;button class&#x3D;&quot;btn-icon w40&quot; (click)&#x3D;&quot;addTag(channelInput)&quot; (mousedown)&#x3D;&quot;$event.preventDefault()&quot;&gt;
           &lt;svg width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; viewBox&#x3D;&quot;0 0 24 24&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
             &lt;mask id&#x3D;&quot;mask0_813_12157&quot; style&#x3D;&quot;mask-type:alpha&quot; maskUnits&#x3D;&quot;userSpaceOnUse&quot; x&#x3D;&quot;0&quot; y&#x3D;&quot;0&quot; width&#x3D;&quot;24&quot;
               height&#x3D;&quot;24&quot;&gt;
@@ -1783,7 +3092,8 @@ export class MessageInputComponent {
           &lt;/svg&gt;
         &lt;/button&gt;
       &lt;/div&gt;
-      &lt;button class&#x3D;&quot;btn-send-message w40&quot; [disabled]&#x3D;&quot;(messageInput &#x3D;&#x3D; &#x27;&#x27; &amp;&amp; currentFile &#x3D;&#x3D; null)&quot; (click)&#x3D;&quot;saveMessage(channelInput,addDocumentInput)&quot;&gt;
+      &lt;!-- button send message --&gt;
+      &lt;button class&#x3D;&quot;btn-send-message w40&quot; [disabled]&#x3D;&quot;(messageInput &#x3D;&#x3D; &#x27;&#x27; &amp;&amp; currentFile &#x3D;&#x3D; null &amp;&amp; channelInput.innerHTML &#x3D;&#x3D; &#x27;&#x27;)&quot; (click)&#x3D;&quot;saveMessage(channelInput,addDocumentInput)&quot;&gt;
         &lt;svg width&#x3D;&quot;30&quot; height&#x3D;&quot;30&quot; viewBox&#x3D;&quot;0 0 30 30&quot; fill&#x3D;&quot;none&quot; xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;&gt;
           &lt;mask id&#x3D;&quot;mask0_813_12250&quot; style&#x3D;&quot;mask-type:alpha&quot; maskUnits&#x3D;&quot;userSpaceOnUse&quot; x&#x3D;&quot;0&quot; y&#x3D;&quot;0&quot; width&#x3D;&quot;30&quot;
             height&#x3D;&quot;30&quot;&gt;
@@ -1826,9 +3136,9 @@ export class MessageInputComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="message-input-container">    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText" attr.placeholder-text="{{getTextareaPlaceholderText()}}">    </div>    <!-- img & pdf preview -->    <div class="documents-preview">      @if(currentFile) {          @if(currentFile.type == \'application/pdf\') { <!-- type pdf -->            <div class="pdf-preview-container">              <div class="pdf-preview">                <div class="pdf-icon"><b>pdf</b></div>                <div class="file-name">{{currentFile.name}}</div>              </div>              <div class="overlay"></div>              <button class="btn-icon-v5" (click)="removeFile(addDocumentInput)">                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                  <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">                  <rect width="24" height="24" fill="#D9D9D9"/>                  </mask>                  <g mask="url(#mask0_813_12181)">                  <path d="M11.9998 13.4L7.0998 18.3C6.91647 18.4834 6.68314 18.575 6.3998 18.575C6.11647 18.575 5.88314 18.4834 5.6998 18.3C5.51647 18.1167 5.4248 17.8834 5.4248 17.6C5.4248 17.3167 5.51647 17.0834 5.6998 16.9L10.5998 12L5.6998 7.10005C5.51647 6.91672 5.4248 6.68338 5.4248 6.40005C5.4248 6.11672 5.51647 5.88338 5.6998 5.70005C5.88314 5.51672 6.11647 5.42505 6.3998 5.42505C6.68314 5.42505 6.91647 5.51672 7.0998 5.70005L11.9998 10.6L16.8998 5.70005C17.0831 5.51672 17.3165 5.42505 17.5998 5.42505C17.8831 5.42505 18.1165 5.51672 18.2998 5.70005C18.4831 5.88338 18.5748 6.11672 18.5748 6.40005C18.5748 6.68338 18.4831 6.91672 18.2998 7.10005L13.3998 12L18.2998 16.9C18.4831 17.0834 18.5748 17.3167 18.5748 17.6C18.5748 17.8834 18.4831 18.1167 18.2998 18.3C18.1165 18.4834 17.8831 18.575 17.5998 18.575C17.3165 18.575 17.0831 18.4834 16.8998 18.3L11.9998 13.4Z" fill="#1C1B1F"/>                  </g>                  </svg>              </button>            </div>          }          @else { <!-- type image -->            <div class="img-preview-container">              <div class="img-preview">                <div class="message-img">                  <img src="{{currentFile.URL}}" alt="">                </div>              </div>              <div class="overlay"></div>              <button class="btn-icon-v5" (click)="removeFile(addDocumentInput)">                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                  <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">                  <rect width="24" height="24" fill="#D9D9D9"/>                  </mask>                  <g mask="url(#mask0_813_12181)">                  <path d="M11.9998 13.4L7.0998 18.3C6.91647 18.4834 6.68314 18.575 6.3998 18.575C6.11647 18.575 5.88314 18.4834 5.6998 18.3C5.51647 18.1167 5.4248 17.8834 5.4248 17.6C5.4248 17.3167 5.51647 17.0834 5.6998 16.9L10.5998 12L5.6998 7.10005C5.51647 6.91672 5.4248 6.68338 5.4248 6.40005C5.4248 6.11672 5.51647 5.88338 5.6998 5.70005C5.88314 5.51672 6.11647 5.42505 6.3998 5.42505C6.68314 5.42505 6.91647 5.51672 7.0998 5.70005L11.9998 10.6L16.8998 5.70005C17.0831 5.51672 17.3165 5.42505 17.5998 5.42505C17.8831 5.42505 18.1165 5.51672 18.2998 5.70005C18.4831 5.88338 18.5748 6.11672 18.5748 6.40005C18.5748 6.68338 18.4831 6.91672 18.2998 7.10005L13.3998 12L18.2998 16.9C18.4831 17.0834 18.5748 17.3167 18.5748 17.6C18.5748 17.8834 18.4831 18.1167 18.2998 18.3C18.1165 18.4834 17.8831 18.575 17.5998 18.575C17.3165 18.575 17.0831 18.4834 16.8998 18.3L11.9998 13.4Z" fill="#1C1B1F"/>                  </g>                  </svg>              </button>            </div>          }      }      @if(errorMessage != \'\') {        <div class="error-message">{{errorMessage}}</div>      }    </div>    <!-- button row -->    <div class="message-input-buttons">      <div class="left-side">        <!-- add document -->        <input type="file" #addDocumentInput style="display: none;" accept="image/*,application/pdf" (change)="addDocument($event)">        <button class="btn-icon w40" (click)="addDocumentInput.click()">          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">            <g clip-path="url(#clip0_813_12245)">              <mask id="mask0_813_12245" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="24"                height="24">                <rect x="3" y="3" width="24" height="24" fill="#D9D9D9" />              </mask>              <g mask="url(#mask0_813_12245)">                <path                  d="M15 22C14.7167 22 14.4793 21.904 14.288 21.712C14.096 21.5207 14 21.2833 14 21V16H9C8.71667 16 8.479 15.904 8.287 15.712C8.09567 15.5207 8 15.2833 8 15C8 14.7167 8.09567 14.479 8.287 14.287C8.479 14.0957 8.71667 14 9 14H14V9C14 8.71667 14.096 8.479 14.288 8.287C14.4793 8.09567 14.7167 8 15 8C15.2833 8 15.521 8.09567 15.713 8.287C15.9043 8.479 16 8.71667 16 9V14H21C21.2833 14 21.5207 14.0957 21.712 14.287C21.904 14.479 22 14.7167 22 15C22 15.2833 21.904 15.5207 21.712 15.712C21.5207 15.904 21.2833 16 21 16H16V21C16 21.2833 15.9043 21.5207 15.713 21.712C15.521 21.904 15.2833 22 15 22Z"                  fill="#686868" />              </g>            </g>            <defs>              <clipPath id="clip0_813_12245">                <rect x="3" y="3" width="24" height="24" rx="12" fill="white" />              </clipPath>            </defs>          </svg>        </button>        <div class="separator-v"></div>        <!-- add emoticon -->        <button class="btn-icon w40" (click)="openDialogEmojiPicker(channelInput)">          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">            <mask id="mask0_813_12139" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"              height="24">              <rect width="24" height="24" fill="#D9D9D9" />            </mask>            <g mask="url(#mask0_813_12139)">              <path                d="M15.5 11C15.9333 11 16.2917 10.8583 16.575 10.575C16.8583 10.2917 17 9.93333 17 9.5C17 9.06667 16.8583 8.70833 16.575 8.425C16.2917 8.14167 15.9333 8 15.5 8C15.0667 8 14.7083 8.14167 14.425 8.425C14.1417 8.70833 14 9.06667 14 9.5C14 9.93333 14.1417 10.2917 14.425 10.575C14.7083 10.8583 15.0667 11 15.5 11ZM8.5 11C8.93333 11 9.29167 10.8583 9.575 10.575C9.85833 10.2917 10 9.93333 10 9.5C10 9.06667 9.85833 8.70833 9.575 8.425C9.29167 8.14167 8.93333 8 8.5 8C8.06667 8 7.70833 8.14167 7.425 8.425C7.14167 8.70833 7 9.06667 7 9.5C7 9.93333 7.14167 10.2917 7.425 10.575C7.70833 10.8583 8.06667 11 8.5 11ZM12 17.5C12.95 17.5 13.8167 17.2877 14.6 16.863C15.3833 16.4377 15.9917 15.9 16.425 15.25C16.625 14.95 16.6543 14.6667 16.513 14.4C16.371 14.1333 16.15 14 15.85 14C15.7333 14 15.6167 14.0333 15.5 14.1C15.3833 14.1667 15.2917 14.25 15.225 14.35C14.8583 14.85 14.4 15.25 13.85 15.55C13.3 15.85 12.6833 16 12 16C11.3167 16 10.7 15.85 10.15 15.55C9.6 15.25 9.14167 14.85 8.775 14.35C8.70833 14.25 8.61267 14.1667 8.488 14.1C8.36267 14.0333 8.24167 14 8.125 14C7.84167 14 7.62933 14.129 7.488 14.387C7.346 14.6457 7.36667 14.9167 7.55 15.2C8 15.8833 8.61667 16.4377 9.4 16.863C10.1833 17.2877 11.05 17.5 12 17.5ZM12 22C10.6167 22 9.31667 21.7373 8.1 21.212C6.88333 20.6873 5.825 19.975 4.925 19.075C4.025 18.175 3.31267 17.1167 2.788 15.9C2.26267 14.6833 2 13.3833 2 12C2 10.6167 2.26267 9.31667 2.788 8.1C3.31267 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.31233 8.1 2.787C9.31667 2.26233 10.6167 2 12 2C13.3833 2 14.6833 2.26233 15.9 2.787C17.1167 3.31233 18.175 4.025 19.075 4.925C19.975 5.825 20.6873 6.88333 21.212 8.1C21.7373 9.31667 22 10.6167 22 12C22 13.3833 21.7373 14.6833 21.212 15.9C20.6873 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6873 15.9 21.212C14.6833 21.7373 13.3833 22 12 22ZM12 20C14.2167 20 16.1043 19.221 17.663 17.663C19.221 16.1043 20 14.2167 20 12C20 9.78333 19.221 7.89567 17.663 6.337C16.1043 4.779 14.2167 4 12 4C9.78333 4 7.896 4.779 6.338 6.337C4.77933 7.89567 4 9.78333 4 12C4 14.2167 4.77933 16.1043 6.338 17.663C7.896 19.221 9.78333 20 12 20Z"                fill="#686868" />            </g>          </svg>        </button>        <!-- add tag -->        <button class="btn-icon w40">          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">            <mask id="mask0_813_12157" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"              height="24">              <rect width="24" height="24" fill="#D9D9D9" />            </mask>            <g mask="url(#mask0_813_12157)">              <path                d="M12 22C10.6333 22 9.34167 21.7373 8.125 21.212C6.90833 20.6873 5.846 19.9707 4.938 19.062C4.02933 18.154 3.31267 17.0917 2.788 15.875C2.26267 14.6583 2 13.3667 2 12C2 10.6167 2.26267 9.321 2.788 8.113C3.31267 6.90433 4.02933 5.846 4.938 4.938C5.846 4.02933 6.90833 3.31233 8.125 2.787C9.34167 2.26233 10.6333 2 12 2C13.3833 2 14.679 2.26233 15.887 2.787C17.0957 3.31233 18.154 4.02933 19.062 4.938C19.9707 5.846 20.6873 6.90433 21.212 8.113C21.7373 9.321 22 10.6167 22 12V13.45C22 14.4333 21.6627 15.2707 20.988 15.962C20.3127 16.654 19.4833 17 18.5 17C17.9 17 17.3417 16.8667 16.825 16.6C16.3083 16.3333 15.8833 15.9833 15.55 15.55C15.1 16 14.571 16.3543 13.963 16.613C13.3543 16.871 12.7 17 12 17C10.6167 17 9.43767 16.5123 8.463 15.537C7.48767 14.5623 7 13.3833 7 12C7 10.6167 7.48767 9.43733 8.463 8.462C9.43767 7.48733 10.6167 7 12 7C13.3833 7 14.5627 7.48733 15.538 8.462C16.5127 9.43733 17 10.6167 17 12V13.45C17 13.9333 17.15 14.3123 17.45 14.587C17.75 14.8623 18.1 15 18.5 15C18.9 15 19.25 14.8623 19.55 14.587C19.85 14.3123 20 13.9333 20 13.45V12C20 9.81667 19.2123 7.93733 17.637 6.362C16.0623 4.78733 14.1833 4 12 4C9.81667 4 7.93733 4.78733 6.362 6.362C4.78733 7.93733 4 9.81667 4 12C4 14.1833 4.78733 16.0623 6.362 17.637C7.93733 19.2123 9.81667 20 12 20H16C16.2833 20 16.5207 20.096 16.712 20.288C16.904 20.4793 17 20.7167 17 21C17 21.2833 16.904 21.5207 16.712 21.712C16.5207 21.904 16.2833 22 16 22H12ZM12 15C12.8333 15 13.5417 14.7083 14.125 14.125C14.7083 13.5417 15 12.8333 15 12C15 11.1667 14.7083 10.4583 14.125 9.875C13.5417 9.29167 12.8333 9 12 9C11.1667 9 10.4583 9.29167 9.875 9.875C9.29167 10.4583 9 11.1667 9 12C9 12.8333 9.29167 13.5417 9.875 14.125C10.4583 14.7083 11.1667 15 12 15Z"                fill="#686868" />            </g>          </svg>        </button>      </div>      <button class="btn-send-message w40" [disabled]="(messageInput == \'\' && currentFile == null)" (click)="saveMessage(channelInput,addDocumentInput)">        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">          <mask id="mask0_813_12250" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30"            height="30">            <rect width="30" height="30" fill="#D9D9D9" />          </mask>          <g mask="url(#mask0_813_12250)">            <path              d="M5.5 24.2811C5.08333 24.4478 4.6875 24.4111 4.3125 24.1711C3.9375 23.932 3.75 23.5832 3.75 23.1249V18.4686C3.75 18.177 3.83333 17.9166 4 17.6874C4.16667 17.4582 4.39583 17.3124 4.6875 17.2499L13.75 14.9999L4.6875 12.7499C4.39583 12.6874 4.16667 12.5416 4 12.3124C3.83333 12.0832 3.75 11.8228 3.75 11.5311V6.87489C3.75 6.41655 3.9375 6.06739 4.3125 5.82739C4.6875 5.58822 5.08333 5.55197 5.5 5.71864L24.75 13.8436C25.2708 14.0728 25.5312 14.4582 25.5312 14.9999C25.5312 15.5416 25.2708 15.927 24.75 16.1561L5.5 24.2811Z"              fill="#444DF2" />          </g>        </svg>      </button>    </div>  </div></div>'
-    var COMPONENTS = [{'name': 'AddChannelCardComponent', 'selector': 'app-add-channel-card'},{'name': 'AddMemberCardComponent', 'selector': 'app-add-member-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'app-avatar'},{'name': 'ChannelComponent', 'selector': 'app-channel'},{'name': 'CheckEmailComponent', 'selector': 'app-check-email'},{'name': 'DialogAddMemberComponent', 'selector': 'app-dialog-add-member'},{'name': 'DialogAddMemberMobileComponent', 'selector': 'app-dialog-add-member-mobile'},{'name': 'DialogEditChannelComponent', 'selector': 'app-dialog-edit-channel'},{'name': 'DialogEditProfileComponent', 'selector': 'app-dialog-edit-profile'},{'name': 'DialogEmojiPickerComponent', 'selector': 'app-dialog-emoji-picker'},{'name': 'DialogShowMembersComponent', 'selector': 'app-dialog-show-members'},{'name': 'DialogShowProfileComponent', 'selector': 'app-dialog-show-profile'},{'name': 'EmailSnackbarComponent', 'selector': 'app-email-snackbar'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'LoginSnackbarComponent', 'selector': 'app-login-snackbar'},{'name': 'LogOutDialogComponent', 'selector': 'app-log-out-dialog'},{'name': 'MainHeaderComponent', 'selector': 'app-main-header'},{'name': 'MainMenuChannelsComponent', 'selector': 'app-main-menu-channels'},{'name': 'MainMenuComponent', 'selector': 'app-main-menu'},{'name': 'MainMenuDmComponent', 'selector': 'app-main-menu-dm'},{'name': 'MainMenuHeaderComponent', 'selector': 'app-main-menu-header'},{'name': 'MainPageComponent', 'selector': 'app-main-page'},{'name': 'MessageComponent', 'selector': 'app-message'},{'name': 'MessageInputComponent', 'selector': 'app-message-input'},{'name': 'PrivacyPolicyComponent', 'selector': 'app-privacy-policy'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'SearchResultsComponent', 'selector': 'app-search-results'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'UserCreatedSnackbarComponent', 'selector': 'app-user-created-snackbar'}];
-    var DIRECTIVES = [{'name': 'OpenProfileDirective', 'selector': '[appOpenProfile]'}];
+        var COMPONENT_TEMPLATE = '<div><div class="message-input-container">    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" attr.placeholder-text="{{getTextareaPlaceholderText()}}"></div>    <app-popup-search [searchTerm]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>        <!-- img & pdf preview -->    <div class="documents-preview">      @if(currentFile) {         <!-- type pdf -->          @if(currentFile.type == \'application/pdf\') {            <div class="pdf-preview-container">              <div class="pdf-preview">                <div class="pdf-icon"><b>pdf</b></div>                <div class="file-name">{{currentFile.name}}</div>              </div>              <div class="overlay"></div>              <button class="btn-icon-v5" (click)="removeFile(addDocumentInput)">                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                  <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">                  <rect width="24" height="24" fill="#D9D9D9"/>                  </mask>                  <g mask="url(#mask0_813_12181)">                  <path d="M11.9998 13.4L7.0998 18.3C6.91647 18.4834 6.68314 18.575 6.3998 18.575C6.11647 18.575 5.88314 18.4834 5.6998 18.3C5.51647 18.1167 5.4248 17.8834 5.4248 17.6C5.4248 17.3167 5.51647 17.0834 5.6998 16.9L10.5998 12L5.6998 7.10005C5.51647 6.91672 5.4248 6.68338 5.4248 6.40005C5.4248 6.11672 5.51647 5.88338 5.6998 5.70005C5.88314 5.51672 6.11647 5.42505 6.3998 5.42505C6.68314 5.42505 6.91647 5.51672 7.0998 5.70005L11.9998 10.6L16.8998 5.70005C17.0831 5.51672 17.3165 5.42505 17.5998 5.42505C17.8831 5.42505 18.1165 5.51672 18.2998 5.70005C18.4831 5.88338 18.5748 6.11672 18.5748 6.40005C18.5748 6.68338 18.4831 6.91672 18.2998 7.10005L13.3998 12L18.2998 16.9C18.4831 17.0834 18.5748 17.3167 18.5748 17.6C18.5748 17.8834 18.4831 18.1167 18.2998 18.3C18.1165 18.4834 17.8831 18.575 17.5998 18.575C17.3165 18.575 17.0831 18.4834 16.8998 18.3L11.9998 13.4Z" fill="#1C1B1F"/>                  </g>                  </svg>              </button>            </div>          }          @else {             <!-- type image -->            <div class="img-preview-container">              <div class="img-preview">                <div class="message-img">                  <img src="{{currentFile.URL}}" alt="">                </div>              </div>              <div class="overlay"></div>              <button class="btn-icon-v5" (click)="removeFile(addDocumentInput)">                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                  <mask id="mask0_813_12181" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">                  <rect width="24" height="24" fill="#D9D9D9"/>                  </mask>                  <g mask="url(#mask0_813_12181)">                  <path d="M11.9998 13.4L7.0998 18.3C6.91647 18.4834 6.68314 18.575 6.3998 18.575C6.11647 18.575 5.88314 18.4834 5.6998 18.3C5.51647 18.1167 5.4248 17.8834 5.4248 17.6C5.4248 17.3167 5.51647 17.0834 5.6998 16.9L10.5998 12L5.6998 7.10005C5.51647 6.91672 5.4248 6.68338 5.4248 6.40005C5.4248 6.11672 5.51647 5.88338 5.6998 5.70005C5.88314 5.51672 6.11647 5.42505 6.3998 5.42505C6.68314 5.42505 6.91647 5.51672 7.0998 5.70005L11.9998 10.6L16.8998 5.70005C17.0831 5.51672 17.3165 5.42505 17.5998 5.42505C17.8831 5.42505 18.1165 5.51672 18.2998 5.70005C18.4831 5.88338 18.5748 6.11672 18.5748 6.40005C18.5748 6.68338 18.4831 6.91672 18.2998 7.10005L13.3998 12L18.2998 16.9C18.4831 17.0834 18.5748 17.3167 18.5748 17.6C18.5748 17.8834 18.4831 18.1167 18.2998 18.3C18.1165 18.4834 17.8831 18.575 17.5998 18.575C17.3165 18.575 17.0831 18.4834 16.8998 18.3L11.9998 13.4Z" fill="#1C1B1F"/>                  </g>                  </svg>              </button>            </div>          }      }      @if(errorMessage != \'\') {        <div class="error-message">{{errorMessage}}</div>      }    </div>    <!-- button row -->    <div class="message-input-buttons">      <div class="left-side">        <!-- button add document -->        <input type="file" #addDocumentInput style="display: none;" accept="image/*,application/pdf" (change)="addDocument($event)">        <button class="btn-icon w40" (click)="addDocumentInput.click()">          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">            <g clip-path="url(#clip0_813_12245)">              <mask id="mask0_813_12245" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="24"                height="24">                <rect x="3" y="3" width="24" height="24" fill="#D9D9D9" />              </mask>              <g mask="url(#mask0_813_12245)">                <path                  d="M15 22C14.7167 22 14.4793 21.904 14.288 21.712C14.096 21.5207 14 21.2833 14 21V16H9C8.71667 16 8.479 15.904 8.287 15.712C8.09567 15.5207 8 15.2833 8 15C8 14.7167 8.09567 14.479 8.287 14.287C8.479 14.0957 8.71667 14 9 14H14V9C14 8.71667 14.096 8.479 14.288 8.287C14.4793 8.09567 14.7167 8 15 8C15.2833 8 15.521 8.09567 15.713 8.287C15.9043 8.479 16 8.71667 16 9V14H21C21.2833 14 21.5207 14.0957 21.712 14.287C21.904 14.479 22 14.7167 22 15C22 15.2833 21.904 15.5207 21.712 15.712C21.5207 15.904 21.2833 16 21 16H16V21C16 21.2833 15.9043 21.5207 15.713 21.712C15.521 21.904 15.2833 22 15 22Z"                  fill="#686868" />              </g>            </g>            <defs>              <clipPath id="clip0_813_12245">                <rect x="3" y="3" width="24" height="24" rx="12" fill="white" />              </clipPath>            </defs>          </svg>        </button>        <div class="separator-v"></div>        <!-- button add emoticon -->        <button class="btn-icon w40" (click)="openDialogEmojiPicker(channelInput)" (mousedown)="$event.preventDefault()">          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">            <mask id="mask0_813_12139" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"              height="24">              <rect width="24" height="24" fill="#D9D9D9" />            </mask>            <g mask="url(#mask0_813_12139)">              <path                d="M15.5 11C15.9333 11 16.2917 10.8583 16.575 10.575C16.8583 10.2917 17 9.93333 17 9.5C17 9.06667 16.8583 8.70833 16.575 8.425C16.2917 8.14167 15.9333 8 15.5 8C15.0667 8 14.7083 8.14167 14.425 8.425C14.1417 8.70833 14 9.06667 14 9.5C14 9.93333 14.1417 10.2917 14.425 10.575C14.7083 10.8583 15.0667 11 15.5 11ZM8.5 11C8.93333 11 9.29167 10.8583 9.575 10.575C9.85833 10.2917 10 9.93333 10 9.5C10 9.06667 9.85833 8.70833 9.575 8.425C9.29167 8.14167 8.93333 8 8.5 8C8.06667 8 7.70833 8.14167 7.425 8.425C7.14167 8.70833 7 9.06667 7 9.5C7 9.93333 7.14167 10.2917 7.425 10.575C7.70833 10.8583 8.06667 11 8.5 11ZM12 17.5C12.95 17.5 13.8167 17.2877 14.6 16.863C15.3833 16.4377 15.9917 15.9 16.425 15.25C16.625 14.95 16.6543 14.6667 16.513 14.4C16.371 14.1333 16.15 14 15.85 14C15.7333 14 15.6167 14.0333 15.5 14.1C15.3833 14.1667 15.2917 14.25 15.225 14.35C14.8583 14.85 14.4 15.25 13.85 15.55C13.3 15.85 12.6833 16 12 16C11.3167 16 10.7 15.85 10.15 15.55C9.6 15.25 9.14167 14.85 8.775 14.35C8.70833 14.25 8.61267 14.1667 8.488 14.1C8.36267 14.0333 8.24167 14 8.125 14C7.84167 14 7.62933 14.129 7.488 14.387C7.346 14.6457 7.36667 14.9167 7.55 15.2C8 15.8833 8.61667 16.4377 9.4 16.863C10.1833 17.2877 11.05 17.5 12 17.5ZM12 22C10.6167 22 9.31667 21.7373 8.1 21.212C6.88333 20.6873 5.825 19.975 4.925 19.075C4.025 18.175 3.31267 17.1167 2.788 15.9C2.26267 14.6833 2 13.3833 2 12C2 10.6167 2.26267 9.31667 2.788 8.1C3.31267 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.31233 8.1 2.787C9.31667 2.26233 10.6167 2 12 2C13.3833 2 14.6833 2.26233 15.9 2.787C17.1167 3.31233 18.175 4.025 19.075 4.925C19.975 5.825 20.6873 6.88333 21.212 8.1C21.7373 9.31667 22 10.6167 22 12C22 13.3833 21.7373 14.6833 21.212 15.9C20.6873 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6873 15.9 21.212C14.6833 21.7373 13.3833 22 12 22ZM12 20C14.2167 20 16.1043 19.221 17.663 17.663C19.221 16.1043 20 14.2167 20 12C20 9.78333 19.221 7.89567 17.663 6.337C16.1043 4.779 14.2167 4 12 4C9.78333 4 7.896 4.779 6.338 6.337C4.77933 7.89567 4 9.78333 4 12C4 14.2167 4.77933 16.1043 6.338 17.663C7.896 19.221 9.78333 20 12 20Z"                fill="#686868" />            </g>          </svg>        </button>        <!-- button add tag -->        <button class="btn-icon w40" (click)="addTag(channelInput)" (mousedown)="$event.preventDefault()">          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">            <mask id="mask0_813_12157" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"              height="24">              <rect width="24" height="24" fill="#D9D9D9" />            </mask>            <g mask="url(#mask0_813_12157)">              <path                d="M12 22C10.6333 22 9.34167 21.7373 8.125 21.212C6.90833 20.6873 5.846 19.9707 4.938 19.062C4.02933 18.154 3.31267 17.0917 2.788 15.875C2.26267 14.6583 2 13.3667 2 12C2 10.6167 2.26267 9.321 2.788 8.113C3.31267 6.90433 4.02933 5.846 4.938 4.938C5.846 4.02933 6.90833 3.31233 8.125 2.787C9.34167 2.26233 10.6333 2 12 2C13.3833 2 14.679 2.26233 15.887 2.787C17.0957 3.31233 18.154 4.02933 19.062 4.938C19.9707 5.846 20.6873 6.90433 21.212 8.113C21.7373 9.321 22 10.6167 22 12V13.45C22 14.4333 21.6627 15.2707 20.988 15.962C20.3127 16.654 19.4833 17 18.5 17C17.9 17 17.3417 16.8667 16.825 16.6C16.3083 16.3333 15.8833 15.9833 15.55 15.55C15.1 16 14.571 16.3543 13.963 16.613C13.3543 16.871 12.7 17 12 17C10.6167 17 9.43767 16.5123 8.463 15.537C7.48767 14.5623 7 13.3833 7 12C7 10.6167 7.48767 9.43733 8.463 8.462C9.43767 7.48733 10.6167 7 12 7C13.3833 7 14.5627 7.48733 15.538 8.462C16.5127 9.43733 17 10.6167 17 12V13.45C17 13.9333 17.15 14.3123 17.45 14.587C17.75 14.8623 18.1 15 18.5 15C18.9 15 19.25 14.8623 19.55 14.587C19.85 14.3123 20 13.9333 20 13.45V12C20 9.81667 19.2123 7.93733 17.637 6.362C16.0623 4.78733 14.1833 4 12 4C9.81667 4 7.93733 4.78733 6.362 6.362C4.78733 7.93733 4 9.81667 4 12C4 14.1833 4.78733 16.0623 6.362 17.637C7.93733 19.2123 9.81667 20 12 20H16C16.2833 20 16.5207 20.096 16.712 20.288C16.904 20.4793 17 20.7167 17 21C17 21.2833 16.904 21.5207 16.712 21.712C16.5207 21.904 16.2833 22 16 22H12ZM12 15C12.8333 15 13.5417 14.7083 14.125 14.125C14.7083 13.5417 15 12.8333 15 12C15 11.1667 14.7083 10.4583 14.125 9.875C13.5417 9.29167 12.8333 9 12 9C11.1667 9 10.4583 9.29167 9.875 9.875C9.29167 10.4583 9 11.1667 9 12C9 12.8333 9.29167 13.5417 9.875 14.125C10.4583 14.7083 11.1667 15 12 15Z"                fill="#686868" />            </g>          </svg>        </button>      </div>      <!-- button send message -->      <button class="btn-send-message w40" [disabled]="(messageInput == \'\' && currentFile == null && channelInput.innerHTML == \'\')" (click)="saveMessage(channelInput,addDocumentInput)">        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">          <mask id="mask0_813_12250" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30"            height="30">            <rect width="30" height="30" fill="#D9D9D9" />          </mask>          <g mask="url(#mask0_813_12250)">            <path              d="M5.5 24.2811C5.08333 24.4478 4.6875 24.4111 4.3125 24.1711C3.9375 23.932 3.75 23.5832 3.75 23.1249V18.4686C3.75 18.177 3.83333 17.9166 4 17.6874C4.16667 17.4582 4.39583 17.3124 4.6875 17.2499L13.75 14.9999L4.6875 12.7499C4.39583 12.6874 4.16667 12.5416 4 12.3124C3.83333 12.0832 3.75 11.8228 3.75 11.5311V6.87489C3.75 6.41655 3.9375 6.06739 4.3125 5.82739C4.6875 5.58822 5.08333 5.55197 5.5 5.71864L24.75 13.8436C25.2708 14.0728 25.5312 14.4582 25.5312 14.9999C25.5312 15.5416 25.2708 15.927 24.75 16.1561L5.5 24.2811Z"              fill="#444DF2" />          </g>        </svg>      </button>    </div>  </div></div>'
+    var COMPONENTS = [{'name': 'AddChannelCardComponent', 'selector': 'app-add-channel-card'},{'name': 'AddMemberCardComponent', 'selector': 'app-add-member-card'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AvatarComponent', 'selector': 'app-avatar'},{'name': 'ChannelComponent', 'selector': 'app-channel'},{'name': 'CheckEmailComponent', 'selector': 'app-check-email'},{'name': 'DialogAddMemberComponent', 'selector': 'app-dialog-add-member'},{'name': 'DialogAddMemberMobileComponent', 'selector': 'app-dialog-add-member-mobile'},{'name': 'DialogEditChannelComponent', 'selector': 'app-dialog-edit-channel'},{'name': 'DialogEditProfileComponent', 'selector': 'app-dialog-edit-profile'},{'name': 'DialogEmojiPickerComponent', 'selector': 'app-dialog-emoji-picker'},{'name': 'DialogShowMembersComponent', 'selector': 'app-dialog-show-members'},{'name': 'DialogShowProfileComponent', 'selector': 'app-dialog-show-profile'},{'name': 'EditMessageComponent', 'selector': 'app-edit-message'},{'name': 'EmailSnackbarComponent', 'selector': 'app-email-snackbar'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'ImprintComponent', 'selector': 'app-imprint'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'LoginSnackbarComponent', 'selector': 'app-login-snackbar'},{'name': 'LogOutDialogComponent', 'selector': 'app-log-out-dialog'},{'name': 'MainHeaderComponent', 'selector': 'app-main-header'},{'name': 'MainMenuChannelsComponent', 'selector': 'app-main-menu-channels'},{'name': 'MainMenuComponent', 'selector': 'app-main-menu'},{'name': 'MainMenuDmComponent', 'selector': 'app-main-menu-dm'},{'name': 'MainMenuHeaderComponent', 'selector': 'app-main-menu-header'},{'name': 'MainPageComponent', 'selector': 'app-main-page'},{'name': 'MessageComponent', 'selector': 'app-message'},{'name': 'MessageInputComponent', 'selector': 'app-message-input'},{'name': 'PopupSearchComponent', 'selector': 'app-popup-search'},{'name': 'PrivacyPolicyComponent', 'selector': 'app-privacy-policy'},{'name': 'ProfileButtonComponent', 'selector': 'app-profile-button'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'SearchBarComponent', 'selector': 'app-search-bar'},{'name': 'SearchResultsComponent', 'selector': 'app-search-results'},{'name': 'SignInComponent', 'selector': 'app-sign-in'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'UserCreatedSnackbarComponent', 'selector': 'app-user-created-snackbar'}];
+    var DIRECTIVES = [{'name': 'OpenProfileDirective', 'selector': '[appOpenProfile]'},{'name': 'TagToComponentDirective', 'selector': '[appTagToComponent]'}];
     var ACTUAL_COMPONENT = {'name': 'MessageInputComponent'};
 </script>
 <script src="../js/tree.js"></script>

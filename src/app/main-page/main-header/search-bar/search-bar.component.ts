@@ -17,6 +17,7 @@ import { OpenProfileDirective } from '../../../shared/directives/open-profile.di
 import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { UtilityService } from '../../../services/utility.service';
+import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
 
 @Component({
   selector: 'app-search-bar',
@@ -28,6 +29,7 @@ import { UtilityService } from '../../../services/utility.service';
     ReactiveFormsModule,
     OpenProfileDirective,
     RouterModule,
+    TagToComponentDirective
   ],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss',
@@ -166,6 +168,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     const message = this.messageService.allMessages.find((message) => message.id === messageId);
     const user = this.userService.getUser(message!.user_id);
     return user?.profile_img || 'assets/img/deleted.png';
+  }
+
+  
+  getUserName(messageId: any) {
+    const message = this.messageService.allMessages.find((message) => message.id === messageId);
+    const user = this.userService.getUser(message!.user_id);
+    return user?.name || 'Deleted User';
   }
 
 

@@ -59,10 +59,10 @@
                     <img class="user-avatar" [src]="getUserImg(message.id)" alt="Avatar">
                     <div class="messageContainer">
                         <div class="messageHeader">
-                            <span class="user-name"></span>
+                            <span class="user-name">{{getUserName(message.id)}}</span>
                             <span class="message-time">{{displayMessageTime(message) }}</span>
                         </div>
-                        <span>{{message.message.text}}</span>
+                        <span class="message-text" appTagToComponent>{{message.message.text}}</span>
                         <span class="message-channel-name">#{{getChannelName(message.channel_id)}}</span>
                     </div>
                 </div>
