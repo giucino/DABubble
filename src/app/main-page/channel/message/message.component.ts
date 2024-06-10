@@ -29,8 +29,9 @@ import { EditMessageComponent } from './edit-message/edit-message.component';
   styleUrl: './message.component.scss',
 })
 export class MessageComponent {
-  showMoreOptions: boolean = false;
-  editMessage: boolean = false;
+  @ViewChild('messageElem') messageElem!: ElementRef;
+  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
+  @ViewChild('channelInput', { read: ViewContainerRef, static: true }) channelInputViewRef!: ViewContainerRef;
   @Input() channelType: 'main' | 'direct' | 'thread' | 'new' = 'main';
   @Input() message: Message = {
     user_id: '',
@@ -56,9 +57,8 @@ export class MessageComponent {
   attachementsData: any[] = [];
   unsubReactions: Function = () => { };
   reactions: Reaction[] = [];
-
-  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
-  @ViewChild('channelInput', { read: ViewContainerRef, static: true }) channelInputViewRef!: ViewContainerRef;
+  showMoreOptions: boolean = false;
+  editMessage: boolean = false;
   tagText: string = '';
 
   constructor(
@@ -70,10 +70,10 @@ export class MessageComponent {
     public reactionService: ReactionService,
     public sharedService: SharedService,
     public elementRef: ElementRef,
-    public mainpage : MainPageComponent, // TODO: als Service
-    public cursorPositionService : CursorPositionService,
-  ) {}
- 
+    public mainpage: MainPageComponent, // TODO: als Service
+    public cursorPositionService: CursorPositionService,
+  ) { }
+
   get channelInputElement(): ElementRef {
     return this.channelInput;
   }
@@ -85,8 +85,9 @@ export class MessageComponent {
     this.getAttachementsData();
     this.getReactions();
     this.message.message.text = this.formatMessageForRead(this.message.message.text);
+    document.addEventListener('click', this.documentClickHandler);
   }
-  
+
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
@@ -97,6 +98,21 @@ export class MessageComponent {
 
   ngOnDestroy() {
     this.unsubReactions();
+    document.removeEventListener('click', this.documentClickHandler);
+  }
+
+
+  documentClickHandler = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (!this.messageElem.nativeElement.contains(target) && this.editMessage) {
+      this.closeEdit();
+    }
+  };
+
+
+  editThisMessage(event: MouseEvent){
+    event.stopPropagation();
+    this.editMessage = true;
   }
 
 
@@ -245,8 +261,8 @@ export class MessageComponent {
       this.messageService.updateMessage(this.message);
     }
   }
-  
-  
+
+
   closeEdit() {
     this.editMessage = false;
     this.showMoreOptions = false;
@@ -368,13 +384,13 @@ export class MessageComponent {
 
   //#region formatting
   // TODO: delete?
-  escapeHTML(text : string) {
+  escapeHTML(text: string) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  formatMessageForRead(text : string) {
-   let formattedText = this.escapeHTML(text);
-   return formattedText;
+  formatMessageForRead(text: string) {
+    let formattedText = this.escapeHTML(text);
+    return formattedText;
   }
 
   //#endregion

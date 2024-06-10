@@ -1,4 +1,4 @@
-<div [ngClass]="{'message-container' : !isCurrentUser(), 'message-container-reverse' : isCurrentUser()}">
+<div #messageElem [ngClass]="{'message-container' : !isCurrentUser(), 'message-container-reverse' : isCurrentUser()}">
     <img class="profile-img" [src]="messageCreator?.profile_img ?? deleted_img" alt="">
     <!-- message -->
     @if(!editMessage) {
@@ -153,7 +153,7 @@
                 </button>
                 @if(showMoreOptions) {
                     <div class="more-options-menu">
-                        <button class="btn-text-v2 fs-20" (click)="editMessage = true">Nachricht bearbeiten</button>
+                        <button class="btn-text-v2 fs-20" (click)="editThisMessage($event)">Nachricht bearbeiten</button>
                     </div>
                 }
                 </div>

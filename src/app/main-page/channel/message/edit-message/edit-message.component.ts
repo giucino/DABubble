@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   Renderer2,
@@ -31,6 +32,9 @@ import { TagToComponentDirective } from '../../../../shared/directives/tag-to-co
   styleUrl: './edit-message.component.scss',
 })
 export class EditMessageComponent {
+  @Output() closeEditEvent: EventEmitter<void> = new EventEmitter<void>();
+  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
+  @ViewChild('channelInput', { read: ViewContainerRef, static: true }) channelInputViewRef!: ViewContainerRef;
   @Input() channelType: 'main' | 'direct' | 'thread' | 'new' = 'main';
   @Input() message: Message = {
     user_id: '',
@@ -47,20 +51,13 @@ export class EditMessageComponent {
     total_replies: 0,
     last_reply: 0,
   };
-
   editableMessage = JSON.parse(JSON.stringify(this.message));
-
-  @Output() closeEditEvent: EventEmitter<void> = new EventEmitter<void>();
-
-  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
-  @ViewChild('channelInput', { read: ViewContainerRef, static: true })
-  channelInputViewRef!: ViewContainerRef;
   tagText: string = '';
 
   constructor(
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
-    private renderer: Renderer2,
+    // private renderer: Renderer2,
     public cursorPositionService: CursorPositionService,
     private elementRef: ElementRef,
   ) {}
@@ -214,5 +211,13 @@ export class EditMessageComponent {
     event.preventDefault();
     this.updateMessage(element);
   }
+
+
+  // @HostListener('document:click', ['$event'])
+  // public onDocumentClick(event: MouseEvent): void {
+  //   if (!this.elementRef.nativeElement.contains(event.target)) {
+  //     this.closeEdit();
+  //   }
+  // }
   //#endregion
 }
