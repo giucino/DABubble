@@ -8,12 +8,10 @@ import {
   Renderer2,
   ViewChild,
   ViewContainerRef,
-  input,
 } from '@angular/core';
 import { Message } from '../../../../interfaces/message.interface';
 import { CursorPositionService } from '../../../../services/cursor-position.service';
 import { PopupSearchComponent } from '../../../../shared/popup-search/popup-search.component';
-import { SafeHtmlPipe } from '../../../../shared/pipes/safe-html.pipe';
 import { OpenProfileDirective } from '../../../../shared/directives/open-profile.directive';
 import { DialogEmojiPickerComponent } from '../../dialog-emoji-picker/dialog-emoji-picker.component';
 import { CustomDialogService } from '../../../../services/custom-dialog.service';
@@ -26,7 +24,6 @@ import { TagToComponentDirective } from '../../../../shared/directives/tag-to-co
   imports: [
     CommonModule,
     PopupSearchComponent,
-    // SafeHtmlPipe,
     OpenProfileDirective,
     TagToComponentDirective
   ],
@@ -64,8 +61,13 @@ export class EditMessageComponent {
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
     private renderer: Renderer2,
-    public cursorPositionService: CursorPositionService
+    public cursorPositionService: CursorPositionService,
+    private elementRef: ElementRef,
   ) {}
+
+  isSmallWidth() {
+    return this.elementRef.nativeElement.offsetWidth <= 600;
+  }
 
   ngOnInit() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
@@ -119,33 +121,35 @@ export class EditMessageComponent {
   }
 
   setFocusAtTextEnd(input : HTMLElement) {
-      input.focus();
-      var range = document.createRange();
-      range.selectNodeContents(input);
-      range.collapse(false);
-      var selection = window.getSelection();
-      if (selection) {
-        selection.removeAllRanges();
-        selection.addRange(range);
-        this.cursorPositionService.setLastCursorPosition(input);
-      }
+    input.focus();
+    var range = document.createRange();
+    range.selectNodeContents(input);
+    range.collapse(false);
+    var selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      this.cursorPositionService.setLastCursorPosition(input);
+    }
   }
 
-  insertAtCursor(text :  string, input: HTMLElement) {
+
+  insertAtCursor(text: string, input: HTMLElement) {
     const sel = window.getSelection();
-    const range = this.cursorPositionService.restoreCursorPosition(input);
-      if(sel && range) {
-      const textNode = document.createTextNode(text);
-      range.insertNode(textNode);
-      range.setStartAfter(textNode);
-      range.setEndAfter(textNode);
-      sel.removeAllRanges();
-      sel.addRange(range);
-      }
+    const range = this.cursorPositionService.restoreCursorPosition(input);  
+    if (sel && range) {
+        const textNode = document.createTextNode(text);
+        range.insertNode(textNode);
+        range.setStartAfter(textNode);
+        range.setEndAfter(textNode);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+    this.setSelectionPosition(input);
   }
   //#endregion emoji picker
 
-  //#region  @/# Tag System
+  //#region  @/# Tag System 
   checkForTag(element: HTMLElement) {
     const text = this.getTextWithLineBreaks(element);
     const cursorPosition = this.setSelectionPosition(element);
@@ -155,7 +159,6 @@ export class EditMessageComponent {
     if (charBeforeCursor && !/\s/.test(charBeforeCursor)) {
       const atIndex = textBeforeCursor.lastIndexOf('@');
       if (atIndex !== -1) {
-        // const charBeforeAt = textBeforeCursor[atIndex - 1];
         const charAfterAt = textBeforeCursor[atIndex + 1];
         if (!charAfterAt?.match(/\s/)) {
           this.tagText = textBeforeCursor.slice(atIndex);
@@ -176,36 +179,40 @@ export class EditMessageComponent {
   setSelectionPosition(element: HTMLElement): number {
     return this.cursorPositionService.saveCursorPosition(element);
   }
+  
+
 
   handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const container = range.startContainer;
-
-      // Prüfen ob die Backspace- oder Delete-Taste gedrückt wurde
-      if (event.key === 'Backspace' || event.key === 'Delete') {
-        // Finden Sie das nächste Element
-        let elementToRemove = null;
-
-        if (container.nodeType === Node.ELEMENT_NODE) {
-          elementToRemove = container as HTMLElement;
-        } else if (container.nodeType === Node.TEXT_NODE) {
-          elementToRemove = container.parentElement;
-        }
-
-        if (elementToRemove && elementToRemove.classList.contains('tag')) {
-          event.preventDefault();
-          this.renderer.removeChild(element, elementToRemove);
-          console.log('Tag-Element entfernt:', elementToRemove);
-        }
-      }
-
-      if(event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        this.updateMessage(element);
-      }
+      const curRange = selection.getRangeAt(selection.rangeCount - 1);
+      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return; // we are in child selection. The characters of the text node is being deleted
+      // if (event.key === 'Backspace') this.handleBackSpace(selection, element, event);
+      if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
+  }
+
+  // handleBackSpace(selection : Selection, element : HTMLDivElement, event: Event) {
+  //   const range = document.createRange();
+  //   if (selection.anchorNode && selection.anchorNode != element) { // selection is in character mode. expand it to the whole editable field
+  //       range.selectNodeContents(element);
+  //       range.setEndBefore(selection.anchorNode);
+  //   } else if (selection.anchorOffset > 0) range.setEnd(element, selection.anchorOffset);
+  //   else return; // reached the beginning of editable field
+  //   range.setStart(element, range.endOffset == 0 ? 0 : range.endOffset - 1);
+  //   const previousNode = range.cloneContents().lastChild;
+  //   if (previousNode && previousNode.nodeType == Node.ELEMENT_NODE) {
+  //     const previousElement = previousNode as HTMLElement;
+  //     if (previousElement.contentEditable === 'false') {  // This is some rich content, e.g. smiley. We should help the user to delete it.
+  //       range.deleteContents();
+  //       event.preventDefault();
+  //     }
+  //   }
+  // }
+
+  handleEnter(event: Event, element : HTMLDivElement) {
+    event.preventDefault();
+    this.updateMessage(element);
   }
   //#endregion
 }

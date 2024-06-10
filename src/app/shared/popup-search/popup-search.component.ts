@@ -5,20 +5,16 @@ import {
   Input,
   Renderer2,
   SimpleChanges,
-  ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Subscription, debounceTime } from 'rxjs';
 import { Channel } from '../../interfaces/channel.interface';
 import { SearchService } from '../../services/search.service';
 import { UserService } from '../../firebase.service/user.service';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThreadService } from '../../services/thread.service';
 import { ChannelTypeEnum } from '../enums/channel-type.enum';
 import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
-import { StateManagementService } from '../../services/state-management.service';
 import { User } from '../../interfaces/user.interface';
 import { ProfileButtonComponent } from '../profile-button/profile-button.component';
 import { CursorPositionService } from '../../services/cursor-position.service';
@@ -36,7 +32,7 @@ export class PopupSearchComponent {
   filteredChannels: Channel[] = [];
   selectedUserId: string = '';
 
-  @Input() inputText: string = '';
+  @Input() searchTerm: string = '';
   @Input() inputElement!: ElementRef;
   @Input() viewContainerRef!: ViewContainerRef;
 
@@ -46,24 +42,18 @@ export class PopupSearchComponent {
     public userService: UserService,
     public threadService: ThreadService,
     public channelService: ChannelFirebaseService,
-    private stateService: StateManagementService,
-    private router: Router,
     private renderer: Renderer2,
     public cursorPositionService :CursorPositionService,
   ) {}
 
-  ngOnInit() {
-    // console.log(this.inputElement)
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['inputText']) this.filter(this.inputText);
+    if (changes['searchTerm']) this.filter(this.searchTerm);
   }
 
   ngOnDestroy(): void {}
 
+
   filter(searchTerm: string): void {
-    console.log('searchterm', searchTerm)
     if (searchTerm.startsWith('@')) {
       // Suche Benutzer mit dem Präfix '@'
       this.filteredUsers = this.searchService.filterUsersByPrefix(
@@ -87,54 +77,41 @@ export class PopupSearchComponent {
   }
 
 
-
-  addTagLinkToText(user: User, event : Event) {
-    // replace inputText with HMTL Element
+  addProfileButton(user: User, event : Event) {
+    // replace searchTerm with HMTL Element
     event.preventDefault();
     let container = this.inputElement.nativeElement;
-    let range = this.cursorPositionService.restoreCursorPosition(container);;
-    range = this.extendRangeBeforeCursor(range!, this.inputText);
+    let range = this.cursorPositionService.restoreCursorPosition(container);
+    if(range) {range = this.extendRangeToSearchTerm(range!, this.searchTerm);
     
       // Ersetzen Sie den Range durch neuen Text
-    this.replaceRangeWithHTML(range, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
-    
-    // Replace placeholders with dynamic components
-    const dynamicUserElements = container.querySelectorAll('.dynamic-user');
-    dynamicUserElements.forEach((element: HTMLElement) => {
-      const userId = element.getAttribute('data-userid');
-      const userName = element.innerText;
-
-      const componentRef: ComponentRef<ProfileButtonComponent> =
-        this.viewContainerRef.createComponent(ProfileButtonComponent);
-      componentRef.instance.userId = userId!;
-      componentRef.instance.userName = userName;
-
-      range!.setStartAfter(element); // set cursor after tag
-      this.renderer.insertBefore(container,componentRef.location.nativeElement,element);
-      this.renderer.removeChild(container, element);
+      this.replaceRangeWithHTML(range, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
       
-      this.inputText = '';
-    });
+      // Replace placeholders with dynamic components
+      const dynamicUserElements = container.querySelectorAll('.dynamic-user');
+      dynamicUserElements.forEach((element: HTMLElement) => {
+        const userId = element.getAttribute('data-userid');
+        const userName = element.innerText;
+
+        const componentRef: ComponentRef<ProfileButtonComponent> = this.viewContainerRef.createComponent(ProfileButtonComponent);
+        componentRef.instance.userId = userId!;
+        componentRef.instance.userName = userName;
+
+        range!.setStartAfter(element); // set cursor after tag
+        this.renderer.insertBefore(container,componentRef.location.nativeElement,element);
+        this.renderer.removeChild(container, element);
+
+        this.searchTerm = '';
+      });
+    }
   }
 
-  // extendRangeBeforeCursor(range: Range, inputText: string) {
-  //   // Hole den Startpunkt der Range
-  //   const startContainer = range.startContainer;
-  //   const startOffset = range.startOffset;
-  //   // Berechne die neue Startposition, indem du die Länge des Eingabetextes abziehst
-  //   const newStartOffset = startOffset - inputText.length;
-  //   // Setze den neuen Startpunkt der Range
-  //   range.setStart(startContainer, newStartOffset);
-  //   // Setze den Endpunkt der Range auf den ursprünglichen Startpunkt
-  //   range.setEnd(startContainer, startOffset);
-  //   return range;
-  // }
 
-  extendRangeBeforeCursor(range: Range, inputText: string) {
+  extendRangeToSearchTerm(range: Range, searchTerm: string) {
     // Hole den Startpunkt der Range
     const startContainer = range.startContainer;
     const startOffset = range.startOffset;
-    const inputLength = inputText.length;
+    const inputLength = searchTerm.length;
   
     let currentNode = startContainer;
     let newStartOffset = startOffset;
@@ -152,19 +129,6 @@ export class PopupSearchComponent {
     range.setEnd(currentNode, startOffset);
     return range;
   }
-
-  // replaceRangeWithHTML(range: Range, newHTML: string) {
-  //   let string = range.toString();
-  //   range.deleteContents();
-  //   const container = range.startContainer.parentElement;
-  //   const tempDiv = document.createElement('div');
-  //   tempDiv.innerHTML = newHTML;
-  //   const fragment = document.createDocumentFragment();
-  //   while (tempDiv.firstChild) {
-  //     fragment.appendChild(tempDiv.firstChild);
-  //   }
-  //   range.insertNode(fragment);
-  // }
 
 
   replaceRangeWithHTML(range: Range, newHTML: string) {
@@ -194,5 +158,7 @@ export class PopupSearchComponent {
       }
     }
   }
+
+  
 
 }

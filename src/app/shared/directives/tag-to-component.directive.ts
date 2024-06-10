@@ -40,7 +40,6 @@ export class TagToComponentDirective {
 
   loadDynamicComponents() {
     let container = this.elementRef.nativeElement;
-
     this.userService.allUsers.forEach(user => {
       const regex = new RegExp(`@${user.id}`, 'g');
       container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);

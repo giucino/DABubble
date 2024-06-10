@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   Input,
-  Renderer2,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -17,7 +16,6 @@ import { DialogEmojiPickerComponent } from '../channel/dialog-emoji-picker/dialo
 import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 import { TagToComponentDirective } from '../../shared/directives/tag-to-component.directive';
 import { CursorPositionService } from '../../services/cursor-position.service';
-import { eventNames } from 'node:process';
 
 @Component({
   selector: 'app-message-input',
@@ -27,12 +25,13 @@ import { eventNames } from 'node:process';
   styleUrl: './message-input.component.scss',
 })
 export class MessageInputComponent {
+
   @Input() usedIn: 'channel' | 'thread' = 'channel';
+
   @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
   @ViewChild('channelInput', { read: ViewContainerRef, static: true })
   channelInputViewRef!: ViewContainerRef;
   @ViewChild('addDocumentInput') addDocumentInput!: HTMLInputElement;
-  // @ViewChild('channelInput') channelInput! :ElementRef<HTMLDivElement>
 
   messageInput: string = '';
   currentUser: User = this.userService.currentUser;
@@ -50,7 +49,6 @@ export class MessageInputComponent {
     last_reply: 0,
   };
 
-  // currentFiles : any[] = [];
   currentFile: any | null = null;
   errorMessage: string = '';
 
@@ -61,59 +59,45 @@ export class MessageInputComponent {
     public channelService: ChannelFirebaseService,
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
-    private renderer: Renderer2,
     public cursorPositionService: CursorPositionService
   ) {}
+
 
   get channelInputElement(): ElementRef {
     return this.channelInput;
   }
 
-  // ngAfterViewInit() {
-  //   this.channelInput.nativeElement.focus();
-  // }
+  //#region save message
 
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
     if (this.messageInput != '' || this.currentFile != null || channelInput.innerHTML != '') {
-      // create new message and receive message id
-      this.message.user_id = this.currentUser.id;
-      channelInput.innerHTML = this.formatMessageForSave(
-        channelInput.innerHTML
-      );
-      this.message.message.text = channelInput.innerText;
-      this.message.created_at = new Date().getTime();
-      this.message.modified_at = this.message.created_at;
-      if (this.usedIn == 'channel')
-        this.message.channel_id = this.channelService.currentChannel.id;
-      if (this.usedIn == 'thread')
-        this.message.thread_id = this.channelService.currentThread.id;
-
-      // empty input
-      this.messageInput = '';
-      channelInput.innerText = '';
-      
+      this.prepareMessageForSave(channelInput);
+      this.emptyInput(channelInput);
       this.message.id = await this.messageService.addMessage(this.message);
-
       // thread message update
       if (this.usedIn == 'thread') this.updateThreadMessage();
       // upload currentFile
-      if (this.currentFile != null) {
-        const path =
-          'users/' +
-          this.currentUser.id +
-          '/messages/' +
-          this.message.id +
-          '/' +
-          this.currentFile.name;
-        await this.messageService.uploadFile(this.currentFile, path);
-        this.message.message.attachements = [];
-        this.message.message.attachements.push(path);
-        this.messageService.updateMessage(this.message);
-        this.removeFile(fileInput);
-      }
+      if (this.currentFile != null) await this.uploadFile(fileInput);
     }
   }
 
+  prepareMessageForSave(channelInput : HTMLDivElement) {
+    this.message.user_id = this.currentUser.id;
+    channelInput.innerHTML = this.formatMessageForSave(channelInput.innerHTML);
+    this.message.message.text = channelInput.innerText;
+    this.message.created_at = new Date().getTime();
+    this.message.modified_at = this.message.created_at;
+    if (this.usedIn == 'channel')
+      this.message.channel_id = this.channelService.currentChannel.id;
+    if (this.usedIn == 'thread')
+      this.message.thread_id = this.channelService.currentThread.id;
+  }
+
+  emptyInput(channelInput : HTMLDivElement) {
+    this.messageInput = '';
+    channelInput.innerText = '';
+  }
+  
   updateThreadMessage() {
     let threadMessages = this.messageService.messagesThread;
     let threadMessage = this.messageService.messagesThread[0];
@@ -121,6 +105,21 @@ export class MessageInputComponent {
     threadMessage.last_reply = this.message.created_at;
     this.messageService.updateMessage(threadMessage);
   }
+
+  async uploadFile(fileInput : HTMLInputElement) {
+    const path = 'users/' + this.currentUser.id + '/messages/' + this.message.id + '/' + this.currentFile.name;
+    await this.messageService.uploadFile(this.currentFile, path);
+    this.message.message.attachements = [];
+    this.message.message.attachements.push(path);
+    this.messageService.updateMessage(this.message);
+    this.removeFile(fileInput);
+  }
+
+  //#endregion save message
+
+  
+
+  //#region placeholder
 
   getDirectChannelUser() {
     let contact = this.channelService.currentChannel.members.find(
@@ -132,26 +131,19 @@ export class MessageInputComponent {
 
   getTextareaPlaceholderText() {
     switch (this.channelService.currentChannel.channel_type) {
-      case 'main':
-        return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
-        break;
+      case 'main': return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
       case 'direct':
-        if (this.channelService.currentChannel.members.length == 2) {
-          return 'Nachricht an ' + this.getDirectChannelUser()?.name;
-        } else {
-          return 'Nachricht an ' + 'dich';
-        }
-        break;
-      case 'thread':
-        return 'Antworten...';
-        break;
-      case 'new':
-        return 'Starte eine neue Nachricht';
-        break;
-      default:
-        return 'Starte eine neue Nachricht';
+        if (this.channelService.currentChannel.members.length == 2) return 'Nachricht an ' + this.getDirectChannelUser()?.name;
+        else return 'Nachricht an ' + 'dich';    
+      case 'thread': return 'Antworten...';
+      case 'new': return 'Starte eine neue Nachricht';
+      default: return 'Starte eine neue Nachricht';
     }
   }
+
+  //#endregion placeholder
+
+ //#region file add / remove
 
   addDocument(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -159,8 +151,7 @@ export class MessageInputComponent {
       const file = input.files[0];
       this.currentFile = file;
       this.currentFile.URL = this.createURL(file);
-      if (file.size > 500 * 1024) {
-        //500KB
+      if (file.size > 500 * 1024) { //500KB
         this.currentFile = null;
         this.errorMessage = 'Die Datei ist zu groß. Max. 500KB.';
         setTimeout(() => (this.errorMessage = ''), 5000);
@@ -175,8 +166,7 @@ export class MessageInputComponent {
       ];
       if (!allowedTypes.includes(file.type)) {
         this.currentFile = null;
-        this.errorMessage =
-          'Ungültiger Dateityp. Bitte wählen Sie eine Bild- oder PDF-Datei.';
+        this.errorMessage = 'Ungültiger Dateityp. Bitte wählen Sie eine Bild- oder PDF-Datei.';
         setTimeout(() => (this.errorMessage = ''), 5000);
       }
     }
@@ -191,7 +181,11 @@ export class MessageInputComponent {
     input.value = '';
   }
 
-  /* Dialog Emoji Picker */
+  //#endregion file add / remove
+
+
+  //#region emoji
+
   openDialogEmojiPicker(input: HTMLDivElement) {
     const component = DialogEmojiPickerComponent;
     const dialogRef = this.customDialogService.openDialog(component);
@@ -207,9 +201,11 @@ export class MessageInputComponent {
     this.insertAtCursor(result, input);
   }
 
- 
+  //#endregion emoji
 
-  //#region @/# Tag System
+
+  //#region @ Tag System
+
   checkForTag(element: HTMLElement) {
     const text = this.getTextWithLineBreaks(element);
     const cursorPosition = this.setSelectionPosition(element);
@@ -244,64 +240,42 @@ export class MessageInputComponent {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const curRange = selection.getRangeAt(selection.rangeCount - 1);
-      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) {
-        // we are in child selection. The characters of the text node is being deleted
-        return;
-    }
-  
-      // Prüfen, ob die Backspace-Taste gedrückt wurde
-      if (event.key === 'Backspace') {
-        
-        const range = document.createRange();
-        if (selection.anchorNode && selection.anchorNode != element) {
-            // selection is in character mode. expand it to the whole editable field
-            range.selectNodeContents(element);
-            range.setEndBefore(selection.anchorNode);
-        } else if (selection.anchorOffset > 0) {
-            range.setEnd(element, selection.anchorOffset);
-        } else {
-            // reached the beginning of editable field
-            return;
-        }
-        range.setStart(element, range.endOffset - 1);
-
-
-        const previousNode = range.cloneContents().lastChild;
-        if (previousNode && previousNode.nodeType == Node.ELEMENT_NODE) {
-          const previousElement = previousNode as HTMLElement;
-          if (previousElement.contentEditable === 'false') {
-            // This is some rich content, e.g. smiley. We should help the user to delete it.
-            range.deleteContents();
-            event.preventDefault();
-          }
-        }
-      }
-  
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        this.saveMessage(element, this.addDocumentInput);
-      }
+      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return; // we are in child selection. The characters of the text node is being deleted
+      // if (event.key === 'Backspace') this.handleBackSpace(selection, element, event);
+      if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
   }
 
+
+  // handleBackSpace(selection : Selection, element : HTMLDivElement, event: Event) {
+  //   const range = document.createRange();
+  //   if (selection.anchorNode && selection.anchorNode != element) { // selection is in character mode. expand it to the whole editable field
+  //       range.selectNodeContents(element);
+  //       range.setEndBefore(selection.anchorNode);
+  //   } else if (selection.anchorOffset > 0) range.setEnd(element, selection.anchorOffset);
+  //   else return; // reached the beginning of editable field
+  //   range.setStart(element, range.endOffset);
+  //   const previousNode = range.cloneContents().lastChild;
+  //   if (previousNode && previousNode.nodeType == Node.ELEMENT_NODE) {
+  //     const previousElement = previousNode as HTMLElement;
+  //     if (previousElement.contentEditable === 'false') {  // This is some rich content, e.g. smiley. We should help the user to delete it.
+  //       range.deleteContents();
+  //       event.preventDefault();
+  //     }
+  //   }
+  // }
+
+  handleEnter(event: Event, element : HTMLDivElement) {
+    event.preventDefault();
+    this.saveMessage(element, this.addDocumentInput);
+  }
+
   //#region add @ Button
+  
   addTag(input: HTMLElement) {
     if (document.activeElement !== input) this.setFocusAtTextEnd(input);
     this.insertTag(input);
   }
-
-  setFocusAtTextEnd(input : HTMLElement) {
-    input.focus();
-    var range = document.createRange();
-    range.selectNodeContents(input);
-    range.collapse(false);
-    var selection = window.getSelection();
-    if (selection) {
-      selection.removeAllRanges();
-      selection.addRange(range);
-      this.cursorPositionService.setLastCursorPosition(input);
-    }
-}
 
   insertTag(input: HTMLElement) {
     const text = input.innerText;
@@ -315,23 +289,30 @@ export class MessageInputComponent {
     this.checkForTag(input);
   }
 
+  setFocusAtTextEnd(input : HTMLElement) {
+    input.focus();
+    var range = document.createRange();
+    range.selectNodeContents(input);
+    range.collapse(false);
+    var selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+      this.cursorPositionService.setLastCursorPosition(input);
+    }
+  }
+
+
   insertAtCursor(text: string, input: HTMLElement) {
     const sel = window.getSelection();
-    const range = this.cursorPositionService.restoreCursorPosition(input);
-  
+    const range = this.cursorPositionService.restoreCursorPosition(input);  
     if (sel && range) {
-      try {
         const textNode = document.createTextNode(text);
         range.insertNode(textNode);
         range.setStartAfter(textNode);
         range.setEndAfter(textNode);
         sel.removeAllRanges();
         sel.addRange(range);
-      } catch (error) {
-        console.error('Error inserting text node:', error);
-      }
-    } else {
-      console.error('Selection or range is invalid.');
     }
     this.setSelectionPosition(input);
   }
@@ -342,14 +323,12 @@ export class MessageInputComponent {
 
   //#region Utility XSS Prevention TODO: in Service
 
-  escapeHTML(text: string) {
-    return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
+  // escapeHTML(text: string) {
+  //   return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // }
 
   formatTagForSave(text: string) {
-    const regex = new RegExp(
-      /<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g
-    );
+    const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g);
     const formattedText = text.replace(regex, '@$1');
     return formattedText;
   }
@@ -359,10 +338,10 @@ export class MessageInputComponent {
     return formattedText;
   }
 
-  formatMessageForRead(text: string) {
-    let formattedText = this.escapeHTML(text);
-    return formattedText;
-  }
+  // formatMessageForRead(text: string) {
+  //   let formattedText = this.escapeHTML(text);
+  //   return formattedText;
+  // }
 
   //#endregion
 }

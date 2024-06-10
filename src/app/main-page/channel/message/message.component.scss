@@ -119,63 +119,6 @@ app-edit-message {
   max-width: calc(100% - 2 * (70px + 30px)); // 100% - 2 * (profile-img - gap)
 }
 
-// .message-edit-container {
-//   background-color: var(--color-white);
-//   border: 1px solid var(--color-light-purple);
-//   border-radius: 20px;
-//   padding: 20px;
-//   gap: 16px;
-//   width: 100%;
-//   max-width: calc(100% - 2 * (70px + 30px)); // 100% - 2 * (profile-img - gap)
-//   position: relative;
-
-//   &:hover {
-//     border-color: var(--color-purple-2);
-//   }
-
-//   &:focus-within {
-//     border-color: var(--color-purple-1);
-//   }
-
-//   textarea {
-//     width: 100%;
-//     min-height: 50px;
-//     max-height: 200px;
-//     resize: vertical;
-//     padding-right: 10px;
-//     outline: none;
-//     border: none;
-//   }
-
-//   ::-webkit-scrollbar {
-//     width: 8px;
-//   }
-
-//   ::-webkit-scrollbar-thumb {
-//     background-color: var(--color-light-purple);
-//     border-radius: 30px;
-//   }
-
-//   &-thread {
-//     @extend .message-edit-container;
-//     max-width: 100%;
-//   }
-// }
-
-
-
-// .message-edit-buttons {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-
-//   .message-confirm-buttons {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 10px;
-//   }
-// }
 
 .replies {
   .count {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ComponentRef, ElementRef, Input, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { Message } from '../../../interfaces/message.interface';
 import { User } from '../../../interfaces/user.interface';
 import { MessageService } from '../../../firebase.service/message.service';
@@ -16,8 +16,6 @@ import { ReactionService } from '../../../firebase.service/reaction.service';
 import { Reaction } from '../../../interfaces/reaction.interface';
 import { SharedService } from '../../../services/shared.service';
 import { MainPageComponent } from '../../main-page.component';
-import { SafeHtmlPipe } from '../../../shared/pipes/safe-html.pipe';
-import { ProfileButtonComponent } from '../../../shared/profile-button/profile-button.component';
 import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
 import { PopupSearchComponent } from '../../../shared/popup-search/popup-search.component';
 import { CursorPositionService } from '../../../services/cursor-position.service';
@@ -26,7 +24,7 @@ import { EditMessageComponent } from './edit-message/edit-message.component';
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, OpenProfileDirective, SafeHtmlPipe, TagToComponentDirective, PopupSearchComponent, EditMessageComponent],
+  imports: [CommonModule, FormsModule, OpenProfileDirective, TagToComponentDirective, PopupSearchComponent, EditMessageComponent],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
@@ -54,7 +52,6 @@ export class MessageComponent {
   currentChannel = this.channelService.currentChannel;
   channelMembers = this.currentChannel.members;
   messageCreator: User | undefined = undefined;
-  // messages: Message[] = this.messageService.messages;
   editableMessage: Message = JSON.parse(JSON.stringify(this.message));
 
   attachementsData: any[] = [];
@@ -63,8 +60,7 @@ export class MessageComponent {
   reactions: Reaction[] = [];
 
   @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
-  @ViewChild('channelInput', { read: ViewContainerRef, static: true })
-  channelInputViewRef!: ViewContainerRef;
+  @ViewChild('channelInput', { read: ViewContainerRef, static: true }) channelInputViewRef!: ViewContainerRef;
   tagText: string = '';
 
   constructor(
@@ -76,12 +72,9 @@ export class MessageComponent {
     public reactionService: ReactionService,
     public sharedService: SharedService,
     public mainpage : MainPageComponent, // TODO: als Service
-    private renderer: Renderer2,
     public cursorPositionService : CursorPositionService,
-  ) {
-    
-  }
-  // TODO: Service
+  ) {}
+ 
   get channelInputElement(): ElementRef {
     return this.channelInput;
   }
@@ -90,14 +83,11 @@ export class MessageComponent {
   ngOnInit() {
     this.messageCreator = this.getUser(this.message.user_id);
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
-    // get attachements data
     this.getAttachementsData();
     this.getReactions();
     this.message.message.text = this.formatMessageForRead(this.message.message.text);
   }
   
-
-
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
@@ -108,6 +98,7 @@ export class MessageComponent {
   ngOnDestroy() {
     this.unsubReactions();
   }
+
 
   async getAttachementsData() {
     const messageAttachementsPaths = this.message.message.attachements;
@@ -152,13 +143,6 @@ export class MessageComponent {
     return i;
   }
 
-  // updateMessage() {
-  //   this.editableMessage.modified_at = new Date().getTime();
-  //   this.editableMessage.message.text = this.formatMessageForSave(this.editableMessage.message.text);
-  //   this.messageService.updateMessage(this.editableMessage);
-  //   this.editMessage = false;
-  //   this.showMoreOptions = false;
-  // }
 
   getTimeDifferenceForLastReply(dateAsNumber: number) {
     let currentDate = new Date().getTime();
@@ -191,6 +175,7 @@ export class MessageComponent {
     return result;
   }
 
+  //#region thread
   async openThread(thread_id: string | undefined) {
     if (this.threadService.threadOpen) this.closeThread();
     if (thread_id == undefined || thread_id == '') {
@@ -237,6 +222,7 @@ export class MessageComponent {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }
+  //#endregion thread
 
   deleteFile(path: string) {
     // remove file from storage
@@ -250,24 +236,13 @@ export class MessageComponent {
     }
   }
 
-  /* Edit Message */
-
+  
+  
   closeEdit() {
     this.editMessage = false;
     this.showMoreOptions = false;
   }
 
-  /* Dialog Emoji Picker */
-  openDialogEmojiPicker(input: HTMLDivElement) {
-    const component = DialogEmojiPickerComponent;
-    const dialogRef = this.customDialogService.openDialog(component);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.editableMessage.message.text += result;
-        input.innerHTML = this.editableMessage.message.text;
-      }
-    });
-  }
 
   //#region REACTIONS
 
@@ -371,103 +346,15 @@ export class MessageComponent {
 
 
   //#region formatting
-  // TODO: evtl. in pipe
+  // TODO: delete?
   escapeHTML(text : string) {
     return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // formatTagForRead(text:  string) {
-  //   let formattedText = text.replace(/@([a-zA-Z0-9]+)/g, (match, userId) => {
-  //     const user = this.userService.allUsers.find((user) => user.id == userId);
-  //     if (user) {
-  //       // return `<div class="tag" data-id="${user.id}" contenteditable="false" style="display: inline-block; background-color: aqua;">@${user.name}</div>`;
-  //       return `<button #profileBtn class="btn-text-v3" appOpenProfile [userId]="${user.id}" [button]="profileBtn">@${user.name}</button>`;
-  //     }
-  //     return match;
-  //   });
-  //   return formattedText;
-  // }
-
   formatMessageForRead(text : string) {
    let formattedText = this.escapeHTML(text);
-  //  formattedText = this.formatTagForRead(formattedText);
    return formattedText;
   }
 
-  // formatTagForSave(text : string) {
-  //   const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
-  //   const formattedText = text.replace(regex, '@$1');
-  //   return formattedText;
-  // }
-
-  // formatMessageForSave(text : string) {
-  //   let formattedText = this.formatTagForSave(text);
-  //   return this.escapeHTML(formattedText);
-  // }
-  //#endregion
-
-
-  //#region  @/# Tag System
-  // checkForTag(element: HTMLElement) {
-  //   const text = element.innerText;
-  //   const cursorPosition = this.getSelectionPosition(element);
-  //   const textBeforeCursor = text.slice(0, cursorPosition);
-  //   const charBeforeCursor = textBeforeCursor[cursorPosition - 1];
-  //   this.tagText = '';
-  //   if (charBeforeCursor && !/\s/.test(charBeforeCursor)) {
-  //     const atIndex = textBeforeCursor.lastIndexOf('@');
-  //     if (atIndex !== -1) {
-  //       const charBeforeAt = textBeforeCursor[atIndex - 1];
-  //       const charAfterAt = textBeforeCursor[atIndex + 1];
-  //       if ((!charBeforeAt || charBeforeAt.match(/\s/)) && (!charAfterAt?.match(/\s/))) {
-  //         this.tagText = textBeforeCursor.slice(atIndex);
-  //       }
-  //     }
-  //   }
-  // }
-
-  // getSelectionPosition(element: HTMLElement): number {
-  //   const selection = window.getSelection();
-  //   this.cursorPositionService.setLastCursorPosition(element);
-  //   if (!selection || selection.rangeCount === 0) {
-  //     return 0;
-  //   }
-  
-  //   const range = selection.getRangeAt(0);
-  //   const preCaretRange = range.cloneRange();
-  //   preCaretRange.selectNodeContents(element);
-  //   preCaretRange.setEnd(range.startContainer, range.startOffset);
-  //   let preCaretText = preCaretRange.toString();
-  
-  //   const startOffset = preCaretText.length;
-  //   return startOffset;
-  // }
-
-
-  // handleKeyDown(event: KeyboardEvent, element: HTMLElement) {
-  //   const selection = window.getSelection();
-  //   if (selection && selection.rangeCount > 0) {
-  //     const range = selection.getRangeAt(0);
-  //     const container = range.startContainer;
-
-  //     // Prüfen ob die Backspace- oder Delete-Taste gedrückt wurde
-  //     if (event.key === 'Backspace' || event.key === 'Delete') {
-  //       // Finden Sie das nächste Element
-  //       let elementToRemove = null;
-
-  //       if (container.nodeType === Node.ELEMENT_NODE) {
-  //         elementToRemove = container as HTMLElement;
-  //       } else if (container.nodeType === Node.TEXT_NODE) {
-  //         elementToRemove = container.parentElement;
-  //       }
-
-  //       if (elementToRemove && elementToRemove.classList.contains('tag')) {
-  //         event.preventDefault();
-  //         this.renderer.removeChild(element, elementToRemove);
-  //         console.log('Tag-Element entfernt:', elementToRemove);
-  //       }
-  //     }
-  //   }
-  // }
   //#endregion
 }
