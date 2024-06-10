@@ -16,6 +16,7 @@ import { DialogEmojiPickerComponent } from '../channel/dialog-emoji-picker/dialo
 import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 import { TagToComponentDirective } from '../../shared/directives/tag-to-component.directive';
 import { CursorPositionService } from '../../services/cursor-position.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-message-input',
@@ -30,7 +31,6 @@ export class MessageInputComponent {
 
 
   @Input() usedIn: 'channel' | 'thread' = 'channel';
-
   @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
   @ViewChild('channelInput', { read: ViewContainerRef, static: true })
   channelInputViewRef!: ViewContainerRef;
@@ -61,12 +61,22 @@ export class MessageInputComponent {
     public channelService: ChannelFirebaseService,
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
-    public cursorPositionService: CursorPositionService
+    public cursorPositionService: CursorPositionService,
+    public route: ActivatedRoute
   ) {}
 
 
   get channelInputElement(): ElementRef {
     return this.channelInput;
+  }
+
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const channelId = params['channelId'];
+      // Wenn sich die channelId ändert, leeren Sie den Inhalt des div
+      this.channelInput.nativeElement.innerText = '';
+    });
   }
 
   //#region save message
