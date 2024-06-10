@@ -15,6 +15,7 @@ input, textarea, .message-input {
 
 
 .message-input-container {
+    position: relative;
     border: 1px solid var(--color-light-purple);
     border-radius: 20px;
     padding: 20px;

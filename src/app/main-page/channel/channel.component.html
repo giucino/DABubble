@@ -87,12 +87,15 @@
       <div class="channel-headline fs-24">Neue Nachricht</div>
     </div>
     <div class="input-container">
-      <input type="text" placeholder="An: #channel, oder @jemand" maxlength="40" [formControl]="searchControl">
+      <!-- <input type="text" placeholder="An: #channel, oder @jemand" maxlength="40" [formControl]="searchControl"> -->
+      <input #input type="text" placeholder="An: #channel, oder @jemand" maxlength="40" [(ngModel)]="inputText">
     </div>
   </div>
+  <app-popup-search [searchTerm]="inputText"></app-popup-search>
   }
 
-  @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 )) {
+  
+  <!-- @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 )) {
   <div class="search-container">
     @if (filteredUsers.length > 0) {
     <ul class="filtered">
@@ -123,9 +126,9 @@
       </li>
       }
     </ul>
-    }
-  </div>
-  }
+    } -->
+  <!-- </div>
+  } -->
 
 
   <!-- channel messages -->

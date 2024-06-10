@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { Message } from '../../../interfaces/message.interface';
 import { User } from '../../../interfaces/user.interface';
 import { MessageService } from '../../../firebase.service/message.service';
@@ -16,11 +16,15 @@ import { ReactionService } from '../../../firebase.service/reaction.service';
 import { Reaction } from '../../../interfaces/reaction.interface';
 import { SharedService } from '../../../services/shared.service';
 import { MainPageComponent } from '../../main-page.component';
+import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
+import { PopupSearchComponent } from '../../../shared/popup-search/popup-search.component';
+import { CursorPositionService } from '../../../services/cursor-position.service';
+import { EditMessageComponent } from './edit-message/edit-message.component';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, OpenProfileDirective],
+  imports: [CommonModule, FormsModule, OpenProfileDirective, TagToComponentDirective, PopupSearchComponent, EditMessageComponent],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
@@ -53,6 +57,10 @@ export class MessageComponent {
   unsubReactions: Function = () => { };
   reactions: Reaction[] = [];
 
+  @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
+  @ViewChild('channelInput', { read: ViewContainerRef, static: true }) channelInputViewRef!: ViewContainerRef;
+  tagText: string = '';
+
   constructor(
     public messageService: MessageService,
     public userService: UserService,
@@ -61,9 +69,13 @@ export class MessageComponent {
     public customDialogService: CustomDialogService,
     public reactionService: ReactionService,
     public sharedService: SharedService,
-    public mainpage: MainPageComponent,
     public elementRef: ElementRef,
-  ) {
+    public mainpage : MainPageComponent, // TODO: als Service
+    public cursorPositionService : CursorPositionService,
+  ) {}
+ 
+  get channelInputElement(): ElementRef {
+    return this.channelInput;
   }
 
 
@@ -72,13 +84,14 @@ export class MessageComponent {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     this.getAttachementsData();
     this.getReactions();
+    this.message.message.text = this.formatMessageForRead(this.message.message.text);
   }
-
-
+  
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
     this.getReactions();
+
   }
 
 
@@ -136,18 +149,6 @@ export class MessageComponent {
   }
 
 
-  updateMessage() {
-    const trimmedMessageText = this.editableMessage.message.text.trim();
-    if (trimmedMessageText != '') {
-      this.editableMessage.message.text = trimmedMessageText;
-      this.editableMessage.modified_at = new Date().getTime();
-      this.messageService.updateMessage(this.editableMessage);
-      this.editMessage = false;
-      this.showMoreOptions = false;
-    }
-  }
-
-
   getTimeDifferenceForLastReply(dateAsNumber: number) {
     let currentDate = new Date().getTime();
     let difference = 0;
@@ -177,6 +178,8 @@ export class MessageComponent {
     return result;
   }
 
+
+  //#region thread
 
   async openThread(thread_id: string | undefined) {
     if (this.threadService.threadOpen) {
@@ -232,6 +235,7 @@ export class MessageComponent {
     this.userService.saveLastThread(this.userService.currentUser.id, '');
     this.threadService.closeThread();
   }
+  //#endregion thread
 
 
   deleteFile(path: string) {
@@ -243,18 +247,15 @@ export class MessageComponent {
       this.messageService.updateMessage(this.message);
     }
   }
-
-
-  openDialogEmojiPicker(input: HTMLDivElement) {
-    const component = DialogEmojiPickerComponent;
-    const dialogRef = this.customDialogService.openDialog(component);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.editableMessage.message.text += result;
-        input.innerText = this.editableMessage.message.text;
-      }
-    });
+  
+  
+  closeEdit() {
+    this.editMessage = false;
+    this.showMoreOptions = false;
   }
+
+
+  //#region REACTIONS
 
 
   //#region REACTIONS
@@ -350,6 +351,7 @@ export class MessageComponent {
   }
 
 
+
   getUserName(userId: string) {
     let user = this.userService.allUsers.find((user) => user.id == userId);
     return user ? user.name : 'Gelöschter Nutzer';
@@ -361,4 +363,22 @@ export class MessageComponent {
     let sortedByLastTimeUsed = filteredReactionsForNoUsers.sort((a, b) => b.lastTimeUsed - a.lastTimeUsed);
     return sortedByLastTimeUsed;
   }
+
+  //#endregion
+
+
+
+  //#region formatting
+  // TODO: delete?
+  escapeHTML(text : string) {
+    return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  formatMessageForRead(text : string) {
+   let formattedText = this.escapeHTML(text);
+   return formattedText;
+  }
+
+  //#endregion
+
 }

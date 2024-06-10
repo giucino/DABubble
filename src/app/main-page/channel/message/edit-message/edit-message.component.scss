@@ -1,0 +1,50 @@
+.message-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  line-height: 24.55px;
+  max-height: 256px;
+  overflow-y: auto;
+}
+
+.message-edit-container {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-purple);
+  border-radius: 20px;
+  padding: 20px;
+  gap: 16px;
+  width: 100%;
+  position: relative;
+
+  &:hover {
+    border-color: var(--color-purple-2);
+  }
+
+  &:focus-within {
+    border-color: var(--color-purple-1);
+  }
+
+  &-thread {
+    @extend .message-edit-container;
+    max-width: 100%;
+  }
+}
+
+.message-edit-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .message-confirm-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+
+
+
+
