@@ -25,6 +25,7 @@ import { StateManagementService } from '../../services/state-management.service'
 import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
+import { PopupNewMessageSearchComponent } from './popup-new-message-search/popup-new-message-search.component';
 
 
 @Component({
@@ -39,7 +40,7 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
     OpenProfileDirective,
     RouterModule,
     MatProgressBarModule,
-    PopupSearchComponent,
+    PopupNewMessageSearchComponent,
   ],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss',
@@ -155,13 +156,13 @@ export class ChannelComponent {
     if (this.userService.currentUser && this.userService.currentUser.last_channel) {
       this.openChannel();
     }
-    this.subscriptions.add(
-      this.searchControl.valueChanges
-        .pipe(debounceTime(300))
-        .subscribe((value) => {
-          this.filter(value);
-        })
-    );
+    // this.subscriptions.add(
+    //   this.searchControl.valueChanges
+    //     .pipe(debounceTime(300))
+    //     .subscribe((value) => {
+    //       this.filter(value);
+    //     })
+    // );
   }
 
 
@@ -188,19 +189,19 @@ export class ChannelComponent {
   // }
 
 
-  filter(searchTerm: string): void {
-    if (searchTerm.startsWith('@')) {
-      this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
-      this.filteredChannels = [];
-    } else if (searchTerm.startsWith('#')) {
-      this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
-      this.filteredUsers = [];
-    } else {
-      const results = this.searchService.clearFilters();
-      this.filteredUsers = results.users;
-      this.filteredChannels = results.channels;
-    }
-  }
+  // filter(searchTerm: string): void {
+  //   if (searchTerm.startsWith('@')) {
+  //     this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
+  //     this.filteredChannels = [];
+  //   } else if (searchTerm.startsWith('#')) {
+  //     this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
+  //     this.filteredUsers = [];
+  //   } else {
+  //     const results = this.searchService.clearFilters();
+  //     this.filteredUsers = results.users;
+  //     this.filteredChannels = results.channels;
+  //   }
+  // }
 
 
   async openDirectChannel(user_id: string): Promise<void> {
@@ -361,11 +362,4 @@ export class ChannelComponent {
     this.threadService.closeThread();
   }
 
-
-  addDirectChannelToArray(userId: string) {
-  }
-
-
-  addChannelToArray(channelId: string) {
-  }
 }

@@ -1,0 +1,115 @@
+@import "../../../../assets/scss/mixin.scss";
+
+
+.search-container {
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  max-width: 100%;
+  width: 100%;
+  transform: translateY(100%);
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  background: white;
+  border: 1px solid var(--color-light-purple);
+  border-radius: 30px;
+
+  .filtered-results {
+    overflow-y: auto;
+    max-height: 180px;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      margin-top: 16px;
+    }
+
+    .categoryName {
+      margin-left: 20px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}
+
+.channelList {
+  @include dFlex($jc: flex-start, $gap: 15px);
+  border-radius: 20px;
+  padding: 4px 20px 4px 20px;
+
+  .img-channel-hash {
+    height: 16px;
+    width: 16px;
+  }
+
+  .channel-name {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &:hover {
+    background-color: var(--color-bg);
+    cursor: pointer;
+
+    .channel-name {
+      color: var(--color-purple-3);
+      font-weight: 700;
+    }
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 30px;
+  padding: 4px 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--color-bg);
+  }
+
+  .user-img-container {
+    position: relative;
+    height: 50px;
+
+    .profile-img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.user-avatar {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.messageContainer {
+  @include dFlex($ai: flex-start, $gap: 5px);
+  flex-direction: column;
+
+  .messageHeader {
+    @include dFlex($ai: flex-start, $gap: 5px);
+
+    .message-time {
+      font-size: 10px;
+      color: #808080;
+    }
+
+    .user-name {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .message-channel-name {
+    font-size: 12px;
+    color: #808080;
+  }
+}
