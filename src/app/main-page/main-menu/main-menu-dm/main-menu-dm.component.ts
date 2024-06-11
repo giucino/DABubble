@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../firebase.service/user.service';
 import { User } from '../../../interfaces/user.interface';
@@ -49,7 +49,6 @@ export class MainMenuDmComponent implements OnInit {
   get menuChannelContainerClass() {
     return this.isExpanded ? 'expanded' : 'collapsed';
   }
-
 
 
   ngOnInit(): void {

@@ -88,6 +88,7 @@ export class MessageComponent {
     document.addEventListener('click', this.documentClickHandler);
   }
 
+
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     if (this.attachementsData.length == 0) this.getAttachementsData();
@@ -196,7 +197,6 @@ export class MessageComponent {
 
 
   //#region thread
-
   async openThread(thread_id: string | undefined) {
     if (this.threadService.threadOpen) {
       this.closeThread();
@@ -267,9 +267,6 @@ export class MessageComponent {
     this.editMessage = false;
     this.showMoreOptions = false;
   }
-
-
-  //#region REACTIONS
 
 
   //#region REACTIONS

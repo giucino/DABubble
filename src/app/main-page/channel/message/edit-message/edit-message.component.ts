@@ -57,22 +57,25 @@ export class EditMessageComponent {
   constructor(
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
-    // private renderer: Renderer2,
     public cursorPositionService: CursorPositionService,
     private elementRef: ElementRef,
   ) {}
+
 
   isSmallWidth() {
     return this.elementRef.nativeElement.offsetWidth <= 600;
   }
 
+
   ngOnInit() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
   }
 
+
   get channelInputElement(): ElementRef {
     return this.channelInput;
   }
+
 
   //#region update message
   updateMessage(channelInput: HTMLDivElement) {
@@ -87,18 +90,19 @@ export class EditMessageComponent {
     this.closeEditEvent.emit();
   }
 
+
   formatTagForSave(text : string) {
     const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g)
     const formattedText = text.replace(regex, '@$1');
     return formattedText;
   }
 
+
   formatMessageForSave(text : string) {
     let formattedText = this.formatTagForSave(text);
     return formattedText;
   }
 
-  //#endregion
 
   //#region emoji picker
   openDialogEmojiPicker(input: HTMLDivElement) {
@@ -116,6 +120,7 @@ export class EditMessageComponent {
     if(document.activeElement !== input)  this.setFocusAtTextEnd(input);
     this.insertAtCursor(result, input);
   }
+
 
   setFocusAtTextEnd(input : HTMLElement) {
     input.focus();
@@ -144,7 +149,7 @@ export class EditMessageComponent {
     }
     this.setSelectionPosition(input);
   }
-  //#endregion emoji picker
+
 
   //#region  @/# Tag System 
   checkForTag(element: HTMLElement) {
@@ -164,6 +169,7 @@ export class EditMessageComponent {
     }
   }
 
+
   getTextWithLineBreaks(input : HTMLElement): string {
     return input.innerHTML
     .replace(/<br\s*\/?>/gi, '\n')
@@ -173,51 +179,24 @@ export class EditMessageComponent {
     .replace(/<[^>]+>/g, '');
   }
 
+
   setSelectionPosition(element: HTMLElement): number {
     return this.cursorPositionService.saveCursorPosition(element);
   }
   
 
-
   handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const curRange = selection.getRangeAt(selection.rangeCount - 1);
-      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return; // we are in child selection. The characters of the text node is being deleted
-      // if (event.key === 'Backspace') this.handleBackSpace(selection, element, event);
+      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return;
       if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
   }
 
-  // handleBackSpace(selection : Selection, element : HTMLDivElement, event: Event) {
-  //   const range = document.createRange();
-  //   if (selection.anchorNode && selection.anchorNode != element) { // selection is in character mode. expand it to the whole editable field
-  //       range.selectNodeContents(element);
-  //       range.setEndBefore(selection.anchorNode);
-  //   } else if (selection.anchorOffset > 0) range.setEnd(element, selection.anchorOffset);
-  //   else return; // reached the beginning of editable field
-  //   range.setStart(element, range.endOffset == 0 ? 0 : range.endOffset - 1);
-  //   const previousNode = range.cloneContents().lastChild;
-  //   if (previousNode && previousNode.nodeType == Node.ELEMENT_NODE) {
-  //     const previousElement = previousNode as HTMLElement;
-  //     if (previousElement.contentEditable === 'false') {  // This is some rich content, e.g. smiley. We should help the user to delete it.
-  //       range.deleteContents();
-  //       event.preventDefault();
-  //     }
-  //   }
-  // }
 
   handleEnter(event: Event, element : HTMLDivElement) {
     event.preventDefault();
     this.updateMessage(element);
   }
-
-
-  // @HostListener('document:click', ['$event'])
-  // public onDocumentClick(event: MouseEvent): void {
-  //   if (!this.elementRef.nativeElement.contains(event.target)) {
-  //     this.closeEdit();
-  //   }
-  // }
-  //#endregion
 }

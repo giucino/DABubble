@@ -26,10 +26,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './message-input.component.scss',
 })
 export class MessageInputComponent {
-//   @ViewChild('channelInput') channelInput!: ElementRef;
-//   @Input() usedIn: 'channel' | 'thread' = 'channel';
-
-
   @Input() usedIn: 'channel' | 'thread' = 'channel';
   @ViewChild('channelInput', { static: true }) channelInput!: ElementRef;
   @ViewChild('channelInput', { read: ViewContainerRef, static: true })
@@ -78,19 +74,18 @@ export class MessageInputComponent {
     });
   }
 
-  //#region save message
 
+  //#region save message
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
     if (this.messageInput != '' || this.currentFile != null || channelInput.innerHTML != '') {
       this.prepareMessageForSave(channelInput);
       this.emptyInput(channelInput);
       this.message.id = await this.messageService.addMessage(this.message);
-      // thread message update
       if (this.usedIn == 'thread') this.updateThreadMessage();
-      // upload currentFile
       if (this.currentFile != null) await this.uploadFile(fileInput);
     }
   }
+
 
   prepareMessageForSave(channelInput : HTMLDivElement) {
     this.message.user_id = this.currentUser.id;
@@ -104,11 +99,13 @@ export class MessageInputComponent {
       this.message.thread_id = this.channelService.currentThread.id;
   }
 
+
   emptyInput(channelInput : HTMLDivElement) {
     this.messageInput = '';
     channelInput.innerText = '';
   }
   
+
   updateThreadMessage() {
     let threadMessages = this.messageService.messagesThread;
     let threadMessage = this.messageService.messagesThread[0];
@@ -116,6 +113,7 @@ export class MessageInputComponent {
     threadMessage.last_reply = this.message.created_at;
     this.messageService.updateMessage(threadMessage);
   }
+
 
   async uploadFile(fileInput : HTMLInputElement) {
     const path = 'users/' + this.currentUser.id + '/messages/' + this.message.id + '/' + this.currentFile.name;
@@ -126,12 +124,8 @@ export class MessageInputComponent {
     this.removeFile(fileInput);
   }
 
-  //#endregion save message
-
-  
 
   //#region placeholder
-
   getDirectChannelUser() {
     let contact = this.channelService.currentChannel.members.find(
       (member) => member != this.currentUser.id
@@ -153,10 +147,8 @@ export class MessageInputComponent {
     }
   }
 
-  //#endregion placeholder
 
  //#region file add / remove
-
   addDocument(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
@@ -194,12 +186,8 @@ export class MessageInputComponent {
     input.value = '';
   }
 
-  //#endregion file add / remove
-
 
   //#region emoji
-
-
   openDialogEmojiPicker(input: HTMLDivElement) {
     const component = DialogEmojiPickerComponent;
     const dialogRef = this.customDialogService.openDialog(component);
@@ -210,16 +198,14 @@ export class MessageInputComponent {
     });
   }
 
+
   addEmoji(input : HTMLElement, result : any) {
     if(document.activeElement !== input)  this.setFocusAtTextEnd(input);
     this.insertAtCursor(result, input);
   }
 
-  //#endregion emoji
-
 
   //#region @ Tag System
-
   checkForTag(element: HTMLElement) {
     const text = this.getTextWithLineBreaks(element);
     const cursorPosition = this.setSelectionPosition(element);
@@ -237,6 +223,7 @@ export class MessageInputComponent {
     }
   }
 
+
   getTextWithLineBreaks(input: HTMLElement): string {
     return input.innerHTML
       .replace(/<br\s*\/?>/gi, '\n')
@@ -246,46 +233,29 @@ export class MessageInputComponent {
       .replace(/<[^>]+>/g, '');
   }
 
+
   setSelectionPosition(element: HTMLElement): number {
     return this.cursorPositionService.saveCursorPosition(element);
   }
+
 
   handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const curRange = selection.getRangeAt(selection.rangeCount - 1);
-      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return; // we are in child selection. The characters of the text node is being deleted
-      // if (event.key === 'Backspace') this.handleBackSpace(selection, element, event);
+      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return;
       if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
   }
 
-
-  // handleBackSpace(selection : Selection, element : HTMLDivElement, event: Event) {
-  //   const range = document.createRange();
-  //   if (selection.anchorNode && selection.anchorNode != element) { // selection is in character mode. expand it to the whole editable field
-  //       range.selectNodeContents(element);
-  //       range.setEndBefore(selection.anchorNode);
-  //   } else if (selection.anchorOffset > 0) range.setEnd(element, selection.anchorOffset);
-  //   else return; // reached the beginning of editable field
-  //   range.setStart(element, range.endOffset);
-  //   const previousNode = range.cloneContents().lastChild;
-  //   if (previousNode && previousNode.nodeType == Node.ELEMENT_NODE) {
-  //     const previousElement = previousNode as HTMLElement;
-  //     if (previousElement.contentEditable === 'false') {  // This is some rich content, e.g. smiley. We should help the user to delete it.
-  //       range.deleteContents();
-  //       event.preventDefault();
-  //     }
-  //   }
-  // }
 
   handleEnter(event: Event, element : HTMLDivElement) {
     event.preventDefault();
     this.saveMessage(element, this.addDocumentInput);
   }
 
+
   //#region add @ Button
-  
   addTag(input: HTMLElement) {
     if (document.activeElement !== input) this.setFocusAtTextEnd(input);
     this.insertTag(input);
@@ -303,6 +273,7 @@ export class MessageInputComponent {
     }
     this.checkForTag(input);
   }
+
 
   setFocusAtTextEnd(input : HTMLElement) {
     input.focus();
@@ -332,36 +303,21 @@ export class MessageInputComponent {
     this.setSelectionPosition(input);
   }
 
-  //#endregion add @ Button
-
-  //#endregion
 
   //#region Utility XSS Prevention TODO: in Service
-
-  // escapeHTML(text: string) {
-  //   return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  // }
-
   formatTagForSave(text: string) {
     const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g);
     const formattedText = text.replace(regex, '@$1');
     return formattedText;
   }
 
+
   formatMessageForSave(text: string) {
     let formattedText = this.formatTagForSave(text);
     return formattedText;
   }
 
-  // formatMessageForRead(text: string) {
-  //   let formattedText = this.escapeHTML(text);
-  //   return formattedText;
-  // }
-
-  //#endregion
-
- 
-
+  
   async setFocusOnInput() {
     await this.channelInput.nativeElement.focus();
   }

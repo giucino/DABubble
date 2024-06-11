@@ -8,8 +8,6 @@ import { User } from '../../interfaces/user.interface';
 import { Message } from '../../interfaces/message.interface';
 import { ThreadService } from '../../services/thread.service';
 import { MessageInputComponent } from '../message-input/message-input.component';
-import { HostListener } from '@angular/core';
-import { doc } from '@angular/fire/firestore';
 import { SharedService } from '../../services/shared.service';
 
 
@@ -111,6 +109,7 @@ export class ThreadComponent {
     return result;
   }
 
+
   convertToDate(dateAsNumber: number) {
     let date = new Date(dateAsNumber);
     let d: number | string = date.getDate();
@@ -122,6 +121,7 @@ export class ThreadComponent {
     return result;
   }
 
+  
   getTextareaPlaceholderText() {
     let channel = this.channelService.currentChannel;
     let channelType = channel.channel_type;
