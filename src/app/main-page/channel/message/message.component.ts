@@ -203,7 +203,7 @@ export class MessageComponent {
     }
     if (thread_id == undefined || thread_id == '') {
       let newThread: Channel = this.newThreadData();
-      this.openNewThread(newThread);
+      await this.openNewThread(newThread);
       this.messageService.updateMessage(this.message);
       this.closeUnder1500();
     } else {
@@ -239,7 +239,7 @@ export class MessageComponent {
   closeUnder1500() {
     if (window.innerWidth < 1500) {
       this.sharedService.isMenuOpen = false;
-      this.threadService.openThread();
+      // this.threadService.openThread();
     }
     this.threadService.openThread();
   }
