@@ -1,34 +1,37 @@
   @if (searchTerm != '' && (filteredUsers.length > 0 || filteredChannels.length > 0 )) {
   <div class="search-container">
-    @if (filteredUsers.length > 0) {
-    <ul class="filtered">
-      <span class="categoryName">Users:</span>
-      @for(user of filteredUsers; track user.id) {
-      <li [class.selected]="user.id === selectedUserId" (click)="addDirectChannelToArray(user.id)">
-        <div class="user">
-          <div class="user-img-container">
-            <img [src]="user.profile_img" alt="" class="profile-img" />
-            <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
-          </div>
-          <div class="user-name fs-18">{{user.name}}</div>
-        </div>
-      </li>
-      }
-    </ul>
-    }
-
-    @if (filteredChannels.length > 0) {
-    <ul class="filtered">
-      <span class="categoryName">Channels:</span>
-      @for(channel of filteredChannels; track channel.id) {
-      <li (click)="addChannelToArray(channel.id)">
-        <div class="channelList">
-          <div class="img-channel-hash">#</div>
-          <span class="channel-name">{{channel.name}}</span>
-        </div>
-      </li>
-      }
-    </ul>
-    }
+    <div class="filtered-results">
+      @if (filteredUsers.length > 0) {
+        <ul class="filtered">
+          <span class="categoryName">Users:</span>
+          @for(user of filteredUsers; track user.id) {
+          <li [class.selected]="user.id === selectedUserId" (click)="addDirectChannelToArray(user.id)">
+            <div class="user">
+              <div class="user-img-container">
+                <img [src]="user.profile_img" alt="" class="profile-img" />
+                <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
+              </div>
+              <div class="user-name fs-18">{{user.name}}</div>
+            </div>
+          </li>
+          }
+        </ul>
+        }
+    
+        @if (filteredChannels.length > 0) {
+        <ul class="filtered">
+          <span class="categoryName">Channels:</span>
+          @for(channel of filteredChannels; track channel.id) {
+          <li (click)="addChannelToArray(channel.id)">
+            <div class="channelList">
+              <div class="img-channel-hash">#</div>
+              <span class="channel-name">{{channel.name}}</span>
+            </div>
+          </li>
+          }
+        </ul>
+        }
+    </div>
+   
   </div>
 }

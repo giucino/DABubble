@@ -63,7 +63,7 @@
                             <span class="message-time">{{displayMessageTime(message) }}</span>
                         </div>
                         <span class="message-text" appTagToComponent>{{message.message.text}}</span>
-                        <span class="message-channel-name">#{{getChannelName(message.channel_id)}}</span>
+                        <span class="message-channel-name">{{getChannel(message.channel_id)?.channel_type == 'direct' ? '@' : '# ' }}{{getChannelName(message.channel_id)}}</span>
                     </div>
                 </div>
             </li>

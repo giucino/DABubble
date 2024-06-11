@@ -17,6 +17,7 @@ import { PopupSearchComponent } from '../../shared/popup-search/popup-search.com
 import { TagToComponentDirective } from '../../shared/directives/tag-to-component.directive';
 import { CursorPositionService } from '../../services/cursor-position.service';
 import { ActivatedRoute } from '@angular/router';
+import { NewMessageAdresseesService } from '../../services/new-message-adressees.service';
 
 @Component({
   selector: 'app-message-input',
@@ -58,7 +59,8 @@ export class MessageInputComponent {
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
     public cursorPositionService: CursorPositionService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public newMessageAdressees: NewMessageAdresseesService,
   ) {}
 
 
@@ -78,14 +80,39 @@ export class MessageInputComponent {
   //#region save message
   async saveMessage(channelInput: HTMLDivElement, fileInput: HTMLInputElement) {
     if (this.messageInput != '' || this.currentFile != null || channelInput.innerHTML != '') {
-      this.prepareMessageForSave(channelInput);
-      this.emptyInput(channelInput);
-      this.message.id = await this.messageService.addMessage(this.message);
-      if (this.usedIn == 'thread') this.updateThreadMessage();
-      if (this.currentFile != null) await this.uploadFile(fileInput);
+      if(this.hasAdressees()) {
+        this.prepareMessageForSave(channelInput);
+        this.emptyInput(channelInput);
+        if(this.isNewMessageChannel()) this.sendToAllAdressees(fileInput);
+        else this.sendToCurrentChannel(fileInput);
+      }
     }
   }
 
+  hasAdressees() {
+    return this.channelService.currentChannel.channel_type != 'new' || (this.channelService.currentChannel.channel_type == 'new' && this.newMessageAdressees.adressees.length > 0)
+  }
+
+  isNewMessageChannel() {
+    return this.channelService.currentChannel.channel_type == 'new';
+  }
+
+  async sendToAllAdressees(fileInput : HTMLInputElement) {
+    this.newMessageAdressees.adressees.forEach( async (channelId) => {
+      this.message.channel_id = channelId;
+      this.messageService.addMessage(this.message);
+      if (this.currentFile != null) await this.uploadFile(fileInput);
+    })
+    this.newMessageAdressees.empty();
+  }
+
+  async sendToCurrentChannel(fileInput: HTMLInputElement) {
+    this.message.id = await this.messageService.addMessage(this.message);
+    // thread message update
+    if (this.usedIn == 'thread') this.updateThreadMessage();
+    // upload currentFile
+    if (this.currentFile != null) await this.uploadFile(fileInput);
+  }
 
   prepareMessageForSave(channelInput : HTMLDivElement) {
     this.message.user_id = this.currentUser.id;
@@ -243,7 +270,8 @@ export class MessageInputComponent {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const curRange = selection.getRangeAt(selection.rangeCount - 1);
-      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return;
+      // if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return; // we are in child selection. The characters of the text node is being deleted
+      // if (event.key === 'Backspace') this.handleBackSpace(selection, element, event);
       if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
   }

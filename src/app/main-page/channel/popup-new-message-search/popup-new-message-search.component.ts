@@ -1,10 +1,12 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Channel } from '../../../interfaces/channel.interface';
 import { User } from '../../../interfaces/user.interface';
 import { SearchService } from '../../../services/search.service';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { UserService } from '../../../firebase.service/user.service';
 import { CommonModule } from '@angular/common';
+import { NewMessageAdresseesService } from '../../../services/new-message-adressees.service';
+import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
 
 @Component({
   selector: 'app-popup-new-message-search',
@@ -20,12 +22,14 @@ export class PopupNewMessageSearchComponent {
   selectedUserId: string = '';
 
   @Input() searchTerm: string = '';
-  
+  @Output() clearSearchEvent = new EventEmitter();
+
   constructor(
     public searchService: SearchService,
     public userService: UserService,
+    public newMessagAddressees : NewMessageAdresseesService,
     // public threadService: ThreadService,
-    // public channelService: ChannelFirebaseService,
+    public channelService: ChannelFirebaseService,
     // private renderer: Renderer2,
     // public cursorPositionService :CursorPositionService,
   ) {}
@@ -51,11 +55,20 @@ export class PopupNewMessageSearchComponent {
   }
 
 
-  addDirectChannelToArray(userId : string) {
-
+  async addDirectChannelToArray(userId : string) {
+    let channelId = this.channelService.getDirectChannelId(this.userService.currentUser.id, userId);
+    if(!channelId) channelId = await this.channelService.createDirectChannel(this.userService.currentUser.id, userId);
+    if(channelId) this.addChannelToArray(channelId);
   }
   
   addChannelToArray(channelId: string) {
-
+    this.newMessagAddressees.add(channelId);
+    this.clearSearch();
   }
+
+  clearSearch() {
+    this.clearSearchEvent.emit();
+  }
+
+
 }

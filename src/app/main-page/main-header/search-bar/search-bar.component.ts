@@ -158,10 +158,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
 
-  getChannelName(channelId: string) {
-    const channel = this.channelService.channels.find((channel) => channel.id === channelId);
-    return channel ? channel.name : '';
-  }
+  // getChannelName(channelId: string) {
+  //   const channel = this.channelService.channels.find((channel) => channel.id === channelId);
+  //   return channel ? channel.name : '';
+  // }
 
 
   getUserImg(messageId: any) {
@@ -186,5 +186,23 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       this.router.navigate(['/main-page', message.thread_id])
       this.messageService.changeMessage(message.id);
     }
+  }
+
+  getChannelName(channelId: string) {
+    let channel = this.getChannel(channelId);
+    if(channel?.channel_type == 'direct') return this.getDirectChannelCounterPart(channelId).name;
+    else return channel?.name;
+  }
+
+  getChannel(channelId: string) {
+    return this.channelService.channels.find((channel) => channel.id === channelId);
+  }
+
+  getDirectChannelCounterPart(channelId: string) {
+    let directChannel = this.channelService.channels.find((channel) => channel.id === channelId);
+    let counterPartId = directChannel?.members.find((member) => member != this.userService.currentUser.id);
+    let counterPart = this.userService.allUsers.find((user) => user.id == counterPartId);
+    if(counterPart) return counterPart;
+    else return this.userService.currentUser; // Personal Channel
   }
 }

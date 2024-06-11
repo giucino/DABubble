@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, ComponentRef, Directive, ElementRef, HostListener, Input, Renderer2, SimpleChange, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
 import { UserService } from '../../firebase.service/user.service';
 import { ProfileButtonComponent } from '../profile-button/profile-button.component';
-import { SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
   selector: '[appTagToComponent]',

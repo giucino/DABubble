@@ -44,6 +44,17 @@ export class ChannelFirebaseService {
   };
   channel: Channel | undefined;
 
+  newDirectChannel : Channel = {
+    id: '',
+    name: 'Direct Channel',
+    description: '',
+    created_at: 0,
+    creator: '',
+    members: [],
+    active_members: [],
+    channel_type: ChannelTypeEnum.direct,
+  }
+
   unsubChannels: any;
   unsubCurrentChannel: any = function () { };
   unsubCurrentThread: any = function () { };
@@ -236,5 +247,13 @@ export class ChannelFirebaseService {
     if (channelFound) {
       this.setCurrentChannel(channelFound.id);
     }
+  }
+
+
+  async createDirectChannel(currentUserId: string, userId: string) {
+    this.newDirectChannel.creator = currentUserId;
+    this.newDirectChannel.created_at = new Date().getTime();
+    this.newDirectChannel.members = [currentUserId, userId];
+    return await this.addChannel(this.newDirectChannel);
   }
 }

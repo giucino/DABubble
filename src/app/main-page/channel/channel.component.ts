@@ -26,6 +26,7 @@ import { PopupSearchComponent } from '../../shared/popup-search/popup-search.com
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { PopupNewMessageSearchComponent } from './popup-new-message-search/popup-new-message-search.component';
+import { NewMessageAdresseesService } from '../../services/new-message-adressees.service';
 
 
 @Component({
@@ -69,11 +70,11 @@ export class ChannelComponent {
   channelId: string = '';
   isLoading = false;
 
-  searchControl = new FormControl();
-  private subscriptions = new Subscription();
-  filteredUsers: User[] = [];
-  filteredChannels: Channel[] = [];
-  selectedUserId: string = '';
+  // searchControl = new FormControl();
+  // private subscriptions = new Subscription();
+  // filteredUsers: User[] = [];
+  // filteredChannels: Channel[] = [];
+  // selectedUserId: string = '';
 
   inputText: string = '';
 
@@ -123,6 +124,7 @@ export class ChannelComponent {
     public searchService: SearchService,
     public userAuth: UserAuthService,
     public viewportScroller: ViewportScroller,
+    public newMessageAdressees: NewMessageAdresseesService,
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? ''
     this.initUserAndChannel();
@@ -180,7 +182,7 @@ export class ChannelComponent {
 
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    // this.subscriptions.unsubscribe();
     this.messageService.unsubMessages();
   }
 
@@ -310,6 +312,24 @@ export class ChannelComponent {
     );
     if (contact) return this.userService.getUser(contact);
     else return this.currentUser;
+  }
+
+  getChannelName(channelId: string) {
+    let channel = this.getChannel(channelId);
+    if(channel?.channel_type == 'direct') return this.getDirectChannelCounterPart(channelId).name;
+    else return channel?.name;
+  }
+
+  getChannel(channelId: string) {
+    return this.channelService.channels.find((channel) => channel.id === channelId);
+  }
+
+  getDirectChannelCounterPart(channelId: string) {
+    let directChannel = this.channelService.channels.find((channel) => channel.id === channelId);
+    let counterPartId = directChannel?.members.find((member) => member != this.currentUser.id);
+    let counterPart = this.userService.allUsers.find((user) => user.id == counterPartId);
+    if(counterPart) return counterPart;
+    else return this.currentUser; // Personal Channel
   }
 
 
