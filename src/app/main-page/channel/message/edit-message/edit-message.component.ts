@@ -18,6 +18,7 @@ import { DialogEmojiPickerComponent } from '../../dialog-emoji-picker/dialog-emo
 import { CustomDialogService } from '../../../../services/custom-dialog.service';
 import { MessageService } from '../../../../firebase.service/message.service';
 import { TagToComponentDirective } from '../../../../shared/directives/tag-to-component.directive';
+import { PasteAsTextDirective } from '../../../../shared/directives/paste-as-text.directive';
 
 @Component({
   selector: 'app-edit-message',
@@ -26,7 +27,8 @@ import { TagToComponentDirective } from '../../../../shared/directives/tag-to-co
     CommonModule,
     PopupSearchComponent,
     OpenProfileDirective,
-    TagToComponentDirective
+    TagToComponentDirective,
+    PasteAsTextDirective,
   ],
   templateUrl: './edit-message.component.html',
   styleUrl: './edit-message.component.scss',

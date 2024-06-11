@@ -18,11 +18,12 @@ import { TagToComponentDirective } from '../../shared/directives/tag-to-componen
 import { CursorPositionService } from '../../services/cursor-position.service';
 import { ActivatedRoute } from '@angular/router';
 import { NewMessageAdresseesService } from '../../services/new-message-adressees.service';
+import { PasteAsTextDirective } from '../../shared/directives/paste-as-text.directive';
 
 @Component({
   selector: 'app-message-input',
   standalone: true,
-  imports: [FormsModule, PopupSearchComponent, TagToComponentDirective],
+  imports: [FormsModule, PopupSearchComponent, TagToComponentDirective, PasteAsTextDirective],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
 })

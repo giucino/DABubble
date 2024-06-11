@@ -1,6 +1,6 @@
 
 <div [ngClass]="{'message-edit-container' : channelType != 'thread', 'message-edit-container-thread' : channelType == 'thread'}" >
-    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text = channelInput.innerHTML; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" [innerText]="message.message.text" appTagToComponent>
+    <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.editableMessage.message.text = channelInput.innerHTML; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" [innerText]="message.message.text" appTagToComponent appPasteAsText>
     </div>
     <app-popup-search [searchTerm]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>
     <div class="message-edit-buttons">

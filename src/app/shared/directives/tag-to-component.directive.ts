@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ComponentRef, Directive, ElementRef, HostListener, Input, Renderer2, SimpleChange, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, ComponentRef, Directive, ElementRef, Input, Renderer2, ViewContainerRef } from '@angular/core';
 import { UserService } from '../../firebase.service/user.service';
 import { ProfileButtonComponent } from '../profile-button/profile-button.component';
 
@@ -59,18 +59,6 @@ export class TagToComponentDirective {
     });
   }
 
-  // TODO: move to own directive?
-  @HostListener('paste', ['$event'])
-  handlePaste(event: ClipboardEvent): void {
-    // Prevent the default paste behavior
-    event.preventDefault();
 
-    // Get the text from the clipboard
-    const clipboardData = event.clipboardData || (window as any).clipboardData;
-    const text = clipboardData.getData('text');
-
-    // Insert the text into the contenteditable div
-    document.execCommand('insertText', false, text);
-  }
 
 }
