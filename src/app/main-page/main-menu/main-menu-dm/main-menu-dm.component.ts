@@ -46,6 +46,12 @@ export class MainMenuDmComponent implements OnInit {
   ) {}
 
 
+  get menuChannelContainerClass() {
+    return this.isExpanded ? 'expanded' : 'collapsed';
+  }
+
+
+
   ngOnInit(): void {
     this.users = this.userService.allUsers;
     this.stateService.getSelectedUserId().subscribe(id => {

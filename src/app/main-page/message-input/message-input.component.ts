@@ -74,7 +74,6 @@ export class MessageInputComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const channelId = params['channelId'];
-      // Wenn sich die channelId ändert, leeren Sie den Inhalt des div
       this.channelInput.nativeElement.innerText = '';
     });
   }

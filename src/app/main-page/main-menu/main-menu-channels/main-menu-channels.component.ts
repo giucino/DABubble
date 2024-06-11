@@ -37,6 +37,11 @@ export class MainMenuChannelsComponent {
   ) {}
 
 
+  get menuChannelContainerClass() {
+    return this.isExpanded ? 'expanded' : 'collapsed';
+  }
+
+
   selectChannel(channelId: string) {
     this.stateService.setSelectedChannelId(channelId);
     this.userService.saveLastThread(this.userService.currentUser.id, '');
