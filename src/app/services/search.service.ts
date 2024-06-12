@@ -67,11 +67,16 @@ export class SearchService {
 
   filterMessages(searchTerm: string, messages: Message[]): Message[] {
     const lowerCaseTerm = this.searchTerm(searchTerm);
-    return messages.filter((message) =>
-      message.message.text.toLowerCase().includes(lowerCaseTerm) &&
-      (this.channelExists(message.channel_id, this.channelService.channels) ||
-      (message.thread_id && this.threadExists(message.thread_id, this.channelService.channels)))
+    let filteredMessages = messages.filter((message) => { 
+      let convertedText = this.convertUserIdTagIntoUserName(message.message.text);
+      if (
+        convertedText.toLowerCase().includes(lowerCaseTerm) &&
+        (this.channelExists(message.channel_id, this.channelService.channels) ||
+        (message.thread_id && this.threadExists(message.thread_id, this.channelService.channels)))) 
+      { return true;}
+      else { return false}}
     );
+    return filteredMessages;
   }
 
 
@@ -107,5 +112,14 @@ export class SearchService {
           .split(' ')
           .some((part: string) => part.toLowerCase().startsWith(lowerCaseTerm))
     );
+  }
+
+  convertUserIdTagIntoUserName(text: string) {
+    let convertedText = text;
+    this.userService.allUsers.forEach(user => {
+      const regex = new RegExp(`@${user.id}`, 'g');
+      convertedText = convertedText.replace(regex, `@${user.name}`);
+    });
+    return convertedText;
   }
 }

@@ -28,10 +28,7 @@ export class PopupNewMessageSearchComponent {
     public searchService: SearchService,
     public userService: UserService,
     public newMessagAddressees : NewMessageAdresseesService,
-    // public threadService: ThreadService,
     public channelService: ChannelFirebaseService,
-    // private renderer: Renderer2,
-    // public cursorPositionService :CursorPositionService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
