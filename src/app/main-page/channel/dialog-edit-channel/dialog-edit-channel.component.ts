@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { DialogAddMemberMobileComponent } from '../dialog-add-member-mobile/dialog-add-member-mobile.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { MessageService } from '../../../firebase.service/message.service';
+import { Message } from '../../../interfaces/message.interface';
 
 @Component({
   selector: 'app-dialog-edit-channel',
@@ -33,7 +34,7 @@ export class DialogEditChannelComponent implements OnInit {
     public channelService: ChannelFirebaseService,
     private router: Router,
     public customDialogService: CustomDialogService,
-    public messageService: MessageService
+    public messageService: MessageService,
   ) { }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -107,6 +108,7 @@ export class DialogEditChannelComponent implements OnInit {
         this.deleteChannelAndMessages();
       }
       await this.channelService.removeUserFromChannel(this.channelService.currentChannel.id, this.userService.currentUser.id);
+      this.deleteUserFromThreadsOfChannel(this.channelService.currentChannel.id, this.userService.currentUser.id);
       this.openNewChannel();
   }
 
@@ -127,5 +129,12 @@ export class DialogEditChannelComponent implements OnInit {
       }
     }
     this.messageService.removeMessagesFromEmptyChannel(this.channelService.currentChannel.id);
+  }
+
+  deleteUserFromThreadsOfChannel(channelId : string, userId : string) {
+    let firstThreadMessages = this.messageService.allMessages.filter((message) => (message.channel_id == channelId && (message.thread_id && message.thread_id != '')));
+    firstThreadMessages.forEach(async (message : Message) => {
+      if (message.thread_id && message.thread_id != '') await this.channelService.removeUserFromChannel(message.thread_id, userId);
+    })
   }
 }

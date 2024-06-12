@@ -13,7 +13,7 @@ export class UserManagementService {
   constructor(
     private userService: UserService,
     private channelService: ChannelFirebaseService,
-    private messageServie: MessageService,
+    private messageService: MessageService,
   ) {}
 
 
@@ -65,7 +65,7 @@ export class UserManagementService {
 
 
   updateMembersForThreadsOfChannel(channelId : string, memberIds : string[]) {
-    let firstThreadMessages = this.messageServie.allMessages.filter((message) => (message.channel_id == channelId && (message.thread_id && message.thread_id != '')));
+    let firstThreadMessages = this.messageService.allMessages.filter((message) => (message.channel_id == channelId && (message.thread_id && message.thread_id != '')));
     firstThreadMessages.forEach((message : Message) => {
       if (message.thread_id && message.thread_id != '') this.channelService.updateChannelMembers(message.thread_id, memberIds);
     })
