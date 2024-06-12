@@ -241,6 +241,9 @@ textarea {
     max-width: unset;
     width: 100%;
   }
+  .channel-footer {
+    padding: 16px;
+  }
 }
 @media (max-width: 500px){
   .channel-container{
@@ -253,8 +256,5 @@ textarea {
     .channel-name-container{
       padding: 6px 0px;
     }
-  }
-  .channel-footer{
-    padding: 30px 10px 20px 10px;
   }
 }

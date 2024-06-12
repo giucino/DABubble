@@ -1,5 +1,8 @@
 input, textarea, .message-input {
     width: 100%;
+    min-height: 64px;
+    max-height: 96px;
+    overflow: auto;
     border: none;
     outline: none;
     font-size: 18px;
@@ -153,10 +156,4 @@ input, textarea, .message-input {
       }
     } 
   }
-}
-
-@media (max-width:  768px) {
-      .message-input{
-        padding: 0px 20px 60px 20px;
-      }
 }
