@@ -6,16 +6,25 @@ import { UserService } from '../firebase.service/user.service';
 import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
 import { MessageService } from '../firebase.service/message.service';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
+  private userSelectedSubject = new Subject<void>();
+  userSelected$ = this.userSelectedSubject.asObservable();
+
   constructor(
     private userService: UserService,
     private channelService: ChannelFirebaseService,
     private messageService: MessageService
   ) { }
+
+
+  userSelected() {
+    this.userSelectedSubject.next();
+  }
 
 
   applyFilters(searchTerm: string): {

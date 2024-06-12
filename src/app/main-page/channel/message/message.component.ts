@@ -20,6 +20,8 @@ import { TagToComponentDirective } from '../../../shared/directives/tag-to-compo
 import { PopupSearchComponent } from '../../../shared/popup-search/popup-search.component';
 import { CursorPositionService } from '../../../services/cursor-position.service';
 import { EditMessageComponent } from './edit-message/edit-message.component';
+import { SearchService } from '../../../services/search.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-message',
@@ -60,6 +62,7 @@ export class MessageComponent {
   showMoreOptions: boolean = false;
   editMessage: boolean = false;
   tagText: string = '';
+  preventEditClose: boolean = false;
 
   constructor(
     public messageService: MessageService,
@@ -72,7 +75,11 @@ export class MessageComponent {
     public elementRef: ElementRef,
     // public mainpage: MainPageComponent, // TODO: als Service
     public cursorPositionService: CursorPositionService,
+    public searchService: SearchService,
   ) { }
+
+  private userSelectedSubscription!: Subscription;
+
 
   get channelInputElement(): ElementRef {
     return this.channelInput;
@@ -85,6 +92,9 @@ export class MessageComponent {
     this.getAttachementsData();
     this.getReactions();
     this.message.message.text = this.message.message.text;
+    this.userSelectedSubscription = this.searchService.userSelected$.subscribe(() => {
+      this.preventEditClose = true;
+    });
     document.addEventListener('click', this.documentClickHandler);
   }
 
@@ -99,15 +109,17 @@ export class MessageComponent {
 
   ngOnDestroy() {
     this.unsubReactions();
+    this.userSelectedSubscription.unsubscribe();
     document.removeEventListener('click', this.documentClickHandler);
   }
 
 
   documentClickHandler = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
-    if (!this.messageElem.nativeElement.contains(target) && this.editMessage) {
+    if (!this.messageElem.nativeElement.contains(target) && this.editMessage && !this.preventEditClose) {
       this.closeEdit();
     }
+    this.preventEditClose = false;
   };
 
 
