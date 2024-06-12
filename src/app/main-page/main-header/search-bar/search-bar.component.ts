@@ -18,6 +18,8 @@ import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { UtilityService } from '../../../services/utility.service';
 import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
+// import { threadId } from 'node:worker_threads';
+import { MainPageComponent } from '../../main-page.component';
 
 @Component({
   selector: 'app-search-bar',
@@ -60,6 +62,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public threadService: ThreadService,
     public utilityService: UtilityService,
     public viewportScroller: ViewportScroller,
+    public mainPage: MainPageComponent
   ) { }
 
 
@@ -182,7 +185,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       await this.userService.saveLastThread(this.userService.currentUser.id, message.thread_id);
       this.router.navigate(['/main-page', channelId]);
       this.threadService.openThread();
-      // this.messageService.changeMessage(message.id);
+      this.messageService.changeMessage(message.id);
+    } if (window.innerWidth < 768) {
+      this.mainPage.toggleMenu();
     }
   }
 

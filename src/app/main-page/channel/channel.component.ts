@@ -152,7 +152,7 @@ export class ChannelComponent {
     let messageElement = document.getElementById('message-' + messageId);
     while (!messageElement) {
       await new Promise(resolve => setTimeout(resolve, 100));
-      messageElement = document.getElementById('message-' + messageId);
+      messageElement = document.getElementById('message-' + messageId)
     }
     if (messageElement) {
       messageElement.scrollIntoView({ behavior: 'smooth' });
@@ -243,6 +243,7 @@ export class ChannelComponent {
 
 
   getDateFormat(dateInput: number) {
+
     let d = new Date(dateInput);
     let date = d.getDate();
     let day: number | string = d.getDay();

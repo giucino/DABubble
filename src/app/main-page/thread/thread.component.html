@@ -32,7 +32,7 @@
         <!-- messages -->
         @for(message of messageService.messagesThread; track message.id; let i = $index) {
   
-          <app-message [message]="message" [channelType]="channelService.currentThread.channel_type"></app-message>
+          <app-message [message]="message" [channelType]="channelService.currentThread.channel_type" [id]="'t-message-' + message.id"></app-message>
           
           <!-- thread -  answers count -->
           @if(i == 0 && message.total_replies && message.total_replies > 0) {

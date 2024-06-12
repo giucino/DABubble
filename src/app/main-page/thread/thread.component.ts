@@ -83,6 +83,27 @@ export class ThreadComponent {
   }
 
 
+  ngAfterViewInit() {
+    this.messageService.currentMessage.subscribe(messageId => {
+      setTimeout(() => this.scrollToMessage(messageId), 0);
+    });
+  }
+
+
+  async scrollToMessage(messageId: string) {
+    let messageElement = document.getElementById('t-message-' + messageId);
+    while (!messageElement) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      messageElement = document.getElementById('t-message-' + messageId)
+    }
+    if (messageElement) {
+      messageElement.scrollIntoView({ behavior: 'smooth' });
+      messageElement.classList.add('blink');
+    }
+  }
+
+
+
   ngOnDestroy() {
     this.channelService.unsubCurrentThread();
     this.messageService.unsubMessagesThread();
