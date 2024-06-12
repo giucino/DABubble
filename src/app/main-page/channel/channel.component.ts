@@ -121,17 +121,17 @@ export class ChannelComponent {
 
 
   async initUserAndChannel() {
-    if (this.userService.currentUser && this.userService.currentUser.last_channel == '') {
-      this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
-      this.router.navigateByUrl('/main-page/');
-    }
-    if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
-      this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
-      this.openChannel();
-    }
     if (this.userService.currentUser && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
       this.router.navigateByUrl('/main-page/');
+    } else if (this.userService.currentUser && this.userService.currentUser.last_channel == '') {
+      this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
+      this.openChannel();
     }
+    // if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
+      // this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+      // this.openChannel();
+    // }
+
   }
 
 
@@ -192,7 +192,10 @@ export class ChannelComponent {
     this.activatedRoute.params.subscribe((params) => {
       if (params['channelId']) {
         this.loadChannelData(params['channelId']);
-      } else {
+      } else if (this.userService.currentUser.last_channel == '') {
+        this.router.navigateByUrl('/main-page/');
+      }
+      else {
         this.loadChannelData(this.userService.currentUser.last_channel);
       }
     });
@@ -277,7 +280,7 @@ export class ChannelComponent {
 
   getChannelName(channelId: string) {
     let channel = this.getChannel(channelId);
-    if(channel?.channel_type == 'direct') return this.getDirectChannelCounterPart(channelId).name;
+    if (channel?.channel_type == 'direct') return this.getDirectChannelCounterPart(channelId).name;
     else return channel?.name;
   }
 
@@ -289,7 +292,7 @@ export class ChannelComponent {
     let directChannel = this.channelService.channels.find((channel) => channel.id === channelId);
     let counterPartId = directChannel?.members.find((member) => member != this.currentUser.id);
     let counterPart = this.userService.allUsers.find((user) => user.id == counterPartId);
-    if(counterPart) return counterPart;
+    if (counterPart) return counterPart;
     else return this.currentUser; // Personal Channel
   }
 
