@@ -342,8 +342,6 @@ app-edit-message {
     }
 
     .message-content {
-
-      // width: 100%;
       .message {
         width: 90%;
         max-width: unset;
@@ -366,6 +364,10 @@ app-edit-message {
   .message-edit-container{
     padding: 10px 20px 10px 20px;
     max-width: 80dvw; 
+  }
+
+  app-edit-message {
+    max-width: unset;
   }
 
 
