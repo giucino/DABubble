@@ -121,10 +121,12 @@ export class ChannelComponent {
 
 
   async initUserAndChannel() {
-    if (this.userService.currentUser && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
-      this.router.navigateByUrl('/main-page/');
-    } else if (this.userService.currentUser && this.userService.currentUser.last_channel == '') {
-      this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
+    // if (this.userService.currentUser && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
+    //   // this.router.navigateByUrl('/main-page/');
+    //   this.openChannel();
+    // } else 
+    if (this.userService.currentUser && this.userService.currentUser.last_channel == '' && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
+      // this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
       this.openChannel();
     }
     // if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
