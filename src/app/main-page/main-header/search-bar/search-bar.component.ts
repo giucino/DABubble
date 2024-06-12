@@ -183,12 +183,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     else if (message.thread_id && message.thread_id != '' && message.channel_id == '') {
       let channelId = this.findChannelIdForThread(message.thread_id);
       await this.userService.saveLastThread(this.userService.currentUser.id, message.thread_id);
+      if (window.innerWidth < 1500) {
+        this.mainPage.toggleMenu();
+      }
       this.router.navigate(['/main-page', channelId]);
       this.threadService.openThread();
       this.messageService.changeMessage(message.id);
-    } if (window.innerWidth < 768) {
-      this.mainPage.toggleMenu();
-    }
+    } 
   }
 
   findChannelIdForThread(threadId : string) {
