@@ -10,7 +10,7 @@ import {
   MatDialogModule,
   MatDialog,
 } from '@angular/material/dialog';
-import { ChannelFirebaseService } from '../../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../../firebase.service/channel.service';
 import { Channel } from '../../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../../shared/enums/channel-type.enum';
 import { FormsModule } from '@angular/forms';
@@ -53,7 +53,7 @@ export class AddChannelCardComponent {
   constructor(
     public dialogRef: MatDialogRef<AddChannelCardComponent>,
     public dialog: MatDialog,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public userService: UserService,
     public customDialogService: CustomDialogService,
     public router: Router

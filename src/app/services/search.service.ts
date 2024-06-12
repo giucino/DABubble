@@ -3,7 +3,7 @@ import { User } from '../interfaces/user.interface';
 import { Channel } from '../interfaces/channel.interface';
 import { Message } from '../interfaces/message.interface';
 import { UserService } from '../firebase.service/user.service';
-import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { ChannelService } from '../firebase.service/channel.service';
 import { MessageService } from '../firebase.service/message.service';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { Subject } from 'rxjs';
@@ -17,7 +17,7 @@ export class SearchService {
 
   constructor(
     private userService: UserService,
-    private channelService: ChannelFirebaseService,
+    private channelService: ChannelService,
     private messageService: MessageService
   ) { }
 

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { Channel } from '../../../interfaces/channel.interface';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
@@ -23,7 +23,7 @@ export class DialogShowMembersComponent {
     public dialogRef: MatDialogRef<DialogShowMembersComponent>,
     public customDialogService: CustomDialogService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService
+    public channelService: ChannelService
   ) {}
 
 

@@ -6,7 +6,7 @@ import { LogOutDialogComponent } from './log-out-dialog/log-out-dialog.component
 import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { SharedService } from '../../services/shared.service';
 import { MainPageComponent } from '../main-page.component';
 import { ThreadService } from '../../services/thread.service';
@@ -25,7 +25,7 @@ export class MainHeaderComponent {
   constructor(
     private customDialogService: CustomDialogService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     private renderer: Renderer2, 
     private el: ElementRef,
     public sharedService: SharedService,

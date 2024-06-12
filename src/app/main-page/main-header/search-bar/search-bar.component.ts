@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
 import { User } from '../../../interfaces/user.interface';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { Channel } from '../../../interfaces/channel.interface';
 import { MessageService } from '../../../firebase.service/message.service';
 import { Message } from '../../../interfaces/message.interface';
@@ -55,7 +55,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   constructor(
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public messageService: MessageService,
     public searchService: SearchService,
     public router: Router,

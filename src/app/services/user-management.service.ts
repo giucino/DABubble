@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user.interface';
 import { UserService } from '../firebase.service/user.service';
-import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { ChannelService } from '../firebase.service/channel.service';
 import { MessageService } from '../firebase.service/message.service';
 import { Message } from '../interfaces/message.interface';
 
@@ -12,7 +12,7 @@ export class UserManagementService {
 
   constructor(
     private userService: UserService,
-    private channelService: ChannelFirebaseService,
+    private channelService: ChannelService,
     private messageService: MessageService,
   ) {}
 

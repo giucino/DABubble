@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { ChannelService } from '../firebase.service/channel.service';
 import { Message } from '../interfaces/message.interface';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class UtilityService {
     'November',
     'Dezember',
   ];
-  constructor(private channelService: ChannelFirebaseService) { }
+  constructor(private channelService: ChannelService) { }
 
 
   convertToDate(dateAsNumber: number) {

@@ -10,7 +10,7 @@ import { Message } from '../../interfaces/message.interface';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
 import { MessageInputComponent } from '../message-input/message-input.component';
@@ -106,7 +106,7 @@ export class ChannelComponent {
     public customDialogService: CustomDialogService,
     public messageService: MessageService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public activatedRoute: ActivatedRoute,
     private router: Router,
     public threadService: ThreadService,

@@ -5,7 +5,7 @@ import { EmailSnackbarComponent } from './popups/email-snackbar/email-snackbar.c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserAuthService } from './firebase.service/user.auth.service';
 import { UserService } from './firebase.service/user.service';
-import { ChannelFirebaseService } from './firebase.service/channelFirebase.service';
+import { ChannelService } from './firebase.service/channel.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +23,7 @@ export class AppComponent {
     private _snackBar: MatSnackBar, 
     public userAuth: UserAuthService,
     public userService: UserService, 
-    public channelService: ChannelFirebaseService) {
+    public channelService: ChannelService) {
     if (userService.currentUser) {
       this.userId = userService.currentUser.id;
     }

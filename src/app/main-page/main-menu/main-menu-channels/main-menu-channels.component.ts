@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AddChannelCardComponent } from './add-channel-card/add-channel-card.component';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { MessageService } from '../../../firebase.service/message.service';
 import { UserService } from '../../../firebase.service/user.service';
 import { Router, RouterModule } from '@angular/router';
@@ -26,7 +26,7 @@ export class MainMenuChannelsComponent {
 
   constructor(
     private customDialogService: CustomDialogService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public messageService: MessageService,
     public userService: UserService,
     public router: Router,

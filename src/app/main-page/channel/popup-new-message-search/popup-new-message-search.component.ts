@@ -6,7 +6,7 @@ import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { UserService } from '../../../firebase.service/user.service';
 import { CommonModule } from '@angular/common';
 import { NewMessageAdresseesService } from '../../../services/new-message-adressees.service';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 
 @Component({
   selector: 'app-popup-new-message-search',
@@ -28,7 +28,7 @@ export class PopupNewMessageSearchComponent {
     public searchService: SearchService,
     public userService: UserService,
     public newMessagAddressees : NewMessageAdresseesService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {

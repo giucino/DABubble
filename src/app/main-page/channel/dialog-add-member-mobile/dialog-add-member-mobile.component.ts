@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { UserManagementService } from '../../../services/user-management.service';
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { ProfileService } from '../../../services/profile.service';
@@ -31,7 +31,7 @@ export class DialogAddMemberMobileComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogAddMemberComponent>,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public userManagementService: UserManagementService,
     public customDialogService: CustomDialogService,
     private profileService: ProfileService
