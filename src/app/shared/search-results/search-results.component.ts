@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
 import { Channel } from '../../interfaces/channel.interface';
 import { Message } from '../../interfaces/message.interface';
-import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
+import { OpenProfileDirective } from '../directives/open-profile.directive';
 import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
 import { UtilityService } from '../../services/utility.service';

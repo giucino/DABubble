@@ -15,7 +15,7 @@ import { OpenProfileDirective } from '../../../shared/directives/open-profile.di
 import { ReactionService } from '../../../firebase.service/reaction.service';
 import { Reaction } from '../../../interfaces/reaction.interface';
 import { SharedService } from '../../../services/shared.service';
-import { MainPageComponent } from '../../main-page.component';
+// import { MainPageComponent } from '../../main-page.component';
 import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
 import { PopupSearchComponent } from '../../../shared/popup-search/popup-search.component';
 import { CursorPositionService } from '../../../services/cursor-position.service';
@@ -70,7 +70,7 @@ export class MessageComponent {
     public reactionService: ReactionService,
     public sharedService: SharedService,
     public elementRef: ElementRef,
-    public mainpage: MainPageComponent, // TODO: als Service
+    // public mainpage: MainPageComponent, // TODO: als Service
     public cursorPositionService: CursorPositionService,
   ) { }
 
@@ -84,7 +84,7 @@ export class MessageComponent {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     this.getAttachementsData();
     this.getReactions();
-    this.message.message.text = this.formatMessageForRead(this.message.message.text);
+    this.message.message.text = this.message.message.text;
     document.addEventListener('click', this.documentClickHandler);
   }
 
@@ -239,7 +239,6 @@ export class MessageComponent {
   closeUnder1500() {
     if (window.innerWidth < 1500) {
       this.sharedService.isMenuOpen = false;
-      // this.threadService.openThread();
     }
     this.threadService.openThread();
   }
@@ -362,7 +361,6 @@ export class MessageComponent {
   }
 
 
-
   getUserName(userId: string) {
     let user = this.userService.allUsers.find((user) => user.id == userId);
     return user ? user.name : 'Gelöschter Nutzer';
@@ -377,19 +375,5 @@ export class MessageComponent {
 
   //#endregion
 
-
-
-  //#region formatting
-  // TODO: delete?
-  escapeHTML(text: string) {
-    return text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  formatMessageForRead(text: string) {
-    let formattedText = this.escapeHTML(text);
-    return formattedText;
-  }
-
-  //#endregion
 
 }

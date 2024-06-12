@@ -8,13 +8,11 @@ import { ProfileButtonComponent } from '../profile-button/profile-button.compone
 })
 export class TagToComponentDirective {
 
-  // @Input() dynamicHost! : ViewContainerRef;
   @Input() message: string = '';
   isViewInitialized : boolean = false;
 
   constructor(
     private viewContainer: ViewContainerRef,
-    // private template : TemplateRef<Object>,
     private elementRef : ElementRef,
     public userService : UserService,
     private renderer: Renderer2,
@@ -22,43 +20,45 @@ export class TagToComponentDirective {
 
   ) { }
 
+  
   ngAfterViewInit() {
-    this.loadDynamicComponents();
+    this.transformTagsIntoComponents();
     this.cdr.detectChanges();
     this.isViewInitialized = true;
   }
 
+
   ngOnChanges() {
     if(this.isViewInitialized) {
-      this.loadDynamicComponents();
-      this.cdr.detectChanges();
-      // console.log('triggered', this.message)
+      this.transformTagsIntoComponents();
     }
-
   }
 
-  loadDynamicComponents() {
-    let container = this.elementRef.nativeElement;
-    this.userService.allUsers.forEach(user => {
-      const regex = new RegExp(`@${user.id}`, 'g');
-      container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
-    });
 
+  transformTagsIntoComponents() {
+    let container = this.transformTagIntoHTMLElement();
     // Replace placeholders with dynamic components
     const dynamicUserElements = container.querySelectorAll('.dynamic-user');
     dynamicUserElements.forEach((element: HTMLElement) => {
       const userId = element.getAttribute('data-userid');
       const userName = element.innerText;
-
       const componentRef: ComponentRef<ProfileButtonComponent> = this.viewContainer.createComponent(ProfileButtonComponent);
       componentRef.instance.userId = userId!;
       componentRef.instance.userName = userName;
-
       this.renderer.insertBefore(container, componentRef.location.nativeElement, element);
       this.renderer.removeChild(container, element);
     });
   }
 
+
+  transformTagIntoHTMLElement() {
+    let container = this.elementRef.nativeElement;
+    this.userService.allUsers.forEach(user => {
+      const regex = new RegExp(`@${user.id}`, 'g');
+      container.innerHTML = container.innerHTML.replace(regex, `<span class="dynamic-user" data-userid="${user.id}">${user.name}</span>`);
+    });
+    return container;
+  }
 
 
 }

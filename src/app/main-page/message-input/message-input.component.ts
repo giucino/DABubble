@@ -90,13 +90,16 @@ export class MessageInputComponent {
     }
   }
 
+
   hasAdressees() {
     return this.channelService.currentChannel.channel_type != 'new' || (this.channelService.currentChannel.channel_type == 'new' && this.newMessageAdressees.adressees.length > 0)
   }
 
+
   isNewMessageChannel() {
     return this.channelService.currentChannel.channel_type == 'new';
   }
+
 
   async sendToAllAdressees(fileInput : HTMLInputElement) {
     this.newMessageAdressees.adressees.forEach( async (channelId) => {
@@ -107,14 +110,14 @@ export class MessageInputComponent {
     this.newMessageAdressees.empty();
   }
 
+
   async sendToCurrentChannel(fileInput: HTMLInputElement) {
     this.message.id = await this.messageService.addMessage(this.message);
-    // thread message update
     if (this.usedIn == 'thread') this.updateThreadMessage();
-    // upload currentFile
     if (this.currentFile != null) await this.uploadFile(fileInput);
   }
 
+  
   prepareMessageForSave(channelInput : HTMLDivElement) {
     this.message.user_id = this.currentUser.id;
     channelInput.innerHTML = this.formatMessageForSave(channelInput.innerHTML);
@@ -271,8 +274,6 @@ export class MessageInputComponent {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
       const curRange = selection.getRangeAt(selection.rangeCount - 1);
-      // if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return; // we are in child selection. The characters of the text node is being deleted
-      // if (event.key === 'Backspace') this.handleBackSpace(selection, element, event);
       if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
   }
@@ -333,7 +334,7 @@ export class MessageInputComponent {
   }
 
 
-  //#region Utility XSS Prevention TODO: in Service
+  //#region Utility XSS Prevention
   formatTagForSave(text: string) {
     const regex = new RegExp(/<app-profile-button[^>]*><button[^>]*ng-reflect-user-id="([^"]+)"[^>]*>[^<]*<\/button><\/app-profile-button>/g);
     const formattedText = text.replace(regex, '@$1');

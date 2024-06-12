@@ -190,8 +190,6 @@ export class EditMessageComponent {
   handleKeyDown(event: KeyboardEvent, element: HTMLDivElement) {
     const selection = window.getSelection();
     if (selection && selection.rangeCount > 0) {
-      const curRange = selection.getRangeAt(selection.rangeCount - 1);
-      if (curRange.commonAncestorContainer.nodeType == 3 && curRange.startOffset > 0) return;
       if (event.key === 'Enter' && !event.shiftKey) this.handleEnter(event, element);
     }
   }

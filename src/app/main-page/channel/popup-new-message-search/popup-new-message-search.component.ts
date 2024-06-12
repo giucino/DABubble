@@ -61,11 +61,13 @@ export class PopupNewMessageSearchComponent {
     if(channelId) this.addChannelToArray(channelId);
   }
   
+
   addChannelToArray(channelId: string) {
     this.newMessagAddressees.add(channelId);
     this.clearSearch();
   }
 
+  
   clearSearch() {
     this.clearSearchEvent.emit();
   }

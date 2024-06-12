@@ -1,0 +1,11 @@
+.btn-text-v3 {
+    background-color: var(--color-bg);
+    padding: 4px 8px;
+    border-radius: 24px;
+    border: 1px solid var(--color-purple-2);
+    &:hover {
+        background-color: var(--color-light-purple);
+        color: var(--color-bg);
+        border-color: transparent;
+    }
+}

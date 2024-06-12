@@ -11,7 +11,6 @@ import {
   getDoc,
   where,
   query,
-  getDocs,
 } from '@angular/fire/firestore';
 import { ChannelTypeEnum } from '../shared/enums/channel-type.enum';
 import { runTransaction } from 'firebase/firestore';
@@ -216,30 +215,30 @@ export class ChannelFirebaseService {
   }
 
 
-  async getAllChannels(): Promise<Channel[]> {
-    const allChannelsQuery = query(this.getChannelsRef());
-    return getDocs(allChannelsQuery)
-      .then((querySnapshot) => {
-        this.channels = [];
-        querySnapshot.forEach((doc) => {
-          const channel = this.setChannel(doc.data(), doc.id);
-          this.channels.push(channel);
-        });
-        return this.channels;
-      })
-      .catch((error) => {
-        return [];
-      });
-  }
+  // async getAllChannels(): Promise<Channel[]> {
+  //   const allChannelsQuery = query(this.getChannelsRef());
+  //   return getDocs(allChannelsQuery)
+  //     .then((querySnapshot) => {
+  //       this.channels = [];
+  //       querySnapshot.forEach((doc) => {
+  //         const channel = this.setChannel(doc.data(), doc.id);
+  //         this.channels.push(channel);
+  //       });
+  //       return this.channels;
+  //     })
+  //     .catch((error) => {
+  //       return [];
+  //     });
+  // }
 
 
-  async createNewChannel(channel: Omit<Channel, 'channel_type'>): Promise<string> {
-    const newChannel: Channel = {
-      ...channel,
-      channel_type: ChannelTypeEnum.new,
-    };
-    return this.addChannel(newChannel);
-  }
+  // async createNewChannel(channel: Omit<Channel, 'channel_type'>): Promise<string> {
+  //   const newChannel: Channel = {
+  //     ...channel,
+  //     channel_type: ChannelTypeEnum.new,
+  //   };
+  //   return this.addChannel(newChannel);
+  // }
 
 
   async openNewChannel(currentUserId: string) {

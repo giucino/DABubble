@@ -14,15 +14,11 @@ import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.s
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
 import { MessageInputComponent } from '../message-input/message-input.component';
-import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, Subscription } from 'rxjs';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { Channel } from '../../interfaces/channel.interface';
-import { SearchService } from '../../services/search.service';
 import { OpenProfileDirective } from '../../shared/directives/open-profile.directive';
 import { StateManagementService } from '../../services/state-management.service';
-import { PopupSearchComponent } from '../../shared/popup-search/popup-search.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { PopupNewMessageSearchComponent } from './popup-new-message-search/popup-new-message-search.component';
@@ -70,12 +66,6 @@ export class ChannelComponent {
   channelId: string = '';
   isLoading = false;
 
-  // searchControl = new FormControl();
-  // private subscriptions = new Subscription();
-  // filteredUsers: User[] = [];
-  // filteredChannels: Channel[] = [];
-  // selectedUserId: string = '';
-
   inputText: string = '';
 
   newDirectChannel: Channel = {
@@ -121,7 +111,6 @@ export class ChannelComponent {
     private router: Router,
     public threadService: ThreadService,
     private stateService: StateManagementService,
-    public searchService: SearchService,
     public userAuth: UserAuthService,
     public viewportScroller: ViewportScroller,
     public newMessageAdressees: NewMessageAdresseesService,
@@ -155,16 +144,7 @@ export class ChannelComponent {
 
 
   ngOnInit() {
-    if (this.userService.currentUser && this.userService.currentUser.last_channel) {
-      this.openChannel();
-    }
-    // this.subscriptions.add(
-    //   this.searchControl.valueChanges
-    //     .pipe(debounceTime(300))
-    //     .subscribe((value) => {
-    //       this.filter(value);
-    //     })
-    // );
+    if (this.userService.currentUser && this.userService.currentUser.last_channel) this.openChannel();
   }
 
 
@@ -182,28 +162,8 @@ export class ChannelComponent {
 
 
   ngOnDestroy(): void {
-    // this.subscriptions.unsubscribe();
     this.messageService.unsubMessages();
   }
-
-  // clearSearch(): void {
-  //   this.searchControl.setValue('');
-  // }
-
-
-  // filter(searchTerm: string): void {
-  //   if (searchTerm.startsWith('@')) {
-  //     this.filteredUsers = this.searchService.filterUsersByPrefix(searchTerm, this.userService.allUsers);
-  //     this.filteredChannels = [];
-  //   } else if (searchTerm.startsWith('#')) {
-  //     this.filteredChannels = this.searchService.filterChannelsByTypeAndPrefix(searchTerm, ChannelTypeEnum.main);
-  //     this.filteredUsers = [];
-  //   } else {
-  //     const results = this.searchService.clearFilters();
-  //     this.filteredUsers = results.users;
-  //     this.filteredChannels = results.channels;
-  //   }
-  // }
 
 
   async openDirectChannel(user_id: string): Promise<void> {

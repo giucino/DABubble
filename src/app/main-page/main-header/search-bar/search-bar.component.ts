@@ -158,12 +158,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
 
-  // getChannelName(channelId: string) {
-  //   const channel = this.channelService.channels.find((channel) => channel.id === channelId);
-  //   return channel ? channel.name : '';
-  // }
-
-
   getUserImg(messageId: any) {
     const message = this.messageService.allMessages.find((message) => message.id === messageId);
     const user = this.userService.getUser(message!.user_id);
