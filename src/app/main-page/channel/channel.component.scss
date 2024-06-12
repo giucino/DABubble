@@ -353,6 +353,9 @@ input, textarea, #channelInput {
   .arrow-down{
     display: none;
   }
+  .channel-footer {
+    padding: 16px;
+  }
 }
 @media (max-width: 500px){
   .channel-container{
@@ -365,8 +368,5 @@ input, textarea, #channelInput {
     .channel-name-container{
       padding: 6px 0px;
     }
-  }
-  .channel-footer{
-    padding: 30px 10px 20px 10px;
   }
 }
