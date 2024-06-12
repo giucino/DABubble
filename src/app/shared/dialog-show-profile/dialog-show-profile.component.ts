@@ -6,7 +6,7 @@ import { DialogEditProfileComponent } from '../../shared/dialog-edit-profile/dia
 import { CustomDialogService } from '../../services/custom-dialog.service';
 import { UserService } from '../../firebase.service/user.service';
 import { User } from '../../interfaces/user.interface';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { Channel } from '../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../shared/enums/channel-type.enum';
 import { Router } from '@angular/router';
@@ -37,7 +37,7 @@ export class DialogShowProfileComponent implements OnInit {
     private profileService: ProfileService,
     private customDialogService: CustomDialogService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     private router : Router,
     public threadService : ThreadService,
   ) {}

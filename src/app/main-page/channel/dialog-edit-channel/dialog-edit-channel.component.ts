@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { UserService } from '../../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DialogAddMemberMobileComponent } from '../dialog-add-member-mobile/dialog-add-member-mobile.component';
@@ -32,7 +32,7 @@ export class DialogEditChannelComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogEditChannelComponent>,
     private _ngZone: NgZone,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     private router: Router,
     public customDialogService: CustomDialogService,
     public messageService: MessageService,

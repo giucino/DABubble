@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MessageService } from '../../firebase.service/message.service';
 import { UserService } from '../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { MessageComponent } from '../channel/message/message.component';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user.interface';
@@ -65,7 +65,7 @@ export class ThreadComponent {
   constructor(
     public messageService: MessageService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public threadService: ThreadService,
     public sharedService: SharedService,
   ) {

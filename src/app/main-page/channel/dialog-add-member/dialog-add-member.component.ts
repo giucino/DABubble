@@ -4,7 +4,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
 import { User } from '../../../interfaces/user.interface';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { UserManagementService } from '../../../services/user-management.service';
 import { Channel } from '../../../interfaces/channel.interface';
 
@@ -26,7 +26,7 @@ export class DialogAddMemberComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogAddMemberComponent>,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public userManagementService: UserManagementService,
   ) { }
 

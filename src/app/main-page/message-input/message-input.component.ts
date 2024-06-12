@@ -6,7 +6,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { UserService } from '../../firebase.service/user.service';
 import { User } from '../../interfaces/user.interface';
 import { Message } from '../../interfaces/message.interface';
@@ -56,7 +56,7 @@ export class MessageInputComponent {
 
   constructor(
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public messageService: MessageService,
     public customDialogService: CustomDialogService,
     public cursorPositionService: CursorPositionService,

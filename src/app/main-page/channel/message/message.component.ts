@@ -5,7 +5,7 @@ import { User } from '../../../interfaces/user.interface';
 import { MessageService } from '../../../firebase.service/message.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../firebase.service/channel.service';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelTypeEnum } from '../../../shared/enums/channel-type.enum';
 import { ThreadService } from '../../../services/thread.service';
@@ -67,7 +67,7 @@ export class MessageComponent {
   constructor(
     public messageService: MessageService,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public threadService: ThreadService,
     public customDialogService: CustomDialogService,
     public reactionService: ReactionService,

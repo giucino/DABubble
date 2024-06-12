@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MainMenuHeaderComponent } from './main-menu-header/main-menu-header.component';
 import { MainMenuDmComponent } from './main-menu-dm/main-menu-dm.component';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { SharedService } from '../../services/shared.service';
 import { MainMenuChannelsComponent } from './main-menu-channels/main-menu-channels.component';
 import { UserService } from '../../firebase.service/user.service';
@@ -31,7 +31,7 @@ export class MainMenuComponent{
   isMenuOpen: boolean = this.sharedService.isMenuOpen;
 
   constructor(
-    public channelService: ChannelFirebaseService, 
+    public channelService: ChannelService, 
     public sharedService: SharedService,
     public userService: UserService,
     public router: Router,

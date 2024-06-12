@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ChannelComponent } from './channel/channel.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
-import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { ChannelService } from '../firebase.service/channel.service';
 import { UserService } from '../firebase.service/user.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -22,7 +22,7 @@ import { SharedService } from '../services/shared.service';
 export class MainPageComponent {
 
   constructor(public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public threadService: ThreadService,
     public sharedService: SharedService) {
     if (this.userService.currentUser) this.channelService.getChannelsForCurrentUser();

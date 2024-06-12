@@ -18,7 +18,7 @@ import { runTransaction } from 'firebase/firestore';
 @Injectable({
   providedIn: 'root',
 })
-export class ChannelFirebaseService {
+export class ChannelService {
   firestore: Firestore = inject(Firestore);
   channels: Channel[] = [];
   currentChannel: Channel = {

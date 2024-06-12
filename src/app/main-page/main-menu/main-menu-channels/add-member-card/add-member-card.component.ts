@@ -8,7 +8,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../../firebase.service/user.service';
 import { User } from '../../../../interfaces/user.interface';
-import { ChannelFirebaseService } from '../../../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../../../firebase.service/channel.service';
 import { UserManagementService } from '../../../../services/user-management.service';
 import { OpenProfileDirective } from '../../../../shared/directives/open-profile.directive';
 import { Router } from '@angular/router';
@@ -34,7 +34,7 @@ export class AddMemberCardComponent {
   constructor(
     public dialogRef: MatDialogRef<AddMemberCardComponent>,
     public userService: UserService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     public userManagementService: UserManagementService,
     public router: Router,
     public sharedService: SharedService

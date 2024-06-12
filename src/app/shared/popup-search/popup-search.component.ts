@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThreadService } from '../../services/thread.service';
 import { ChannelTypeEnum } from '../enums/channel-type.enum';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { User } from '../../interfaces/user.interface';
 import { ProfileButtonComponent } from '../profile-button/profile-button.component';
 import { CursorPositionService } from '../../services/cursor-position.service';
@@ -41,7 +41,7 @@ export class PopupSearchComponent {
     public searchService: SearchService,
     public userService: UserService,
     public threadService: ThreadService,
-    public channelService: ChannelFirebaseService,
+    public channelService: ChannelService,
     private renderer: Renderer2,
     public cursorPositionService: CursorPositionService,
   ) { }

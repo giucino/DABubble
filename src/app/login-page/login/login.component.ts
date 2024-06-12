@@ -6,7 +6,7 @@ import { ResetPasswordComponent } from '../reset-password/reset-password.compone
 import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../firebase.service/user.service';
-import { ChannelFirebaseService } from '../../firebase.service/channelFirebase.service';
+import { ChannelService } from '../../firebase.service/channel.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginComponent {
   constructor(private userAuth: UserAuthService, 
     private userService: UserService,
     private router: Router, 
-    private channelService: ChannelFirebaseService,
+    private channelService: ChannelService,
     public route: ActivatedRoute
   ) { }
 
