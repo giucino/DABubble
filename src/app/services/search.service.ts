@@ -69,8 +69,8 @@ export class SearchService {
     const lowerCaseTerm = this.searchTerm(searchTerm);
     return messages.filter((message) =>
       message.message.text.toLowerCase().includes(lowerCaseTerm) &&
-      this.channelExists(message.channel_id, this.channelService.channels) ||
-      (message.thread_id && this.threadExists(message.thread_id, this.channelService.channels))
+      (this.channelExists(message.channel_id, this.channelService.channels) ||
+      (message.thread_id && this.threadExists(message.thread_id, this.channelService.channels)))
     );
   }
 
