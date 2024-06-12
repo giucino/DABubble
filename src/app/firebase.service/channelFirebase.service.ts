@@ -215,32 +215,6 @@ export class ChannelFirebaseService {
   }
 
 
-  // async getAllChannels(): Promise<Channel[]> {
-  //   const allChannelsQuery = query(this.getChannelsRef());
-  //   return getDocs(allChannelsQuery)
-  //     .then((querySnapshot) => {
-  //       this.channels = [];
-  //       querySnapshot.forEach((doc) => {
-  //         const channel = this.setChannel(doc.data(), doc.id);
-  //         this.channels.push(channel);
-  //       });
-  //       return this.channels;
-  //     })
-  //     .catch((error) => {
-  //       return [];
-  //     });
-  // }
-
-
-  // async createNewChannel(channel: Omit<Channel, 'channel_type'>): Promise<string> {
-  //   const newChannel: Channel = {
-  //     ...channel,
-  //     channel_type: ChannelTypeEnum.new,
-  //   };
-  //   return this.addChannel(newChannel);
-  // }
-
-
   async openNewChannel(currentUserId: string) {
     const channelFound = this.channels.find(channel => channel.members.includes(currentUserId) && channel.channel_type === 'main');
     if (channelFound) {

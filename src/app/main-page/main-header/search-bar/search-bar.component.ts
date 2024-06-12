@@ -18,7 +18,6 @@ import { Router, RouterModule } from '@angular/router';
 import { ThreadService } from '../../../services/thread.service';
 import { UtilityService } from '../../../services/utility.service';
 import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
-import { threadId } from 'node:worker_threads';
 
 @Component({
   selector: 'app-search-bar',
@@ -177,12 +176,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     if (message.channel_id != '') {
       this.router.navigate(['/main-page', message.channel_id])
       this.messageService.changeMessage(message.id);
-    } if (message.thread_id && message.thread_id != '' && message.channel_id == '') {
+    } 
+    else if (message.thread_id && message.thread_id != '' && message.channel_id == '') {
       let channelId = this.findChannelIdForThread(message.thread_id);
       await this.userService.saveLastThread(this.userService.currentUser.id, message.thread_id);
       this.router.navigate(['/main-page', channelId]);
       this.threadService.openThread();
-      this.messageService.changeMessage(message.id);
+      // this.messageService.changeMessage(message.id);
     }
   }
 
