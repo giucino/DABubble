@@ -16,10 +16,14 @@
         font-weight: 700;
     }
 }
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
 .back-to-login {
-    position: absolute;
-    left: 120px;
-    top: 200px;
     width: 40px;
     height: 40px;
 
@@ -35,18 +39,12 @@
         padding: 40px 30px;
         width: 95dvw;
     }
-    .back-to-login{
-        left: 60px;
-    }
 }
 @media(max-width: 700px){
     .privacy-container{
         h1{
             font-size: 36px;
         }
-    }
-    .back-to-login{
-        top: 195px;
     }
 }
 @media(max-width: 600px){
@@ -56,8 +54,6 @@
         }
     }
     .back-to-login{
-        left: 35px;
-        top: 190px;
         img{
             width: 20px !important;
             height: 20px !important;
@@ -72,8 +68,6 @@
         }
     }
     .back-to-login{
-        left: 26px;
-        top: 188px;
         img{
             width: 16px !important;
             height: 16px !important;
@@ -86,8 +80,5 @@
         h1{
             font-size: 22px;
         }
-    }
-    .back-to-login{
-        top: 156px;
     }
 }

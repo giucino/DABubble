@@ -11,6 +11,7 @@ import { DialogAddMemberMobileComponent } from '../dialog-add-member-mobile/dial
 import { CustomDialogService } from '../../../services/custom-dialog.service';
 import { MessageService } from '../../../firebase.service/message.service';
 import { Message } from '../../../interfaces/message.interface';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-dialog-edit-channel',
@@ -35,6 +36,7 @@ export class DialogEditChannelComponent implements OnInit {
     private router: Router,
     public customDialogService: CustomDialogService,
     public messageService: MessageService,
+    public threadService: ThreadService,
   ) { }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -109,6 +111,8 @@ export class DialogEditChannelComponent implements OnInit {
       }
       await this.channelService.removeUserFromChannel(this.channelService.currentChannel.id, this.userService.currentUser.id);
       this.deleteUserFromThreadsOfChannel(this.channelService.currentChannel.id, this.userService.currentUser.id);
+      this.userService.saveLastThread(this.userService.currentUser.id, '');
+      this.threadService.closeThread();
       this.openNewChannel();
   }
 
