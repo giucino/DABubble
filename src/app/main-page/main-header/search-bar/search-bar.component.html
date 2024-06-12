@@ -18,58 +18,60 @@
 
     @if (searchControl && (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0)) {
     <div class="search-container">
-        @if (filteredUsers.length > 0) {
-        <ul class="filtered">
-            <span class="categoryName">Users:</span>
-            @for(user of filteredUsers; track user.id) {
-            <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn" (click)="clearSearch()">
-                <div class="user">
-                    <div class="user-img-container">
-                        <img [src]="user.profile_img" alt="" class="profile-img" />
-                        <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
-                    </div>
-                    <div class="user-name fs-18">{{ userService.getUser(user.id).name }}{{ userService.getUser(user.id).name ===
-                        userService.currentUser?.name ? ' (Du)' : '' }}</div>
-                </div>
-            </li>
-            }
-        </ul>
-        }
-
-        @if (filteredChannels.length > 0) {
-        <ul class="filtered">
-            <span class="categoryName">Channels:</span>
-            @for(channel of filteredChannels; track channel.id) {
-            <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread(); clearSearch()">
-                <div class="channelList">
-                    <div class="img-channel-hash">#</div>
-                    <span class="channel-name">{{channel.name}}</span>
-                </div>
-            </li>
-            }
-        </ul>
-        }
-
-        @if (filteredMessages.length > 0) {
-        <ul class="filtered">
-            <span class="categoryName">Messages:</span>
-            @for(message of filteredMessages; track message.id; ) {
-            <li (click)="navigateToMessage(message)">
-                <div class="channelList">
-                    <img class="user-avatar" [src]="getUserImg(message.id)" alt="Avatar">
-                    <div class="messageContainer">
-                        <div class="messageHeader">
-                            <span class="user-name">{{getUserName(message.id)}}</span>
-                            <span class="message-time">{{displayMessageTime(message) }}</span>
+        <div class="all-filltered">
+            @if (filteredUsers.length > 0) {
+                <ul class="filtered">
+                    <span class="categoryName">Users:</span>
+                    @for(user of filteredUsers; track user.id) {
+                    <li #profileBtn appOpenProfile [userId]="user.id" [button]="profileBtn" (click)="clearSearch()">
+                        <div class="user">
+                            <div class="user-img-container">
+                                <img [src]="user.profile_img" alt="" class="profile-img" />
+                                <div class="online-status-wborder online" [ngClass]="user.logged_in ? 'online' : 'offline'"></div>
+                            </div>
+                            <div class="user-name fs-18">{{ userService.getUser(user.id).name }}{{ userService.getUser(user.id).name ===
+                                userService.currentUser?.name ? ' (Du)' : '' }}</div>
                         </div>
-                        <span class="message-text" appTagToComponent>{{message.message.text}}</span>
-                        <span class="message-channel-name">{{getChannel(message.channel_id)?.channel_type == 'direct' ? '@' : '# ' }}{{getChannelName(message.channel_id)}}</span>
-                    </div>
-                </div>
-            </li>
-            }
-        </ul>
-        }
+                    </li>
+                    }
+                </ul>
+                }
+        
+                @if (filteredChannels.length > 0) {
+                <ul class="filtered">
+                    <span class="categoryName">Channels:</span>
+                    @for(channel of filteredChannels; track channel.id) {
+                    <li [routerLink]="['/main-page' , channel.id]" (click)="closeThread(); clearSearch()">
+                        <div class="channelList">
+                            <div class="img-channel-hash">#</div>
+                            <span class="channel-name">{{channel.name}}</span>
+                        </div>
+                    </li>
+                    }
+                </ul>
+                }
+        
+                @if (filteredMessages.length > 0) {
+                <ul class="filtered">
+                    <span class="categoryName">Messages:</span>
+                    @for(message of filteredMessages; track message.id; ) {
+                    <li (click)="navigateToMessage(message)">
+                        <div class="channelList">
+                            <img class="user-avatar" [src]="getUserImg(message.id)" alt="Avatar">
+                            <div class="messageContainer">
+                                <div class="messageHeader">
+                                    <span class="user-name">{{getUserName(message.id)}}</span>
+                                    <span class="message-time">{{displayMessageTime(message) }}</span>
+                                </div>
+                                <span class="message-text" appTagToComponent>{{message.message.text}}</span>
+                                <span class="message-channel-name">{{getChannel(message.channel_id)?.channel_type == 'direct' ? '@' : '# ' }}{{getChannelName(message.channel_id)}}</span>
+                            </div>
+                        </div>
+                    </li>
+                    }
+                </ul>
+                }
+        </div>
     </div>
     }
 </div>

@@ -182,6 +182,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       await this.userService.saveLastThread(this.userService.currentUser.id, message.thread_id);
       this.router.navigate(['/main-page', channelId]);
       this.threadService.openThread();
+      this.messageService.changeMessage(message.id);
     }
   }
 

@@ -36,10 +36,15 @@
   background: white;
   border: 1px solid var(--color-light-purple);
   border-radius: 30px;
-  overflow-y: auto;
-  width: calc(100% - 50px);
-  max-height: 50vh;
-  clip-path: inset(0 round 30px);
+  max-width: 100%;
+
+  .all-filltered {
+    height: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    width: 100%;
+  }
+
 
   ul {
     padding: 0;
@@ -47,6 +52,7 @@
 
     li {
       margin-top: 16px;
+      word-break: break-word;
     }
 
     .categoryName {
