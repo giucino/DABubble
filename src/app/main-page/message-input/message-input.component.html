@@ -1,4 +1,4 @@
-<div class="message-input-container">
+<div class="message-input-container" (click)="setFocusOnInput()">
     <div #channelInput name="channelInput" class="message-input" contenteditable="true" (input)="this.messageInput = channelInput.innerText; checkForTag(channelInput)" (keyup)="checkForTag(channelInput)" (mouseup)="checkForTag(channelInput)" (keydown)="handleKeyDown($event, channelInput)" attr.placeholder-text="{{getTextareaPlaceholderText()}}" appPasteAsText></div>
 
     <app-popup-search [searchTerm]="tagText" [inputElement]="channelInputElement" [viewContainerRef]="channelInputViewRef"></app-popup-search>
