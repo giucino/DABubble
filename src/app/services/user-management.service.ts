@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user.interface';
 import { UserService } from '../firebase.service/user.service';
 import { ChannelFirebaseService } from '../firebase.service/channelFirebase.service';
+import { MessageService } from '../firebase.service/message.service';
+import { Message } from '../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,8 @@ export class UserManagementService {
 
   constructor(
     private userService: UserService,
-    private channelService: ChannelFirebaseService
+    private channelService: ChannelFirebaseService,
+    private messageServie: MessageService,
   ) {}
 
 
@@ -46,6 +49,7 @@ export class UserManagementService {
 
 
   updateMembers(channelId: string, memberIds: string[]): Promise<void> {
+    this.updateMembersForThreadsOfChannel(channelId, memberIds);
     return this.channelService.updateChannelMembers(channelId, memberIds);
   }
 
@@ -57,5 +61,13 @@ export class UserManagementService {
 
   getAllUserIds(): string[] {
     return this.userService.allUsers.map(user => user.id).filter((id): id is string => id !== undefined);
+  }
+
+
+  updateMembersForThreadsOfChannel(channelId : string, memberIds : string[]) {
+    let firstThreadMessages = this.messageServie.allMessages.filter((message) => (message.channel_id == channelId && (message.thread_id && message.thread_id != '')));
+    firstThreadMessages.forEach((message : Message) => {
+      if (message.thread_id && message.thread_id != '') this.channelService.updateChannelMembers(message.thread_id, memberIds);
+    })
   }
 }

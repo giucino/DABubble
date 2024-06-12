@@ -221,7 +221,7 @@ export class MessageComponent {
       description: '',
       created_at: new Date().getTime(),
       creator: this.userService.currentUser.id,
-      members: [this.userService.currentUser.id],
+      members: this.channelService.currentChannel.members,
       active_members: [],
       channel_type: ChannelTypeEnum.thread,
     };
