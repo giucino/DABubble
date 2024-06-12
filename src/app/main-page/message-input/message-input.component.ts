@@ -167,6 +167,7 @@ export class MessageInputComponent {
 
 
   getTextareaPlaceholderText() {
+    if(this.usedIn == 'thread') return 'Antworten...';
     switch (this.channelService.currentChannel.channel_type) {
       case 'main': return 'Nachricht an ' + '#' + this.channelService.currentChannel.name;
       case 'direct':
