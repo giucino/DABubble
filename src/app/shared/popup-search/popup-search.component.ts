@@ -74,6 +74,8 @@ export class PopupSearchComponent {
     let range = this.cursorPositionService.restoreCursorPosition(container);
     if (range) {
       this.handleRange(user, range, container);
+      // service userselected
+      this.searchService.userSelected();
     }
   }
 
