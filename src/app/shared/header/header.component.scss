@@ -123,3 +123,11 @@ header {
     }
 }
 
+@media (max-width: 350px) {
+    // .intro-logo{
+    //     left: var(--);
+    // }
+    :root{
+        --changeLeft: 40px;
+    }
+}
