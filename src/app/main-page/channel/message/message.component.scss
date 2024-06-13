@@ -51,6 +51,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      align-items: center;
     }
 
     &:hover {
@@ -108,8 +109,9 @@
     background-color: var(--color-white);
   }
   .text{
+    width: 100%;
     max-width: 100%;
-    overflow-wrap: break-word;
+    word-break: break-word;
   }
 }
 
@@ -336,7 +338,7 @@ app-edit-message {
 
   .message-container,
   .message-container-reverse {
-    padding: 10px 10px;
+    padding: 10px 16px;
     gap: 20px;
 
     .profile-img {
@@ -346,8 +348,8 @@ app-edit-message {
 
     .message-content {
       .message {
-        width: 90%;
-        max-width: unset;
+        width: fit-content;
+        max-width: 100%;
         .attachement-container{
           .attachement-img{
             min-width: 60px;
@@ -364,10 +366,6 @@ app-edit-message {
     padding: 6px 12px;
     font-size: 16px;
   }
-  .message-edit-container{
-    padding: 10px 20px 10px 20px;
-    max-width: 80dvw; 
-  }
 
   app-edit-message {
     max-width: unset;
@@ -376,16 +374,6 @@ app-edit-message {
 
 }
 @media (max-width: 550px) {
-  .message-container,
-  .message-container-reverse {
-
-
-    .message-content {
-      .message {
-        width: 80%;
-      }
-    }
-  }
   .reaction-bar{
     .more-options-button-container{
       .more-options-menu{
@@ -398,9 +386,6 @@ app-edit-message {
   .btn-text-v2{
     font-size: 16px;
     padding: 5px 10px;
-  }
-  .message-edit-container{
-    max-width: 70dvw; 
   }
 }
 @media(max-width: 450px){
@@ -415,12 +400,6 @@ app-edit-message {
       .more-options-menu{
         left: calc(-220% + 8px);
       }
-    }
-  }
-  .message-container,
-  .message-container-reverse {
-    .message-content {
-      max-width: 80%;
     }
   }
 }
@@ -443,7 +422,6 @@ app-edit-message {
   .message-container-reverse {
     .message-content {
       .message {
-        width: 90%;
         .attachement-container{
           .attachement-img{
             min-width: 50px;
@@ -465,13 +443,5 @@ app-edit-message {
   }
   .btn-primary,.btn-secondary{
     padding: 3px 6px;
-  }
-}
-@media (max-width: 320px){
-  .message-container,
-  .message-container-reverse {
-    .message-content {
-      max-width: 70%;
-    }
   }
 }
