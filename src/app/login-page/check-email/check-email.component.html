@@ -4,7 +4,8 @@
         <p class="textMsgAbove">Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
         <form #emailForm="ngForm">
             <div>
-                <input [(ngModel)]="resetEmail" class="fs-18" name="email" type="email" #email="ngModel" ngModel placeholder="beispielname@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$">
+                <img class="iconOverlay" [src]="iconMail" alt="">
+                <input [(ngModel)]="resetEmail" (focus)="changeIconMail(true)" (blur)="changeIconMail(false)" class="fs-18" name="email" type="email" #email="ngModel" ngModel placeholder="beispielname@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,4}$">
                 <p *ngIf="!email.valid && email.touched || error" class="errorMsg">*Diese E-Mail-Adresse ist leider ungültig.</p>
             </div>
         </form>

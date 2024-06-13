@@ -16,7 +16,8 @@
             <p class="errorMsg" *ngIf="emailExists">*Diese E-Mail-Adresse existiert bereits.</p>
         </div>
         <div>
-            <input [(ngModel)]="user.password" type="password" #signPassword="ngModel" class="fs-18" ngModel required name="signPassword" id="signPassword" placeholder="Passwort">
+            <img class="iconOverlay" [src]="iconPassw" alt="">
+            <input [(ngModel)]="user.password" (focus)="changeIconPassw(true)" (blur)="changeIconPassw(false)" type="password" #signPassword="ngModel" class="fs-18" ngModel required name="signPassword" id="signPassword" placeholder="Passwort">
             <p class="errorMsg" *ngIf="!signPassword.valid && signPassword.touched && !passwordError">Bitte geben Sie ein Passwort ein.</p>
             @if (passwordError){
                 <p class="passErrorMsg">Mindestens 6 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen</p>

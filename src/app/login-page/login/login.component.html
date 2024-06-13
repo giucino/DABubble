@@ -13,7 +13,8 @@
         </div>
 
         <div>
-            <input (keyup.enter)="login()" [(ngModel)]="loginPassword" type="password" class="fs-18" #password="ngModel" ngModel required name="loginPassword" id="loginPasswort" placeholder="Passwort">
+            <img class="iconOverlay" [src]="passwSrc" alt="">
+            <input (keyup.enter)="login()" [(ngModel)]="loginPassword" (focus)="changePasswIcon(true)" (blur)="changePasswIcon(false)" type="password" class="fs-18" #password="ngModel" ngModel required name="loginPassword" id="loginPasswort" placeholder="Passwort">
             <p *ngIf="!password.valid && password.touched || error" class="errorMsg">Falsches Passwort. Bitte noch einmal versuchen.</p>
         </div>
         

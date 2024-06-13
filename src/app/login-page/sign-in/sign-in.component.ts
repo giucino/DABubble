@@ -26,8 +26,9 @@ export class SignInComponent {
   firestore: Firestore = inject(Firestore);
   user = new User();
   emailExists: boolean = false;
-  iconName = '/assets/img/person_filled.png';
-  iconMail = '/assets/img/mail.png';
+  iconName = 'assets/img/person_filled.png';
+  iconMail = 'assets/img/mail.png';
+  iconPassw = 'assets/img/lock.png';
   passwordError = false;
 
 
@@ -100,5 +101,10 @@ export class SignInComponent {
 
   changeIconMail(focus: boolean) {
       this.iconMail = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+  }
+
+
+  changeIconPassw(focus: boolean) {
+    this.iconPassw = focus ? '/assets/img/lock_b.png' : '/assets/img/lock.png';
   }
 }

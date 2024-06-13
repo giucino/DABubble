@@ -70,12 +70,12 @@ input {
     }
 }
 
-input[type="password"] {
-    background-image: "assets/img/lock.png";
-    &:focus{
-        background-image: "assets/img/lock_b.png";
-    }
-}
+// input[type="password"] {
+//     background-image: "assets/img/lock.png";
+//     &:focus{
+//         background-image: "assets/img/lock_b.png";
+//     }
+// }
 
 
 .iconOverlay{

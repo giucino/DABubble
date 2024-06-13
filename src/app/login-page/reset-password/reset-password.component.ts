@@ -18,6 +18,7 @@ export class ResetPasswordComponent {
   resetPassword: string = '';
   resetPasswordAgain: string = '';
   oobCode: string = '';
+  iconPassw: string = 'assets/img/lock.png';
   constructor(private router: Router, private _snackBar: MatSnackBar,
     private userAuth: UserAuthService, private route: ActivatedRoute) { }
 
@@ -70,6 +71,10 @@ export class ResetPasswordComponent {
     }).catch((error) => {
       console.error(error);
     });
+  }
 
+
+  changeIconPassw(focus: boolean) {
+    this.iconPassw = focus ? '/assets/img/lock_b.png' : '/assets/img/lock.png';
   }
 }

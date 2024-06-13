@@ -19,6 +19,11 @@
     }
 }
 
+.iconOverlay{
+    position: absolute;
+    left: 30px;
+    top: 19px;
+}
 form {
     width: 100%;
     display: flex;
@@ -26,6 +31,7 @@ form {
 
     >div {
         gap: 4px;
+        position: relative;
 
         input {
             background-color: var(--color-bg);
@@ -37,10 +43,10 @@ form {
             padding: 20px 70px;
             display: flex;
             align-items: center;
-            background-image: url("/assets/img/lock.png");
-            background-position: left 30px center;
-            background-size: 24px 24px;
-            background-repeat: no-repeat;
+            // background-image: url("/assets/img/lock.png");
+            // background-position: left 30px center;
+            // background-size: 24px 24px;
+            // background-repeat: no-repeat;
             border: 1px solid transparent;
 
             &::placeholder {
@@ -58,7 +64,7 @@ form {
             &:focus {
                 border: 1px solid var(--color-purple-2);
                 outline: none;
-                background-image: url("/assets/img/lock_b.png");
+                // background-image: url("/assets/img/lock_b.png");
                 font-weight: 700;
             }
         }
@@ -192,6 +198,10 @@ form {
 }
 
 @media (max-width: 500px) {
+    .iconOverlay{
+        left: 22px;
+        top: 13px;
+    }
     .check-email-container {
         h1 {
             font-size: 32px;
@@ -237,5 +247,8 @@ form {
         top: unset;
         bottom: 36px;
         left: 18px;
+    }
+    .iconOverlay{
+        left: 16px
     }
 }

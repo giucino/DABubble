@@ -18,6 +18,7 @@ import { updateProfile } from '@angular/fire/auth';
 export class CheckEmailComponent {
   resetEmail: string = '';
   error = false;
+  iconMail = 'assets/img/mail.png';
 
   constructor(private router: Router, private _snackBar: MatSnackBar, private userAuth: UserAuthService) { }
 
@@ -56,4 +57,9 @@ export class CheckEmailComponent {
       direction: 'rtl',
     });
   }
+
+
+  changeIconMail(focus: boolean) {
+    this.iconMail = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+}
 }

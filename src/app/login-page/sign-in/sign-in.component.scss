@@ -100,12 +100,12 @@ form {
 }
 
 
-input[type="password"] {
-    background-image: url("/assets/img/lock.png");
-    &:focus{
-        background-image: url("/assets/img/lock_b.png");
-    }
-}
+// input[type="password"] {
+//     background-image: url("/assets/img/lock.png");
+//     &:focus{
+//         background-image: url("/assets/img/lock_b.png");
+//     }
+// }
 
 
 .iconOverlay{
