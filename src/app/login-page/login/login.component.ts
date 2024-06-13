@@ -97,18 +97,22 @@ export class LoginComponent {
 
   setGoogleUser() {
     let user = this.userService.allUsers.find(user => user.email === this.userAuth.googleEmail);
-    return this.createUserObject(user);
+    if (user) {
+      return user;
+    } else {
+    return this.createUserObject();
+    }
   }
 
 
-  createUserObject(user: any) {
+  createUserObject() {
     return {
       name: this.userAuth.googleName,
       email: this.userAuth.googleEmail,
       profile_img: this.userAuth.googleProfileImg,
-      id: user.id,
-      last_channel: user.last_channel || '',
-      last_thread: user.last_thread || '',
+      id: '',
+      last_channel: '',
+      last_thread: '',
       logged_in: true,
       is_typing: false,
       password: '',
