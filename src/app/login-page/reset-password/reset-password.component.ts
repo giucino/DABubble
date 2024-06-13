@@ -75,6 +75,6 @@ export class ResetPasswordComponent {
 
 
   changeIconPassw(focus: boolean) {
-    this.iconPassw = focus ? '/assets/img/lock_b.png' : '/assets/img/lock.png';
+    this.iconPassw = focus ? 'assets/img/lock_b.png' : 'assets/img/lock.png';
   }
 }

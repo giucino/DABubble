@@ -133,7 +133,7 @@ form {
         background-color: rgba(0, 0, 0, 0) !important;
 
         &:checked {
-            background: url('/assets/img/checked.png') no-repeat center center;
+            background: url('./../../../assets/img/checked.png') no-repeat center center;
 
             &:hover {
                 background-color: var(--color-bg) !important;

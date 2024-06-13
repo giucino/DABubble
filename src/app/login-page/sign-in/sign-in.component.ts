@@ -95,16 +95,16 @@ export class SignInComponent {
 
 
   changeIconName(focus: boolean) {
-    this.iconName = focus ? '/assets/img/person_filled_b.png' : '/assets/img/person_filled.png';
+    this.iconName = focus ? 'assets/img/person_filled_b.png' : 'assets/img/person_filled.png';
   }
 
 
   changeIconMail(focus: boolean) {
-      this.iconMail = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+      this.iconMail = focus ? 'assets/img/mail_b.png' : 'assets/img/mail.png';
   }
 
 
   changeIconPassw(focus: boolean) {
-    this.iconPassw = focus ? '/assets/img/lock_b.png' : '/assets/img/lock.png';
+    this.iconPassw = focus ? 'assets/img/lock_b.png' : 'assets/img/lock.png';
   }
 }

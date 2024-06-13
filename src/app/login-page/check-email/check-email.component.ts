@@ -60,6 +60,6 @@ export class CheckEmailComponent {
 
 
   changeIconMail(focus: boolean) {
-    this.iconMail = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+    this.iconMail = focus ? 'assets/img/mail_b.png' : 'assets/img/mail.png';
 }
 }
