@@ -24,7 +24,7 @@ export class LoginComponent {
   loginEmail: string = '';
   loginPassword: string = '';
   isLoading = false;
-  iconSrc = '/assets/img/mail.png';
+  iconSrc = 'assets/img/mail.png';
   oobCode: string = '';
 
   constructor(private userAuth: UserAuthService, 
@@ -141,6 +141,6 @@ export class LoginComponent {
 
 
   changeIcon(focus: boolean) {
-    this.iconSrc = focus ? '/assets/img/mail_b.png' : '/assets/img/mail.png';
+    this.iconSrc = focus ? 'assets/img/mail_b.png' : 'assets/img/mail.png';
   }
 }

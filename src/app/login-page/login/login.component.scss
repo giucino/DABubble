@@ -71,9 +71,9 @@ input {
 }
 
 input[type="password"] {
-    background-image: url("/assets/img/lock.png");
+    background-image: "assets/img/lock.png";
     &:focus{
-        background-image: url("/assets/img/lock_b.png");
+        background-image: "assets/img/lock_b.png";
     }
 }
 

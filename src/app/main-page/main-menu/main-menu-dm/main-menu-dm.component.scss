@@ -1,5 +1,5 @@
-@import "../../../../styles.scss";
 @import "../../../../assets/scss/mixin.scss";
+
 .scroll-dms{
   @include dFlex($fd: column, $ai: flex-start, $gap: 25px);
   width: 100%;
