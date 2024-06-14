@@ -194,11 +194,12 @@ export class ChannelComponent {
     this.activatedRoute.params.subscribe((params) => {
       if (params['channelId']) {
         this.loadChannelData(params['channelId']);
-      } else if (this.userService.currentUser.last_channel == '') {
-        this.router.navigateByUrl('/main-page/');
-      }
-      else {
-        this.loadChannelData(this.userService.currentUser.last_channel);
+      } else {
+        if (this.userService.currentUser.last_channel == '') {
+          this.router.navigateByUrl('/main-page/');
+        } else {
+          this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+        }
       }
     });
   }
