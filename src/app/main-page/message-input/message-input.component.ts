@@ -104,7 +104,7 @@ export class MessageInputComponent {
   async sendToAllAdressees(fileInput : HTMLInputElement) {
     this.newMessageAdressees.adressees.forEach( async (channelId) => {
       this.message.channel_id = channelId;
-      this.messageService.addMessage(this.message);
+      this.message.id = await this.messageService.addMessage(this.message);
       if (this.currentFile != null) await this.uploadFile(fileInput);
     })
     this.newMessageAdressees.empty();
@@ -151,7 +151,7 @@ export class MessageInputComponent {
     await this.messageService.uploadFile(this.currentFile, path);
     this.message.message.attachements = [];
     this.message.message.attachements.push(path);
-    this.messageService.updateMessage(this.message);
+    await this.messageService.updateMessage(this.message);
     this.removeFile(fileInput);
   }
 
@@ -216,6 +216,7 @@ export class MessageInputComponent {
   removeFile(input: HTMLInputElement) {
     this.currentFile = null;
     input.value = '';
+    this.message.message.attachements = [];
   }
 
 
