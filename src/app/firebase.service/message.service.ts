@@ -224,10 +224,10 @@ export class MessageService {
   }
 
 
-  deleteFile(path: string) {
+  async deleteFile(path: string) {
     const storage = getStorage();
     const storageRef = ref(storage, path);
-    deleteObject(storageRef);
+    await deleteObject(storageRef);
   }
 
 

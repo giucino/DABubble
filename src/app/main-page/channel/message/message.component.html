@@ -15,14 +15,14 @@
                     @for(attachementPath of message.message.attachements; track attachementPath) {
                         @if(attachementPath != 'deleted') {
                             <div class="attachement-container">
-                                @if(attachementData(attachementPath)?.type == 'application/pdf' && attachementData(attachementPath).url) { <!-- pdf type -->
+                                @if(attachementData(attachementPath)?.type == 'application/pdf' && attachementData(attachementPath)?.url) { <!-- pdf type -->
                                     <div class="attachement-pdf">
                                         <div class="pdf-icon"><b>pdf</b></div>
-                                        <div class="file-name">{{attachementData(attachementPath).name}}</div>
+                                        <div class="file-name">{{attachementData(attachementPath)?.name}}</div>
                                     </div>
                                 }
                                 @else {
-                                        <img class="attachement-img" src="{{attachementData(attachementPath)?.url}}" alt="">
+                                        <img class="attachement-img" [src]="attachementData(attachementPath)?.url" alt="">
                                 }
                                 <div class="overlay">
                                     <div class="buttons">

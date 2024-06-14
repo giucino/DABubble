@@ -15,7 +15,6 @@ import { OpenProfileDirective } from '../../../shared/directives/open-profile.di
 import { ReactionService } from '../../../firebase.service/reaction.service';
 import { Reaction } from '../../../interfaces/reaction.interface';
 import { SharedService } from '../../../services/shared.service';
-// import { MainPageComponent } from '../../main-page.component';
 import { TagToComponentDirective } from '../../../shared/directives/tag-to-component.directive';
 import { PopupSearchComponent } from '../../../shared/popup-search/popup-search.component';
 import { CursorPositionService } from '../../../services/cursor-position.service';
@@ -73,7 +72,6 @@ export class MessageComponent {
     public reactionService: ReactionService,
     public sharedService: SharedService,
     public elementRef: ElementRef,
-    // public mainpage: MainPageComponent, // TODO: als Service
     public cursorPositionService: CursorPositionService,
     public searchService: SearchService,
   ) { }
@@ -91,7 +89,6 @@ export class MessageComponent {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
     this.getAttachementsData();
     this.getReactions();
-    this.message.message.text = this.message.message.text;
     this.userSelectedSubscription = this.searchService.userSelected$.subscribe(() => {
       this.preventEditClose = true;
     });
@@ -101,9 +98,8 @@ export class MessageComponent {
 
   ngOnChanges() {
     this.editableMessage = JSON.parse(JSON.stringify(this.message));
-    if (this.attachementsData.length == 0) this.getAttachementsData();
+    if (this.attachementsData.length === 0) this.getAttachementsData();
     this.getReactions();
-
   }
 
 
@@ -132,13 +128,13 @@ export class MessageComponent {
   async getAttachementsData() {
     const messageAttachementsPaths = this.message.message.attachements;
     if (messageAttachementsPaths) {
-      this.attachementsData = [];
-      messageAttachementsPaths.forEach(async (path) => {
-        if (path != 'deleted') {
+      this.attachementsData.length = 0;
+      for (const path of messageAttachementsPaths) {
+        if (path !== 'deleted') {
           const attachement = await this.messageService.getFileData(path);
           this.attachementsData.push(attachement);
         }
-      });
+      }
     }
   }
 
@@ -147,8 +143,9 @@ export class MessageComponent {
     let attachementData = this.attachementsData.find(
       (data) => data.path == path
     );
-    return attachementData;
+    return attachementData
   }
+  
 
 
   isCurrentUser(): boolean {
@@ -263,13 +260,15 @@ export class MessageComponent {
   //#endregion thread
 
 
-  deleteFile(path: string) {
-    this.messageService.deleteFile(path);
-    if (this.message.message.attachements) {
+  async deleteFile(path: string) {
+    if (this.message.message.attachements && this.message.message.attachements.length > 0) {
       const index = this.message.message.attachements.indexOf(path);
-      if (index > -1) this.message.message.attachements[index] = 'deleted';
-      this.message.modified_at = new Date().getTime();
-      this.messageService.updateMessage(this.message);
+      if (index > -1) {
+        this.message.message.attachements[index] = 'deleted';
+        this.message.modified_at = new Date().getTime();
+        await this.messageService.updateMessage(this.message);
+        await this.messageService.deleteFile(path);
+      }
     }
   }
 
