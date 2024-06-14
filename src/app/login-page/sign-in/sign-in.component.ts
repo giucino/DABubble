@@ -83,8 +83,8 @@ export class SignInComponent {
 
 
   validatePassword(password: string): boolean {
-    // Mindestens 6 Zeichen, mindestens eine Großbuchstabe, eine Kleinbuchstabe, eine Zahl 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    // Mindestens 6 Zeichen, mindestens eine Großbuchstabe, eine Kleinbuchstabe, eine Zahl , ein Sonderzeichen '@$!%*?&._'
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._])[A-Za-z\d@$!%*?&._]{6,}$/;
     if (!passwordRegex.test(password)) {
       this.passwordError = true;
       return false;

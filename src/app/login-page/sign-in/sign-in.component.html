@@ -20,7 +20,7 @@
             <input [(ngModel)]="user.password" (focus)="changeIconPassw(true)" (blur)="changeIconPassw(false)" type="password" #signPassword="ngModel" class="fs-18" ngModel required name="signPassword" id="signPassword" placeholder="Passwort">
             <p class="errorMsg" *ngIf="!signPassword.valid && signPassword.touched && !passwordError">Bitte geben Sie ein Passwort ein.</p>
             @if (passwordError){
-                <p class="passErrorMsg">Mindestens 6 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen</p>
+                <p class="passErrorMsg">Mindestens 6 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen (&#64;$!%*?&._)</p>
             }
             
         </div>
