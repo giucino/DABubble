@@ -58,8 +58,8 @@
                     </svg>
                     <div class="email-label fs-20">Vollständiger Name</div>
                 </div>
-                <div class="input-field fs-18">
-                    <input type="text" formControlName="name" placeholder={{userService.currentUser?.name}}>
+                <div class="input-field fs-18 change-name">
+                    <input class="change-name" type="text" formControlName="name" placeholder={{userService.currentUser?.name}}>
                 </div>
             </div>
 
@@ -80,7 +80,8 @@
                 </div>
 
                 <div class="input-field fs-18">
-                    <input type="email" formControlName="email" [placeholder]="emailPlaceholder()">
+                    <!-- <input type="email" formControlName="email" [placeholder]="emailPlaceholder()"> -->
+                    <div class="email-address fs-18">{{ isOwnProfile() ? userService.currentUser.email : user?.email }}</div>
                 </div>
                 @if (emailExists) {
                 <p class="errorMsg">Email existiert bereits</p>

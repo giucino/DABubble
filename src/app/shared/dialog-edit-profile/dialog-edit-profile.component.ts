@@ -6,6 +6,8 @@ import { UserAuthService } from '../../firebase.service/user.auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-dialog-edit-profile',
@@ -15,6 +17,8 @@ import { Router } from '@angular/router';
   styleUrl: './dialog-edit-profile.component.scss',
 })
 export class DialogEditProfileComponent implements OnInit {
+  user: User | null = null;
+
   editForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl({ value: '', disabled: this.isEmailDisabled() }, [
@@ -39,7 +43,8 @@ export class DialogEditProfileComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogEditProfileComponent>,
     public userService: UserService,
     public userAuth: UserAuthService,
-    public router: Router
+    public router: Router,
+    public profileService: ProfileService
   ) { }
 
 
@@ -64,6 +69,13 @@ export class DialogEditProfileComponent implements OnInit {
     return this.userService.currentUser?.email == this.userAuth.googleEmail
       ? 'Kann hier nicht bearbeitet werden'
       : this.userService.currentUser?.email;
+  }
+
+
+  
+
+  isOwnProfile(): boolean {
+    return this.profileService.getOwnProfileStatus();
   }
 
 
