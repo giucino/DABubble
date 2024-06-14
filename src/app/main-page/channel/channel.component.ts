@@ -116,25 +116,28 @@ export class ChannelComponent {
     public newMessageAdressees: NewMessageAdresseesService,
   ) {
     this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') ?? ''
-    this.initUserAndChannel();
-  }
-
-
-  async initUserAndChannel() {
-    // if (this.userService.currentUser && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
-    //   // this.router.navigateByUrl('/main-page/');
-      this.openChannel();
-    // } else 
-    if (this.userService.currentUser && this.userService.currentUser.last_channel == '' && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
-      // this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
-      this.openChannel();
+    // this.initUserAndChannel();
+    if (userService.currentUser && channelService.currentChannel.members.includes(userService.currentUser.id)) {
+    this.openChannel();
     }
-    // if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
-      // this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
-      // this.openChannel();
-    // }
-
   }
+
+
+  // async initUserAndChannel() {
+  //   // if (this.userService.currentUser && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
+  //   //   // this.router.navigateByUrl('/main-page/');
+  //     this.openChannel();
+  //   // } else 
+  //   if (this.userService.currentUser && this.userService.currentUser.last_channel == '' && this.channelService.currentChannel.members.includes(this.userService.currentUser.id)) {
+  //     // this.channelId = this.activatedRoute.snapshot.paramMap.get('channelId') || '';
+  //     this.openChannel();
+  //   }
+  //   // if (this.userService.currentUser && this.userService.currentUser.last_channel != '') {
+  //     // this.router.navigateByUrl('/main-page/' + this.userService.currentUser.last_channel);
+  //     // this.openChannel();
+  //   // }
+
+  // }
 
 
   ngAfterViewInit() {
