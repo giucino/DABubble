@@ -1,9 +1,25 @@
-# DABubble
+# Description
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+DABubble is a communication platform designed for teams, offering real-time messaging and file sharing. It organizes conversations into channels, making it easier to manage and track discussions within projects or teams. Written as a group-project of 3 in Angular, Firestore is used as backend.
 
-This is a 3-man project for educational purpose only. The project is a webbrowser slack clone with firebase backend. 
+# Documentation
 
-## Further help
+https://bari-sopa.com/docs/frontend/dabubble/
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Installation
+
+0. Must have:
+NodeJS <br>
+Angular <br>
+
+1. Install 
+```bash
+npm install
+```
+
+```bash
+ng s
+```
+
+
+
